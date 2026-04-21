@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kaori – Acceder</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Nunito', sans-serif; background: #faf8f5; color: #2d1b69; min-height: 100vh; display: flex; flex-direction: column; }
+
+    /* ── NAVBAR ── */
+    nav { display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; height: 72px; background: rgba(250,248,245,0.97); border-bottom: 1px solid #f3e8ff; }
+    .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; letter-spacing: 0.2em; color: #4c1d95; text-decoration: none; }
+
+    /* ── CONTENEDOR ── */
+    .page { flex: 1; display: flex; align-items: center; justify-content: center; padding: 2rem 1rem; }
+    .card { background: white; border-radius: 1rem; padding: 2.5rem 2rem; border: 1px solid #f3e8ff; width: 100%; max-width: 400px; box-shadow: 0 4px 24px rgba(124,58,237,0.06); }
+
+    /* ── CABECERA ── */
+    .card-logo { text-align: center; font-family: 'Cormorant Garamond', serif; font-size: 2rem; letter-spacing: 0.2em; color: #4c1d95; margin-bottom: 0.25rem; }
+    .card-sub  { text-align: center; font-size: 0.82rem; color: #6b7280; margin-bottom: 2rem; }
+
+    /* ── TABS ── */
+    .tabs { display: flex; border-bottom: 1px solid #f3e8ff; margin-bottom: 1.75rem; }
+    .tab  { flex: 1; padding: 0.65rem; text-align: center; cursor: pointer; font-size: 0.85rem; color: #6b7280; border: none; border-bottom: 2px solid transparent; background: none; font-family: 'Nunito', sans-serif; transition: all 0.2s; }
+    .tab.active { color: #7c3aed; border-bottom-color: #7c3aed; font-weight: 700; }
+
+    /* ── FORMULARIO ── */
+    .form-group { display: flex; flex-direction: column; gap: 5px; margin-bottom: 1rem; }
+    label { font-size: 0.8rem; font-weight: 600; color: #4c1d95; }
+    input { font-family: 'Nunito', sans-serif; border: 1px solid #e9d5ff; border-radius: 0.75rem; padding: 0.75rem 1rem; font-size: 0.9rem; outline: none; width: 100%; transition: border-color 0.2s; color: #2d1b69; }
+    input:focus { border-color: #a855f7; }
+
+    /* ── BOTÓN ── */
+    .btn { width: 100%; background: #7c3aed; color: white; border: none; border-radius: 9999px; padding: 0.9rem; font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 0.95rem; cursor: pointer; margin-top: 0.5rem; transition: background 0.2s; }
+    .btn:hover:not(:disabled) { background: #6d28d9; }
+    .btn:disabled { background: #c4b5fd; cursor: not-allowed; }
+
+    /* ── MENSAJES ── */
+    .mensaje { font-size: 0.82rem; text-align: center; padding: 0.65rem 1rem; border-radius: 0.5rem; margin-top: 1rem; display: none; line-height: 1.5; }
+    .mensaje.error { background: #fee2e2; color: #b91c1c; display: block; }
+    .mensaje.ok    { background: #dcfce7; color: #166534; display: block; }
+
+    /* ── SEPARADOR ── */
+    .divider { text-align: center; font-size: 0.75rem; color: #9ca3af; margin: 1.25rem 0; position: relative; }
+    .divider::before, .divider::after { content: ''; position: absolute; top: 50%; width: 42%; height: 1px; background: #f3e8ff; }
+    .divider::before { left: 0; }
+    .divider::after  { right: 0; }
+
+    /* ── LINK ── */
+    .link-volver { text-align: center; margin-top: 1.5rem; font-size: 0.82rem; color: #6b7280; }
+    .link-volver a { color: #7c3aed; text-decoration: none; font-weight: 600; }
+    .link-volver a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="/index.html" class="nav-logo">KAORI</a>
+  </nav>
+
+  <div class="page">
+    <div class="card">
+      <p class="card-logo">KAORI</p>
+      <p class="card-sub">Accede a tu cuenta</p>
+
+      <!-- TABS -->
+      <div class="tabs">
+        <button class="tab active" onclick="mostrarTab('login')"    id="tab-login">Iniciar sesión</button>
+        <button class="tab"        onclick="mostrarTab('registro')" id="tab-registro">Crear cuenta</button>
+      </div>
+
+      <!-- ── FORMULARIO LOGIN ── -->
+      <div id="form-login">
+        <div class="form-group">
+          <label for="login-email">Email</label>
+          <input type="email" id="login-email" placeholder="tu@email.com" autocomplete="email" />
+        </div>
+        <div class="form-group">
+          <label for="login-pass">Contraseña</label>
+          <input type="password" id="login-pass" placeholder="••••••••"
+                 autocomplete="current-password"
+                 onkeydown="if(event.key==='Enter') hacerLogin()" />
+        </div>
+        <button class="btn" onclick="hacerLogin()" id="btn-login">Entrar</button>
+        <p class="mensaje" id="msg-login"></p>
+      </div>
+
+      <!-- ── FORMULARIO REGISTRO ── -->
+      <div id="form-registro" style="display:none">
+        <div class="form-group">
+          <label for="reg-email">Email</label>
+          <input type="email" id="reg-email" placeholder="tu@email.com" autocomplete="email" />
+        </div>
+        <div class="form-group">
+          <label for="reg-pass">Contraseña <span style="color:#9ca3af;font-weight:400">(mín. 6 caracteres)</span></label>
+          <input type="password" id="reg-pass" placeholder="••••••••" autocomplete="new-password" />
+        </div>
+        <div class="form-group">
+          <label for="reg-pass2">Repetir contraseña</label>
+          <input type="password" id="reg-pass2" placeholder="••••••••"
+                 autocomplete="new-password"
+                 onkeydown="if(event.key==='Enter') hacerRegistro()" />
+        </div>
+        <button class="btn" onclick="hacerRegistro()" id="btn-registro">Crear cuenta</button>
+        <p class="mensaje" id="msg-registro"></p>
+      </div>
+
+      <div class="divider">o</div>
+      <div class="link-volver">
+        <a href="/index.html">← Volver a la tienda</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Supabase primero, luego nuestros archivos -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/supabase.js"></script>
+  <script src="/auth.js"></script>
+  <script>
+    // ── Si ya hay sesión activa redirige directamente ─────────────────────────
+    (async () => {
+      const sesion = await obtenerSesion();
+      if (sesion) {
+        const rol = await obtenerRol();
+        redirigirSegunRol(rol);
+      }
+    })();
+
+    // ── Redirige según el rol ─────────────────────────────────────────────────
+    function redirigirSegunRol(rol) {
+      if (rol === 'admin') window.location.href = '/admin.html';
+      else                 window.location.href = '/mi-cuenta.html';
+    }
+
+    // ── Cambiar entre tabs ────────────────────────────────────────────────────
+    function mostrarTab(tab) {
+      document.getElementById('form-login').style.display    = tab === 'login'    ? '' : 'none';
+      document.getElementById('form-registro').style.display = tab === 'registro' ? '' : 'none';
+      document.getElementById('tab-login').classList.toggle('active',    tab === 'login');
+      document.getElementById('tab-registro').classList.toggle('active', tab === 'registro');
+      // Limpiar mensajes al cambiar de tab
+      document.getElementById('msg-login').className    = 'mensaje';
+      document.getElementById('msg-registro').className = 'mensaje';
+    }
+
+    // ── LOGIN ─────────────────────────────────────────────────────────────────
+    async function hacerLogin() {
+      const email = document.getElementById('login-email').value.trim();
+      const pass  = document.getElementById('login-pass').value;
+      const btn   = document.getElementById('btn-login');
+      const msg   = document.getElementById('msg-login');
+
+      if (!email || !pass) {
+        mostrarMensaje(msg, 'Por favor rellena todos los campos.', 'error');
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Entrando...';
+
+      const resultado = await iniciarSesion(email, pass);
+
+      btn.disabled = false;
+      btn.textContent = 'Entrar';
+
+      if (!resultado.ok) {
+        mostrarMensaje(msg, resultado.mensaje, 'error');
+        return;
+      }
+
+      const rol = await obtenerRol();
+      redirigirSegunRol(rol);
+    }
+
+    // ── REGISTRO ──────────────────────────────────────────────────────────────
+    async function hacerRegistro() {
+      const email = document.getElementById('reg-email').value.trim();
+      const pass  = document.getElementById('reg-pass').value;
+      const pass2 = document.getElementById('reg-pass2').value;
+      const btn   = document.getElementById('btn-registro');
+      const msg   = document.getElementById('msg-registro');
+
+      if (!email || !pass || !pass2) {
+        mostrarMensaje(msg, 'Por favor rellena todos los campos.', 'error');
+        return;
+      }
+      if (pass !== pass2) {
+        mostrarMensaje(msg, 'Las contraseñas no coinciden.', 'error');
+        return;
+      }
+      if (pass.length < 6) {
+        mostrarMensaje(msg, 'La contraseña debe tener al menos 6 caracteres.', 'error');
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Creando cuenta...';
+
+      const resultado = await registrarUsuario(email, pass);
+
+      btn.disabled = false;
+      btn.textContent = 'Crear cuenta';
+
+      if (!resultado.ok) {
+        mostrarMensaje(msg, resultado.mensaje, 'error');
+        return;
+      }
+
+      // Si Supabase requiere confirmación de email
+      mostrarMensaje(msg, '¡Cuenta creada! Revisa tu email para confirmar tu cuenta.', 'ok');
+    }
+
+    // ── Mostrar mensaje ───────────────────────────────────────────────────────
+    function mostrarMensaje(el, texto, tipo) {
+      el.textContent = texto;
+      el.className   = 'mensaje ' + tipo;
+    }
+  </script>
+</body>
+</html>
