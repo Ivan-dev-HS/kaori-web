@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kaori – Mi Cuenta</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Nunito', sans-serif; background: #faf8f5; color: #2d1b69; }
+    h1,h2,h3 { font-family: 'Cormorant Garamond', serif; }
+
+    /* ── NAVBAR ── */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; height: 72px; background: rgba(250,248,245,0.97); backdrop-filter: blur(8px); border-bottom: 1px solid #f3e8ff; }
+    .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; letter-spacing: 0.2em; color: #4c1d95; text-decoration: none; }
+    .nav-links { display: flex; gap: 2rem; align-items: center; }
+    .nav-links a { font-size: 0.85rem; color: #4b5563; text-decoration: none; transition: color 0.2s; }
+    .nav-links a:hover { color: #7c3aed; }
+    .btn-logout { background: none; border: 1px solid #e9d5ff; border-radius: 9999px; padding: 0.4rem 1rem; font-family: 'Nunito', sans-serif; font-size: 0.82rem; color: #7c3aed; cursor: pointer; transition: all 0.2s; }
+    .btn-logout:hover { background: #f3e8ff; }
+
+    /* ── PÁGINA ── */
+    .page { max-width: 72rem; margin: 0 auto; padding: 6rem 1.5rem 4rem; }
+
+    /* ── BIENVENIDA ── */
+    .welcome { background: linear-gradient(135deg, #4c1d95, #7c3aed); border-radius: 1.5rem; padding: 2.5rem; margin-bottom: 2rem; color: white; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    .welcome h1 { font-size: clamp(1.5rem, 4vw, 2.2rem); font-weight: 300; margin-bottom: 0.4rem; }
+    .welcome p  { color: rgba(255,255,255,0.8); font-size: 0.9rem; }
+    .avatar { width: 64px; height: 64px; border-radius: 50%; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; flex-shrink: 0; }
+
+    /* ── GRID DE SECCIONES ── */
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+
+    /* ── TARJETAS ── */
+    .card { background: white; border-radius: 1rem; padding: 1.5rem; border: 1px solid #f3e8ff; }
+    .card h2 { font-size: 1.2rem; color: #4c1d95; margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.5rem; }
+    .card-icon { font-size: 1.1rem; }
+
+    /* ── INFO DE CUENTA ── */
+    .info-row { display: flex; justify-content: space-between; align-items: center; padding: 0.6rem 0; border-bottom: 1px solid #faf5ff; font-size: 0.875rem; }
+    .info-row:last-child { border-bottom: none; }
+    .info-label { color: #6b7280; }
+    .info-value { color: #2d1b69; font-weight: 600; }
+    .badge-role { background: #f3e8ff; color: #7c3aed; font-size: 0.72rem; font-weight: 700; padding: 3px 10px; border-radius: 9999px; }
+
+    /* ── PEDIDOS ── */
+    .empty-orders { text-align: center; padding: 2rem 0; }
+    .empty-orders p.icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+    .empty-orders p.txt  { color: #6b7280; font-size: 0.875rem; margin-bottom: 1.2rem; }
+    .btn-shop { display: inline-block; background: #7c3aed; color: white; border-radius: 9999px; padding: 0.7rem 1.5rem; font-weight: 700; font-size: 0.875rem; text-decoration: none; transition: background 0.2s; }
+    .btn-shop:hover { background: #6d28d9; }
+
+    /* ── ACCESOS RÁPIDOS ── */
+    .quick-links { display: flex; flex-direction: column; gap: 0.5rem; }
+    .quick-link { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem; border-radius: 0.75rem; text-decoration: none; color: #4c1d95; font-size: 0.875rem; font-weight: 600; transition: background 0.15s; border: 1px solid #f3e8ff; }
+    .quick-link:hover { background: #faf5ff; }
+    .quick-link span.ql-icon { font-size: 1.1rem; width: 32px; height: 32px; background: #f3e8ff; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+
+    /* ── LOADING ── */
+    .loading { min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+    .loading p { color: #6b7280; font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+
+  <!-- LOADING mientras verificamos sesión -->
+  <div class="loading" id="loadingScreen">
+    <p>Cargando...</p>
+  </div>
+
+  <!-- CONTENIDO (oculto hasta verificar sesión) -->
+  <div id="mainContent" style="display:none">
+
+    <nav>
+      <a href="/index.html" class="nav-logo">KAORI</a>
+      <div class="nav-links">
+        <a href="/shop.html">Tienda</a>
+        <a href="/shop.html">Mis pedidos</a>
+        <button class="btn-logout" onclick="hacerLogout()">Cerrar sesión</button>
+      </div>
+    </nav>
+
+    <div class="page">
+
+      <!-- BIENVENIDA -->
+      <div class="welcome">
+        <div>
+          <h1>Hola, <span id="userNombre">Usuaria</span> 👋</h1>
+          <p id="userEmail">cargando...</p>
+        </div>
+        <div class="avatar">🌸</div>
+      </div>
+
+      <div class="grid">
+
+        <!-- INFO DE CUENTA -->
+        <div class="card">
+          <h2><span class="card-icon">👤</span> Mi cuenta</h2>
+          <div class="info-row">
+            <span class="info-label">Email</span>
+            <span class="info-value" id="infoEmail">—</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Rol</span>
+            <span class="badge-role" id="infoRol">cliente</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Miembro desde</span>
+            <span class="info-value" id="infoFecha">—</span>
+          </div>
+        </div>
+
+        <!-- ACCESOS RÁPIDOS -->
+        <div class="card">
+          <h2><span class="card-icon">⚡</span> Accesos rápidos</h2>
+          <div class="quick-links">
+            <a href="/shop.html" class="quick-link">
+              <span class="ql-icon">🛍️</span> Explorar la tienda
+            </a>
+            <a href="/shop.html?category=velas" class="quick-link">
+              <span class="ql-icon">🕯️</span> Velas artesanales
+            </a>
+            <a href="/shop.html?category=minerales" class="quick-link">
+              <span class="ql-icon">💎</span> Minerales y cristales
+            </a>
+            <a href="/about.html" class="quick-link">
+              <span class="ql-icon">🌿</span> Sobre Kaori
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- MIS PEDIDOS -->
+      <div class="card">
+        <h2><span class="card-icon">📦</span> Mis pedidos</h2>
+        <div class="empty-orders">
+          <p class="icon">🛒</p>
+          <p class="txt">Todavía no tienes pedidos.<br />¡Explora nuestra tienda y encuentra algo especial!</p>
+          <a href="/shop.html" class="btn-shop">Ir a la tienda →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/supabase.js"></script>
+  <script src="/auth.js"></script>
+  <script>
+    // ── Proteger la página: solo usuarios logueados ───────────────────────────
+    // Si no hay sesión → redirige a login automáticamente
+    (async () => {
+      const rol = await protegerPagina(null); // null = cualquier usuario logueado
+      if (!rol) return; // protegerPagina ya redirigió
+
+      // Si es admin no debería estar aquí → mandarlo a su panel
+      if (rol === 'admin') {
+        window.location.href = '/admin.html';
+        return;
+      }
+
+      // Cargar datos del usuario
+      const usuario = await obtenerUsuario();
+      if (!usuario) return;
+
+      // Rellenar la interfaz
+      const nombre = usuario.email.split('@')[0];
+      const fecha  = new Date(usuario.created_at).toLocaleDateString('es-ES', {
+        year: 'numeric', month: 'long', day: 'numeric'
+      });
+
+      document.getElementById('userNombre').textContent = nombre;
+      document.getElementById('userEmail').textContent  = usuario.email;
+      document.getElementById('infoEmail').textContent  = usuario.email;
+      document.getElementById('infoFecha').textContent  = fecha;
+      document.getElementById('infoRol').textContent    = rol;
+
+      // Mostrar contenido y ocultar loading
+      document.getElementById('loadingScreen').style.display = 'none';
+      document.getElementById('mainContent').style.display   = '';
+    })();
+
+    // ── Cerrar sesión ─────────────────────────────────────────────────────────
+    async function hacerLogout() {
+      await cerrarSesion();
+      window.location.href = '/login.html';
+    }
+  </script>
+</body>
+</html>
