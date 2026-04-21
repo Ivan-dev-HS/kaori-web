@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kaori – Acceso Denegado</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Nunito', sans-serif; background: #faf8f5; color: #2d1b69; min-height: 100vh; display: flex; flex-direction: column; }
+
+    /* ── NAVBAR ── */
+    nav { display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; height: 72px; background: rgba(250,248,245,0.97); border-bottom: 1px solid #f3e8ff; }
+    .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; letter-spacing: 0.2em; color: #4c1d95; text-decoration: none; }
+
+    /* ── CONTENIDO ── */
+    .page { flex: 1; display: flex; align-items: center; justify-content: center; padding: 2rem; }
+    .card { background: white; border-radius: 1.5rem; padding: 3rem 2rem; border: 1px solid #f3e8ff; width: 100%; max-width: 480px; text-align: center; box-shadow: 0 4px 24px rgba(124,58,237,0.06); }
+
+    /* ── ICONO ── */
+    .icon-wrap { width: 88px; height: 88px; border-radius: 50%; background: #fee2e2; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; font-size: 2.5rem; }
+
+    /* ── TEXTOS ── */
+    h1 { font-family: 'Cormorant Garamond', serif; font-size: 2rem; color: #4c1d95; margin-bottom: 0.75rem; font-weight: 400; }
+    .subtitle { color: #6b7280; font-size: 0.95rem; line-height: 1.7; margin-bottom: 0.5rem; }
+    .code { color: #9ca3af; font-size: 0.78rem; margin-bottom: 2rem; font-family: monospace; background: #f9fafb; display: inline-block; padding: 4px 12px; border-radius: 9999px; border: 1px solid #f3e8ff; }
+
+    /* ── BOTONES ── */
+    .btns { display: flex; flex-direction: column; gap: 0.75rem; }
+    .btn-primary { background: #7c3aed; color: white; border: none; border-radius: 9999px; padding: 0.9rem 2rem; font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 0.95rem; cursor: pointer; text-decoration: none; display: block; transition: background 0.2s; }
+    .btn-primary:hover { background: #6d28d9; }
+    .btn-secondary { background: white; color: #7c3aed; border: 1px solid #e9d5ff; border-radius: 9999px; padding: 0.9rem 2rem; font-family: 'Nunito', sans-serif; font-weight: 600; font-size: 0.95rem; cursor: pointer; text-decoration: none; display: block; transition: all 0.2s; }
+    .btn-secondary:hover { background: #faf5ff; }
+
+    /* ── NOTA DE SEGURIDAD ── */
+    .security-note { margin-top: 2rem; padding: 1rem; background: #faf5ff; border-radius: 0.75rem; border: 1px solid #f3e8ff; font-size: 0.78rem; color: #6b7280; line-height: 1.6; }
+    .security-note strong { color: #4c1d95; }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="/index.html" class="nav-logo">KAORI</a>
+  </nav>
+
+  <div class="page">
+    <div class="card">
+
+      <div class="icon-wrap">🔒</div>
+
+      <h1>Acceso Denegado</h1>
+      <p class="subtitle">
+        No tienes permisos para acceder a esta página.<br />
+        Esta área está reservada para administradores.
+      </p>
+      <span class="code">Error 403 — Forbidden</span>
+
+      <div class="btns">
+        <a href="/index.html" class="btn-primary">Volver al inicio →</a>
+        <a href="/mi-cuenta.html" class="btn-secondary" id="btnCuenta">Mi cuenta</a>
+        <a href="/login.html" class="btn-secondary" id="btnLogin" style="display:none">Iniciar sesión</a>
+      </div>
+
+      <div class="security-note">
+        <strong>¿Por qué veo esto?</strong><br />
+        Intentaste acceder a una página que requiere permisos de administrador.
+        Si crees que esto es un error, contacta con nosotras en
+        <a href="mailto:info@kaori.es" style="color:#7c3aed">info@kaori.es</a>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/supabase.js"></script>
+  <script src="/auth.js"></script>
+  <script>
+    // ── Adaptar botones según si hay sesión o no ──────────────────────────────
+    (async () => {
+      const sesion = await obtenerSesion();
+
+      if (!sesion) {
+        // No hay sesión → mostrar botón de login, ocultar "Mi cuenta"
+        document.getElementById('btnCuenta').style.display = 'none';
+        document.getElementById('btnLogin').style.display  = '';
+      }
+
+      // Registrar intento de acceso no autorizado en consola
+      // En producción podrías enviarlo a un log de Supabase
+      console.warn('Intento de acceso no autorizado a página protegida.');
+    })();
+  </script>
+</body>
+</html>
