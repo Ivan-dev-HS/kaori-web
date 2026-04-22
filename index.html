@@ -12,84 +12,143 @@
     a { text-decoration: none; color: inherit; }
 
     /* ── NAVBAR ── */
-    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; height: 72px; background: rgba(250,248,245,0.95); backdrop-filter: blur(8px); border-bottom: 1px solid #f3e8ff; transition: all 0.3s; }
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; height: 72px; background: rgba(250,248,245,0.97); backdrop-filter: blur(8px); border-bottom: 1px solid #f3e8ff; transition: all 0.3s; }
     .nav-logo  { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; letter-spacing: 0.2em; color: #4c1d95; }
     .nav-links { display: flex; gap: 2rem; align-items: center; }
     .nav-links a { font-size: 0.85rem; color: #4b5563; transition: color 0.2s; }
     .nav-links a:hover { color: #7c3aed; }
     .nav-right { display: flex; align-items: center; gap: 0.75rem; }
-
-    /* Botón carrito */
+    .nav-cuenta { background: white; color: #7c3aed; border: 1px solid #e9d5ff; border-radius: 9999px; padding: 0.5rem 1.2rem; font-family: 'Nunito', sans-serif; font-size: 0.85rem; font-weight: 600; transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.4rem; }
+    .nav-cuenta:hover { background: #f3e8ff; }
     .nav-cart { background: #7c3aed; color: white; border: none; border-radius: 9999px; padding: 0.5rem 1.2rem; cursor: pointer; font-family: 'Nunito', sans-serif; font-size: 0.85rem; font-weight: 600; transition: background 0.2s; }
     .nav-cart:hover { background: #6d28d9; }
 
-    /* Botón cuenta — cambia según sesión */
-    .nav-cuenta { background: white; color: #7c3aed; border: 1px solid #e9d5ff; border-radius: 9999px; padding: 0.5rem 1.2rem; cursor: pointer; font-family: 'Nunito', sans-serif; font-size: 0.85rem; font-weight: 600; transition: all 0.2s; text-decoration: none; display: inline-flex; align-items: center; gap: 0.4rem; }
-    .nav-cuenta:hover { background: #f3e8ff; }
+    /* ── HAMBURGER ── */
+    .hamburger { display: none; background: none; border: none; cursor: pointer; padding: 0.5rem; flex-direction: column; gap: 5px; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: #4c1d95; border-radius: 2px; transition: all 0.3s; }
+    .mobile-menu { display: none; position: fixed; top: 72px; left: 0; right: 0; background: white; border-bottom: 1px solid #f3e8ff; padding: 1rem 2rem; z-index: 49; flex-direction: column; gap: 0.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+    .mobile-menu a { font-size: 0.95rem; color: #4c1d95; font-weight: 600; padding: 0.6rem 0; border-bottom: 1px solid #faf5ff; display: block; }
+    .mobile-menu a:last-child { border-bottom: none; }
+    .mobile-menu.open { display: flex; }
 
     /* ── HERO ── */
     .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 50%, #ede9fe 100%); padding-top: 72px; }
-    .hero-content { text-align: center; max-width: 56rem; padding: 2rem; }
+    .hero-content { text-align: center; max-width: 56rem; padding: 2rem 1.5rem; }
     .hero-label { font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: #a855f7; margin-bottom: 1.5rem; }
-    .hero h1 { font-size: clamp(3rem, 8vw, 6rem); color: #2e0854; line-height: 1.1; margin-bottom: 1.5rem; font-weight: 300; }
+    .hero h1 { font-size: clamp(2.5rem, 8vw, 6rem); color: #2e0854; line-height: 1.1; margin-bottom: 1.5rem; font-weight: 300; }
     .hero h1 em { color: #9333ea; font-style: italic; }
-    .hero p { color: #6b7280; font-size: 1.1rem; line-height: 1.7; max-width: 36rem; margin: 0 auto 2.5rem; }
+    .hero p { color: #6b7280; font-size: clamp(0.9rem, 2vw, 1.1rem); line-height: 1.7; max-width: 36rem; margin: 0 auto 2.5rem; }
     .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-    .btn-primary { background: #7c3aed; color: white; padding: 1rem 2rem; border-radius: 9999px; font-weight: 700; font-size: 0.95rem; transition: background 0.2s; display: inline-block; }
+    .btn-primary { background: #7c3aed; color: white; padding: 1rem 2rem; border-radius: 9999px; font-weight: 700; font-size: 0.95rem; transition: background 0.2s; display: inline-block; border: none; cursor: pointer; font-family: 'Nunito', sans-serif; }
     .btn-primary:hover { background: #6d28d9; }
-    .btn-outline { border: 2px solid #7c3aed; color: #7c3aed; padding: 1rem 2rem; border-radius: 9999px; font-weight: 600; font-size: 0.95rem; transition: all 0.2s; display: inline-block; }
+    .btn-outline { border: 2px solid #7c3aed; color: #7c3aed; padding: 1rem 2rem; border-radius: 9999px; font-weight: 600; font-size: 0.95rem; transition: all 0.2s; display: inline-block; background: transparent; cursor: pointer; font-family: 'Nunito', sans-serif; }
     .btn-outline:hover { background: #7c3aed; color: white; }
 
-    /* ── VALUES ── */
-    .values { padding: 5rem 1.5rem; background: white; }
-    .values-inner { max-width: 72rem; margin: 0 auto; }
+    /* ── PRODUCTOS DESTACADOS ── */
+    .featured { padding: 5rem 1.5rem; background: white; }
+    .featured-inner { max-width: 72rem; margin: 0 auto; }
     .section-label { font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: #a855f7; margin-bottom: 0.5rem; text-align: center; }
-    .section-title { font-size: clamp(1.8rem, 4vw, 2.5rem); color: #4c1d95; text-align: center; margin-bottom: 3rem; }
-    .values-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; }
-    .value-card { text-align: center; padding: 2rem 1rem; }
+    .section-title { font-size: clamp(1.6rem, 4vw, 2.5rem); color: #4c1d95; text-align: center; margin-bottom: 3rem; font-weight: 400; }
+    .featured-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.5rem; }
+    .feat-card { background: white; border-radius: 1rem; overflow: hidden; border: 1px solid #f3e8ff; transition: box-shadow 0.2s, transform 0.2s; cursor: pointer; }
+    .feat-card:hover { box-shadow: 0 8px 30px rgba(124,58,237,0.12); transform: translateY(-2px); }
+    .feat-img { aspect-ratio: 1; overflow: hidden; background: #faf5ff; position: relative; }
+    .feat-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
+    .feat-card:hover .feat-img img { transform: scale(1.04); }
+    .feat-badge { position: absolute; top: 8px; left: 8px; background: #7c3aed; color: white; font-size: 0.68rem; font-weight: 700; padding: 2px 8px; border-radius: 9999px; }
+    .feat-info { padding: 1rem; }
+    .feat-cat  { font-size: 0.68rem; color: #a855f7; text-transform: uppercase; letter-spacing: 0.1em; }
+    .feat-info h4 { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: #4c1d95; margin: 0.25rem 0; }
+    .feat-price { color: #7c3aed; font-weight: 700; font-size: 0.95rem; }
+    .feat-btn { width: 100%; margin-top: 0.75rem; background: #f3e8ff; color: #7c3aed; border: none; border-radius: 9999px; padding: 0.55rem; font-family: 'Nunito', sans-serif; font-weight: 600; cursor: pointer; font-size: 0.82rem; transition: background 0.2s; }
+    .feat-btn:hover { background: #7c3aed; color: white; }
+    .feat-btn.added { background: #dcfce7; color: #16a34a; }
+    .ver-todos { display: block; text-align: center; margin-top: 2.5rem; }
+    .ver-todos a { display: inline-block; background: #7c3aed; color: white; padding: 0.9rem 2.5rem; border-radius: 9999px; font-weight: 700; font-size: 0.95rem; transition: background 0.2s; font-family: 'Nunito', sans-serif; }
+    .ver-todos a:hover { background: #6d28d9; }
+
+    /* ── VALUES ── */
+    .values { padding: 5rem 1.5rem; background: #faf5ff; }
+    .values-inner { max-width: 72rem; margin: 0 auto; }
+    .values-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 2rem; }
+    .value-card { text-align: center; padding: 2rem 1rem; background: white; border-radius: 1rem; border: 1px solid #f3e8ff; }
     .value-icon { width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.2rem; font-size: 1.5rem; }
     .ic-purple { background: #f3e8ff; }
     .ic-green  { background: #dcfce7; }
     .ic-amber  { background: #fef3c7; }
-    .value-card h3 { font-size: 1.2rem; color: #4c1d95; margin-bottom: 0.8rem; }
+    .value-card h3 { font-size: 1.1rem; color: #4c1d95; margin-bottom: 0.8rem; font-weight: 400; }
     .value-card p  { color: #6b7280; font-size: 0.875rem; line-height: 1.7; }
 
     /* ── ABOUT BANNER ── */
-    .about-banner { padding: 6rem 1.5rem; background: #2e0854; text-align: center; }
-    .about-banner h2 { font-size: clamp(2rem, 5vw, 3rem); color: white; margin-bottom: 1rem; }
-    .about-banner p  { color: #d8b4fe; max-width: 36rem; margin: 0 auto 2rem; line-height: 1.7; }
-    .btn-white { background: white; color: #4c1d95; padding: 1rem 2.5rem; border-radius: 9999px; font-weight: 700; display: inline-block; transition: background 0.2s; }
+    .about-banner { padding: 5rem 1.5rem; background: #2e0854; text-align: center; }
+    .about-banner h2 { font-size: clamp(1.8rem, 5vw, 3rem); color: white; margin-bottom: 1rem; font-weight: 400; }
+    .about-banner p  { color: #d8b4fe; max-width: 36rem; margin: 0 auto 2rem; line-height: 1.7; font-size: 0.95rem; }
+    .btn-white { background: white; color: #4c1d95; padding: 1rem 2.5rem; border-radius: 9999px; font-weight: 700; display: inline-block; transition: background 0.2s; font-family: 'Nunito', sans-serif; font-size: 0.95rem; }
     .btn-white:hover { background: #f5f3ff; }
+
+    /* ── TOAST ── */
+    #toast { position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%) translateY(80px); background: #4c1d95; color: white; padding: 0.75rem 1.5rem; border-radius: 9999px; font-size: 0.875rem; font-weight: 600; z-index: 200; transition: transform 0.3s; pointer-events: none; white-space: nowrap; font-family: 'Nunito', sans-serif; }
+    #toast.show { transform: translateX(-50%) translateY(0); }
 
     /* ── FOOTER ── */
     footer { background: #1e0a3c; color: white; padding: 4rem 1.5rem 2rem; }
-    .footer-inner { max-width: 72rem; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 3rem; margin-bottom: 3rem; }
-    .footer-brand h3 { font-size: 2rem; letter-spacing: 0.2em; margin-bottom: 1rem; font-weight: 400; }
+    .footer-inner { max-width: 72rem; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 2.5rem; margin-bottom: 3rem; }
+    .footer-brand h3 { font-size: 1.8rem; letter-spacing: 0.2em; margin-bottom: 1rem; font-weight: 400; }
     .footer-brand p  { color: #c4b5fd; font-size: 0.875rem; line-height: 1.7; }
-    .footer-links h4 { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: #a78bfa; margin-bottom: 1rem; }
+    .footer-links h4 { font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: #a78bfa; margin-bottom: 1rem; }
     .footer-links ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
     .footer-links a  { color: #c4b5fd; font-size: 0.875rem; transition: color 0.2s; }
     .footer-links a:hover { color: white; }
     .footer-bottom { border-top: 1px solid #3b1f6e; padding-top: 1.5rem; text-align: center; color: #7c5cbf; font-size: 0.8rem; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 0 1rem; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .hero-btns { flex-direction: column; align-items: center; }
+      .btn-primary, .btn-outline { width: 100%; max-width: 280px; text-align: center; }
+      .featured-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 1rem; }
+      .values-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-inner { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+    }
+    @media (max-width: 480px) {
+      .nav-right .nav-cuenta { display: none; }
+      .featured-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+      .values-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+      .value-card { padding: 1.25rem 0.75rem; }
+      .footer-inner { grid-template-columns: 1fr; }
+      .about-banner { padding: 3.5rem 1rem; }
+    }
   </style>
 </head>
 <body>
 
   <nav>
-    <a href="/index.html" class="nav-logo">KAORI</a>
+    <a href="index.html" class="nav-logo">KAORI</a>
     <div class="nav-links">
-      <a href="/shop.html">Tienda</a>
-      <a href="/about.html">Nosotras</a>
-      <a href="/contact.html">Contacto</a>
+      <a href="shop.html">Tienda</a>
+      <a href="about.html">Nosotras</a>
+      <a href="contact.html">Contacto</a>
     </div>
     <div class="nav-right">
-      <!-- Se rellena dinámicamente según sesión -->
-      <a href="/login.html" class="nav-cuenta" id="btnCuenta">👤 Mi cuenta</a>
-      <button class="nav-cart" onclick="window.location.href='/shop.html'">
-        🛒 Carrito (<span id="cartCount">0</span>)
+      <a href="login.html" class="nav-cuenta" id="btnCuenta">👤 Mi cuenta</a>
+      <button class="nav-cart" onclick="window.location.href='shop.html'">
+        🛒 <span id="cartCount">0</span>
+      </button>
+      <button class="hamburger" onclick="toggleMenu()" aria-label="Abrir menú">
+        <span></span><span></span><span></span>
       </button>
     </div>
   </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html"   onclick="toggleMenu()">Inicio</a>
+    <a href="shop.html"    onclick="toggleMenu()">Tienda</a>
+    <a href="about.html"   onclick="toggleMenu()">Nosotras</a>
+    <a href="contact.html" onclick="toggleMenu()">Contacto</a>
+    <a href="login.html"   onclick="toggleMenu()" id="mobileLoginBtn">Mi cuenta</a>
+  </div>
 
   <!-- HERO -->
   <section class="hero">
@@ -98,8 +157,22 @@
       <h1>Luz, aroma<br />y <em>energía</em><br />en cada pieza</h1>
       <p>Productos artesanales creados con intención, amor y los mejores materiales naturales para transformar tu espacio.</p>
       <div class="hero-btns">
-        <a href="/shop.html"  class="btn-primary">Explorar la tienda</a>
-        <a href="/about.html" class="btn-outline">Nuestra historia</a>
+        <a href="shop.html"  class="btn-primary">Explorar la tienda</a>
+        <a href="about.html" class="btn-outline">Nuestra historia</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCTOS DESTACADOS -->
+  <section class="featured">
+    <div class="featured-inner">
+      <p class="section-label">Más queridos</p>
+      <h2 class="section-title">Productos Destacados</h2>
+      <div class="featured-grid" id="featuredGrid">
+        <!-- Se rellena desde localStorage -->
+      </div>
+      <div class="ver-todos">
+        <a href="shop.html">Ver todos los productos →</a>
       </div>
     </div>
   </section>
@@ -113,22 +186,22 @@
         <div class="value-card">
           <div class="value-icon ic-purple">🌿</div>
           <h3>100% Natural</h3>
-          <p>Ceras vegetales, esencias puras y materiales sostenibles seleccionados con cuidado.</p>
+          <p>Ceras vegetales, esencias puras y materiales sostenibles.</p>
         </div>
         <div class="value-card">
           <div class="value-icon ic-green">🤲</div>
           <h3>Artesanal</h3>
-          <p>Cada pieza se crea a mano con dedicación y atención a cada detalle.</p>
+          <p>Cada pieza se crea a mano con dedicación y cariño.</p>
         </div>
         <div class="value-card">
           <div class="value-icon ic-amber">✨</div>
           <h3>Con Energía</h3>
-          <p>Elaboramos con intención para que cada producto lleve vibración positiva.</p>
+          <p>Elaboramos con intención y vibración positiva.</p>
         </div>
         <div class="value-card">
           <div class="value-icon ic-purple">📦</div>
           <h3>Envío Seguro</h3>
-          <p>Empaquetado con mimo. Envío gratuito a partir de 50€.</p>
+          <p>Empaquetado con mimo. Gratis a partir de 50€.</p>
         </div>
       </div>
     </div>
@@ -138,7 +211,7 @@
   <section class="about-banner">
     <h2>Una marca familiar<br />nacida del amor</h2>
     <p>Kaori nació de la pasión por la naturaleza y el arte. Creemos en el poder de los objetos conscientes para transformar espacios y elevar el espíritu.</p>
-    <a href="/about.html" class="btn-white">Conoce nuestra historia</a>
+    <a href="about.html" class="btn-white">Conoce nuestra historia</a>
   </section>
 
   <!-- FOOTER -->
@@ -151,17 +224,17 @@
       <div class="footer-links">
         <h4>Tienda</h4>
         <ul>
-          <li><a href="/shop.html">Todos los productos</a></li>
-          <li><a href="/shop.html?category=velas">Velas</a></li>
-          <li><a href="/shop.html?category=minerales">Minerales</a></li>
-          <li><a href="/shop.html?category=joyeria">Joyería</a></li>
+          <li><a href="shop.html">Todos los productos</a></li>
+          <li><a href="shop.html?category=velas">Velas</a></li>
+          <li><a href="shop.html?category=minerales">Minerales</a></li>
+          <li><a href="shop.html?category=joyeria">Joyería</a></li>
         </ul>
       </div>
       <div class="footer-links">
         <h4>Información</h4>
         <ul>
-          <li><a href="/about.html">Sobre Nosotras</a></li>
-          <li><a href="/contact.html">Contacto</a></li>
+          <li><a href="about.html">Sobre Nosotras</a></li>
+          <li><a href="contact.html">Contacto</a></li>
         </ul>
       </div>
       <div class="footer-links">
@@ -177,41 +250,137 @@
     </div>
   </footer>
 
+  <div id="toast"></div>
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="/supabase.js"></script>
-  <script src="/auth.js"></script>
+  <script src="supabase.js"></script>
+  <script src="auth.js"></script>
   <script>
+    // ── Productos desde localStorage ──────────────────────────────────────────
+    const PRODUCTOS_DEFAULT = [
+      { id:'1', name:'Vela Artesanal de Lavanda',  category:'velas',     price:18, compare:22,   featured:true,  image:'https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=400&q=80' },
+      { id:'2', name:'Amatista Natural',            category:'minerales', price:24, compare:null, featured:true,  image:'https://images.unsplash.com/photo-1557053910-d9eadeed1c58?w=400&q=80' },
+      { id:'3', name:'Collar de Cuarzo Rosa',       category:'joyeria',   price:32, compare:null, featured:true,  image:'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=400&q=80' },
+      { id:'4', name:'Vela Energética Sándalo',     category:'velas',     price:22, compare:null, featured:false, image:'https://images.unsplash.com/photo-1603905000478-e1b9fb17b2eb?w=400&q=80' },
+      { id:'5', name:'Cuarzo Rosa Natural',         category:'minerales', price:19, compare:25,   featured:false, image:'https://images.unsplash.com/photo-1559181567-c3190ee73a43?w=400&q=80' },
+      { id:'6', name:'Pulsera de Labradorita',      category:'joyeria',   price:28, compare:null, featured:false, image:'https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?w=400&q=80' },
+      { id:'7', name:'Incienso de Palo Santo',      category:'ambientacion',price:12,compare:null,featured:false, image:'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=400&q=80' },
+      { id:'8', name:'Crema Corporal de Lavanda',   category:'corporal',  price:16, compare:null, featured:false, image:'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=400&q=80' },
+    ];
+
+    function getProductos() {
+      try {
+        const g = localStorage.getItem('kaori_productos');
+        if (g) return JSON.parse(g);
+        localStorage.setItem('kaori_productos', JSON.stringify(PRODUCTOS_DEFAULT));
+        return PRODUCTOS_DEFAULT;
+      } catch { return PRODUCTOS_DEFAULT; }
+    }
+
+    // ── Render productos destacados ───────────────────────────────────────────
+    function renderDestacados() {
+      const destacados = getProductos()
+        .filter(p => p.featured)
+        .slice(0, 4);
+
+      const grid = document.getElementById('featuredGrid');
+      if (!destacados.length) {
+        grid.innerHTML = '<p style="color:#9ca3af;grid-column:1/-1;text-align:center;padding:2rem">No hay productos destacados aún.</p>';
+        return;
+      }
+      grid.innerHTML = destacados.map(p => `
+        <div class="feat-card" onclick="window.location.href='product.html?id=${p.id}'">
+          <div class="feat-img">
+            <img src="${p.image}" alt="${p.name}" loading="lazy"
+                 onerror="this.src='https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=400&q=80'" />
+            <span class="feat-badge">✨ Destacado</span>
+          </div>
+          <div class="feat-info">
+            <p class="feat-cat">${p.category}</p>
+            <h4>${p.name}</h4>
+            <p class="feat-price">${Number(p.price).toFixed(2)} €</p>
+            <button class="feat-btn" onclick="event.stopPropagation();añadirAlCarrito('${p.id}',this)">
+              Añadir al carrito
+            </button>
+          </div>
+        </div>`).join('');
+    }
+
+    // ── Carrito ───────────────────────────────────────────────────────────────
+    function getCarrito() {
+      try { return JSON.parse(localStorage.getItem('kaori_cart') || '[]'); }
+      catch { return []; }
+    }
+    function guardarCarrito(cart) {
+      localStorage.setItem('kaori_cart', JSON.stringify(cart));
+      actualizarContador();
+    }
+    function actualizarContador() {
+      const total = getCarrito().reduce((s,i) => s + i.quantity, 0);
+      document.getElementById('cartCount').textContent = total;
+    }
+    function añadirAlCarrito(id, btn) {
+      const producto = getProductos().find(p => p.id === id);
+      if (!producto) return;
+      const cart     = getCarrito();
+      const existing = cart.find(i => i.id === id);
+      if (existing) existing.quantity++;
+      else cart.push({ id: producto.id, name: producto.name, price: Number(producto.price), image: producto.image, quantity: 1 });
+      guardarCarrito(cart);
+      const orig = btn.textContent;
+      btn.textContent = '✓ Añadido';
+      btn.classList.add('added');
+      setTimeout(() => { btn.textContent = orig; btn.classList.remove('added'); }, 1500);
+      mostrarToast(`"${producto.name}" añadido`);
+    }
+
+    // ── Toast ─────────────────────────────────────────────────────────────────
+    function mostrarToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = '✓ ' + msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2500);
+    }
+
+    // ── Menú hamburguesa ──────────────────────────────────────────────────────
+    function toggleMenu() {
+      document.getElementById('mobileMenu').classList.toggle('open');
+    }
+    // Cerrar menú al hacer clic fuera
+    document.addEventListener('click', e => {
+      const menu = document.getElementById('mobileMenu');
+      const ham  = document.querySelector('.hamburger');
+      if (menu.classList.contains('open') && !menu.contains(e.target) && !ham.contains(e.target)) {
+        menu.classList.remove('open');
+      }
+    });
+
     // ── Navbar dinámico según sesión ──────────────────────────────────────────
     (async () => {
-      const sesion = await obtenerSesion();
-      const btn    = document.getElementById('btnCuenta');
-
-      if (sesion) {
-        const rol = await obtenerRol();
-        if (rol === 'admin') {
-          // Admin → botón directo al panel
-          btn.href        = '/admin.html';
-          btn.textContent = '👑 Panel Admin';
-        } else {
-          // Cliente → botón a su cuenta
-          btn.href        = '/mi-cuenta.html';
-          btn.textContent = '👤 Mi cuenta';
-        }
-      } else {
-        // Sin sesión → botón de login
-        btn.href        = '/login.html';
-        btn.textContent = '👤 Iniciar sesión';
-      }
-    })();
-
-    // ── Contador de carrito ───────────────────────────────────────────────────
-    (function() {
       try {
-        const cart  = JSON.parse(localStorage.getItem('kaori_cart') || '[]');
-        const total = cart.reduce((s, i) => s + i.quantity, 0);
-        document.getElementById('cartCount').textContent = total;
-      } catch { /* carrito vacío */ }
+        const sesion = await obtenerSesion();
+        const btn    = document.getElementById('btnCuenta');
+        const mobileBtn = document.getElementById('mobileLoginBtn');
+        if (sesion) {
+          const rol = await obtenerRol();
+          if (rol === 'admin') {
+            btn.href        = 'admin.html';
+            btn.textContent = '👑 Panel Admin';
+            mobileBtn.href        = 'admin.html';
+            mobileBtn.textContent = '👑 Panel Admin';
+          } else {
+            btn.href        = 'mi-cuenta.html';
+            btn.textContent = '👤 Mi cuenta';
+            mobileBtn.href        = 'mi-cuenta.html';
+            mobileBtn.textContent = '👤 Mi cuenta';
+          }
+        }
+      } catch(e) { /* Supabase no configurado */ }
     })();
+
+    // ── Init ──────────────────────────────────────────────────────────────────
+    renderDestacados();
+    actualizarContador();
   </script>
 </body>
 </html>
