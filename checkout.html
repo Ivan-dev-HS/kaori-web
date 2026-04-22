@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kaori – Finalizar Compra</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Nunito', sans-serif; background: #faf8f5; color: #2d1b69; }
+    h1,h2,h3 { font-family: 'Cormorant Garamond', serif; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ── NAVBAR ── */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; height: 72px; background: rgba(250,248,245,0.97); backdrop-filter: blur(8px); border-bottom: 1px solid #f3e8ff; }
+    .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; letter-spacing: 0.2em; color: #4c1d95; }
+    .nav-right { display: flex; align-items: center; gap: 0.75rem; }
+    .nav-cuenta { background: white; color: #7c3aed; border: 1px solid #e9d5ff; border-radius: 9999px; padding: 0.5rem 1.2rem; font-family: 'Nunito', sans-serif; font-size: 0.85rem; font-weight: 600; transition: all 0.2s; }
+    .nav-cuenta:hover { background: #f3e8ff; }
+
+    /* ── PÁGINA ── */
+    .checkout-page { max-width: 72rem; margin: 0 auto; padding: 6rem 1.5rem 4rem; }
+    .breadcrumb { margin-bottom: 1.5rem; font-size: 0.875rem; }
+    .breadcrumb a { color: #7c3aed; }
+    .breadcrumb a:hover { text-decoration: underline; }
+    h1.page-title { font-size: clamp(1.8rem, 4vw, 2.5rem); color: #4c1d95; margin-bottom: 2rem; }
+
+    /* ── GRID ── */
+    .checkout-grid { display: grid; gap: 2rem; }
+    @media(min-width: 1024px) { .checkout-grid { grid-template-columns: 3fr 2fr; } }
+
+    /* ── CARDS ── */
+    .card { background: white; border-radius: 1rem; padding: 1.5rem; border: 1px solid #f3e8ff; margin-bottom: 1.5rem; }
+    .card h2 { font-size: 1.2rem; color: #4c1d95; margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.7rem; }
+    .step-num { width: 32px; height: 32px; border-radius: 50%; background: #f3e8ff; color: #7c3aed; font-size: 0.85rem; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; font-family: 'Nunito', sans-serif; }
+
+    /* ── FORMULARIO ── */
+    .form-row { display: grid; gap: 1rem; }
+    @media(min-width: 640px) { .form-row { grid-template-columns: 1fr 1fr; } }
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+    .form-group.full { grid-column: 1 / -1; }
+    label { font-size: 0.875rem; font-weight: 600; color: #4c1d95; }
+    input, textarea { font-family: 'Nunito', sans-serif; border: 1px solid #e9d5ff; border-radius: 0.75rem; padding: 0.7rem 1rem; font-size: 0.9rem; outline: none; background: white; color: #2d1b69; width: 100%; transition: border-color 0.2s; }
+    input:focus, textarea:focus { border-color: #a855f7; }
+    textarea { resize: none; }
+
+    /* ── ENVÍO ── */
+    .ship-opt { display: flex; align-items: center; gap: 1rem; padding: 1rem; border: 2px solid #f3e8ff; border-radius: 0.75rem; cursor: pointer; margin-bottom: 0.75rem; transition: all 0.15s; }
+    .ship-opt.sel { border-color: #7c3aed; background: #faf5ff; }
+    .ship-opt input[type=radio] { accent-color: #7c3aed; width: 18px; height: 18px; flex-shrink: 0; }
+    .ship-label { flex: 1; }
+    .ship-label strong { display: block; font-size: 0.9rem; color: #4c1d95; }
+    .ship-label span   { font-size: 0.8rem; color: #6b7280; }
+    .ship-cost { font-weight: 700; color: #7c3aed; font-size: 0.9rem; }
+
+    /* ── PAGO ── */
+    .pay-opt { display: flex; align-items: center; gap: 1rem; padding: 1rem; border: 2px solid #f3e8ff; border-radius: 0.75rem; cursor: pointer; margin-bottom: 0.75rem; transition: all 0.15s; }
+    .pay-opt.sel { border-color: #7c3aed; background: #faf5ff; }
+    .pay-dot { width: 20px; height: 20px; border-radius: 50%; border: 2px solid #d1d5db; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.15s; }
+    .pay-dot.checked { border-color: #7c3aed; background: #7c3aed; }
+    .pay-dot.checked::after { content:''; display:block; width:7px; height:7px; border-radius:50%; background:white; }
+    .pay-label strong { display: block; font-size: 0.875rem; color: #4c1d95; }
+    .pay-label span   { font-size: 0.75rem; color: #6b7280; }
+    .card-fields { border: 1px solid #e9d5ff; border-radius: 0.75rem; padding: 1rem; margin-top: 0.5rem; display: flex; flex-direction: column; gap: 1rem; }
+    .card-field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .secure-note { font-size: 0.75rem; color: #9ca3af; }
+    .transfer-info { background: #fffbeb; border: 1px solid #fde68a; border-radius: 0.75rem; padding: 1rem; font-size: 0.875rem; color: #92400e; margin-top: 0.5rem; }
+
+    /* ── RESUMEN ── */
+    .summary-sticky { position: sticky; top: 88px; }
+    .order-item { display: flex; gap: 0.75rem; margin-bottom: 1rem; align-items: center; }
+    .order-item img { width: 64px; height: 64px; object-fit: cover; border-radius: 0.5rem; flex-shrink: 0; }
+    .order-item-info { flex: 1; }
+    .order-item-info h4 { font-family: 'Nunito', sans-serif; font-weight: 600; font-size: 0.875rem; color: #4c1d95; margin-bottom: 2px; }
+    .order-item-info p  { font-size: 0.75rem; color: #6b7280; }
+    .order-item-price   { font-weight: 700; font-size: 0.875rem; color: #4c1d95; white-space: nowrap; }
+    .totals { border-top: 1px solid #f3e8ff; padding-top: 1rem; display: flex; flex-direction: column; gap: 0.5rem; }
+    .total-row { display: flex; justify-content: space-between; font-size: 0.875rem; color: #4b5563; }
+    .total-final { display: flex; justify-content: space-between; font-weight: 700; font-size: 1.1rem; border-top: 1px solid #f3e8ff; padding-top: 0.75rem; margin-top: 0.5rem; color: #4c1d95; }
+    .free-shipping-note { font-size: 0.75rem; color: #a855f7; background: #faf5ff; padding: 0.5rem; border-radius: 0.5rem; text-align: center; margin-top: 0.5rem; }
+    .trust { border-top: 1px solid #f3e8ff; padding-top: 1rem; margin-top: 1rem; display: flex; flex-direction: column; gap: 0.6rem; font-size: 0.875rem; color: #4b5563; }
+
+    /* ── BOTÓN SUBMIT ── */
+    .btn-submit { width: 100%; background: #7c3aed; color: white; border: none; border-radius: 9999px; padding: 1.2rem; font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 1rem; cursor: pointer; transition: background 0.2s; }
+    .btn-submit:hover:not(:disabled) { background: #6d28d9; }
+    .btn-submit:disabled { background: #c4b5fd; cursor: not-allowed; }
+
+    /* ── CARRITO VACÍO ── */
+    .empty-cart { text-align: center; padding: 2rem 0; }
+    .empty-cart p.icon { font-size: 3rem; margin-bottom: 0.75rem; }
+    .empty-cart p.txt  { color: #6b7280; font-size: 0.9rem; margin-bottom: 1.2rem; }
+    .btn-shop { display: inline-block; background: #7c3aed; color: white; border-radius: 9999px; padding: 0.75rem 1.5rem; font-weight: 700; font-size: 0.875rem; }
+    .btn-shop:hover { background: #6d28d9; }
+
+    /* ── ÉXITO ── */
+    .success-screen { min-height: 60vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 4rem 1.5rem; padding-top: 100px; }
+    .success-circle { width: 80px; height: 80px; border-radius: 50%; background: #dcfce7; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; margin: 0 auto 1.5rem; }
+
+    /* ── BANNER LOGIN ── */
+    .login-banner { background: #faf5ff; border: 1px solid #e9d5ff; border-radius: 0.75rem; padding: 1rem 1.25rem; margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+    .login-banner p { font-size: 0.875rem; color: #4c1d95; }
+    .login-banner a { background: #7c3aed; color: white; border-radius: 9999px; padding: 0.5rem 1.2rem; font-size: 0.82rem; font-weight: 700; }
+    .login-banner a:hover { background: #6d28d9; }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="/index.html" class="nav-logo">KAORI</a>
+    <div class="nav-right">
+      <a href="/login.html" class="nav-cuenta" id="btnCuenta">👤 Mi cuenta</a>
+    </div>
+  </nav>
+
+  <!-- CHECKOUT -->
+  <div class="checkout-page" id="checkoutPage">
+    <nav class="breadcrumb"><a href="/shop.html">← Volver a la tienda</a></nav>
+    <h1 class="page-title">Finalizar Compra</h1>
+
+    <!-- Banner si no está logueado -->
+    <div class="login-banner" id="loginBanner" style="display:none">
+      <p>💡 ¿Tienes cuenta? Inicia sesión para guardar tu historial de pedidos.</p>
+      <a href="/login.html">Iniciar sesión</a>
+    </div>
+
+    <div class="checkout-grid">
+
+      <!-- FORMULARIO -->
+      <div>
+        <form id="checkoutForm" onsubmit="submitOrder(event)">
+
+          <!-- 1. CONTACTO -->
+          <div class="card">
+            <h2><span class="step-num">1</span> Datos de Contacto</h2>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Nombre completo *</label>
+                <input name="name" type="text" id="inputName" required />
+              </div>
+              <div class="form-group">
+                <label>Email *</label>
+                <input name="email" type="email" id="inputEmail" required />
+              </div>
+              <div class="form-group full">
+                <label>Teléfono *</label>
+                <input name="phone" type="tel" required />
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. DIRECCIÓN -->
+          <div class="card" id="addressCard">
+            <h2><span class="step-num">2</span> Dirección de Envío</h2>
+            <div class="form-row">
+              <div class="form-group full">
+                <label>Dirección *</label>
+                <input name="address" type="text" placeholder="Calle, número, piso..." required />
+              </div>
+              <div class="form-group">
+                <label>Ciudad *</label>
+                <input name="city" type="text" required />
+              </div>
+              <div class="form-group">
+                <label>Código Postal *</label>
+                <input name="postal" type="text" required />
+              </div>
+              <div class="form-group full">
+                <label>Notas del pedido (opcional)</label>
+                <textarea name="notes" rows="3" placeholder="Instrucciones especiales..."></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. ENVÍO -->
+          <div class="card">
+            <h2><span class="step-num">3</span> Opciones de Envío</h2>
+            <div class="ship-opt sel" id="so-standard" onclick="selectShipping(this, 4.95)">
+              <input type="radio" name="shipping" value="standard" checked />
+              <div class="ship-label">
+                <strong>🚚 Envío a domicilio</strong>
+                <span>3–5 días laborables</span>
+              </div>
+              <span class="ship-cost">4,95 €</span>
+            </div>
+            <div class="ship-opt" id="so-pickup" onclick="selectShipping(this, 0)">
+              <input type="radio" name="shipping" value="pickup" />
+              <div class="ship-label">
+                <strong>🏪 Recogida en tienda</strong>
+                <span>Gratis · Acordar fecha</span>
+              </div>
+              <span class="ship-cost" style="color:#16a34a">Gratis</span>
+            </div>
+          </div>
+
+          <!-- 4. PAGO -->
+          <div class="card">
+            <h2><span class="step-num">4</span> Método de Pago</h2>
+            <div class="pay-opt sel" id="po-stripe" onclick="selectPayment('stripe')">
+              <div class="pay-dot checked" id="pd-stripe"></div>
+              <div class="pay-label">
+                <strong>💳 Tarjeta de crédito / débito</strong>
+                <span>Visa, Mastercard, Amex · Pago seguro con Stripe</span>
+              </div>
+            </div>
+            <div class="pay-opt" id="po-transfer" onclick="selectPayment('transfer')">
+              <div class="pay-dot" id="pd-transfer"></div>
+              <div class="pay-label">
+                <strong>🏦 Transferencia bancaria</strong>
+                <span>Recibirás los datos bancarios por email</span>
+              </div>
+            </div>
+            <div class="card-fields" id="cardFields">
+              <div class="form-group">
+                <label style="font-size:0.75rem;color:#6b7280">Número de tarjeta</label>
+                <input type="text" placeholder="1234 5678 9012 3456" maxlength="19" oninput="fmtCard(this)" />
+              </div>
+              <div class="card-field-row">
+                <div class="form-group">
+                  <label style="font-size:0.75rem;color:#6b7280">Caducidad</label>
+                  <input type="text" placeholder="MM / AA" maxlength="7" oninput="fmtDate(this)" />
+                </div>
+                <div class="form-group">
+                  <label style="font-size:0.75rem;color:#6b7280">CVC</label>
+                  <input type="text" placeholder="123" maxlength="4" oninput="this.value=this.value.replace(/\D/g,'')" />
+                </div>
+              </div>
+              <p class="secure-note">🔒 Pago cifrado y seguro</p>
+            </div>
+            <div class="transfer-info" id="transferInfo" style="display:none">
+              🏦 Tras confirmar el pedido te enviaremos los datos bancarios por email.
+            </div>
+          </div>
+
+          <button type="submit" class="btn-submit" id="submitBtn">
+            Pagar con Stripe · <span id="totalBtn">—</span>
+          </button>
+
+        </form>
+      </div>
+
+      <!-- RESUMEN -->
+      <div>
+        <div class="card summary-sticky">
+          <h2>Resumen del Pedido</h2>
+          <div id="cartSummaryItems"></div>
+          <div class="totals">
+            <div class="total-row"><span>Subtotal</span><span id="subtotalDisplay">—</span></div>
+            <div class="total-row">
+              <span>Envío</span>
+              <span id="shippingDisplay">—</span>
+            </div>
+            <div class="total-final"><span>Total</span><span id="totalDisplay">—</span></div>
+          </div>
+          <p class="free-shipping-note" id="freeShippingNote" style="display:none"></p>
+          <div class="trust">
+            <div>📦 Empaquetado con mimo</div>
+            <div>🚚 Envío en 3–5 días laborables</div>
+            <div>🔒 Pago 100% seguro</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PANTALLA DE ÉXITO -->
+  <div id="successScreen" class="success-screen" style="display:none">
+    <div>
+      <div class="success-circle">🛍️</div>
+      <h1 style="font-size:2rem;color:#4c1d95;margin-bottom:1rem">¡Pedido Recibido!</h1>
+      <p style="color:#4b5563;margin-bottom:0.5rem;font-family:'Nunito',sans-serif">
+        Gracias por tu compra. Nos pondremos en contacto contigo para gestionar el pago.
+      </p>
+      <p style="color:#6b7280;font-size:0.875rem;margin-bottom:2rem;font-family:'Nunito',sans-serif">
+        Te hemos enviado un email de confirmación.
+      </p>
+      <a href="/shop.html" style="background:#7c3aed;color:white;padding:1rem 2rem;border-radius:9999px;font-weight:700;font-family:'Nunito',sans-serif">
+        Seguir Comprando
+      </a>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/supabase.js"></script>
+  <script src="/auth.js"></script>
+  <script>
+    // ─── ESTADO ───────────────────────────────────────────────────────────────
+    let shippingCost    = 4.95;
+    let currentPayType  = 'stripe';
+
+    // ─── CARRITO ──────────────────────────────────────────────────────────────
+    function getCarrito() {
+      try { return JSON.parse(localStorage.getItem('kaori_cart') || '[]'); }
+      catch { return []; }
+    }
+
+    // ─── RENDER RESUMEN ───────────────────────────────────────────────────────
+    function renderResumen() {
+      const cart      = getCarrito();
+      const container = document.getElementById('cartSummaryItems');
+
+      if (!cart.length) {
+        container.innerHTML = `
+          <div class="empty-cart">
+            <p class="icon">🛒</p>
+            <p class="txt">Tu carrito está vacío.</p>
+            <a href="/shop.html" class="btn-shop">Ir a la tienda →</a>
+          </div>`;
+        document.getElementById('submitBtn').disabled = true;
+        return;
+      }
+
+      container.innerHTML = cart.map(item => `
+        <div class="order-item">
+          <img src="${item.image}" alt="${item.name}" />
+          <div class="order-item-info">
+            <h4>${item.name}</h4>
+            <p>Cantidad: ${item.quantity}</p>
+          </div>
+          <span class="order-item-price">${(item.price * item.quantity).toFixed(2)} €</span>
+        </div>`).join('');
+
+      actualizarTotales();
+    }
+
+    // ─── TOTALES ──────────────────────────────────────────────────────────────
+    function actualizarTotales() {
+      const subtotal = getCarrito().reduce((s,i) => s + i.price * i.quantity, 0);
+      const total    = subtotal + shippingCost;
+
+      document.getElementById('subtotalDisplay').textContent = subtotal.toFixed(2) + ' €';
+      document.getElementById('shippingDisplay').textContent =
+        shippingCost === 0 ? 'Gratis' : shippingCost.toFixed(2) + ' €';
+      document.getElementById('shippingDisplay').style.color =
+        shippingCost === 0 ? '#16a34a' : '';
+      document.getElementById('totalDisplay').textContent = total.toFixed(2) + ' €';
+
+      // Nota envío gratis
+      const nota = document.getElementById('freeShippingNote');
+      if (subtotal < 50 && shippingCost > 0) {
+        nota.textContent = `¡Añade ${(50 - subtotal).toFixed(2)} € más para envío gratis!`;
+        nota.style.display = '';
+      } else {
+        nota.style.display = 'none';
+      }
+
+      // Actualizar botón submit
+      const label = currentPayType === 'stripe' ? 'Pagar con Stripe · ' : 'Confirmar Pedido · ';
+      document.getElementById('submitBtn').innerHTML =
+        `${label}<span id="totalBtn">${total.toFixed(2)} €</span>`;
+    }
+
+    // ─── ENVÍO ────────────────────────────────────────────────────────────────
+    function selectShipping(el, cost) {
+      document.querySelectorAll('.ship-opt').forEach(o => o.classList.remove('sel'));
+      el.classList.add('sel');
+      el.querySelector('input').checked = true;
+      shippingCost = cost;
+      // Ocultar dirección si es recogida en tienda
+      document.getElementById('addressCard').style.display = cost === 0 ? 'none' : '';
+      actualizarTotales();
+    }
+
+    // ─── PAGO ─────────────────────────────────────────────────────────────────
+    function selectPayment(type) {
+      currentPayType = type;
+      ['stripe', 'transfer'].forEach(t => {
+        document.getElementById('po-' + t).classList.toggle('sel', t === type);
+        const dot = document.getElementById('pd-' + t);
+        dot.classList.toggle('checked', t === type);
+      });
+      document.getElementById('cardFields').style.display   = type === 'stripe'   ? '' : 'none';
+      document.getElementById('transferInfo').style.display = type === 'transfer' ? '' : 'none';
+      actualizarTotales();
+    }
+
+    // ─── FORMATO TARJETA ──────────────────────────────────────────────────────
+    function fmtCard(el) {
+      let v = el.value.replace(/\D/g,'').slice(0,16);
+      el.value = v.replace(/(\d{4})/g,'$1 ').trim();
+    }
+    function fmtDate(el) {
+      let v = el.value.replace(/\D/g,'').slice(0,4);
+      if (v.length >= 3) v = v.slice(0,2) + ' / ' + v.slice(2);
+      el.value = v;
+    }
+
+    // ─── SUBMIT ───────────────────────────────────────────────────────────────
+    async function submitOrder(e) {
+      e.preventDefault();
+      const cart = getCarrito();
+      if (!cart.length) { alert('Tu carrito está vacío.'); return; }
+
+      const btn = document.getElementById('submitBtn');
+      btn.disabled    = true;
+      btn.textContent = 'Procesando...';
+
+      // TODO: aquí conectarás con tu backend o Supabase para guardar el pedido
+      // y enviar el email de confirmación
+      await new Promise(r => setTimeout(r, 1500));
+
+      // Limpiar carrito
+      localStorage.removeItem('kaori_cart');
+
+      document.getElementById('checkoutPage').style.display  = 'none';
+      document.getElementById('successScreen').style.display = 'flex';
+    }
+
+    // ─── NAVBAR + PREFILL + BANNER ────────────────────────────────────────────
+    (async () => {
+      const sesion = await obtenerSesion();
+      const btn    = document.getElementById('btnCuenta');
+
+      if (sesion) {
+        // Rellenar email automáticamente si está logueado
+        const usuario = await obtenerUsuario();
+        if (usuario) {
+          document.getElementById('inputEmail').value = usuario.email;
+        }
+        const rol = await obtenerRol();
+        btn.href        = rol === 'admin' ? '/admin.html' : '/mi-cuenta.html';
+        btn.textContent = rol === 'admin' ? '👑 Panel Admin' : '👤 Mi cuenta';
+      } else {
+        // Mostrar banner de login
+        document.getElementById('loginBanner').style.display = '';
+      }
+    })();
+
+    // ─── INIT ─────────────────────────────────────────────────────────────────
+    renderResumen();
+  </script>
+</body>
+</html>
