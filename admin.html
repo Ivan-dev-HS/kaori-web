@@ -19,44 +19,100 @@
     /* ── NAVBAR ── */
     nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; height: 72px; background: rgba(250,248,245,0.97); backdrop-filter: blur(8px); border-bottom: 1px solid #f3e8ff; }
     .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; letter-spacing: 0.2em; color: #4c1d95; text-decoration: none; }
-    .nav-right { display: flex; align-items: center; gap: 1rem; }
+    .nav-right { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
     .admin-badge { background: #7c3aed; color: white; font-size: 0.72rem; font-weight: 700; padding: 4px 12px; border-radius: 9999px; }
     .nav-email { font-size: 0.8rem; color: #6b7280; }
-    .btn-logout { background: none; border: 1px solid #e9d5ff; border-radius: 9999px; padding: 0.4rem 1rem; font-family: 'Nunito', sans-serif; font-size: 0.82rem; color: #7c3aed; cursor: pointer; transition: all 0.2s; }
-    .btn-logout:hover { background: #f3e8ff; }
+    .btn-sm { background: none; border: 1px solid #e9d5ff; border-radius: 9999px; padding: 0.4rem 1rem; font-family: 'Nunito', sans-serif; font-size: 0.82rem; color: #7c3aed; cursor: pointer; transition: all 0.2s; text-decoration: none; display: inline-block; }
+    .btn-sm:hover { background: #f3e8ff; }
+    .btn-sm.danger { color: #b91c1c; border-color: #fecaca; }
+    .btn-sm.danger:hover { background: #fef2f2; }
+
+    /* ── TABS ── */
+    .tabs { display: flex; border-bottom: 2px solid #f3e8ff; margin-bottom: 2rem; gap: 0; overflow-x: auto; }
+    .tab { padding: 0.75rem 1.5rem; font-family: 'Nunito', sans-serif; font-size: 0.875rem; font-weight: 600; color: #6b7280; border: none; background: none; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; white-space: nowrap; transition: all 0.2s; }
+    .tab.active { color: #7c3aed; border-bottom-color: #7c3aed; }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
 
     /* ── DASHBOARD ── */
-    .dashboard { max-width: 60rem; margin: 0 auto; padding: 5.5rem 1.5rem 4rem; }
+    .dashboard { max-width: 64rem; margin: 0 auto; padding: 5.5rem 1.5rem 4rem; }
     .dash-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem; }
-    .dash-header h1 { font-size: 2rem; color: #4c1d95; }
-    .btn-refresh { background: white; border: 1px solid #e9d5ff; border-radius: 0.75rem; padding: 0.5rem 1rem; font-family: 'Nunito', sans-serif; cursor: pointer; font-size: 0.875rem; color: #4c1d95; transition: background 0.15s; }
-    .btn-refresh:hover { background: #f5f3ff; }
+    .dash-header h1 { font-size: clamp(1.5rem, 4vw, 2rem); color: #4c1d95; }
 
     /* ── STATS ── */
-    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
     .stat-card { background: white; border-radius: 1rem; padding: 1.2rem; border: 1px solid #f3e8ff; text-align: center; }
     .stat-val { font-size: 1.8rem; font-weight: 800; color: #4c1d95; }
     .stat-val.yellow { color: #d97706; }
     .stat-val.green  { color: #16a34a; }
+    .stat-val.purple { color: #7c3aed; }
     .stat-label { font-size: 0.75rem; color: #6b7280; margin-top: 0.3rem; }
 
-    /* ── FILTROS ── */
-    .filters { display: flex; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
-    .search-wrap { position: relative; flex: 1; min-width: 200px; }
-    .search-wrap input { padding: 0.5rem 0.75rem 0.5rem 2.2rem; border: 1px solid #e9d5ff; border-radius: 0.75rem; font-family: 'Nunito', sans-serif; outline: none; font-size: 0.875rem; width: 100%; }
-    .search-wrap input:focus { border-color: #a855f7; }
-    .search-icon { position: absolute; left: 0.7rem; top: 50%; transform: translateY(-50%); color: #9ca3af; }
-    .status-filters { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    /* ── CARDS GENERALES ── */
+    .card { background: white; border-radius: 1rem; padding: 1.5rem; border: 1px solid #f3e8ff; margin-bottom: 1.5rem; }
+    .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; flex-wrap: wrap; gap: 0.75rem; }
+    .card-header h2 { font-size: 1.2rem; color: #4c1d95; }
+
+    /* ── BOTONES PRINCIPALES ── */
+    .btn-primary { background: #7c3aed; color: white; border: none; border-radius: 9999px; padding: 0.6rem 1.4rem; font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 0.875rem; cursor: pointer; transition: background 0.2s; }
+    .btn-primary:hover { background: #6d28d9; }
+    .btn-danger  { background: #ef4444; color: white; border: none; border-radius: 9999px; padding: 0.4rem 1rem; font-family: 'Nunito', sans-serif; font-weight: 600; font-size: 0.78rem; cursor: pointer; transition: background 0.2s; }
+    .btn-danger:hover { background: #dc2626; }
+    .btn-edit    { background: #f3e8ff; color: #7c3aed; border: none; border-radius: 9999px; padding: 0.4rem 1rem; font-family: 'Nunito', sans-serif; font-weight: 600; font-size: 0.78rem; cursor: pointer; transition: background 0.2s; }
+    .btn-edit:hover { background: #e9d5ff; }
+
+    /* ── FORMULARIO PRODUCTO ── */
+    .modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 100; display: none; align-items: center; justify-content: center; padding: 1rem; }
+    .modal-backdrop.open { display: flex; }
+    .modal { background: white; border-radius: 1rem; padding: 2rem; width: 100%; max-width: 540px; max-height: 90vh; overflow-y: auto; }
+    .modal h2 { font-size: 1.4rem; color: #4c1d95; margin-bottom: 1.5rem; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: 4px; }
+    .form-group.full { grid-column: 1 / -1; }
+    .form-group label { font-size: 0.8rem; font-weight: 600; color: #4c1d95; }
+    .form-group input, .form-group select, .form-group textarea {
+      font-family: 'Nunito', sans-serif; border: 1px solid #e9d5ff; border-radius: 0.75rem;
+      padding: 0.65rem 0.9rem; font-size: 0.875rem; outline: none; width: 100%;
+      transition: border-color 0.2s; color: #2d1b69; background: white;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: #a855f7; }
+    .form-group textarea { resize: none; }
+    .checkbox-group { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0; }
+    .checkbox-group input[type=checkbox] { width: 16px; height: 16px; accent-color: #7c3aed; cursor: pointer; }
+    .checkbox-group label { font-size: 0.875rem; color: #4c1d95; font-weight: 600; cursor: pointer; margin: 0; }
+    .modal-btns { display: flex; gap: 0.75rem; justify-content: flex-end; margin-top: 1.5rem; flex-wrap: wrap; }
+    .btn-cancel { background: white; color: #6b7280; border: 1px solid #e9d5ff; border-radius: 9999px; padding: 0.6rem 1.4rem; font-family: 'Nunito', sans-serif; font-weight: 600; font-size: 0.875rem; cursor: pointer; }
+    .btn-cancel:hover { background: #f9fafb; }
+    .img-preview { width: 100%; height: 140px; object-fit: cover; border-radius: 0.75rem; margin-top: 0.5rem; display: none; border: 1px solid #f3e8ff; }
+
+    /* ── TABLA PRODUCTOS ── */
+    .products-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+    .products-table th { text-align: left; padding: 0.6rem 0.75rem; color: #6b7280; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid #f3e8ff; font-weight: 700; white-space: nowrap; }
+    .products-table td { padding: 0.75rem; border-bottom: 1px solid #faf5ff; vertical-align: middle; }
+    .products-table tr:last-child td { border-bottom: none; }
+    .prod-thumb { width: 48px; height: 48px; object-fit: cover; border-radius: 0.5rem; }
+    .prod-name-cell { font-weight: 600; color: #4c1d95; }
+    .prod-cat-badge { background: #f3e8ff; color: #7c3aed; font-size: 0.7rem; padding: 2px 8px; border-radius: 9999px; font-weight: 600; }
+    .prod-actions { display: flex; gap: 0.5rem; }
+    .featured-star { color: #f59e0b; font-size: 1rem; }
+    .empty-table { text-align: center; padding: 3rem; color: #9ca3af; }
+    .empty-table p.icon { font-size: 2rem; margin-bottom: 0.5rem; }
+
+    /* ── FILTROS ADMIN ── */
+    .admin-filters { display: flex; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; align-items: center; }
+    .admin-search { position: relative; flex: 1; min-width: 200px; }
+    .admin-search input { padding: 0.5rem 0.75rem 0.5rem 2.2rem; border: 1px solid #e9d5ff; border-radius: 0.75rem; font-family: 'Nunito', sans-serif; outline: none; font-size: 0.875rem; width: 100%; }
+    .admin-search input:focus { border-color: #a855f7; }
+    .admin-search .si { position: absolute; left: 0.7rem; top: 50%; transform: translateY(-50%); color: #9ca3af; pointer-events: none; }
     .filter-pill { padding: 0.4rem 0.9rem; border-radius: 9999px; border: 1px solid #e9d5ff; background: white; font-size: 0.8rem; color: #4b5563; cursor: pointer; font-family: 'Nunito', sans-serif; transition: all 0.15s; }
     .filter-pill.active { background: #7c3aed; color: white; border-color: #7c3aed; }
 
     /* ── PEDIDOS ── */
-    .orders-list { display: flex; flex-direction: column; gap: 0.75rem; }
-    .order-row { background: white; border-radius: 1rem; border: 1px solid #f3e8ff; overflow: hidden; }
+    .order-row { background: white; border-radius: 1rem; border: 1px solid #f3e8ff; overflow: hidden; margin-bottom: 0.75rem; }
     .order-header { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.2rem; cursor: pointer; transition: background 0.15s; flex-wrap: wrap; }
     .order-header:hover { background: #faf5ff; }
     .order-name { flex: 1; min-width: 0; }
-    .order-name strong { display: block; color: #4c1d95; font-size: 0.9rem; font-family: 'Nunito', sans-serif; }
+    .order-name strong { display: block; color: #4c1d95; font-size: 0.9rem; }
     .order-name span   { font-size: 0.75rem; color: #9ca3af; }
     .status-badge { padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; white-space: nowrap; }
     .s-pending    { background: #fef3c7; color: #92400e; }
@@ -64,12 +120,11 @@
     .s-shipped    { background: #f3e8ff; color: #6d28d9; }
     .s-delivered  { background: #dcfce7; color: #166534; }
     .s-cancelled  { background: #fee2e2; color: #991b1b; }
-    .order-total { text-align: right; }
-    .order-total strong { display: block; color: #4c1d95; font-size: 0.9rem; font-family: 'Nunito', sans-serif; }
-    .order-total span   { font-size: 0.75rem; color: #9ca3af; }
+    .order-total-col { text-align: right; }
+    .order-total-col strong { display: block; color: #4c1d95; font-size: 0.9rem; }
+    .order-total-col span   { font-size: 0.75rem; color: #9ca3af; }
     .btn-delete { background: transparent; border: none; cursor: pointer; font-size: 1rem; padding: 0.3rem; border-radius: 0.4rem; transition: background 0.15s; }
     .btn-delete:hover { background: #fee2e2; }
-
     .order-details { display: none; border-top: 1px solid #f3e8ff; padding: 1.2rem; }
     .details-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; color: #9ca3af; margin-bottom: 0.5rem; }
     .detail-item { display: flex; justify-content: space-between; font-size: 0.875rem; margin-bottom: 0.3rem; color: #4b5563; }
@@ -81,93 +136,221 @@
     .confirm-btns { display: flex; gap: 0.5rem; }
     .btn-cancel-del  { padding: 0.3rem 0.8rem; border-radius: 0.5rem; border: 1px solid #d1d5db; background: white; font-family: 'Nunito', sans-serif; cursor: pointer; font-size: 0.8rem; }
     .btn-confirm-del { padding: 0.3rem 0.8rem; border-radius: 0.5rem; background: #ef4444; color: white; border: none; font-family: 'Nunito', sans-serif; cursor: pointer; font-size: 0.8rem; }
-    .empty-state { text-align: center; padding: 4rem 1rem; color: #9ca3af; }
-    .empty-state p { font-size: 1.1rem; margin-top: 0.5rem; }
 
     /* ── USUARIOS ── */
-    .section-title { font-size: 1.5rem; color: #4c1d95; margin: 2rem 0 1rem; }
-    .users-list { display: flex; flex-direction: column; gap: 0.5rem; }
-    .user-row { background: white; border-radius: 0.75rem; border: 1px solid #f3e8ff; padding: 0.75rem 1.2rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; }
+    .user-row { background: white; border-radius: 0.75rem; border: 1px solid #f3e8ff; padding: 0.75rem 1.2rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem; }
     .user-info strong { display: block; color: #4c1d95; font-size: 0.875rem; }
     .user-info span   { font-size: 0.75rem; color: #9ca3af; }
     .role-badge { font-size: 0.72rem; font-weight: 700; padding: 3px 10px; border-radius: 9999px; }
     .role-admin  { background: #f3e8ff; color: #6d28d9; }
     .role-client { background: #f0fdf4; color: #16a34a; }
+
+    /* ── TOAST ── */
+    #adminToast { position: fixed; bottom: 1.5rem; right: 1.5rem; background: #4c1d95; color: white; padding: 0.75rem 1.5rem; border-radius: 0.75rem; font-size: 0.875rem; font-weight: 600; z-index: 300; transition: all 0.3s; opacity: 0; pointer-events: none; transform: translateY(10px); }
+    #adminToast.show { opacity: 1; transform: translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 0 1rem; }
+      .nav-email { display: none; }
+      .dashboard { padding: 5rem 1rem 3rem; }
+      .form-grid { grid-template-columns: 1fr; }
+      .products-table { font-size: 0.8rem; }
+      .products-table th:nth-child(3),
+      .products-table td:nth-child(3) { display: none; }
+      .tabs { gap: 0; }
+      .tab { padding: 0.6rem 1rem; font-size: 0.82rem; }
+    }
+    @media (max-width: 480px) {
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .admin-filters { flex-direction: column; }
+      .modal { padding: 1.5rem; }
+      .products-table th:nth-child(4),
+      .products-table td:nth-child(4) { display: none; }
+    }
   </style>
 </head>
 <body>
 
-  <!-- LOADING -->
   <div class="loading" id="loadingScreen">
     <div class="spinner"></div>
     <p>Verificando acceso...</p>
   </div>
 
-  <!-- DASHBOARD (oculto hasta verificar que es admin) -->
   <div id="mainContent" style="display:none">
 
     <nav>
-      <a href="/index.html" class="nav-logo">KAORI</a>
+      <a href="index.html" class="nav-logo">KAORI</a>
       <div class="nav-right">
         <span class="admin-badge">ADMIN</span>
         <span class="nav-email" id="adminEmail">—</span>
-        <button class="btn-logout" onclick="hacerLogout()">Cerrar sesión</button>
+        <a href="index.html" class="btn-sm">← Ver tienda</a>
+        <button class="btn-sm danger" onclick="hacerLogout()">Cerrar sesión</button>
       </div>
     </nav>
 
     <div class="dashboard">
       <div class="dash-header">
-        <h1>Panel de Pedidos</h1>
-        <button class="btn-refresh" onclick="renderOrders()">↻ Actualizar</button>
+        <h1>Panel de Administración</h1>
       </div>
 
       <!-- STATS -->
       <div class="stats">
         <div class="stat-card">
-          <p class="stat-val"        id="statTotal">0</p>
-          <p class="stat-label">Total pedidos</p>
+          <p class="stat-val purple" id="statProductos">0</p>
+          <p class="stat-label">Productos</p>
+        </div>
+        <div class="stat-card">
+          <p class="stat-val" id="statPedidos">0</p>
+          <p class="stat-label">Pedidos</p>
         </div>
         <div class="stat-card">
           <p class="stat-val yellow" id="statPending">0</p>
           <p class="stat-label">Pendientes</p>
         </div>
         <div class="stat-card">
-          <p class="stat-val green"  id="statRevenue">0 €</p>
-          <p class="stat-label">Facturación total</p>
+          <p class="stat-val green" id="statRevenue">0 €</p>
+          <p class="stat-label">Facturación</p>
         </div>
       </div>
 
-      <!-- FILTROS -->
-      <div class="filters">
-        <div class="search-wrap">
-          <span class="search-icon">🔍</span>
-          <input type="text" placeholder="Buscar por nombre o email..." id="searchAdmin" oninput="renderOrders()" />
-        </div>
-        <div class="status-filters">
-          <button class="filter-pill active" onclick="setFilter('all',this)">Todos</button>
-          <button class="filter-pill" onclick="setFilter('pending',this)">Pendiente</button>
-          <button class="filter-pill" onclick="setFilter('processing',this)">En proceso</button>
-          <button class="filter-pill" onclick="setFilter('shipped',this)">Enviado</button>
-          <button class="filter-pill" onclick="setFilter('delivered',this)">Entregado</button>
-          <button class="filter-pill" onclick="setFilter('cancelled',this)">Cancelado</button>
+      <!-- TABS -->
+      <div class="tabs">
+        <button class="tab active" onclick="switchTab('productos', this)">🛍️ Productos</button>
+        <button class="tab" onclick="switchTab('pedidos', this)">📦 Pedidos</button>
+        <button class="tab" onclick="switchTab('usuarios', this)">👥 Usuarios</button>
+      </div>
+
+      <!-- TAB: PRODUCTOS -->
+      <div class="tab-content active" id="tab-productos">
+        <div class="card">
+          <div class="card-header">
+            <h2>Gestión de Productos</h2>
+            <button class="btn-primary" onclick="abrirModal()">+ Añadir producto</button>
+          </div>
+          <div class="admin-filters">
+            <div class="admin-search">
+              <span class="si">🔍</span>
+              <input type="text" placeholder="Buscar producto..." id="searchProductos" oninput="renderTablaProductos()" />
+            </div>
+            <button class="filter-pill active" onclick="setFiltroCategoria('', this)">Todos</button>
+            <button class="filter-pill" onclick="setFiltroCategoria('velas', this)">Velas</button>
+            <button class="filter-pill" onclick="setFiltroCategoria('minerales', this)">Minerales</button>
+            <button class="filter-pill" onclick="setFiltroCategoria('joyeria', this)">Joyería</button>
+          </div>
+          <div style="overflow-x:auto">
+            <table class="products-table">
+              <thead>
+                <tr>
+                  <th>Imagen</th>
+                  <th>Nombre</th>
+                  <th>Categoría</th>
+                  <th>Precio</th>
+                  <th>Dest.</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="productosTableBody"></tbody>
+            </table>
+          </div>
         </div>
       </div>
 
-      <!-- LISTA DE PEDIDOS -->
-      <div class="orders-list" id="ordersList"></div>
+      <!-- TAB: PEDIDOS -->
+      <div class="tab-content" id="tab-pedidos">
+        <div class="card">
+          <div class="card-header">
+            <h2>Gestión de Pedidos</h2>
+            <button class="btn-primary" onclick="renderPedidos()">↻ Actualizar</button>
+          </div>
+          <div class="admin-filters">
+            <div class="admin-search">
+              <span class="si">🔍</span>
+              <input type="text" placeholder="Buscar por nombre o email..." id="searchPedidos" oninput="renderPedidos()" />
+            </div>
+            <div style="display:flex;gap:0.5rem;flex-wrap:wrap">
+              <button class="filter-pill active" onclick="setFiltroPedido('all',this)">Todos</button>
+              <button class="filter-pill" onclick="setFiltroPedido('pending',this)">Pendiente</button>
+              <button class="filter-pill" onclick="setFiltroPedido('processing',this)">En proceso</button>
+              <button class="filter-pill" onclick="setFiltroPedido('shipped',this)">Enviado</button>
+              <button class="filter-pill" onclick="setFiltroPedido('delivered',this)">Entregado</button>
+              <button class="filter-pill" onclick="setFiltroPedido('cancelled',this)">Cancelado</button>
+            </div>
+          </div>
+          <div id="pedidosList"></div>
+        </div>
+      </div>
 
-      <!-- LISTA DE USUARIOS -->
-      <h2 class="section-title">👥 Usuarios registrados</h2>
-      <div class="users-list" id="usersList">
-        <p style="color:#9ca3af;font-size:0.875rem">Cargando usuarios...</p>
+      <!-- TAB: USUARIOS -->
+      <div class="tab-content" id="tab-usuarios">
+        <div class="card">
+          <div class="card-header">
+            <h2>Usuarios Registrados</h2>
+            <button class="btn-primary" onclick="cargarUsuarios()">↻ Actualizar</button>
+          </div>
+          <div id="usuariosList">
+            <p style="color:#9ca3af;font-size:0.875rem">Cargando usuarios...</p>
+          </div>
+        </div>
       </div>
 
     </div>
   </div>
 
+  <!-- MODAL PRODUCTO -->
+  <div class="modal-backdrop" id="modalBackdrop" onclick="cerrarModalSiBackdrop(event)">
+    <div class="modal">
+      <h2 id="modalTitulo">Añadir Producto</h2>
+      <input type="hidden" id="productoId" />
+      <div class="form-grid">
+        <div class="form-group full">
+          <label>Nombre del producto *</label>
+          <input type="text" id="pNombre" placeholder="Vela de Lavanda" />
+        </div>
+        <div class="form-group">
+          <label>Categoría *</label>
+          <select id="pCategoria">
+            <option value="">Seleccionar...</option>
+            <option value="velas">Velas</option>
+            <option value="minerales">Minerales</option>
+            <option value="joyeria">Joyería</option>
+            <option value="ambientacion">Ambientación</option>
+            <option value="corporal">Corporal</option>
+            <option value="quemadores">Quemadores</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Precio (€) *</label>
+          <input type="number" id="pPrecio" placeholder="18.00" min="0" step="0.01" />
+        </div>
+        <div class="form-group">
+          <label>Precio anterior (€) <span style="color:#9ca3af;font-weight:400">opcional</span></label>
+          <input type="number" id="pCompare" placeholder="22.00" min="0" step="0.01" />
+        </div>
+        <div class="form-group full">
+          <label>URL de imagen *</label>
+          <input type="url" id="pImagen" placeholder="https://..." oninput="previewImagen()" />
+          <img id="imgPreview" class="img-preview" alt="Vista previa" />
+        </div>
+        <div class="form-group full">
+          <div class="checkbox-group">
+            <input type="checkbox" id="pFeatured" />
+            <label for="pFeatured">✨ Marcar como producto destacado</label>
+          </div>
+        </div>
+      </div>
+      <div class="modal-btns">
+        <button class="btn-cancel" onclick="cerrarModal()">Cancelar</button>
+        <button class="btn-primary" onclick="guardarProducto()">Guardar producto</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="adminToast"></div>
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="/supabase.js"></script>
-  <script src="/auth.js"></script>
+  <script src="supabase.js"></script>
+  <script src="auth.js"></script>
   <script>
     // ─── DATOS ────────────────────────────────────────────────────────────────
     const STATUS = {
@@ -178,107 +361,229 @@
       cancelled:  { label: 'Cancelado',  cls: 's-cancelled'   },
     };
 
-    let orders = [
-      {
-        id: '1', customer_name: 'Ana García', customer_email: 'ana@email.com',
-        customer_phone: '600 111 222', status: 'pending', total: 40.95,
-        shipping_cost: 4.95, created_date: new Date().toISOString(),
-        shipping_address: 'Calle Mayor 1', shipping_city: 'Madrid',
-        shipping_postal_code: '28001', payment_method: 'stripe', notes: '',
-        items: [{ product_name: 'Vela de Lavanda', quantity: 2, price: 18 }]
-      },
-      {
-        id: '2', customer_name: 'Laura Martínez', customer_email: 'laura@email.com',
-        customer_phone: '600 333 444', status: 'shipped', total: 72.00,
-        shipping_cost: 0, created_date: new Date(Date.now()-86400000).toISOString(),
-        shipping_address: 'Av. Libertad 5', shipping_city: 'Barcelona',
-        shipping_postal_code: '08001', payment_method: 'transfer', notes: 'Sin gluten',
-        items: [
-          { product_name: 'Amatista Natural',  quantity: 1, price: 24 },
-          { product_name: 'Collar de Cuarzo',  quantity: 1, price: 32 },
-        ]
-      },
+    let pedidos = [
+      { id:'1', customer_name:'Ana García', customer_email:'ana@email.com', customer_phone:'600 111 222', status:'pending', total:40.95, shipping_cost:4.95, created_date:new Date().toISOString(), shipping_address:'Calle Mayor 1', shipping_city:'Madrid', shipping_postal_code:'28001', payment_method:'stripe', notes:'', items:[{ product_name:'Vela de Lavanda', quantity:2, price:18 }] },
+      { id:'2', customer_name:'Laura Martínez', customer_email:'laura@email.com', customer_phone:'600 333 444', status:'shipped', total:72.00, shipping_cost:0, created_date:new Date(Date.now()-86400000).toISOString(), shipping_address:'Av. Libertad 5', shipping_city:'Barcelona', shipping_postal_code:'08001', payment_method:'transfer', notes:'Sin gluten', items:[{ product_name:'Amatista Natural', quantity:1, price:24 },{ product_name:'Collar de Cuarzo', quantity:1, price:32 }] },
     ];
 
-    let filterStatus = 'all';
+    let filtroPedido    = 'all';
+    let filtroCategoria = '';
 
-    // ─── PROTECCIÓN REAL ──────────────────────────────────────────────────────
-    // protegerPagina('admin') hace tres cosas:
-    // 1. Comprueba que hay sesión activa
-    // 2. Consulta el rol en Supabase (no en localStorage)
-    // 3. Si el rol no es 'admin' redirige a /acceso-denegado.html
+    // ─── PROTECCIÓN ───────────────────────────────────────────────────────────
     (async () => {
-      const rol = await protegerPagina('admin');
-      if (!rol) return; // ya redirigió
-
-      // Cargar email del admin en el navbar
-      const usuario = await obtenerUsuario();
-      if (usuario) {
-        document.getElementById('adminEmail').textContent = usuario.email;
+      try {
+        const rol = await protegerPagina('admin');
+        if (!rol) return;
+        const usuario = await obtenerUsuario();
+        if (usuario) document.getElementById('adminEmail').textContent = usuario.email;
+      } catch(e) {
+        // Si Supabase no está configurado, mostrar igualmente para desarrollo
+        console.warn('Supabase no configurado:', e.message);
       }
-
-      // Mostrar dashboard
       document.getElementById('loadingScreen').style.display = 'none';
       document.getElementById('mainContent').style.display   = '';
-
-      // Cargar datos
-      renderOrders();
-      cargarUsuarios();
+      actualizarStats();
+      renderTablaProductos();
+      renderPedidos();
     })();
 
-    // ─── CERRAR SESIÓN ────────────────────────────────────────────────────────
+    // ─── LOGOUT ───────────────────────────────────────────────────────────────
     async function hacerLogout() {
-      await cerrarSesion();
-      window.location.href = '/login.html';
+      try { await cerrarSesion(); } catch(e) {}
+      window.location.href = 'login.html';
     }
 
-    // ─── FILTROS ──────────────────────────────────────────────────────────────
-    function setFilter(status, btn) {
-      filterStatus = status;
-      document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+    // ─── TABS ─────────────────────────────────────────────────────────────────
+    function switchTab(nombre, btn) {
+      document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.getElementById('tab-' + nombre).classList.add('active');
       btn.classList.add('active');
-      renderOrders();
+      if (nombre === 'usuarios') cargarUsuarios();
+      if (nombre === 'pedidos')  renderPedidos();
     }
 
-    // ─── RENDER PEDIDOS ───────────────────────────────────────────────────────
-    function renderOrders() {
-      const q = document.getElementById('searchAdmin').value.toLowerCase();
-      const filtered = orders.filter(o => {
-        const matchSearch = !q
-          || o.customer_name.toLowerCase().includes(q)
-          || o.customer_email.toLowerCase().includes(q);
-        const matchStatus = filterStatus === 'all' || o.status === filterStatus;
-        return matchSearch && matchStatus;
+    // ─── STATS ────────────────────────────────────────────────────────────────
+    function actualizarStats() {
+      const productos    = getProductos();
+      const nonCancelled = pedidos.filter(o => o.status !== 'cancelled');
+      document.getElementById('statProductos').textContent = productos.length;
+      document.getElementById('statPedidos').textContent   = pedidos.length;
+      document.getElementById('statPending').textContent   = pedidos.filter(o => o.status === 'pending').length;
+      document.getElementById('statRevenue').textContent   = nonCancelled.reduce((s,o) => s + o.total, 0).toFixed(2) + ' €';
+    }
+
+    // ─── GESTIÓN DE PRODUCTOS ─────────────────────────────────────────────────
+    const PRODUCTOS_DEFAULT = [
+      { id:'1', name:'Vela Artesanal de Lavanda',  category:'velas',       price:18, compare:22,   featured:true,  image:'https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=400&q=80' },
+      { id:'2', name:'Amatista Natural',            category:'minerales',   price:24, compare:null, featured:false, image:'https://images.unsplash.com/photo-1557053910-d9eadeed1c58?w=400&q=80' },
+      { id:'3', name:'Collar de Cuarzo Rosa',       category:'joyeria',     price:32, compare:null, featured:false, image:'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=400&q=80' },
+      { id:'4', name:'Vela Energética Sándalo',     category:'velas',       price:22, compare:null, featured:false, image:'https://images.unsplash.com/photo-1603905000478-e1b9fb17b2eb?w=400&q=80' },
+      { id:'5', name:'Cuarzo Rosa Natural',         category:'minerales',   price:19, compare:25,   featured:false, image:'https://images.unsplash.com/photo-1559181567-c3190ee73a43?w=400&q=80' },
+      { id:'6', name:'Pulsera de Labradorita',      category:'joyeria',     price:28, compare:null, featured:false, image:'https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?w=400&q=80' },
+      { id:'7', name:'Incienso de Palo Santo',      category:'ambientacion',price:12, compare:null, featured:false, image:'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=400&q=80' },
+      { id:'8', name:'Crema Corporal de Lavanda',   category:'corporal',    price:16, compare:null, featured:false, image:'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=400&q=80' },
+    ];
+
+    function getProductos() {
+      try {
+        const g = localStorage.getItem('kaori_productos');
+        if (g) return JSON.parse(g);
+        localStorage.setItem('kaori_productos', JSON.stringify(PRODUCTOS_DEFAULT));
+        return PRODUCTOS_DEFAULT;
+      } catch { return PRODUCTOS_DEFAULT; }
+    }
+    function guardarProductos(lista) {
+      localStorage.setItem('kaori_productos', JSON.stringify(lista));
+      actualizarStats();
+    }
+
+    // ── Filtro categoría productos ────────────────────────────────────────────
+    function setFiltroCategoria(cat, btn) {
+      filtroCategoria = cat;
+      document.querySelectorAll('#tab-productos .filter-pill')
+        .forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderTablaProductos();
+    }
+
+    // ── Render tabla ──────────────────────────────────────────────────────────
+    function renderTablaProductos() {
+      const q    = (document.getElementById('searchProductos')?.value || '').toLowerCase();
+      const lista = getProductos().filter(p => {
+        const mq = !q || p.name.toLowerCase().includes(q);
+        const mc = !filtroCategoria || p.category === filtroCategoria;
+        return mq && mc;
       });
 
-      const nonCancelled = orders.filter(o => o.status !== 'cancelled');
-      document.getElementById('statTotal').textContent   = orders.length;
-      document.getElementById('statPending').textContent = orders.filter(o => o.status === 'pending').length;
-      document.getElementById('statRevenue').textContent = nonCancelled.reduce((s,o) => s + o.total, 0).toFixed(2) + ' €';
-
-      const list = document.getElementById('ordersList');
-      if (!filtered.length) {
-        list.innerHTML = '<div class="empty-state"><p style="font-size:2rem">📦</p><p>No hay pedidos</p></div>';
+      const tbody = document.getElementById('productosTableBody');
+      if (!lista.length) {
+        tbody.innerHTML = `<tr><td colspan="6" class="empty-table"><p class="icon">📦</p><p>No hay productos</p></td></tr>`;
         return;
       }
+      tbody.innerHTML = lista.map(p => `
+        <tr>
+          <td><img class="prod-thumb" src="${p.image}" alt="${p.name}"
+               onerror="this.src='https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=100&q=60'" /></td>
+          <td class="prod-name-cell">${p.name}</td>
+          <td><span class="prod-cat-badge">${p.category}</span></td>
+          <td><strong>${Number(p.price).toFixed(2)} €</strong>
+              ${p.compare ? `<br/><span style="color:#9ca3af;font-size:0.78rem;text-decoration:line-through">${Number(p.compare).toFixed(2)} €</span>` : ''}</td>
+          <td style="text-align:center">${p.featured ? '<span class="featured-star">⭐</span>' : '—'}</td>
+          <td>
+            <div class="prod-actions">
+              <button class="btn-edit"   onclick="editarProducto('${p.id}')">Editar</button>
+              <button class="btn-danger" onclick="eliminarProducto('${p.id}')">Eliminar</button>
+            </div>
+          </td>
+        </tr>`).join('');
+    }
 
+    // ── Modal ─────────────────────────────────────────────────────────────────
+    function abrirModal(producto = null) {
+      document.getElementById('modalTitulo').textContent = producto ? 'Editar Producto' : 'Añadir Producto';
+      document.getElementById('productoId').value  = producto?.id  || '';
+      document.getElementById('pNombre').value     = producto?.name     || '';
+      document.getElementById('pCategoria').value  = producto?.category || '';
+      document.getElementById('pPrecio').value     = producto?.price    || '';
+      document.getElementById('pCompare').value    = producto?.compare  || '';
+      document.getElementById('pImagen').value     = producto?.image    || '';
+      document.getElementById('pFeatured').checked = producto?.featured || false;
+      const prev = document.getElementById('imgPreview');
+      if (producto?.image) { prev.src = producto.image; prev.style.display = 'block'; }
+      else { prev.style.display = 'none'; }
+      document.getElementById('modalBackdrop').classList.add('open');
+      document.getElementById('pNombre').focus();
+    }
+    function cerrarModal() {
+      document.getElementById('modalBackdrop').classList.remove('open');
+    }
+    function cerrarModalSiBackdrop(e) {
+      if (e.target === document.getElementById('modalBackdrop')) cerrarModal();
+    }
+    function previewImagen() {
+      const url  = document.getElementById('pImagen').value;
+      const prev = document.getElementById('imgPreview');
+      if (url) { prev.src = url; prev.style.display = 'block'; }
+      else       { prev.style.display = 'none'; }
+    }
+    function editarProducto(id) {
+      const p = getProductos().find(p => p.id === id);
+      if (p) abrirModal(p);
+    }
+
+    // ── Guardar producto ──────────────────────────────────────────────────────
+    function guardarProducto() {
+      const nombre    = document.getElementById('pNombre').value.trim();
+      const categoria = document.getElementById('pCategoria').value;
+      const precio    = parseFloat(document.getElementById('pPrecio').value);
+      const compare   = parseFloat(document.getElementById('pCompare').value) || null;
+      const imagen    = document.getElementById('pImagen').value.trim();
+      const featured  = document.getElementById('pFeatured').checked;
+      const id        = document.getElementById('productoId').value;
+
+      if (!nombre)    { mostrarToastAdmin('⚠️ El nombre es obligatorio',    'error'); return; }
+      if (!categoria) { mostrarToastAdmin('⚠️ Selecciona una categoría',    'error'); return; }
+      if (!precio || precio <= 0) { mostrarToastAdmin('⚠️ El precio no es válido', 'error'); return; }
+      if (!imagen)    { mostrarToastAdmin('⚠️ La URL de imagen es obligatoria', 'error'); return; }
+
+      const lista = getProductos();
+      if (id) {
+        // Editar existente
+        const idx = lista.findIndex(p => p.id === id);
+        if (idx !== -1) lista[idx] = { id, name:nombre, category:categoria, price:precio, compare, image:imagen, featured };
+        mostrarToastAdmin('✓ Producto actualizado');
+      } else {
+        // Nuevo
+        const nuevoId = Date.now().toString();
+        lista.push({ id:nuevoId, name:nombre, category:categoria, price:precio, compare, image:imagen, featured });
+        mostrarToastAdmin('✓ Producto añadido');
+      }
+      guardarProductos(lista);
+      renderTablaProductos();
+      cerrarModal();
+    }
+
+    // ── Eliminar ──────────────────────────────────────────────────────────────
+    function eliminarProducto(id) {
+      if (!confirm('¿Seguro que quieres eliminar este producto? Esta acción no se puede deshacer.')) return;
+      const lista = getProductos().filter(p => p.id !== id);
+      guardarProductos(lista);
+      renderTablaProductos();
+      mostrarToastAdmin('🗑️ Producto eliminado');
+    }
+
+    // ─── PEDIDOS ──────────────────────────────────────────────────────────────
+    function setFiltroPedido(status, btn) {
+      filtroPedido = status;
+      document.querySelectorAll('#tab-pedidos .filter-pill')
+        .forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderPedidos();
+    }
+    function renderPedidos() {
+      const q = (document.getElementById('searchPedidos')?.value || '').toLowerCase();
+      const filtered = pedidos.filter(o => {
+        const ms = !q || o.customer_name.toLowerCase().includes(q) || o.customer_email.toLowerCase().includes(q);
+        const mf = filtroPedido === 'all' || o.status === filtroPedido;
+        return ms && mf;
+      });
+      actualizarStats();
+      const list = document.getElementById('pedidosList');
+      if (!filtered.length) {
+        list.innerHTML = '<div style="text-align:center;padding:3rem;color:#9ca3af"><p style="font-size:2rem">📦</p><p>No hay pedidos</p></div>';
+        return;
+      }
       list.innerHTML = filtered.map(o => {
         const st   = STATUS[o.status] || STATUS.pending;
         const date = new Date(o.created_date).toLocaleDateString('es-ES');
         const items = o.items.map(i =>
-          `<div class="detail-item">
-            <span>${i.product_name} × ${i.quantity}</span>
-            <span>${(i.price * i.quantity).toFixed(2)} €</span>
-          </div>`
+          `<div class="detail-item"><span>${i.product_name} × ${i.quantity}</span><span>${(i.price*i.quantity).toFixed(2)} €</span></div>`
         ).join('');
-        const statusBtns = Object.entries(STATUS).map(([k,v]) =>
-          `<button class="status-btn"
-            onclick="changeStatus('${o.id}','${k}')"
-            style="${o.status===k ? 'background:#f3e8ff;border-color:#a855f7;color:#6d28d9' : ''}">
-            ${v.label}
-          </button>`
+        const stBtns = Object.entries(STATUS).map(([k,v]) =>
+          `<button class="status-btn" onclick="cambiarEstado('${o.id}','${k}')"
+            style="${o.status===k ? 'background:#f3e8ff;border-color:#a855f7;color:#6d28d9' : ''}">${v.label}</button>`
         ).join('');
-
         return `
           <div class="order-row" id="order-${o.id}">
             <div class="order-header" onclick="toggleOrder('${o.id}')">
@@ -287,7 +592,7 @@
                 <span>${o.customer_email} · ${o.customer_phone}</span>
               </div>
               <span class="status-badge ${st.cls}">${st.label}</span>
-              <div class="order-total">
+              <div class="order-total-col">
                 <strong>${o.total.toFixed(2)} €</strong>
                 <span>${date}</span>
               </div>
@@ -297,35 +602,21 @@
             <div class="confirm-delete" id="confirm-${o.id}">
               <p>¿Eliminar este pedido?</p>
               <div class="confirm-btns">
-                <button class="btn-cancel-del"  onclick="hideConfirmDelete('${o.id}')">Cancelar</button>
-                <button class="btn-confirm-del" onclick="deleteOrder('${o.id}')">Eliminar</button>
+                <button class="btn-cancel-del" onclick="hideConfirmDelete('${o.id}')">Cancelar</button>
+                <button class="btn-confirm-del" onclick="eliminarPedido('${o.id}')">Eliminar</button>
               </div>
             </div>
             <div class="order-details" id="details-${o.id}">
-              <p class="details-label">Productos</p>
-              ${items}
-              <div class="detail-item">
-                <span>Envío</span>
-                <span>${o.shipping_cost === 0 ? 'Gratis' : o.shipping_cost.toFixed(2) + ' €'}</span>
-              </div>
-              ${o.shipping_address
-                ? `<br/><p class="details-label">Dirección</p>
-                   <p style="font-size:0.875rem;color:#4b5563">
-                     ${o.shipping_address}, ${o.shipping_city} ${o.shipping_postal_code}
-                   </p>`
-                : ''}
-              ${o.notes
-                ? `<br/><p class="details-label">Notas</p>
-                   <p style="font-size:0.875rem;color:#4b5563">${o.notes}</p>`
-                : ''}
-              <br/>
-              <p class="details-label">Cambiar Estado</p>
-              <div class="change-status">${statusBtns}</div>
+              <p class="details-label">Productos</p>${items}
+              <div class="detail-item"><span>Envío</span><span>${o.shipping_cost===0?'Gratis':o.shipping_cost.toFixed(2)+' €'}</span></div>
+              ${o.shipping_address ? `<br/><p class="details-label">Dirección</p><p style="font-size:0.875rem;color:#4b5563">${o.shipping_address}, ${o.shipping_city} ${o.shipping_postal_code}</p>` : ''}
+              ${o.notes ? `<br/><p class="details-label">Notas</p><p style="font-size:0.875rem;color:#4b5563">${o.notes}</p>` : ''}
+              <br/><p class="details-label">Cambiar Estado</p>
+              <div class="change-status">${stBtns}</div>
             </div>
           </div>`;
       }).join('');
     }
-
     function toggleOrder(id) {
       const det  = document.getElementById('details-' + id);
       const chev = document.getElementById('chevron-' + id);
@@ -333,44 +624,36 @@
       det.style.display = open ? 'none' : 'block';
       chev.textContent  = open ? '▼' : '▲';
     }
-    function showConfirmDelete(id) { document.getElementById('confirm-' + id).style.display = 'flex'; }
-    function hideConfirmDelete(id) { document.getElementById('confirm-' + id).style.display = 'none'; }
-    function deleteOrder(id) {
-      orders = orders.filter(o => o.id !== id);
-      renderOrders();
-    }
-    function changeStatus(id, status) {
-      orders = orders.map(o => o.id === id ? { ...o, status } : o);
-      renderOrders();
-    }
+    function showConfirmDelete(id)  { document.getElementById('confirm-' + id).style.display = 'flex'; }
+    function hideConfirmDelete(id)  { document.getElementById('confirm-' + id).style.display = 'none'; }
+    function eliminarPedido(id)     { pedidos = pedidos.filter(o => o.id !== id); renderPedidos(); }
+    function cambiarEstado(id, st)  { pedidos = pedidos.map(o => o.id === id ? {...o, status:st} : o); renderPedidos(); }
 
-    // ─── CARGAR USUARIOS DESDE SUPABASE ───────────────────────────────────────
+    // ─── USUARIOS ─────────────────────────────────────────────────────────────
     async function cargarUsuarios() {
-      const { data, error } = await db
-        .from('profiles')
-        .select('id, email, role, created_at')
-        .order('created_at', { ascending: false });
-
-      const list = document.getElementById('usersList');
-
-      if (error || !data?.length) {
-        list.innerHTML = '<p style="color:#9ca3af;font-size:0.875rem">No hay usuarios registrados todavía.</p>';
-        return;
-      }
-
-      list.innerHTML = data.map(u => {
-        const fecha = new Date(u.created_at).toLocaleDateString('es-ES');
-        return `
-          <div class="user-row">
-            <div class="user-info">
-              <strong>${u.email}</strong>
-              <span>Registrado el ${fecha}</span>
-            </div>
-            <span class="role-badge ${u.role === 'admin' ? 'role-admin' : 'role-client'}">
-              ${u.role === 'admin' ? '👑 Admin' : '👤 Cliente'}
-            </span>
+      const list = document.getElementById('usuariosList');
+      try {
+        const { data, error } = await db.from('profiles').select('id, email, role, created_at').order('created_at', { ascending: false });
+        if (error || !data?.length) { list.innerHTML = '<p style="color:#9ca3af;font-size:0.875rem">No hay usuarios registrados.</p>'; return; }
+        list.innerHTML = data.map(u => {
+          const fecha = new Date(u.created_at).toLocaleDateString('es-ES');
+          return `<div class="user-row">
+            <div class="user-info"><strong>${u.email}</strong><span>Registrado el ${fecha}</span></div>
+            <span class="role-badge ${u.role==='admin'?'role-admin':'role-client'}">${u.role==='admin'?'👑 Admin':'👤 Cliente'}</span>
           </div>`;
-      }).join('');
+        }).join('');
+      } catch(e) {
+        list.innerHTML = '<p style="color:#9ca3af;font-size:0.875rem">Configura Supabase para ver los usuarios.</p>';
+      }
+    }
+
+    // ─── TOAST ADMIN ──────────────────────────────────────────────────────────
+    function mostrarToastAdmin(msg, tipo = 'ok') {
+      const t = document.getElementById('adminToast');
+      t.textContent       = msg;
+      t.style.background  = tipo === 'error' ? '#ef4444' : '#4c1d95';
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2800);
     }
   </script>
 </body>
