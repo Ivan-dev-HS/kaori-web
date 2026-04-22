@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kaori – Sobre Nosotras</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Nunito', sans-serif; background: #faf8f5; color: #2d1b69; }
+    h1,h2,h3 { font-family: 'Cormorant Garamond', serif; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ── NAVBAR ── */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; height: 72px; background: rgba(250,248,245,0.95); backdrop-filter: blur(8px); border-bottom: 1px solid #f3e8ff; }
+    .nav-logo  { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; letter-spacing: 0.2em; color: #4c1d95; }
+    .nav-links { display: flex; gap: 2rem; }
+    .nav-links a { font-size: 0.85rem; color: #4b5563; transition: color 0.2s; }
+    .nav-links a:hover { color: #7c3aed; }
+    .nav-right { display: flex; align-items: center; gap: 0.75rem; }
+    .nav-cuenta { background: white; color: #7c3aed; border: 1px solid #e9d5ff; border-radius: 9999px; padding: 0.5rem 1.2rem; font-family: 'Nunito', sans-serif; font-size: 0.85rem; font-weight: 600; transition: all 0.2s; }
+    .nav-cuenta:hover { background: #f3e8ff; }
+    .nav-cart { background: #7c3aed; color: white; border: none; border-radius: 9999px; padding: 0.5rem 1.2rem; cursor: pointer; font-family: 'Nunito', sans-serif; font-size: 0.85rem; font-weight: 600; transition: background 0.2s; }
+    .nav-cart:hover { background: #6d28d9; }
+
+    /* ── HERO ── */
+    .hero { position: relative; padding: 8rem 1.5rem 5rem; text-align: center; overflow: hidden; }
+    .hero-bg { position: absolute; inset: 0; background: url('https://images.unsplash.com/photo-1557053910-d9eadeed1c58?w=1200&q=60') center/cover; opacity: 0.08; }
+    .hero-inner { position: relative; max-width: 56rem; margin: 0 auto; }
+    .hero-label { font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: #a855f7; margin-bottom: 1rem; }
+    .hero h1 { font-size: clamp(2.5rem, 6vw, 4rem); color: #4c1d95; line-height: 1.2; margin-bottom: 1.5rem; font-weight: 300; }
+    .hero h1 em { color: #9333ea; font-style: normal; }
+    .hero p { color: #4b5563; font-size: 1.1rem; line-height: 1.7; max-width: 40rem; margin: 0 auto; }
+
+    /* ── HISTORIA ── */
+    .story { padding: 5rem 1.5rem; background: white; }
+    .story-inner { max-width: 72rem; margin: 0 auto; display: grid; gap: 3rem; align-items: center; }
+    @media(min-width: 1024px) { .story-inner { grid-template-columns: 1fr 1fr; gap: 5rem; } }
+    .story-img { aspect-ratio: 4/5; border-radius: 1.5rem; overflow: hidden; }
+    .story-img img { width: 100%; height: 100%; object-fit: cover; }
+    .story-text h2 { font-size: clamp(1.8rem, 4vw, 2.5rem); color: #4c1d95; margin-bottom: 1.5rem; font-weight: 400; }
+    .story-text p  { color: #4b5563; line-height: 1.8; margin-bottom: 1rem; font-size: 0.95rem; }
+    .story-text em { color: #7c3aed; font-style: italic; }
+
+    /* ── VALORES ── */
+    .values { padding: 5rem 1.5rem; background: #faf5ff; }
+    .values-inner { max-width: 72rem; margin: 0 auto; }
+    .section-header { text-align: center; margin-bottom: 3rem; }
+    .section-label  { font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: #a855f7; margin-bottom: 0.5rem; }
+    .section-title  { font-size: clamp(1.8rem, 4vw, 2.5rem); color: #4c1d95; font-weight: 400; }
+    .values-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem; }
+    .value-card { background: white; border-radius: 1rem; padding: 2rem; text-align: center; border: 1px solid #f3e8ff; }
+    .val-icon { width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.2rem; font-size: 1.5rem; }
+    .ic-green  { background: #dcfce7; }
+    .ic-pink   { background: #fce7f3; }
+    .ic-purple { background: #f3e8ff; }
+    .value-card h3 { font-size: 1.2rem; color: #4c1d95; margin-bottom: 0.8rem; font-weight: 400; }
+    .value-card p  { color: #6b7280; font-size: 0.875rem; line-height: 1.7; }
+
+    /* ── EQUIPO ── */
+    .team { padding: 5rem 1.5rem; background: white; }
+    .team-inner { max-width: 72rem; margin: 0 auto; }
+    .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 2rem; margin-top: 3rem; }
+    .team-card { text-align: center; }
+    .team-avatar { width: 120px; height: 120px; border-radius: 50%; overflow: hidden; margin: 0 auto 1.2rem; border: 3px solid #f3e8ff; }
+    .team-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .team-card h3 { font-size: 1.3rem; color: #4c1d95; margin-bottom: 0.3rem; font-weight: 400; }
+    .team-card .role { font-size: 0.78rem; color: #a855f7; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem; }
+    .team-card p { color: #6b7280; font-size: 0.875rem; line-height: 1.7; }
+
+    /* ── CTA ── */
+    .cta { padding: 5rem 1.5rem; background: #4c1d95; text-align: center; }
+    .cta h2 { font-size: clamp(1.8rem, 4vw, 2.5rem); color: white; margin-bottom: 1rem; line-height: 1.3; font-weight: 400; }
+    .cta p  { color: #d8b4fe; max-width: 36rem; margin: 0 auto 2rem; line-height: 1.7; font-size: 0.95rem; }
+    .btn-white { background: white; color: #4c1d95; padding: 1rem 2.5rem; border-radius: 9999px; font-weight: 700; display: inline-block; transition: background 0.2s; font-family: 'Nunito', sans-serif; }
+    .btn-white:hover { background: #f5f3ff; }
+
+    /* ── FOOTER ── */
+    footer { background: #1e0a3c; color: white; padding: 3rem 1.5rem 1.5rem; }
+    .footer-inner { max-width: 72rem; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 2rem; margin-bottom: 2rem; }
+    .footer-brand h3 { font-size: 1.5rem; letter-spacing: 0.2em; margin-bottom: 0.75rem; font-weight: 400; }
+    .footer-brand p  { color: #c4b5fd; font-size: 0.82rem; line-height: 1.7; }
+    .footer-links h4 { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: #a78bfa; margin-bottom: 0.75rem; }
+    .footer-links ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+    .footer-links a  { color: #c4b5fd; font-size: 0.82rem; transition: color 0.2s; }
+    .footer-links a:hover { color: white; }
+    .footer-bottom { border-top: 1px solid #3b1f6e; padding-top: 1.2rem; text-align: center; color: #7c5cbf; font-size: 0.78rem; }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="/index.html" class="nav-logo">KAORI</a>
+    <div class="nav-links">
+      <a href="/shop.html">Tienda</a>
+      <a href="/about.html">Nosotras</a>
+      <a href="/contact.html">Contacto</a>
+    </div>
+    <div class="nav-right">
+      <a href="/login.html" class="nav-cuenta" id="btnCuenta">👤 Mi cuenta</a>
+      <button class="nav-cart" onclick="window.location.href='/shop.html'">
+        🛒 Carrito (<span id="cartCount">0</span>)
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-inner">
+      <p class="hero-label">Nuestra Historia</p>
+      <h1>Hola, somos<br /><em>Kaori</em></h1>
+      <p>Una marca familiar nacida de la pasión por la naturaleza, el arte y la energía. Cada producto es creado con intención, amor y los mejores materiales naturales.</p>
+    </div>
+  </section>
+
+  <!-- HISTORIA -->
+  <section class="story">
+    <div class="story-inner">
+      <div class="story-img">
+        <img src="https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=800&q=80" alt="Kaori artesanía" />
+      </div>
+      <div class="story-text">
+        <h2>Nuestra pasión</h2>
+        <p>Kaori nació de un profundo amor por lo natural y lo hecho a mano. Somos una pequeña marca familiar que crea productos artesanales con un propósito especial: llevar luz, arte y energía positiva a cada hogar.</p>
+        <p>Cada vela que vertemos, cada mineral que seleccionamos y cada pieza de resina que moldeamos, lo hacemos con intención y cariño. Creemos en el poder de los objetos conscientes para transformar espacios y elevar el espíritu.</p>
+        <p>Nuestro nombre, <em>Kaori</em>, significa "fragancia" en japonés, representando la esencia invisible pero poderosa que cada uno de nuestros productos aporta a tu vida.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- VALORES -->
+  <section class="values">
+    <div class="values-inner">
+      <div class="section-header">
+        <p class="section-label">Lo que nos define</p>
+        <h2 class="section-title">Nuestros Valores</h2>
+      </div>
+      <div class="values-grid">
+        <div class="value-card">
+          <div class="val-icon ic-green">🌿</div>
+          <h3>Natural</h3>
+          <p>Utilizamos solo ingredientes naturales, ceras vegetales, esencias puras y materiales sostenibles seleccionados con cuidado.</p>
+        </div>
+        <div class="value-card">
+          <div class="val-icon ic-pink">♥</div>
+          <h3>Con Amor</h3>
+          <p>Cada producto se crea a mano con dedicación, cariño y atención a cada detalle. Nunca fabricamos en serie.</p>
+        </div>
+        <div class="value-card">
+          <div class="val-icon ic-purple">✨</div>
+          <h3>Consciente</h3>
+          <p>Creemos en el poder de la intención. Cada pieza lleva una energía especial cargada para tu bienestar.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <h2>¿Lista para descubrir<br />la magia de Kaori?</h2>
+    <p>Explora nuestra colección de productos artesanales creados con amor e intención para transformar tu espacio.</p>
+    <a href="/shop.html" class="btn-white">Explorar la Tienda →</a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <h3>KAORI</h3>
+        <p>Productos artesanales creados con amor, intención y los mejores materiales naturales.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Tienda</h4>
+        <ul>
+          <li><a href="/shop.html">Todos los productos</a></li>
+          <li><a href="/shop.html?category=velas">Velas</a></li>
+          <li><a href="/shop.html?category=minerales">Minerales</a></li>
+          <li><a href="/shop.html?category=joyeria">Joyería</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Información</h4>
+        <ul>
+          <li><a href="/about.html">Sobre Nosotras</a></li>
+          <li><a href="/contact.html">Contacto</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Contacto</h4>
+        <ul>
+          <li><a href="mailto:info@kaori.es">info@kaori.es</a></li>
+          <li><a href="https://instagram.com/kaoribyjessnuan" target="_blank" rel="noreferrer">@kaoribyjessnuan</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2024 Kaori. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/supabase.js"></script>
+  <script src="/auth.js"></script>
+  <script>
+    // ── Navbar dinámico ───────────────────────────────────────────────────────
+    (async () => {
+      const sesion = await obtenerSesion();
+      const btn    = document.getElementById('btnCuenta');
+      if (sesion) {
+        const rol   = await obtenerRol();
+        btn.href        = rol === 'admin' ? '/admin.html' : '/mi-cuenta.html';
+        btn.textContent = rol === 'admin' ? '👑 Panel Admin' : '👤 Mi cuenta';
+      }
+    })();
+
+    // ── Contador carrito ──────────────────────────────────────────────────────
+    (function() {
+      try {
+        const cart  = JSON.parse(localStorage.getItem('kaori_cart') || '[]');
+        const total = cart.reduce((s,i) => s + i.quantity, 0);
+        document.getElementById('cartCount').textContent = total;
+      } catch { /* vacío */ }
+    })();
+  </script>
+</body>
+</html>
