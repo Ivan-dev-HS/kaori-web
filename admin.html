@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kaori – Panel Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Nunito', sans-serif; background: #faf8f5; color: #2d1b69; }
+    h1,h2,h3 { font-family: 'Cormorant Garamond', serif; }
+
+    /* ── LOADING ── */
+    .loading { min-height: 100vh; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 1rem; }
+    .loading p { color: #6b7280; font-size: 0.9rem; }
+    .spinner { width: 36px; height: 36px; border: 3px solid #f3e8ff; border-top-color: #7c3aed; border-radius: 50%; animation: spin 0.8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── NAVBAR ── */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; height: 72px; background: rgba(250,248,245,0.97); backdrop-filter: blur(8px); border-bottom: 1px solid #f3e8ff; }
+    .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; letter-spacing: 0.2em; color: #4c1d95; text-decoration: none; }
+    .nav-right { display: flex; align-items: center; gap: 1rem; }
+    .admin-badge { background: #7c3aed; color: white; font-size: 0.72rem; font-weight: 700; padding: 4px 12px; border-radius: 9999px; }
+    .nav-email { font-size: 0.8rem; color: #6b7280; }
+    .btn-logout { background: none; border: 1px solid #e9d5ff; border-radius: 9999px; padding: 0.4rem 1rem; font-family: 'Nunito', sans-serif; font-size: 0.82rem; color: #7c3aed; cursor: pointer; transition: all 0.2s; }
+    .btn-logout:hover { background: #f3e8ff; }
+
+    /* ── DASHBOARD ── */
+    .dashboard { max-width: 60rem; margin: 0 auto; padding: 5.5rem 1.5rem 4rem; }
+    .dash-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem; }
+    .dash-header h1 { font-size: 2rem; color: #4c1d95; }
+    .btn-refresh { background: white; border: 1px solid #e9d5ff; border-radius: 0.75rem; padding: 0.5rem 1rem; font-family: 'Nunito', sans-serif; cursor: pointer; font-size: 0.875rem; color: #4c1d95; transition: background 0.15s; }
+    .btn-refresh:hover { background: #f5f3ff; }
+
+    /* ── STATS ── */
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
+    .stat-card { background: white; border-radius: 1rem; padding: 1.2rem; border: 1px solid #f3e8ff; text-align: center; }
+    .stat-val { font-size: 1.8rem; font-weight: 800; color: #4c1d95; }
+    .stat-val.yellow { color: #d97706; }
+    .stat-val.green  { color: #16a34a; }
+    .stat-label { font-size: 0.75rem; color: #6b7280; margin-top: 0.3rem; }
+
+    /* ── FILTROS ── */
+    .filters { display: flex; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+    .search-wrap { position: relative; flex: 1; min-width: 200px; }
+    .search-wrap input { padding: 0.5rem 0.75rem 0.5rem 2.2rem; border: 1px solid #e9d5ff; border-radius: 0.75rem; font-family: 'Nunito', sans-serif; outline: none; font-size: 0.875rem; width: 100%; }
+    .search-wrap input:focus { border-color: #a855f7; }
+    .search-icon { position: absolute; left: 0.7rem; top: 50%; transform: translateY(-50%); color: #9ca3af; }
+    .status-filters { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .filter-pill { padding: 0.4rem 0.9rem; border-radius: 9999px; border: 1px solid #e9d5ff; background: white; font-size: 0.8rem; color: #4b5563; cursor: pointer; font-family: 'Nunito', sans-serif; transition: all 0.15s; }
+    .filter-pill.active { background: #7c3aed; color: white; border-color: #7c3aed; }
+
+    /* ── PEDIDOS ── */
+    .orders-list { display: flex; flex-direction: column; gap: 0.75rem; }
+    .order-row { background: white; border-radius: 1rem; border: 1px solid #f3e8ff; overflow: hidden; }
+    .order-header { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.2rem; cursor: pointer; transition: background 0.15s; flex-wrap: wrap; }
+    .order-header:hover { background: #faf5ff; }
+    .order-name { flex: 1; min-width: 0; }
+    .order-name strong { display: block; color: #4c1d95; font-size: 0.9rem; font-family: 'Nunito', sans-serif; }
+    .order-name span   { font-size: 0.75rem; color: #9ca3af; }
+    .status-badge { padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; white-space: nowrap; }
+    .s-pending    { background: #fef3c7; color: #92400e; }
+    .s-processing { background: #dbeafe; color: #1e40af; }
+    .s-shipped    { background: #f3e8ff; color: #6d28d9; }
+    .s-delivered  { background: #dcfce7; color: #166534; }
+    .s-cancelled  { background: #fee2e2; color: #991b1b; }
+    .order-total { text-align: right; }
+    .order-total strong { display: block; color: #4c1d95; font-size: 0.9rem; font-family: 'Nunito', sans-serif; }
+    .order-total span   { font-size: 0.75rem; color: #9ca3af; }
+    .btn-delete { background: transparent; border: none; cursor: pointer; font-size: 1rem; padding: 0.3rem; border-radius: 0.4rem; transition: background 0.15s; }
+    .btn-delete:hover { background: #fee2e2; }
+
+    .order-details { display: none; border-top: 1px solid #f3e8ff; padding: 1.2rem; }
+    .details-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; color: #9ca3af; margin-bottom: 0.5rem; }
+    .detail-item { display: flex; justify-content: space-between; font-size: 0.875rem; margin-bottom: 0.3rem; color: #4b5563; }
+    .change-status { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; }
+    .status-btn { padding: 0.3rem 0.75rem; border-radius: 9999px; border: 1px solid #e5e7eb; background: white; font-size: 0.75rem; font-weight: 600; cursor: pointer; font-family: 'Nunito', sans-serif; transition: all 0.15s; }
+    .status-btn:hover { border-color: #a855f7; }
+    .confirm-delete { background: #fef2f2; border-top: 1px solid #fecaca; padding: 0.75rem 1.2rem; display: none; align-items: center; justify-content: space-between; gap: 1rem; }
+    .confirm-delete p { font-size: 0.875rem; color: #b91c1c; }
+    .confirm-btns { display: flex; gap: 0.5rem; }
+    .btn-cancel-del  { padding: 0.3rem 0.8rem; border-radius: 0.5rem; border: 1px solid #d1d5db; background: white; font-family: 'Nunito', sans-serif; cursor: pointer; font-size: 0.8rem; }
+    .btn-confirm-del { padding: 0.3rem 0.8rem; border-radius: 0.5rem; background: #ef4444; color: white; border: none; font-family: 'Nunito', sans-serif; cursor: pointer; font-size: 0.8rem; }
+    .empty-state { text-align: center; padding: 4rem 1rem; color: #9ca3af; }
+    .empty-state p { font-size: 1.1rem; margin-top: 0.5rem; }
+
+    /* ── USUARIOS ── */
+    .section-title { font-size: 1.5rem; color: #4c1d95; margin: 2rem 0 1rem; }
+    .users-list { display: flex; flex-direction: column; gap: 0.5rem; }
+    .user-row { background: white; border-radius: 0.75rem; border: 1px solid #f3e8ff; padding: 0.75rem 1.2rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; }
+    .user-info strong { display: block; color: #4c1d95; font-size: 0.875rem; }
+    .user-info span   { font-size: 0.75rem; color: #9ca3af; }
+    .role-badge { font-size: 0.72rem; font-weight: 700; padding: 3px 10px; border-radius: 9999px; }
+    .role-admin  { background: #f3e8ff; color: #6d28d9; }
+    .role-client { background: #f0fdf4; color: #16a34a; }
+  </style>
+</head>
+<body>
+
+  <!-- LOADING -->
+  <div class="loading" id="loadingScreen">
+    <div class="spinner"></div>
+    <p>Verificando acceso...</p>
+  </div>
+
+  <!-- DASHBOARD (oculto hasta verificar que es admin) -->
+  <div id="mainContent" style="display:none">
+
+    <nav>
+      <a href="/index.html" class="nav-logo">KAORI</a>
+      <div class="nav-right">
+        <span class="admin-badge">ADMIN</span>
+        <span class="nav-email" id="adminEmail">—</span>
+        <button class="btn-logout" onclick="hacerLogout()">Cerrar sesión</button>
+      </div>
+    </nav>
+
+    <div class="dashboard">
+      <div class="dash-header">
+        <h1>Panel de Pedidos</h1>
+        <button class="btn-refresh" onclick="renderOrders()">↻ Actualizar</button>
+      </div>
+
+      <!-- STATS -->
+      <div class="stats">
+        <div class="stat-card">
+          <p class="stat-val"        id="statTotal">0</p>
+          <p class="stat-label">Total pedidos</p>
+        </div>
+        <div class="stat-card">
+          <p class="stat-val yellow" id="statPending">0</p>
+          <p class="stat-label">Pendientes</p>
+        </div>
+        <div class="stat-card">
+          <p class="stat-val green"  id="statRevenue">0 €</p>
+          <p class="stat-label">Facturación total</p>
+        </div>
+      </div>
+
+      <!-- FILTROS -->
+      <div class="filters">
+        <div class="search-wrap">
+          <span class="search-icon">🔍</span>
+          <input type="text" placeholder="Buscar por nombre o email..." id="searchAdmin" oninput="renderOrders()" />
+        </div>
+        <div class="status-filters">
+          <button class="filter-pill active" onclick="setFilter('all',this)">Todos</button>
+          <button class="filter-pill" onclick="setFilter('pending',this)">Pendiente</button>
+          <button class="filter-pill" onclick="setFilter('processing',this)">En proceso</button>
+          <button class="filter-pill" onclick="setFilter('shipped',this)">Enviado</button>
+          <button class="filter-pill" onclick="setFilter('delivered',this)">Entregado</button>
+          <button class="filter-pill" onclick="setFilter('cancelled',this)">Cancelado</button>
+        </div>
+      </div>
+
+      <!-- LISTA DE PEDIDOS -->
+      <div class="orders-list" id="ordersList"></div>
+
+      <!-- LISTA DE USUARIOS -->
+      <h2 class="section-title">👥 Usuarios registrados</h2>
+      <div class="users-list" id="usersList">
+        <p style="color:#9ca3af;font-size:0.875rem">Cargando usuarios...</p>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/supabase.js"></script>
+  <script src="/auth.js"></script>
+  <script>
+    // ─── DATOS ────────────────────────────────────────────────────────────────
+    const STATUS = {
+      pending:    { label: 'Pendiente',  cls: 's-pending'    },
+      processing: { label: 'En proceso', cls: 's-processing'  },
+      shipped:    { label: 'Enviado',    cls: 's-shipped'     },
+      delivered:  { label: 'Entregado',  cls: 's-delivered'   },
+      cancelled:  { label: 'Cancelado',  cls: 's-cancelled'   },
+    };
+
+    let orders = [
+      {
+        id: '1', customer_name: 'Ana García', customer_email: 'ana@email.com',
+        customer_phone: '600 111 222', status: 'pending', total: 40.95,
+        shipping_cost: 4.95, created_date: new Date().toISOString(),
+        shipping_address: 'Calle Mayor 1', shipping_city: 'Madrid',
+        shipping_postal_code: '28001', payment_method: 'stripe', notes: '',
+        items: [{ product_name: 'Vela de Lavanda', quantity: 2, price: 18 }]
+      },
+      {
+        id: '2', customer_name: 'Laura Martínez', customer_email: 'laura@email.com',
+        customer_phone: '600 333 444', status: 'shipped', total: 72.00,
+        shipping_cost: 0, created_date: new Date(Date.now()-86400000).toISOString(),
+        shipping_address: 'Av. Libertad 5', shipping_city: 'Barcelona',
+        shipping_postal_code: '08001', payment_method: 'transfer', notes: 'Sin gluten',
+        items: [
+          { product_name: 'Amatista Natural',  quantity: 1, price: 24 },
+          { product_name: 'Collar de Cuarzo',  quantity: 1, price: 32 },
+        ]
+      },
+    ];
+
+    let filterStatus = 'all';
+
+    // ─── PROTECCIÓN REAL ──────────────────────────────────────────────────────
+    // protegerPagina('admin') hace tres cosas:
+    // 1. Comprueba que hay sesión activa
+    // 2. Consulta el rol en Supabase (no en localStorage)
+    // 3. Si el rol no es 'admin' redirige a /acceso-denegado.html
+    (async () => {
+      const rol = await protegerPagina('admin');
+      if (!rol) return; // ya redirigió
+
+      // Cargar email del admin en el navbar
+      const usuario = await obtenerUsuario();
+      if (usuario) {
+        document.getElementById('adminEmail').textContent = usuario.email;
+      }
+
+      // Mostrar dashboard
+      document.getElementById('loadingScreen').style.display = 'none';
+      document.getElementById('mainContent').style.display   = '';
+
+      // Cargar datos
+      renderOrders();
+      cargarUsuarios();
+    })();
+
+    // ─── CERRAR SESIÓN ────────────────────────────────────────────────────────
+    async function hacerLogout() {
+      await cerrarSesion();
+      window.location.href = '/login.html';
+    }
+
+    // ─── FILTROS ──────────────────────────────────────────────────────────────
+    function setFilter(status, btn) {
+      filterStatus = status;
+      document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      renderOrders();
+    }
+
+    // ─── RENDER PEDIDOS ───────────────────────────────────────────────────────
+    function renderOrders() {
+      const q = document.getElementById('searchAdmin').value.toLowerCase();
+      const filtered = orders.filter(o => {
+        const matchSearch = !q
+          || o.customer_name.toLowerCase().includes(q)
+          || o.customer_email.toLowerCase().includes(q);
+        const matchStatus = filterStatus === 'all' || o.status === filterStatus;
+        return matchSearch && matchStatus;
+      });
+
+      const nonCancelled = orders.filter(o => o.status !== 'cancelled');
+      document.getElementById('statTotal').textContent   = orders.length;
+      document.getElementById('statPending').textContent = orders.filter(o => o.status === 'pending').length;
+      document.getElementById('statRevenue').textContent = nonCancelled.reduce((s,o) => s + o.total, 0).toFixed(2) + ' €';
+
+      const list = document.getElementById('ordersList');
+      if (!filtered.length) {
+        list.innerHTML = '<div class="empty-state"><p style="font-size:2rem">📦</p><p>No hay pedidos</p></div>';
+        return;
+      }
+
+      list.innerHTML = filtered.map(o => {
+        const st   = STATUS[o.status] || STATUS.pending;
+        const date = new Date(o.created_date).toLocaleDateString('es-ES');
+        const items = o.items.map(i =>
+          `<div class="detail-item">
+            <span>${i.product_name} × ${i.quantity}</span>
+            <span>${(i.price * i.quantity).toFixed(2)} €</span>
+          </div>`
+        ).join('');
+        const statusBtns = Object.entries(STATUS).map(([k,v]) =>
+          `<button class="status-btn"
+            onclick="changeStatus('${o.id}','${k}')"
+            style="${o.status===k ? 'background:#f3e8ff;border-color:#a855f7;color:#6d28d9' : ''}">
+            ${v.label}
+          </button>`
+        ).join('');
+
+        return `
+          <div class="order-row" id="order-${o.id}">
+            <div class="order-header" onclick="toggleOrder('${o.id}')">
+              <div class="order-name">
+                <strong>${o.customer_name}</strong>
+                <span>${o.customer_email} · ${o.customer_phone}</span>
+              </div>
+              <span class="status-badge ${st.cls}">${st.label}</span>
+              <div class="order-total">
+                <strong>${o.total.toFixed(2)} €</strong>
+                <span>${date}</span>
+              </div>
+              <button class="btn-delete" onclick="event.stopPropagation();showConfirmDelete('${o.id}')">🗑️</button>
+              <span id="chevron-${o.id}">▼</span>
+            </div>
+            <div class="confirm-delete" id="confirm-${o.id}">
+              <p>¿Eliminar este pedido?</p>
+              <div class="confirm-btns">
+                <button class="btn-cancel-del"  onclick="hideConfirmDelete('${o.id}')">Cancelar</button>
+                <button class="btn-confirm-del" onclick="deleteOrder('${o.id}')">Eliminar</button>
+              </div>
+            </div>
+            <div class="order-details" id="details-${o.id}">
+              <p class="details-label">Productos</p>
+              ${items}
+              <div class="detail-item">
+                <span>Envío</span>
+                <span>${o.shipping_cost === 0 ? 'Gratis' : o.shipping_cost.toFixed(2) + ' €'}</span>
+              </div>
+              ${o.shipping_address
+                ? `<br/><p class="details-label">Dirección</p>
+                   <p style="font-size:0.875rem;color:#4b5563">
+                     ${o.shipping_address}, ${o.shipping_city} ${o.shipping_postal_code}
+                   </p>`
+                : ''}
+              ${o.notes
+                ? `<br/><p class="details-label">Notas</p>
+                   <p style="font-size:0.875rem;color:#4b5563">${o.notes}</p>`
+                : ''}
+              <br/>
+              <p class="details-label">Cambiar Estado</p>
+              <div class="change-status">${statusBtns}</div>
+            </div>
+          </div>`;
+      }).join('');
+    }
+
+    function toggleOrder(id) {
+      const det  = document.getElementById('details-' + id);
+      const chev = document.getElementById('chevron-' + id);
+      const open = det.style.display === 'block';
+      det.style.display = open ? 'none' : 'block';
+      chev.textContent  = open ? '▼' : '▲';
+    }
+    function showConfirmDelete(id) { document.getElementById('confirm-' + id).style.display = 'flex'; }
+    function hideConfirmDelete(id) { document.getElementById('confirm-' + id).style.display = 'none'; }
+    function deleteOrder(id) {
+      orders = orders.filter(o => o.id !== id);
+      renderOrders();
+    }
+    function changeStatus(id, status) {
+      orders = orders.map(o => o.id === id ? { ...o, status } : o);
+      renderOrders();
+    }
+
+    // ─── CARGAR USUARIOS DESDE SUPABASE ───────────────────────────────────────
+    async function cargarUsuarios() {
+      const { data, error } = await db
+        .from('profiles')
+        .select('id, email, role, created_at')
+        .order('created_at', { ascending: false });
+
+      const list = document.getElementById('usersList');
+
+      if (error || !data?.length) {
+        list.innerHTML = '<p style="color:#9ca3af;font-size:0.875rem">No hay usuarios registrados todavía.</p>';
+        return;
+      }
+
+      list.innerHTML = data.map(u => {
+        const fecha = new Date(u.created_at).toLocaleDateString('es-ES');
+        return `
+          <div class="user-row">
+            <div class="user-info">
+              <strong>${u.email}</strong>
+              <span>Registrado el ${fecha}</span>
+            </div>
+            <span class="role-badge ${u.role === 'admin' ? 'role-admin' : 'role-client'}">
+              ${u.role === 'admin' ? '👑 Admin' : '👤 Cliente'}
+            </span>
+          </div>`;
+      }).join('');
+    }
+  </script>
+</body>
+</html>
