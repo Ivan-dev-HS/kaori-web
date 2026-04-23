@@ -20,10 +20,9 @@
 
     /* ── PÁGINA ── */
     .checkout-page { max-width: 72rem; margin: 0 auto; padding: 6rem 1.5rem 4rem; }
-    .breadcrumb { margin-bottom: 1.5rem; font-size: 0.875rem; }
-    .breadcrumb a { color: #7c3aed; }
-    .breadcrumb a:hover { text-decoration: underline; }
-    h1.page-title { font-size: clamp(1.8rem, 4vw, 2.5rem); color: #4c1d95; margin-bottom: 2rem; }
+    .breadcrumb { margin-bottom: 1.5rem; font-size: 0.875rem; color: #7c3aed; cursor: pointer; display: inline-block; }
+    .breadcrumb:hover { text-decoration: underline; }
+    h1.page-title { font-size: clamp(1.5rem, 4vw, 2.5rem); color: #4c1d95; margin-bottom: 2rem; font-weight: 400; }
 
     /* ── GRID ── */
     .checkout-grid { display: grid; gap: 2rem; }
@@ -31,15 +30,15 @@
 
     /* ── CARDS ── */
     .card { background: white; border-radius: 1rem; padding: 1.5rem; border: 1px solid #f3e8ff; margin-bottom: 1.5rem; }
-    .card h2 { font-size: 1.2rem; color: #4c1d95; margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.7rem; }
-    .step-num { width: 32px; height: 32px; border-radius: 50%; background: #f3e8ff; color: #7c3aed; font-size: 0.85rem; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; font-family: 'Nunito', sans-serif; }
+    .card h2 { font-size: 1.1rem; color: #4c1d95; margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.7rem; font-family: 'Nunito', sans-serif; font-weight: 700; }
+    .step-num { width: 30px; height: 30px; border-radius: 50%; background: #f3e8ff; color: #7c3aed; font-size: 0.82rem; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
 
     /* ── FORMULARIO ── */
     .form-row { display: grid; gap: 1rem; }
-    @media(min-width: 640px) { .form-row { grid-template-columns: 1fr 1fr; } }
+    @media(min-width: 600px) { .form-row { grid-template-columns: 1fr 1fr; } }
     .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
     .form-group.full { grid-column: 1 / -1; }
-    label { font-size: 0.875rem; font-weight: 600; color: #4c1d95; }
+    label { font-size: 0.82rem; font-weight: 600; color: #4c1d95; }
     input, textarea { font-family: 'Nunito', sans-serif; border: 1px solid #e9d5ff; border-radius: 0.75rem; padding: 0.7rem 1rem; font-size: 0.9rem; outline: none; background: white; color: #2d1b69; width: 100%; transition: border-color 0.2s; }
     input:focus, textarea:focus { border-color: #a855f7; }
     textarea { resize: none; }
@@ -47,11 +46,11 @@
     /* ── ENVÍO ── */
     .ship-opt { display: flex; align-items: center; gap: 1rem; padding: 1rem; border: 2px solid #f3e8ff; border-radius: 0.75rem; cursor: pointer; margin-bottom: 0.75rem; transition: all 0.15s; }
     .ship-opt.sel { border-color: #7c3aed; background: #faf5ff; }
-    .ship-opt input[type=radio] { accent-color: #7c3aed; width: 18px; height: 18px; flex-shrink: 0; }
+    .ship-opt input[type=radio] { accent-color: #7c3aed; width: 18px; height: 18px; flex-shrink: 0; cursor: pointer; }
     .ship-label { flex: 1; }
     .ship-label strong { display: block; font-size: 0.9rem; color: #4c1d95; }
     .ship-label span   { font-size: 0.8rem; color: #6b7280; }
-    .ship-cost { font-weight: 700; color: #7c3aed; font-size: 0.9rem; }
+    .ship-cost { font-weight: 700; color: #7c3aed; font-size: 0.9rem; white-space: nowrap; }
 
     /* ── PAGO ── */
     .pay-opt { display: flex; align-items: center; gap: 1rem; padding: 1rem; border: 2px solid #f3e8ff; border-radius: 0.75rem; cursor: pointer; margin-bottom: 0.75rem; transition: all 0.15s; }
@@ -69,58 +68,70 @@
     /* ── RESUMEN ── */
     .summary-sticky { position: sticky; top: 88px; }
     .order-item { display: flex; gap: 0.75rem; margin-bottom: 1rem; align-items: center; }
-    .order-item img { width: 64px; height: 64px; object-fit: cover; border-radius: 0.5rem; flex-shrink: 0; }
-    .order-item-info { flex: 1; }
-    .order-item-info h4 { font-family: 'Nunito', sans-serif; font-weight: 600; font-size: 0.875rem; color: #4c1d95; margin-bottom: 2px; }
+    .order-item img { width: 60px; height: 60px; object-fit: cover; border-radius: 0.5rem; flex-shrink: 0; }
+    .order-item-info { flex: 1; min-width: 0; }
+    .order-item-info h4 { font-family: 'Nunito', sans-serif; font-weight: 600; font-size: 0.82rem; color: #4c1d95; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .order-item-info p  { font-size: 0.75rem; color: #6b7280; }
     .order-item-price   { font-weight: 700; font-size: 0.875rem; color: #4c1d95; white-space: nowrap; }
     .totals { border-top: 1px solid #f3e8ff; padding-top: 1rem; display: flex; flex-direction: column; gap: 0.5rem; }
     .total-row { display: flex; justify-content: space-between; font-size: 0.875rem; color: #4b5563; }
     .total-final { display: flex; justify-content: space-between; font-weight: 700; font-size: 1.1rem; border-top: 1px solid #f3e8ff; padding-top: 0.75rem; margin-top: 0.5rem; color: #4c1d95; }
-    .free-shipping-note { font-size: 0.75rem; color: #a855f7; background: #faf5ff; padding: 0.5rem; border-radius: 0.5rem; text-align: center; margin-top: 0.5rem; }
-    .trust { border-top: 1px solid #f3e8ff; padding-top: 1rem; margin-top: 1rem; display: flex; flex-direction: column; gap: 0.6rem; font-size: 0.875rem; color: #4b5563; }
-
-    /* ── BOTÓN SUBMIT ── */
-    .btn-submit { width: 100%; background: #7c3aed; color: white; border: none; border-radius: 9999px; padding: 1.2rem; font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 1rem; cursor: pointer; transition: background 0.2s; }
-    .btn-submit:hover:not(:disabled) { background: #6d28d9; }
-    .btn-submit:disabled { background: #c4b5fd; cursor: not-allowed; }
+    .free-note { font-size: 0.75rem; color: #a855f7; background: #faf5ff; padding: 0.5rem; border-radius: 0.5rem; text-align: center; margin-top: 0.5rem; }
+    .trust { border-top: 1px solid #f3e8ff; padding-top: 1rem; margin-top: 1rem; display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.82rem; color: #4b5563; }
 
     /* ── CARRITO VACÍO ── */
     .empty-cart { text-align: center; padding: 2rem 0; }
-    .empty-cart p.icon { font-size: 3rem; margin-bottom: 0.75rem; }
-    .empty-cart p.txt  { color: #6b7280; font-size: 0.9rem; margin-bottom: 1.2rem; }
-    .btn-shop { display: inline-block; background: #7c3aed; color: white; border-radius: 9999px; padding: 0.75rem 1.5rem; font-weight: 700; font-size: 0.875rem; }
+    .empty-cart .icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+    .empty-cart p { color: #6b7280; font-size: 0.9rem; margin-bottom: 1rem; }
+    .btn-shop { display: inline-block; background: #7c3aed; color: white; border-radius: 9999px; padding: 0.7rem 1.5rem; font-weight: 700; font-size: 0.875rem; font-family: 'Nunito', sans-serif; }
     .btn-shop:hover { background: #6d28d9; }
 
-    /* ── ÉXITO ── */
-    .success-screen { min-height: 60vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 4rem 1.5rem; padding-top: 100px; }
-    .success-circle { width: 80px; height: 80px; border-radius: 50%; background: #dcfce7; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; margin: 0 auto 1.5rem; }
+    /* ── BOTÓN SUBMIT ── */
+    .btn-submit { width: 100%; background: #7c3aed; color: white; border: none; border-radius: 9999px; padding: 1.1rem; font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 0.95rem; cursor: pointer; transition: background 0.2s; margin-top: 0.5rem; }
+    .btn-submit:hover:not(:disabled) { background: #6d28d9; }
+    .btn-submit:disabled { background: #c4b5fd; cursor: not-allowed; }
 
     /* ── BANNER LOGIN ── */
     .login-banner { background: #faf5ff; border: 1px solid #e9d5ff; border-radius: 0.75rem; padding: 1rem 1.25rem; margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
     .login-banner p { font-size: 0.875rem; color: #4c1d95; }
-    .login-banner a { background: #7c3aed; color: white; border-radius: 9999px; padding: 0.5rem 1.2rem; font-size: 0.82rem; font-weight: 700; }
+    .login-banner a { background: #7c3aed; color: white; border-radius: 9999px; padding: 0.5rem 1.2rem; font-size: 0.82rem; font-weight: 700; font-family: 'Nunito', sans-serif; white-space: nowrap; }
     .login-banner a:hover { background: #6d28d9; }
+
+    /* ── ÉXITO ── */
+    .success-screen { min-height: 60vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 6rem 1.5rem 4rem; }
+    .success-circle { width: 80px; height: 80px; border-radius: 50%; background: #dcfce7; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; margin: 0 auto 1.5rem; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 0 1rem; }
+      .checkout-page { padding: 5rem 1rem 3rem; }
+      .summary-sticky { position: static; }
+      .card-field-row { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      .ship-opt { flex-wrap: wrap; gap: 0.5rem; }
+      .login-banner { flex-direction: column; align-items: flex-start; }
+    }
   </style>
 </head>
 <body>
 
   <nav>
-    <a href="/index.html" class="nav-logo">KAORI</a>
+    <a href="index.html" class="nav-logo">KAORI</a>
     <div class="nav-right">
-      <a href="/login.html" class="nav-cuenta" id="btnCuenta">👤 Mi cuenta</a>
+      <a href="login.html" class="nav-cuenta" id="btnCuenta">👤 Mi cuenta</a>
     </div>
   </nav>
 
   <!-- CHECKOUT -->
   <div class="checkout-page" id="checkoutPage">
-    <nav class="breadcrumb"><a href="/shop.html">← Volver a la tienda</a></nav>
+    <p class="breadcrumb" onclick="window.location.href='shop.html'">← Volver a la tienda</p>
     <h1 class="page-title">Finalizar Compra</h1>
 
     <!-- Banner si no está logueado -->
     <div class="login-banner" id="loginBanner" style="display:none">
       <p>💡 ¿Tienes cuenta? Inicia sesión para guardar tu historial de pedidos.</p>
-      <a href="/login.html">Iniciar sesión</a>
+      <a href="login.html">Iniciar sesión</a>
     </div>
 
     <div class="checkout-grid">
@@ -135,15 +146,15 @@
             <div class="form-row">
               <div class="form-group">
                 <label>Nombre completo *</label>
-                <input name="name" type="text" id="inputName" required />
+                <input name="name" type="text" id="inputName" placeholder="Ana García" required />
               </div>
               <div class="form-group">
                 <label>Email *</label>
-                <input name="email" type="email" id="inputEmail" required />
+                <input name="email" type="email" id="inputEmail" placeholder="tu@email.com" required />
               </div>
               <div class="form-group full">
                 <label>Teléfono *</label>
-                <input name="phone" type="tel" required />
+                <input name="phone" type="tel" placeholder="600 123 456" required />
               </div>
             </div>
           </div>
@@ -158,15 +169,15 @@
               </div>
               <div class="form-group">
                 <label>Ciudad *</label>
-                <input name="city" type="text" required />
+                <input name="city" type="text" placeholder="Madrid" required />
               </div>
               <div class="form-group">
                 <label>Código Postal *</label>
-                <input name="postal" type="text" required />
+                <input name="postal" type="text" placeholder="28001" required />
               </div>
               <div class="form-group full">
-                <label>Notas del pedido (opcional)</label>
-                <textarea name="notes" rows="3" placeholder="Instrucciones especiales..."></textarea>
+                <label>Notas (opcional)</label>
+                <textarea name="notes" rows="2" placeholder="Instrucciones especiales..."></textarea>
               </div>
             </div>
           </div>
@@ -234,24 +245,22 @@
           <button type="submit" class="btn-submit" id="submitBtn">
             Pagar con Stripe · <span id="totalBtn">—</span>
           </button>
-
         </form>
       </div>
 
       <!-- RESUMEN -->
       <div>
         <div class="card summary-sticky">
-          <h2>Resumen del Pedido</h2>
+          <h2 style="font-family:'Nunito',sans-serif;font-weight:700;font-size:1rem;color:#4c1d95;margin-bottom:1rem">
+            Resumen del Pedido
+          </h2>
           <div id="cartSummaryItems"></div>
           <div class="totals">
             <div class="total-row"><span>Subtotal</span><span id="subtotalDisplay">—</span></div>
-            <div class="total-row">
-              <span>Envío</span>
-              <span id="shippingDisplay">—</span>
-            </div>
+            <div class="total-row"><span>Envío</span><span id="shippingDisplay">—</span></div>
             <div class="total-final"><span>Total</span><span id="totalDisplay">—</span></div>
           </div>
-          <p class="free-shipping-note" id="freeShippingNote" style="display:none"></p>
+          <p class="free-note" id="freeNote" style="display:none"></p>
           <div class="trust">
             <div>📦 Empaquetado con mimo</div>
             <div>🚚 Envío en 3–5 días laborables</div>
@@ -263,118 +272,106 @@
     </div>
   </div>
 
-  <!-- PANTALLA DE ÉXITO -->
+  <!-- PANTALLA ÉXITO -->
   <div id="successScreen" class="success-screen" style="display:none">
     <div>
       <div class="success-circle">🛍️</div>
-      <h1 style="font-size:2rem;color:#4c1d95;margin-bottom:1rem">¡Pedido Recibido!</h1>
-      <p style="color:#4b5563;margin-bottom:0.5rem;font-family:'Nunito',sans-serif">
+      <h1 style="font-size:2rem;color:#4c1d95;margin-bottom:1rem;font-weight:400">¡Pedido Recibido!</h1>
+      <p style="color:#4b5563;margin-bottom:0.5rem;font-size:0.95rem">
         Gracias por tu compra. Nos pondremos en contacto contigo para gestionar el pago.
       </p>
-      <p style="color:#6b7280;font-size:0.875rem;margin-bottom:2rem;font-family:'Nunito',sans-serif">
+      <p style="color:#6b7280;font-size:0.82rem;margin-bottom:2rem">
         Te hemos enviado un email de confirmación.
       </p>
-      <a href="/shop.html" style="background:#7c3aed;color:white;padding:1rem 2rem;border-radius:9999px;font-weight:700;font-family:'Nunito',sans-serif">
+      <a href="shop.html" style="background:#7c3aed;color:white;padding:1rem 2rem;border-radius:9999px;font-weight:700;font-family:'Nunito',sans-serif;display:inline-block">
         Seguir Comprando
       </a>
     </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="/supabase.js"></script>
-  <script src="/auth.js"></script>
+  <script src="supabase.js"></script>
+  <script src="auth.js"></script>
   <script>
-    // ─── ESTADO ───────────────────────────────────────────────────────────────
-    let shippingCost    = 4.95;
-    let currentPayType  = 'stripe';
+    let shippingCost   = 4.95;
+    let currentPayType = 'stripe';
 
-    // ─── CARRITO ──────────────────────────────────────────────────────────────
+    // ── Carrito ───────────────────────────────────────────────────────────────
     function getCarrito() {
       try { return JSON.parse(localStorage.getItem('kaori_cart') || '[]'); }
       catch { return []; }
     }
 
-    // ─── RENDER RESUMEN ───────────────────────────────────────────────────────
+    // ── Render resumen ────────────────────────────────────────────────────────
     function renderResumen() {
       const cart      = getCarrito();
       const container = document.getElementById('cartSummaryItems');
-
       if (!cart.length) {
         container.innerHTML = `
           <div class="empty-cart">
-            <p class="icon">🛒</p>
-            <p class="txt">Tu carrito está vacío.</p>
-            <a href="/shop.html" class="btn-shop">Ir a la tienda →</a>
+            <div class="icon">🛒</div>
+            <p>Tu carrito está vacío.</p>
+            <a href="shop.html" class="btn-shop">Ir a la tienda →</a>
           </div>`;
         document.getElementById('submitBtn').disabled = true;
         return;
       }
-
-      container.innerHTML = cart.map(item => `
+      container.innerHTML = cart.map(i => `
         <div class="order-item">
-          <img src="${item.image}" alt="${item.name}" />
+          <img src="${i.image}" alt="${i.name}"
+               onerror="this.src='https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=200&q=60'" />
           <div class="order-item-info">
-            <h4>${item.name}</h4>
-            <p>Cantidad: ${item.quantity}</p>
+            <h4>${i.name}</h4>
+            <p>Cantidad: ${i.quantity}</p>
           </div>
-          <span class="order-item-price">${(item.price * item.quantity).toFixed(2)} €</span>
+          <span class="order-item-price">${(i.price * i.quantity).toFixed(2)} €</span>
         </div>`).join('');
-
       actualizarTotales();
     }
 
-    // ─── TOTALES ──────────────────────────────────────────────────────────────
+    // ── Totales ───────────────────────────────────────────────────────────────
     function actualizarTotales() {
       const subtotal = getCarrito().reduce((s,i) => s + i.price * i.quantity, 0);
       const total    = subtotal + shippingCost;
-
-      document.getElementById('subtotalDisplay').textContent = subtotal.toFixed(2) + ' €';
-      document.getElementById('shippingDisplay').textContent =
-        shippingCost === 0 ? 'Gratis' : shippingCost.toFixed(2) + ' €';
-      document.getElementById('shippingDisplay').style.color =
-        shippingCost === 0 ? '#16a34a' : '';
-      document.getElementById('totalDisplay').textContent = total.toFixed(2) + ' €';
-
-      // Nota envío gratis
-      const nota = document.getElementById('freeShippingNote');
+      document.getElementById('subtotalDisplay').textContent  = subtotal.toFixed(2) + ' €';
+      const sd = document.getElementById('shippingDisplay');
+      sd.textContent  = shippingCost === 0 ? 'Gratis' : shippingCost.toFixed(2) + ' €';
+      sd.style.color  = shippingCost === 0 ? '#16a34a' : '';
+      document.getElementById('totalDisplay').textContent     = total.toFixed(2) + ' €';
+      const nota = document.getElementById('freeNote');
       if (subtotal < 50 && shippingCost > 0) {
-        nota.textContent = `¡Añade ${(50 - subtotal).toFixed(2)} € más para envío gratis!`;
-        nota.style.display = '';
+        nota.textContent    = `¡Añade ${(50 - subtotal).toFixed(2)} € más para envío gratis!`;
+        nota.style.display  = '';
       } else {
-        nota.style.display = 'none';
+        nota.style.display  = 'none';
       }
-
-      // Actualizar botón submit
-      const label = currentPayType === 'stripe' ? 'Pagar con Stripe · ' : 'Confirmar Pedido · ';
       document.getElementById('submitBtn').innerHTML =
-        `${label}<span id="totalBtn">${total.toFixed(2)} €</span>`;
+        `${currentPayType === 'stripe' ? 'Pagar con Stripe' : 'Confirmar Pedido'} · <span id="totalBtn">${total.toFixed(2)} €</span>`;
     }
 
-    // ─── ENVÍO ────────────────────────────────────────────────────────────────
+    // ── Envío ─────────────────────────────────────────────────────────────────
     function selectShipping(el, cost) {
       document.querySelectorAll('.ship-opt').forEach(o => o.classList.remove('sel'));
       el.classList.add('sel');
       el.querySelector('input').checked = true;
       shippingCost = cost;
-      // Ocultar dirección si es recogida en tienda
       document.getElementById('addressCard').style.display = cost === 0 ? 'none' : '';
       actualizarTotales();
     }
 
-    // ─── PAGO ─────────────────────────────────────────────────────────────────
+    // ── Pago ──────────────────────────────────────────────────────────────────
     function selectPayment(type) {
       currentPayType = type;
-      ['stripe', 'transfer'].forEach(t => {
+      ['stripe','transfer'].forEach(t => {
         document.getElementById('po-' + t).classList.toggle('sel', t === type);
-        const dot = document.getElementById('pd-' + t);
-        dot.classList.toggle('checked', t === type);
+        document.getElementById('pd-' + t).classList.toggle('checked', t === type);
       });
       document.getElementById('cardFields').style.display   = type === 'stripe'   ? '' : 'none';
       document.getElementById('transferInfo').style.display = type === 'transfer' ? '' : 'none';
       actualizarTotales();
     }
 
-    // ─── FORMATO TARJETA ──────────────────────────────────────────────────────
+    // ── Formato tarjeta ───────────────────────────────────────────────────────
     function fmtCard(el) {
       let v = el.value.replace(/\D/g,'').slice(0,16);
       el.value = v.replace(/(\d{4})/g,'$1 ').trim();
@@ -385,48 +382,37 @@
       el.value = v;
     }
 
-    // ─── SUBMIT ───────────────────────────────────────────────────────────────
+    // ── Submit ────────────────────────────────────────────────────────────────
     async function submitOrder(e) {
       e.preventDefault();
-      const cart = getCarrito();
-      if (!cart.length) { alert('Tu carrito está vacío.'); return; }
-
+      if (!getCarrito().length) { alert('Tu carrito está vacío.'); return; }
       const btn = document.getElementById('submitBtn');
       btn.disabled    = true;
       btn.textContent = 'Procesando...';
-
-      // TODO: aquí conectarás con tu backend o Supabase para guardar el pedido
-      // y enviar el email de confirmación
       await new Promise(r => setTimeout(r, 1500));
-
-      // Limpiar carrito
       localStorage.removeItem('kaori_cart');
-
       document.getElementById('checkoutPage').style.display  = 'none';
       document.getElementById('successScreen').style.display = 'flex';
     }
 
-    // ─── NAVBAR + PREFILL + BANNER ────────────────────────────────────────────
+    // ── Navbar + prefill ──────────────────────────────────────────────────────
     (async () => {
-      const sesion = await obtenerSesion();
-      const btn    = document.getElementById('btnCuenta');
-
-      if (sesion) {
-        // Rellenar email automáticamente si está logueado
-        const usuario = await obtenerUsuario();
-        if (usuario) {
-          document.getElementById('inputEmail').value = usuario.email;
+      try {
+        const sesion = await obtenerSesion();
+        const btn    = document.getElementById('btnCuenta');
+        if (sesion) {
+          const usuario = await obtenerUsuario();
+          if (usuario) document.getElementById('inputEmail').value = usuario.email;
+          const rol       = await obtenerRol();
+          btn.href        = rol === 'admin' ? 'admin.html' : 'mi-cuenta.html';
+          btn.textContent = rol === 'admin' ? '👑 Panel Admin' : '👤 Mi cuenta';
+        } else {
+          document.getElementById('loginBanner').style.display = '';
         }
-        const rol = await obtenerRol();
-        btn.href        = rol === 'admin' ? '/admin.html' : '/mi-cuenta.html';
-        btn.textContent = rol === 'admin' ? '👑 Panel Admin' : '👤 Mi cuenta';
-      } else {
-        // Mostrar banner de login
-        document.getElementById('loginBanner').style.display = '';
-      }
+      } catch(e) {}
     })();
 
-    // ─── INIT ─────────────────────────────────────────────────────────────────
+    // ── Init ──────────────────────────────────────────────────────────────────
     renderResumen();
   </script>
 </body>
