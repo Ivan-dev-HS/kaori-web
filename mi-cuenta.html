@@ -10,6 +10,12 @@
     body { font-family: 'Nunito', sans-serif; background: #faf8f5; color: #2d1b69; }
     h1,h2,h3 { font-family: 'Cormorant Garamond', serif; }
 
+    /* ── LOADING ── */
+    .loading { min-height: 100vh; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 1rem; }
+    .loading p { color: #6b7280; font-size: 0.9rem; font-family: 'Nunito', sans-serif; }
+    .spinner { width: 36px; height: 36px; border: 3px solid #f3e8ff; border-top-color: #7c3aed; border-radius: 50%; animation: spin 0.8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
     /* ── NAVBAR ── */
     nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; height: 72px; background: rgba(250,248,245,0.97); backdrop-filter: blur(8px); border-bottom: 1px solid #f3e8ff; }
     .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; letter-spacing: 0.2em; color: #4c1d95; text-decoration: none; }
@@ -19,74 +25,102 @@
     .btn-logout { background: none; border: 1px solid #e9d5ff; border-radius: 9999px; padding: 0.4rem 1rem; font-family: 'Nunito', sans-serif; font-size: 0.82rem; color: #7c3aed; cursor: pointer; transition: all 0.2s; }
     .btn-logout:hover { background: #f3e8ff; }
 
+    /* ── HAMBURGER ── */
+    .hamburger { display: none; background: none; border: none; cursor: pointer; padding: 0.5rem; flex-direction: column; gap: 5px; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: #4c1d95; border-radius: 2px; }
+    .mobile-menu { display: none; position: fixed; top: 72px; left: 0; right: 0; background: white; border-bottom: 1px solid #f3e8ff; padding: 1rem 2rem; z-index: 49; flex-direction: column; gap: 0.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+    .mobile-menu a, .mobile-menu button { font-size: 0.95rem; color: #4c1d95; font-weight: 600; padding: 0.6rem 0; border-bottom: 1px solid #faf5ff; display: block; background: none; border-left: none; border-right: none; border-top: none; text-align: left; font-family: 'Nunito', sans-serif; cursor: pointer; width: 100%; }
+    .mobile-menu a:last-child, .mobile-menu button:last-child { border-bottom: none; }
+    .mobile-menu.open { display: flex; }
+
     /* ── PÁGINA ── */
     .page { max-width: 72rem; margin: 0 auto; padding: 6rem 1.5rem 4rem; }
 
     /* ── BIENVENIDA ── */
     .welcome { background: linear-gradient(135deg, #4c1d95, #7c3aed); border-radius: 1.5rem; padding: 2.5rem; margin-bottom: 2rem; color: white; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
-    .welcome h1 { font-size: clamp(1.5rem, 4vw, 2.2rem); font-weight: 300; margin-bottom: 0.4rem; }
+    .welcome h1 { font-size: clamp(1.3rem, 4vw, 2rem); font-weight: 300; margin-bottom: 0.4rem; }
     .welcome p  { color: rgba(255,255,255,0.8); font-size: 0.9rem; }
     .avatar { width: 64px; height: 64px; border-radius: 50%; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; flex-shrink: 0; }
 
-    /* ── GRID DE SECCIONES ── */
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+    /* ── GRID ── */
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin-bottom: 1.5rem; }
 
     /* ── TARJETAS ── */
     .card { background: white; border-radius: 1rem; padding: 1.5rem; border: 1px solid #f3e8ff; }
-    .card h2 { font-size: 1.2rem; color: #4c1d95; margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.5rem; }
-    .card-icon { font-size: 1.1rem; }
+    .card h2 { font-size: 1.1rem; color: #4c1d95; margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.5rem; font-weight: 400; }
 
-    /* ── INFO DE CUENTA ── */
+    /* ── INFO ── */
     .info-row { display: flex; justify-content: space-between; align-items: center; padding: 0.6rem 0; border-bottom: 1px solid #faf5ff; font-size: 0.875rem; }
     .info-row:last-child { border-bottom: none; }
     .info-label { color: #6b7280; }
-    .info-value { color: #2d1b69; font-weight: 600; }
+    .info-value { color: #2d1b69; font-weight: 600; text-align: right; word-break: break-all; }
     .badge-role { background: #f3e8ff; color: #7c3aed; font-size: 0.72rem; font-weight: 700; padding: 3px 10px; border-radius: 9999px; }
 
-    /* ── PEDIDOS ── */
-    .empty-orders { text-align: center; padding: 2rem 0; }
-    .empty-orders p.icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
-    .empty-orders p.txt  { color: #6b7280; font-size: 0.875rem; margin-bottom: 1.2rem; }
-    .btn-shop { display: inline-block; background: #7c3aed; color: white; border-radius: 9999px; padding: 0.7rem 1.5rem; font-weight: 700; font-size: 0.875rem; text-decoration: none; transition: background 0.2s; }
-    .btn-shop:hover { background: #6d28d9; }
-
-    /* ── ACCESOS RÁPIDOS ── */
+    /* ── ACCESOS ── */
     .quick-links { display: flex; flex-direction: column; gap: 0.5rem; }
     .quick-link { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem; border-radius: 0.75rem; text-decoration: none; color: #4c1d95; font-size: 0.875rem; font-weight: 600; transition: background 0.15s; border: 1px solid #f3e8ff; }
     .quick-link:hover { background: #faf5ff; }
-    .quick-link span.ql-icon { font-size: 1.1rem; width: 32px; height: 32px; background: #f3e8ff; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .ql-icon { font-size: 1rem; width: 32px; height: 32px; background: #f3e8ff; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 
-    /* ── LOADING ── */
-    .loading { min-height: 100vh; display: flex; align-items: center; justify-content: center; }
-    .loading p { color: #6b7280; font-size: 0.9rem; }
+    /* ── PEDIDOS ── */
+    .empty-orders { text-align: center; padding: 2rem 0; }
+    .empty-orders .icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+    .empty-orders p { color: #6b7280; font-size: 0.875rem; margin-bottom: 1.2rem; }
+    .btn-shop { display: inline-block; background: #7c3aed; color: white; border-radius: 9999px; padding: 0.7rem 1.5rem; font-weight: 700; font-size: 0.875rem; text-decoration: none; transition: background 0.2s; font-family: 'Nunito', sans-serif; }
+    .btn-shop:hover { background: #6d28d9; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 0 1rem; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .page { padding: 5rem 1rem 3rem; }
+      .welcome { padding: 1.5rem; }
+    }
+    @media (max-width: 480px) {
+      .grid { grid-template-columns: 1fr; }
+      .avatar { display: none; }
+    }
   </style>
 </head>
 <body>
 
-  <!-- LOADING mientras verificamos sesión -->
+  <!-- LOADING -->
   <div class="loading" id="loadingScreen">
-    <p>Cargando...</p>
+    <div class="spinner"></div>
+    <p>Cargando tu cuenta...</p>
   </div>
 
-  <!-- CONTENIDO (oculto hasta verificar sesión) -->
+  <!-- CONTENIDO -->
   <div id="mainContent" style="display:none">
 
     <nav>
-      <a href="/index.html" class="nav-logo">KAORI</a>
+      <a href="index.html" class="nav-logo">KAORI</a>
       <div class="nav-links">
-        <a href="/shop.html">Tienda</a>
-        <a href="/shop.html">Mis pedidos</a>
+        <a href="shop.html">Tienda</a>
+        <a href="about.html">Nosotras</a>
+        <a href="contact.html">Contacto</a>
         <button class="btn-logout" onclick="hacerLogout()">Cerrar sesión</button>
       </div>
+      <button class="hamburger" onclick="toggleMenu()" aria-label="Menú">
+        <span></span><span></span><span></span>
+      </button>
     </nav>
+
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="shop.html"    onclick="toggleMenu()">Tienda</a>
+      <a href="about.html"   onclick="toggleMenu()">Nosotras</a>
+      <a href="contact.html" onclick="toggleMenu()">Contacto</a>
+      <button onclick="hacerLogout()">Cerrar sesión</button>
+    </div>
 
     <div class="page">
 
       <!-- BIENVENIDA -->
       <div class="welcome">
         <div>
-          <h1>Hola, <span id="userNombre">Usuaria</span> 👋</h1>
-          <p id="userEmail">cargando...</p>
+          <h1>Hola, <span id="userNombre">—</span> 👋</h1>
+          <p id="userEmailSub">—</p>
         </div>
         <div class="avatar">🌸</div>
       </div>
@@ -95,7 +129,7 @@
 
         <!-- INFO DE CUENTA -->
         <div class="card">
-          <h2><span class="card-icon">👤</span> Mi cuenta</h2>
+          <h2>👤 Mi cuenta</h2>
           <div class="info-row">
             <span class="info-label">Email</span>
             <span class="info-value" id="infoEmail">—</span>
@@ -112,18 +146,18 @@
 
         <!-- ACCESOS RÁPIDOS -->
         <div class="card">
-          <h2><span class="card-icon">⚡</span> Accesos rápidos</h2>
+          <h2>⚡ Accesos rápidos</h2>
           <div class="quick-links">
-            <a href="/shop.html" class="quick-link">
+            <a href="shop.html" class="quick-link">
               <span class="ql-icon">🛍️</span> Explorar la tienda
             </a>
-            <a href="/shop.html?category=velas" class="quick-link">
+            <a href="shop.html" class="quick-link">
               <span class="ql-icon">🕯️</span> Velas artesanales
             </a>
-            <a href="/shop.html?category=minerales" class="quick-link">
+            <a href="shop.html" class="quick-link">
               <span class="ql-icon">💎</span> Minerales y cristales
             </a>
-            <a href="/about.html" class="quick-link">
+            <a href="about.html" class="quick-link">
               <span class="ql-icon">🌿</span> Sobre Kaori
             </a>
           </div>
@@ -131,13 +165,13 @@
 
       </div>
 
-      <!-- MIS PEDIDOS -->
+      <!-- PEDIDOS -->
       <div class="card">
-        <h2><span class="card-icon">📦</span> Mis pedidos</h2>
+        <h2>📦 Mis pedidos</h2>
         <div class="empty-orders">
-          <p class="icon">🛒</p>
-          <p class="txt">Todavía no tienes pedidos.<br />¡Explora nuestra tienda y encuentra algo especial!</p>
-          <a href="/shop.html" class="btn-shop">Ir a la tienda →</a>
+          <div class="icon">🛒</div>
+          <p>Todavía no tienes pedidos.<br />¡Explora nuestra tienda y encuentra algo especial!</p>
+          <a href="shop.html" class="btn-shop">Ir a la tienda →</a>
         </div>
       </div>
 
@@ -145,47 +179,62 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="/supabase.js"></script>
-  <script src="/auth.js"></script>
+  <script src="supabase.js"></script>
+  <script src="auth.js"></script>
   <script>
-    // ── Proteger la página: solo usuarios logueados ───────────────────────────
-    // Si no hay sesión → redirige a login automáticamente
+    // ── Proteger página ───────────────────────────────────────────────────────
     (async () => {
-      const rol = await protegerPagina(null); // null = cualquier usuario logueado
-      if (!rol) return; // protegerPagina ya redirigió
+      const rol = await protegerPagina(null);
+      if (!rol) return;
 
-      // Si es admin no debería estar aquí → mandarlo a su panel
+      // Si es admin mandarlo a su panel
       if (rol === 'admin') {
-        window.location.href = '/admin.html';
+        window.location.href = 'admin.html';
         return;
       }
 
       // Cargar datos del usuario
       const usuario = await obtenerUsuario();
-      if (!usuario) return;
+      if (!usuario) {
+        window.location.href = 'login.html';
+        return;
+      }
 
-      // Rellenar la interfaz
+      // Rellenar interfaz
       const nombre = usuario.email.split('@')[0];
       const fecha  = new Date(usuario.created_at).toLocaleDateString('es-ES', {
         year: 'numeric', month: 'long', day: 'numeric'
       });
 
-      document.getElementById('userNombre').textContent = nombre;
-      document.getElementById('userEmail').textContent  = usuario.email;
-      document.getElementById('infoEmail').textContent  = usuario.email;
-      document.getElementById('infoFecha').textContent  = fecha;
-      document.getElementById('infoRol').textContent    = rol;
+      document.getElementById('userNombre').textContent  = nombre;
+      document.getElementById('userEmailSub').textContent = usuario.email;
+      document.getElementById('infoEmail').textContent   = usuario.email;
+      document.getElementById('infoRol').textContent     = rol;
+      document.getElementById('infoFecha').textContent   = fecha;
 
-      // Mostrar contenido y ocultar loading
+      // Mostrar contenido
       document.getElementById('loadingScreen').style.display = 'none';
       document.getElementById('mainContent').style.display   = '';
     })();
 
-    // ── Cerrar sesión ─────────────────────────────────────────────────────────
+    // ── Logout ────────────────────────────────────────────────────────────────
     async function hacerLogout() {
       await cerrarSesion();
-      window.location.href = '/login.html';
+      window.location.href = 'login.html';
     }
+
+    // ── Menú hamburguesa ──────────────────────────────────────────────────────
+    function toggleMenu() {
+      document.getElementById('mobileMenu').classList.toggle('open');
+    }
+    document.addEventListener('click', e => {
+      const menu = document.getElementById('mobileMenu');
+      const ham  = document.querySelector('.hamburger');
+      if (menu && ham && menu.classList.contains('open') &&
+          !menu.contains(e.target) && !ham.contains(e.target)) {
+        menu.classList.remove('open');
+      }
+    });
   </script>
 </body>
 </html>
