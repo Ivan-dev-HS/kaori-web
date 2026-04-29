@@ -5,12 +5,19 @@
 async function registrarUsuario(email, password) {
   try {
     const { data, error } = await db.auth.signUp({
-      email:    email.trim().toLowerCase(),
+      email: email.trim().toLowerCase(),
       password: password,
+      options: {
+        emailRedirectTo: 'https://TU-DOMINIO/login.html'
+      }
     });
-    if (error) return { ok: false, mensaje: traducirError(error.message) };
+
+    if (error) {
+      return { ok: false, mensaje: traducirError(error.message) };
+    }
+
     return { ok: true, usuario: data.user };
-  } catch(e) {
+  } catch (e) {
     return { ok: false, mensaje: 'Error de conexión con Supabase.' };
   }
 }
