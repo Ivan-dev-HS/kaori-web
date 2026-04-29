@@ -112,9 +112,27 @@
     </div>
     <div class="nav-right">
       <a href="login.html" class="nav-cuenta" id="btnCuenta">👤 Mi cuenta</a>
-      <button class="nav-cart" onclick="window.location.href='shop.html'">
-        🛒 <span id="cartCount">0</span>
-      </button>
+      
+<button onclick="CartWidget.toggle()" style="
+  position:relative;
+  background:#7c3aed;color:white;border:none;
+  border-radius:9999px;padding:0.5rem 1.2rem;
+  cursor:pointer;font-family:'Nunito',sans-serif;
+  font-size:0.85rem;font-weight:600;
+  transition:background 0.2s;
+  display:flex;align-items:center;gap:0.4rem;
+" onmouseover="this.style.background='#6d28d9'"
+   onmouseout="this.style.background='#7c3aed'">
+  🛒
+  <span class="cart-count-text">0</span>
+  <span class="cart-count-badge" style="
+    display:none;position:absolute;top:-6px;right:-6px;
+    background:#ec4899;color:white;
+    font-size:0.65rem;font-weight:700;
+    width:18px;height:18px;border-radius:50%;
+    align-items:center;justify-content:center;
+  ">0</span>
+</button>
       <button class="hamburger" onclick="toggleMenu()" aria-label="Abrir menú">
         <span></span><span></span><span></span>
       </button>
@@ -263,5 +281,7 @@
       } catch(e) {}
     })();
   </script>
+  <script src="cart.js"></script>
+
 </body>
 </html>
