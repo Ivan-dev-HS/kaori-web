@@ -8,7 +8,7 @@ async function registrarUsuario(email, password) {
       email: email.trim().toLowerCase(),
       password: password,
       options: {
-        emailRedirectTo: 'https://ivan-dev-hs.github.io/kaori-web/login.html'
+        emailRedirectTo: 'https://kaori.es/login.html'
       }
     });
 
