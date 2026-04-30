@@ -12,34 +12,37 @@
     /* ── NAVBAR ── */
     nav { display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; height: 72px; background: rgba(250,248,245,0.97); border-bottom: 1px solid #f3e8ff; flex-shrink: 0; }
     .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; letter-spacing: 0.2em; color: #4c1d95; }
-    .nav-back  { font-size: 0.85rem; color: #7c3aed; cursor: pointer; display: flex; align-items: center; gap: 0.4rem; }
-    .nav-back:hover { text-decoration: underline; }
+    .nav-back  { font-size: 0.85rem; color: #7c3aed; cursor: pointer; display: flex; align-items: center; gap: 0.4rem; transition: color 0.2s; }
+    .nav-back:hover { color: #4c1d95; }
 
-    /* ── CONTENEDOR ── */
-    .page { flex: 1; display: flex; align-items: center; justify-content: center; padding: 2rem 1rem; }
-    .card { background: white; border-radius: 1.25rem; padding: 2.5rem 2rem; border: 1px solid #f3e8ff; width: 100%; max-width: 420px; box-shadow: 0 4px 30px rgba(124,58,237,0.07); }
+    /* ── BG ── */
+    .page-bg { flex: 1; display: flex; align-items: center; justify-content: center; padding: 2rem 1rem; position: relative; overflow: hidden; }
+    .page-bg::before { content:''; position:absolute; inset:0; background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 50%, #ede9fe 100%); }
+    .page-bg::after { content:'✦'; position:absolute; font-size:20rem; color:rgba(124,58,237,0.04); top:50%; left:50%; transform:translate(-50%,-50%); pointer-events:none; font-family:'Cormorant Garamond',serif; }
 
-    /* ── CABECERA ── */
-    .card-logo { text-align: center; font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; letter-spacing: 0.2em; color: #4c1d95; margin-bottom: 0.3rem; }
-    .card-sub  { text-align: center; font-size: 0.82rem; color: #6b7280; margin-bottom: 2rem; }
+    /* ── CARD ── */
+    .card { position: relative; background: white; border-radius: 1.5rem; padding: 2.5rem 2rem; border: 1px solid #f3e8ff; width: 100%; max-width: 420px; box-shadow: 0 8px 40px rgba(124,58,237,0.1), 0 2px 8px rgba(0,0,0,0.04); }
+
+    /* ── LOGO ── */
+    .card-logo { text-align: center; font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; letter-spacing: 0.25em; color: #4c1d95; margin-bottom: 0.25rem; font-weight: 300; }
+    .card-sub  { text-align: center; font-size: 0.82rem; color: #9ca3af; margin-bottom: 2rem; }
 
     /* ── TABS ── */
-    .tabs { display: flex; border-bottom: 1px solid #f3e8ff; margin-bottom: 1.75rem; }
-    .tab  { flex: 1; padding: 0.7rem; text-align: center; cursor: pointer; font-size: 0.875rem; color: #6b7280; border: none; border-bottom: 2px solid transparent; background: none; font-family: 'Nunito', sans-serif; transition: all 0.2s; margin-bottom: -1px; }
-    .tab.active { color: #7c3aed; border-bottom-color: #7c3aed; font-weight: 700; }
-    .tab:hover:not(.active) { color: #4c1d95; }
+    .tabs { display: flex; background: #faf5ff; border-radius: 9999px; padding: 0.25rem; margin-bottom: 2rem; }
+    .tab  { flex: 1; padding: 0.65rem; text-align: center; cursor: pointer; font-size: 0.875rem; color: #6b7280; border: none; background: none; font-family: 'Nunito', sans-serif; border-radius: 9999px; transition: all 0.2s; font-weight: 600; }
+    .tab.active { background: white; color: #7c3aed; box-shadow: 0 2px 8px rgba(124,58,237,0.12); }
 
     /* ── FORMULARIO ── */
     .form-group { display: flex; flex-direction: column; gap: 5px; margin-bottom: 1rem; }
-    label { font-size: 0.8rem; font-weight: 600; color: #4c1d95; }
-    input { font-family: 'Nunito', sans-serif; border: 1px solid #e9d5ff; border-radius: 0.75rem; padding: 0.78rem 1rem; font-size: 0.9rem; outline: none; width: 100%; transition: border-color 0.2s; color: #2d1b69; background: white; }
-    input:focus { border-color: #a855f7; box-shadow: 0 0 0 3px rgba(168,85,247,0.08); }
-    .input-hint { font-size: 0.75rem; color: #9ca3af; margin-top: 2px; }
+    label { font-size: 0.8rem; font-weight: 700; color: #4c1d95; }
+    input { font-family: 'Nunito', sans-serif; border: 1.5px solid #e9d5ff; border-radius: 0.75rem; padding: 0.82rem 1rem; font-size: 0.9rem; outline: none; width: 100%; transition: all 0.2s; color: #2d1b69; background: white; }
+    input:focus { border-color: #a855f7; box-shadow: 0 0 0 3px rgba(168,85,247,0.1); }
+    .input-hint { font-size: 0.72rem; color: #9ca3af; }
 
     /* ── BOTÓN ── */
-    .btn { width: 100%; background: #7c3aed; color: white; border: none; border-radius: 9999px; padding: 0.9rem; font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 0.95rem; cursor: pointer; margin-top: 0.5rem; transition: background 0.2s; }
-    .btn:hover:not(:disabled) { background: #6d28d9; }
-    .btn:disabled { background: #c4b5fd; cursor: not-allowed; }
+    .btn { width: 100%; background: linear-gradient(135deg, #7c3aed, #6d28d9); color: white; border: none; border-radius: 9999px; padding: 0.95rem; font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 0.95rem; cursor: pointer; margin-top: 0.5rem; transition: all 0.2s; box-shadow: 0 4px 14px rgba(124,58,237,0.3); }
+    .btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(124,58,237,0.4); }
+    .btn:disabled { background: #c4b5fd; cursor: not-allowed; box-shadow: none; transform: none; }
 
     /* ── MENSAJES ── */
     .mensaje { font-size: 0.82rem; text-align: center; padding: 0.7rem 1rem; border-radius: 0.6rem; margin-top: 1rem; display: none; line-height: 1.5; }
@@ -53,20 +56,24 @@
     .divider span { font-size: 0.75rem; color: #9ca3af; white-space: nowrap; }
 
     /* ── LINKS ── */
-    .links-row { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; }
-    .link-btn { background: none; border: 1px solid #e9d5ff; border-radius: 9999px; padding: 0.6rem 1.2rem; font-family: 'Nunito', sans-serif; font-size: 0.82rem; color: #4c1d95; cursor: pointer; transition: all 0.2s; text-decoration: none; display: inline-block; }
-    .link-btn:hover { background: #faf5ff; border-color: #c4b5fd; }
+    .links-row { display: flex; justify-content: center; gap: 0.75rem; flex-wrap: wrap; }
+    .link-btn { background: #faf5ff; border: 1px solid #f3e8ff; border-radius: 9999px; padding: 0.55rem 1.1rem; font-family: 'Nunito', sans-serif; font-size: 0.8rem; color: #4c1d95; cursor: pointer; transition: all 0.2s; text-decoration: none; display: inline-block; font-weight: 600; }
+    .link-btn:hover { background: #f3e8ff; border-color: #c4b5fd; transform: translateY(-1px); }
 
     /* ── FOOTER CARD ── */
-    .card-footer { text-align: center; margin-top: 1.5rem; font-size: 0.8rem; color: #9ca3af; }
+    .card-footer { text-align: center; margin-top: 1.5rem; font-size: 0.78rem; color: #9ca3af; }
     .card-footer a { color: #7c3aed; text-decoration: none; font-weight: 600; }
     .card-footer a:hover { text-decoration: underline; }
+
+    /* ── TRUST ── */
+    .trust-row { display: flex; justify-content: center; gap: 1.5rem; margin-top: 1.5rem; flex-wrap: wrap; }
+    .trust-item { display: flex; align-items: center; gap: 0.3rem; font-size: 0.72rem; color: #9ca3af; }
 
     /* ── RESPONSIVE ── */
     @media (max-width: 480px) {
       nav { padding: 0 1rem; }
       .card { padding: 2rem 1.25rem; border-radius: 1rem; }
-      .card-logo { font-size: 1.8rem; }
+      .card-logo { font-size: 2rem; }
     }
   </style>
 </head>
@@ -77,8 +84,9 @@
     <a href="shop.html" class="nav-back">← Volver a la tienda</a>
   </nav>
 
-  <div class="page">
-    <div class="card">
+  <div class="page-bg">
+    <div class="card" data-animate="zoom-in">
+
       <p class="card-logo">KAORI</p>
       <p class="card-sub">Accede a tu cuenta o crea una nueva</p>
 
@@ -88,7 +96,7 @@
         <button class="tab"        onclick="mostrarTab('registro')" id="tab-registro">Crear cuenta</button>
       </div>
 
-      <!-- ── FORMULARIO LOGIN ── -->
+      <!-- LOGIN -->
       <div id="form-login">
         <div class="form-group">
           <label for="login-email">Email</label>
@@ -107,7 +115,7 @@
         <p class="mensaje" id="msg-login"></p>
       </div>
 
-      <!-- ── FORMULARIO REGISTRO ── -->
+      <!-- REGISTRO -->
       <div id="form-registro" style="display:none">
         <div class="form-group">
           <label for="reg-email">Email</label>
@@ -132,12 +140,18 @@
         <p class="mensaje" id="msg-registro"></p>
       </div>
 
-      <div class="divider"><span>o</span></div>
+      <div class="divider"><span>o continúa como visitante</span></div>
 
       <div class="links-row">
         <a href="index.html" class="link-btn">🏠 Inicio</a>
         <a href="shop.html"  class="link-btn">🛍️ Tienda</a>
         <a href="about.html" class="link-btn">🌿 Nosotras</a>
+      </div>
+
+      <div class="trust-row">
+        <span class="trust-item">🔒 Conexión segura</span>
+        <span class="trust-item">🛡️ Datos protegidos</span>
+        <span class="trust-item">✨ Sin spam</span>
       </div>
 
       <p class="card-footer">
@@ -150,8 +164,9 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase.js"></script>
   <script src="auth.js"></script>
+  <script src="animations.js"></script>
   <script>
-    // ── Si ya hay sesión redirige directamente ────────────────────────────────
+    // ── Si ya hay sesión redirige ──────────────────────────────────────────────
     (async () => {
       try {
         const sesion = await obtenerSesion();
@@ -159,27 +174,27 @@
           const rol = await obtenerRol();
           redirigirSegunRol(rol);
         }
-      } catch(e) { /* Supabase no configurado */ }
+      } catch(e) {}
     })();
 
     function redirigirSegunRol(rol) {
       window.location.href = rol === 'admin' ? 'admin.html' : 'mi-cuenta.html';
     }
 
-    // ── Cambiar tabs ──────────────────────────────────────────────────────────
+    // ── Tabs ──────────────────────────────────────────────────────────────────
     function mostrarTab(tab) {
       document.getElementById('form-login').style.display    = tab === 'login'    ? '' : 'none';
       document.getElementById('form-registro').style.display = tab === 'registro' ? '' : 'none';
       document.getElementById('tab-login').classList.toggle('active',    tab === 'login');
       document.getElementById('tab-registro').classList.toggle('active', tab === 'registro');
-      // Limpiar mensajes
       ['msg-login','msg-registro'].forEach(id => {
-        document.getElementById(id).className = 'mensaje';
-        document.getElementById(id).textContent = '';
+        const el = document.getElementById(id);
+        el.className = 'mensaje';
+        el.textContent = '';
       });
     }
 
-    // ── LOGIN ─────────────────────────────────────────────────────────────────
+    // ── Login ─────────────────────────────────────────────────────────────────
     async function hacerLogin() {
       const email = document.getElementById('login-email').value.trim();
       const pass  = document.getElementById('login-pass').value;
@@ -192,7 +207,7 @@
       }
 
       btn.disabled    = true;
-      btn.textContent = 'Entrando...';
+      btn.textContent = '⏳ Entrando...';
 
       try {
         const resultado = await iniciarSesion(email, pass);
@@ -212,7 +227,7 @@
       }
     }
 
-    // ── REGISTRO ──────────────────────────────────────────────────────────────
+    // ── Registro ──────────────────────────────────────────────────────────────
     async function hacerRegistro() {
       const email = document.getElementById('reg-email').value.trim();
       const pass  = document.getElementById('reg-pass').value;
@@ -232,14 +247,13 @@
         mostrarMensaje(msg, 'La contraseña debe tener al menos 6 caracteres.', 'error');
         return;
       }
-      // Validación básica de email
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
         mostrarMensaje(msg, 'El formato del email no es válido.', 'error');
         return;
       }
 
       btn.disabled    = true;
-      btn.textContent = 'Creando cuenta...';
+      btn.textContent = '⏳ Creando cuenta...';
 
       try {
         const resultado = await registrarUsuario(email, pass);
@@ -250,16 +264,16 @@
           mostrarMensaje(msg, resultado.mensaje, 'error');
           return;
         }
+
         mostrarMensaje(
           msg,
-          '¡Cuenta creada con éxito! Revisa tu email para confirmarla y luego inicia sesión.',
+          '¡Cuenta creada! Revisa tu email para confirmarla y luego inicia sesión.',
           'ok'
         );
-        // Cambiar al tab de login después de 2 segundos
         setTimeout(() => {
           mostrarTab('login');
           document.getElementById('login-email').value = email;
-        }, 2000);
+        }, 2500);
       } catch(e) {
         mostrarMensaje(msg, 'Error de conexión. Comprueba tu configuración de Supabase.', 'error');
         btn.disabled    = false;
@@ -267,7 +281,6 @@
       }
     }
 
-    // ── Mostrar mensaje ───────────────────────────────────────────────────────
     function mostrarMensaje(el, texto, tipo) {
       el.textContent = texto;
       el.className   = 'mensaje ' + tipo;
