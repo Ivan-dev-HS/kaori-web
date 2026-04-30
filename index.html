@@ -12,16 +12,18 @@
     a { text-decoration: none; color: inherit; }
 
     /* ── NAVBAR ── */
-    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; height: 72px; background: rgba(250,248,245,0.97); backdrop-filter: blur(8px); border-bottom: 1px solid #f3e8ff; transition: all 0.3s; }
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; height: 72px; background: rgba(250,248,245,0.97); backdrop-filter: blur(12px); border-bottom: 1px solid #f3e8ff; transition: all 0.3s; }
     .nav-logo  { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; letter-spacing: 0.2em; color: #4c1d95; }
     .nav-links { display: flex; gap: 2rem; align-items: center; }
-    .nav-links a { font-size: 0.85rem; color: #4b5563; transition: color 0.2s; }
+    .nav-links a { font-size: 0.85rem; color: #4b5563; transition: color 0.2s; font-weight: 500; }
     .nav-links a:hover { color: #7c3aed; }
     .nav-right { display: flex; align-items: center; gap: 0.75rem; }
     .nav-cuenta { background: white; color: #7c3aed; border: 1px solid #e9d5ff; border-radius: 9999px; padding: 0.5rem 1.2rem; font-family: 'Nunito', sans-serif; font-size: 0.85rem; font-weight: 600; transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.4rem; }
     .nav-cuenta:hover { background: #f3e8ff; }
-    .nav-cart { background: #7c3aed; color: white; border: none; border-radius: 9999px; padding: 0.5rem 1.2rem; cursor: pointer; font-family: 'Nunito', sans-serif; font-size: 0.85rem; font-weight: 600; transition: background 0.2s; }
-    .nav-cart:hover { background: #6d28d9; }
+    .nav-cart-wrap { position: relative; }
+    .nav-cart-btn { background: #7c3aed; color: white; border: none; border-radius: 9999px; padding: 0.5rem 1.2rem; cursor: pointer; font-family: 'Nunito', sans-serif; font-size: 0.85rem; font-weight: 600; transition: background 0.2s; display: flex; align-items: center; gap: 0.4rem; }
+    .nav-cart-btn:hover { background: #6d28d9; }
+    .cart-count-badge { position: absolute; top: -6px; right: -6px; background: #ec4899; color: white; font-size: 0.65rem; font-weight: 700; width: 18px; height: 18px; border-radius: 50%; display: none; align-items: center; justify-content: center; }
 
     /* ── HAMBURGER ── */
     .hamburger { display: none; background: none; border: none; cursor: pointer; padding: 0.5rem; flex-direction: column; gap: 5px; }
@@ -39,39 +41,40 @@
     .hero h1 em { color: #9333ea; font-style: italic; }
     .hero p { color: #6b7280; font-size: clamp(0.9rem, 2vw, 1.1rem); line-height: 1.7; max-width: 36rem; margin: 0 auto 2.5rem; }
     .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-    .btn-primary { background: #7c3aed; color: white; padding: 1rem 2rem; border-radius: 9999px; font-weight: 700; font-size: 0.95rem; transition: background 0.2s; display: inline-block; border: none; cursor: pointer; font-family: 'Nunito', sans-serif; }
-    .btn-primary:hover { background: #6d28d9; }
-    .btn-outline { border: 2px solid #7c3aed; color: #7c3aed; padding: 1rem 2rem; border-radius: 9999px; font-weight: 600; font-size: 0.95rem; transition: all 0.2s; display: inline-block; background: transparent; cursor: pointer; font-family: 'Nunito', sans-serif; }
-    .btn-outline:hover { background: #7c3aed; color: white; }
+    .btn-primary { background: linear-gradient(135deg, #7c3aed, #6d28d9); color: white; padding: 1rem 2rem; border-radius: 9999px; font-weight: 700; font-size: 0.95rem; transition: all 0.2s; display: inline-block; box-shadow: 0 4px 14px rgba(124,58,237,0.3); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(124,58,237,0.4); }
+    .btn-outline { border: 2px solid #7c3aed; color: #7c3aed; padding: 1rem 2rem; border-radius: 9999px; font-weight: 600; font-size: 0.95rem; transition: all 0.2s; display: inline-block; }
+    .btn-outline:hover { background: #7c3aed; color: white; transform: translateY(-2px); }
 
-    /* ── PRODUCTOS DESTACADOS ── */
+    /* ── FEATURED ── */
     .featured { padding: 5rem 1.5rem; background: white; }
     .featured-inner { max-width: 72rem; margin: 0 auto; }
     .section-label { font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: #a855f7; margin-bottom: 0.5rem; text-align: center; }
     .section-title { font-size: clamp(1.6rem, 4vw, 2.5rem); color: #4c1d95; text-align: center; margin-bottom: 3rem; font-weight: 400; }
     .featured-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.5rem; }
-    .feat-card { background: white; border-radius: 1rem; overflow: hidden; border: 1px solid #f3e8ff; transition: box-shadow 0.2s, transform 0.2s; cursor: pointer; }
-    .feat-card:hover { box-shadow: 0 8px 30px rgba(124,58,237,0.12); transform: translateY(-2px); }
+    .feat-card { background: white; border-radius: 1rem; overflow: hidden; border: 1px solid #f3e8ff; transition: all 0.3s; cursor: pointer; }
+    .feat-card:hover { box-shadow: 0 12px 40px rgba(124,58,237,0.15); transform: translateY(-4px); }
     .feat-img { aspect-ratio: 1; overflow: hidden; background: #faf5ff; position: relative; }
-    .feat-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
-    .feat-card:hover .feat-img img { transform: scale(1.04); }
+    .feat-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
+    .feat-card:hover .feat-img img { transform: scale(1.06); }
     .feat-badge { position: absolute; top: 8px; left: 8px; background: #7c3aed; color: white; font-size: 0.68rem; font-weight: 700; padding: 2px 8px; border-radius: 9999px; }
     .feat-info { padding: 1rem; }
     .feat-cat  { font-size: 0.68rem; color: #a855f7; text-transform: uppercase; letter-spacing: 0.1em; }
     .feat-info h4 { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: #4c1d95; margin: 0.25rem 0; }
     .feat-price { color: #7c3aed; font-weight: 700; font-size: 0.95rem; }
-    .feat-btn { width: 100%; margin-top: 0.75rem; background: #f3e8ff; color: #7c3aed; border: none; border-radius: 9999px; padding: 0.55rem; font-family: 'Nunito', sans-serif; font-weight: 600; cursor: pointer; font-size: 0.82rem; transition: background 0.2s; }
+    .feat-btn { width: 100%; margin-top: 0.75rem; background: #f3e8ff; color: #7c3aed; border: none; border-radius: 9999px; padding: 0.55rem; font-family: 'Nunito', sans-serif; font-weight: 600; cursor: pointer; font-size: 0.82rem; transition: all 0.2s; }
     .feat-btn:hover { background: #7c3aed; color: white; }
     .feat-btn.added { background: #dcfce7; color: #16a34a; }
     .ver-todos { display: block; text-align: center; margin-top: 2.5rem; }
-    .ver-todos a { display: inline-block; background: #7c3aed; color: white; padding: 0.9rem 2.5rem; border-radius: 9999px; font-weight: 700; font-size: 0.95rem; transition: background 0.2s; font-family: 'Nunito', sans-serif; }
-    .ver-todos a:hover { background: #6d28d9; }
+    .ver-todos a { display: inline-block; background: #7c3aed; color: white; padding: 0.9rem 2.5rem; border-radius: 9999px; font-weight: 700; font-size: 0.95rem; transition: all 0.2s; font-family: 'Nunito', sans-serif; }
+    .ver-todos a:hover { background: #6d28d9; transform: translateY(-2px); }
 
     /* ── VALUES ── */
     .values { padding: 5rem 1.5rem; background: #faf5ff; }
     .values-inner { max-width: 72rem; margin: 0 auto; }
     .values-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 2rem; }
-    .value-card { text-align: center; padding: 2rem 1rem; background: white; border-radius: 1rem; border: 1px solid #f3e8ff; }
+    .value-card { text-align: center; padding: 2rem 1rem; background: white; border-radius: 1rem; border: 1px solid #f3e8ff; transition: all 0.3s; }
+    .value-card:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(124,58,237,0.1); }
     .value-icon { width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.2rem; font-size: 1.5rem; }
     .ic-purple { background: #f3e8ff; }
     .ic-green  { background: #dcfce7; }
@@ -80,14 +83,15 @@
     .value-card p  { color: #6b7280; font-size: 0.875rem; line-height: 1.7; }
 
     /* ── ABOUT BANNER ── */
-    .about-banner { padding: 5rem 1.5rem; background: #2e0854; text-align: center; }
-    .about-banner h2 { font-size: clamp(1.8rem, 5vw, 3rem); color: white; margin-bottom: 1rem; font-weight: 400; }
-    .about-banner p  { color: #d8b4fe; max-width: 36rem; margin: 0 auto 2rem; line-height: 1.7; font-size: 0.95rem; }
-    .btn-white { background: white; color: #4c1d95; padding: 1rem 2.5rem; border-radius: 9999px; font-weight: 700; display: inline-block; transition: background 0.2s; font-family: 'Nunito', sans-serif; font-size: 0.95rem; }
-    .btn-white:hover { background: #f5f3ff; }
+    .about-banner { padding: 6rem 1.5rem; background: linear-gradient(135deg, #2e0854, #4c1d95); text-align: center; position: relative; overflow: hidden; }
+    .about-banner::before { content:''; position:absolute; inset:0; background: url('https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=1200&q=40') center/cover; opacity:0.06; }
+    .about-banner h2 { position:relative; font-size: clamp(1.8rem, 5vw, 3rem); color: white; margin-bottom: 1rem; font-weight: 400; }
+    .about-banner p  { position:relative; color: #d8b4fe; max-width: 36rem; margin: 0 auto 2rem; line-height: 1.7; font-size: 0.95rem; }
+    .btn-white { position:relative; background: white; color: #4c1d95; padding: 1rem 2.5rem; border-radius: 9999px; font-weight: 700; display: inline-block; transition: all 0.2s; font-family: 'Nunito', sans-serif; font-size: 0.95rem; }
+    .btn-white:hover { background: #f5f3ff; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
 
     /* ── TOAST ── */
-    #toast { position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%) translateY(80px); background: #4c1d95; color: white; padding: 0.75rem 1.5rem; border-radius: 9999px; font-size: 0.875rem; font-weight: 600; z-index: 200; transition: transform 0.3s; pointer-events: none; white-space: nowrap; font-family: 'Nunito', sans-serif; }
+    #toast { position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%) translateY(80px); background: #4c1d95; color: white; padding: 0.85rem 1.75rem; border-radius: 9999px; font-size: 0.875rem; font-weight: 600; z-index: 200; transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1); pointer-events: none; white-space: nowrap; font-family: 'Nunito', sans-serif; box-shadow: 0 8px 24px rgba(76,29,149,0.3); }
     #toast.show { transform: translateX(-50%) translateY(0); }
 
     /* ── FOOTER ── */
@@ -108,7 +112,7 @@
       .hamburger { display: flex; }
       .hero-btns { flex-direction: column; align-items: center; }
       .btn-primary, .btn-outline { width: 100%; max-width: 280px; text-align: center; }
-      .featured-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 1rem; }
+      .featured-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
       .values-grid { grid-template-columns: repeat(2, 1fr); }
       .footer-inner { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
     }
@@ -133,27 +137,12 @@
     </div>
     <div class="nav-right">
       <a href="login.html" class="nav-cuenta" id="btnCuenta">👤 Mi cuenta</a>
-
-<button onclick="CartWidget.toggle()" style="
-  position:relative;
-  background:#7c3aed;color:white;border:none;
-  border-radius:9999px;padding:0.5rem 1.2rem;
-  cursor:pointer;font-family:'Nunito',sans-serif;
-  font-size:0.85rem;font-weight:600;
-  transition:background 0.2s;
-  display:flex;align-items:center;gap:0.4rem;
-" onmouseover="this.style.background='#6d28d9'"
-   onmouseout="this.style.background='#7c3aed'">
-  🛒
-  <span class="cart-count-text">0</span>
-  <span class="cart-count-badge" style="
-    display:none;position:absolute;top:-6px;right:-6px;
-    background:#ec4899;color:white;
-    font-size:0.65rem;font-weight:700;
-    width:18px;height:18px;border-radius:50%;
-    align-items:center;justify-content:center;
-  ">0</span>
-</button>
+      <div class="nav-cart-wrap">
+        <button class="nav-cart-btn" onclick="CartWidget.toggle()">
+          🛒 <span class="cart-count-text">0</span>
+        </button>
+        <span class="cart-count-badge">0</span>
+      </div>
       <button class="hamburger" onclick="toggleMenu()" aria-label="Abrir menú">
         <span></span><span></span><span></span>
       </button>
@@ -170,7 +159,7 @@
 
   <!-- HERO -->
   <section class="hero">
-    <div class="hero-content">
+    <div class="hero-content" data-animate="fade-up">
       <p class="hero-label">✦ Artesanía con alma ✦</p>
       <h1>Luz, aroma<br />y <em>energía</em><br />en cada pieza</h1>
       <p>Productos artesanales creados con intención, amor y los mejores materiales naturales para transformar tu espacio.</p>
@@ -181,15 +170,13 @@
     </div>
   </section>
 
-  <!-- PRODUCTOS DESTACADOS -->
+  <!-- FEATURED -->
   <section class="featured">
     <div class="featured-inner">
-      <p class="section-label">Más queridos</p>
-      <h2 class="section-title">Productos Destacados</h2>
-      <div class="featured-grid" id="featuredGrid">
-        <!-- Se rellena desde localStorage -->
-      </div>
-      <div class="ver-todos">
+      <p class="section-label" data-animate="fade-up">Más queridos</p>
+      <h2 class="section-title" data-animate="fade-up" data-delay="100">Productos Destacados</h2>
+      <div class="featured-grid" id="featuredGrid"></div>
+      <div class="ver-todos" data-animate="fade-up">
         <a href="shop.html">Ver todos los productos →</a>
       </div>
     </div>
@@ -198,25 +185,25 @@
   <!-- VALUES -->
   <section class="values">
     <div class="values-inner">
-      <p class="section-label">Por qué elegirnos</p>
-      <h2 class="section-title">Hecho con intención</h2>
+      <p class="section-label" data-animate="fade-up">Por qué elegirnos</p>
+      <h2 class="section-title" data-animate="fade-up" data-delay="100">Hecho con intención</h2>
       <div class="values-grid">
-        <div class="value-card">
+        <div class="value-card" data-animate="fade-up" data-delay="100">
           <div class="value-icon ic-purple">🌿</div>
           <h3>100% Natural</h3>
           <p>Ceras vegetales, esencias puras y materiales sostenibles.</p>
         </div>
-        <div class="value-card">
+        <div class="value-card" data-animate="fade-up" data-delay="200">
           <div class="value-icon ic-green">🤲</div>
           <h3>Artesanal</h3>
           <p>Cada pieza se crea a mano con dedicación y cariño.</p>
         </div>
-        <div class="value-card">
+        <div class="value-card" data-animate="fade-up" data-delay="300">
           <div class="value-icon ic-amber">✨</div>
           <h3>Con Energía</h3>
           <p>Elaboramos con intención y vibración positiva.</p>
         </div>
-        <div class="value-card">
+        <div class="value-card" data-animate="fade-up" data-delay="400">
           <div class="value-icon ic-purple">📦</div>
           <h3>Envío Seguro</h3>
           <p>Empaquetado con mimo. Gratis a partir de 50€.</p>
@@ -226,7 +213,7 @@
   </section>
 
   <!-- ABOUT BANNER -->
-  <section class="about-banner">
+  <section class="about-banner" data-animate="fade">
     <h2>Una marca familiar<br />nacida del amor</h2>
     <p>Kaori nació de la pasión por la naturaleza y el arte. Creemos en el poder de los objetos conscientes para transformar espacios y elevar el espíritu.</p>
     <a href="about.html" class="btn-white">Conoce nuestra historia</a>
@@ -235,27 +222,27 @@
   <!-- FOOTER -->
   <footer>
     <div class="footer-inner">
-      <div class="footer-brand">
+      <div class="footer-brand" data-animate="fade-up">
         <h3>KAORI</h3>
         <p>Productos artesanales creados con amor, intención y los mejores materiales naturales.</p>
       </div>
-      <div class="footer-links">
+      <div class="footer-links" data-animate="fade-up" data-delay="100">
         <h4>Tienda</h4>
         <ul>
           <li><a href="shop.html">Todos los productos</a></li>
-          <li><a href="shop.html?category=velas">Velas</a></li>
-          <li><a href="shop.html?category=minerales">Minerales</a></li>
-          <li><a href="shop.html?category=joyeria">Joyería</a></li>
+          <li><a href="shop.html">Velas</a></li>
+          <li><a href="shop.html">Minerales</a></li>
+          <li><a href="shop.html">Joyería</a></li>
         </ul>
       </div>
-      <div class="footer-links">
+      <div class="footer-links" data-animate="fade-up" data-delay="200">
         <h4>Información</h4>
         <ul>
           <li><a href="about.html">Sobre Nosotras</a></li>
           <li><a href="contact.html">Contacto</a></li>
         </ul>
       </div>
-      <div class="footer-links">
+      <div class="footer-links" data-animate="fade-up" data-delay="300">
         <h4>Contacto</h4>
         <ul>
           <li><a href="mailto:info@kaori.es">info@kaori.es</a></li>
@@ -273,17 +260,19 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase.js"></script>
   <script src="auth.js"></script>
+  <script src="cart.js"></script>
+  <script src="animations.js"></script>
   <script>
-    // ── Productos desde localStorage ──────────────────────────────────────────
+    // ── Productos ─────────────────────────────────────────────────────────────
     const PRODUCTOS_DEFAULT = [
-      { id:'1', name:'Vela Artesanal de Lavanda',  category:'velas',     price:18, compare:22,   featured:true,  image:'https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=400&q=80' },
-      { id:'2', name:'Amatista Natural',            category:'minerales', price:24, compare:null, featured:true,  image:'https://images.unsplash.com/photo-1557053910-d9eadeed1c58?w=400&q=80' },
-      { id:'3', name:'Collar de Cuarzo Rosa',       category:'joyeria',   price:32, compare:null, featured:true,  image:'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=400&q=80' },
-      { id:'4', name:'Vela Energética Sándalo',     category:'velas',     price:22, compare:null, featured:false, image:'https://images.unsplash.com/photo-1603905000478-e1b9fb17b2eb?w=400&q=80' },
-      { id:'5', name:'Cuarzo Rosa Natural',         category:'minerales', price:19, compare:25,   featured:false, image:'https://images.unsplash.com/photo-1559181567-c3190ee73a43?w=400&q=80' },
-      { id:'6', name:'Pulsera de Labradorita',      category:'joyeria',   price:28, compare:null, featured:false, image:'https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?w=400&q=80' },
-      { id:'7', name:'Incienso de Palo Santo',      category:'ambientacion',price:12,compare:null,featured:false, image:'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=400&q=80' },
-      { id:'8', name:'Crema Corporal de Lavanda',   category:'corporal',  price:16, compare:null, featured:false, image:'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=400&q=80' },
+      { id:'1', name:'Vela Artesanal de Lavanda',  category:'velas',       price:18, compare:22,   featured:true,  image:'https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=400&q=80' },
+      { id:'2', name:'Amatista Natural',            category:'minerales',   price:24, compare:null, featured:true,  image:'https://images.unsplash.com/photo-1557053910-d9eadeed1c58?w=400&q=80' },
+      { id:'3', name:'Collar de Cuarzo Rosa',       category:'joyeria',     price:32, compare:null, featured:true,  image:'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=400&q=80' },
+      { id:'4', name:'Vela Energética Sándalo',     category:'velas',       price:22, compare:null, featured:false, image:'https://images.unsplash.com/photo-1603905000478-e1b9fb17b2eb?w=400&q=80' },
+      { id:'5', name:'Cuarzo Rosa Natural',         category:'minerales',   price:19, compare:25,   featured:false, image:'https://images.unsplash.com/photo-1559181567-c3190ee73a43?w=400&q=80' },
+      { id:'6', name:'Pulsera de Labradorita',      category:'joyeria',     price:28, compare:null, featured:false, image:'https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?w=400&q=80' },
+      { id:'7', name:'Incienso de Palo Santo',      category:'ambientacion',price:12, compare:null, featured:false, image:'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=400&q=80' },
+      { id:'8', name:'Crema Corporal de Lavanda',   category:'corporal',    price:16, compare:null, featured:false, image:'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=400&q=80' },
     ];
 
     function getProductos() {
@@ -295,19 +284,25 @@
       } catch { return PRODUCTOS_DEFAULT; }
     }
 
-    // ── Render productos destacados ───────────────────────────────────────────
-    function renderDestacados() {
-      const destacados = getProductos()
-        .filter(p => p.featured)
-        .slice(0, 4);
+    function getCarrito() {
+      try { return JSON.parse(localStorage.getItem('kaori_cart') || '[]'); } catch { return []; }
+    }
+    function guardarCarrito(cart) {
+      localStorage.setItem('kaori_cart', JSON.stringify(cart));
+      if (window.CartWidget) CartWidget.updateBadge();
+    }
 
+    // ── Render destacados ─────────────────────────────────────────────────────
+    function renderDestacados() {
+      const destacados = getProductos().filter(p => p.featured).slice(0, 4);
       const grid = document.getElementById('featuredGrid');
       if (!destacados.length) {
         grid.innerHTML = '<p style="color:#9ca3af;grid-column:1/-1;text-align:center;padding:2rem">No hay productos destacados aún.</p>';
         return;
       }
-      grid.innerHTML = destacados.map(p => `
-        <div class="feat-card" onclick="window.location.href='product.html?id=${p.id}'">
+      grid.innerHTML = destacados.map((p, i) => `
+        <div class="feat-card" data-animate="fade-up" data-delay="${i * 100}"
+             onclick="window.location.href='product.html?id=${p.id}'">
           <div class="feat-img">
             <img src="${p.image}" alt="${p.name}" loading="lazy"
                  onerror="this.src='https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=400&q=80'" />
@@ -322,21 +317,11 @@
             </button>
           </div>
         </div>`).join('');
+
+      // Re-init animaciones para los elementos nuevos
+      if (window.AnimationsInit) AnimationsInit();
     }
 
-    // ── Carrito ───────────────────────────────────────────────────────────────
-    function getCarrito() {
-      try { return JSON.parse(localStorage.getItem('kaori_cart') || '[]'); }
-      catch { return []; }
-    }
-    function guardarCarrito(cart) {
-      localStorage.setItem('kaori_cart', JSON.stringify(cart));
-      actualizarContador();
-    }
-    function actualizarContador() {
-      const total = getCarrito().reduce((s,i) => s + i.quantity, 0);
-      document.getElementById('cartCount').textContent = total;
-    }
     function añadirAlCarrito(id, btn) {
       const producto = getProductos().find(p => p.id === id);
       if (!producto) return;
@@ -352,7 +337,6 @@
       mostrarToast(`"${producto.name}" añadido`);
     }
 
-    // ── Toast ─────────────────────────────────────────────────────────────────
     function mostrarToast(msg) {
       const t = document.getElementById('toast');
       t.textContent = '✓ ' + msg;
@@ -360,46 +344,36 @@
       setTimeout(() => t.classList.remove('show'), 2500);
     }
 
-    // ── Menú hamburguesa ──────────────────────────────────────────────────────
     function toggleMenu() {
       document.getElementById('mobileMenu').classList.toggle('open');
     }
-    // Cerrar menú al hacer clic fuera
     document.addEventListener('click', e => {
       const menu = document.getElementById('mobileMenu');
       const ham  = document.querySelector('.hamburger');
-      if (menu.classList.contains('open') && !menu.contains(e.target) && !ham.contains(e.target)) {
+      if (menu && ham && menu.classList.contains('open') &&
+          !menu.contains(e.target) && !ham.contains(e.target)) {
         menu.classList.remove('open');
       }
     });
 
-    // ── Navbar dinámico según sesión ──────────────────────────────────────────
+    // ── Navbar dinámico ───────────────────────────────────────────────────────
     (async () => {
       try {
         const sesion = await obtenerSesion();
         const btn    = document.getElementById('btnCuenta');
-        const mobileBtn = document.getElementById('mobileLoginBtn');
+        const mBtn   = document.getElementById('mobileLoginBtn');
         if (sesion) {
           const rol = await obtenerRol();
-          if (rol === 'admin') {
-            btn.href        = 'admin.html';
-            btn.textContent = '👑 Panel Admin';
-            mobileBtn.href        = 'admin.html';
-            mobileBtn.textContent = '👑 Panel Admin';
-          } else {
-            btn.href        = 'mi-cuenta.html';
-            btn.textContent = '👤 Mi cuenta';
-            mobileBtn.href        = 'mi-cuenta.html';
-            mobileBtn.textContent = '👤 Mi cuenta';
-          }
+          const href = rol === 'admin' ? 'admin.html' : 'mi-cuenta.html';
+          const txt  = rol === 'admin' ? '👑 Panel Admin' : '👤 Mi cuenta';
+          btn.href  = href; btn.textContent  = txt;
+          mBtn.href = href; mBtn.textContent = txt;
         }
-      } catch(e) { /* Supabase no configurado */ }
+      } catch(e) {}
     })();
 
     // ── Init ──────────────────────────────────────────────────────────────────
     renderDestacados();
-    actualizarContador();
   </script>
-  <script src="cart.js"></script>
 </body>
 </html>
