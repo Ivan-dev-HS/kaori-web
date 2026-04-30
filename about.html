@@ -12,16 +12,18 @@
     a { text-decoration: none; color: inherit; }
 
     /* ── NAVBAR ── */
-    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; height: 72px; background: rgba(250,248,245,0.97); backdrop-filter: blur(8px); border-bottom: 1px solid #f3e8ff; }
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; height: 72px; background: rgba(250,248,245,0.97); backdrop-filter: blur(12px); border-bottom: 1px solid #f3e8ff; transition: all 0.3s; }
     .nav-logo  { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; letter-spacing: 0.2em; color: #4c1d95; }
     .nav-links { display: flex; gap: 2rem; }
-    .nav-links a { font-size: 0.85rem; color: #4b5563; transition: color 0.2s; }
+    .nav-links a { font-size: 0.85rem; color: #4b5563; transition: color 0.2s; font-weight: 500; }
     .nav-links a:hover { color: #7c3aed; }
     .nav-right { display: flex; align-items: center; gap: 0.75rem; }
     .nav-cuenta { background: white; color: #7c3aed; border: 1px solid #e9d5ff; border-radius: 9999px; padding: 0.5rem 1.2rem; font-family: 'Nunito', sans-serif; font-size: 0.85rem; font-weight: 600; transition: all 0.2s; }
     .nav-cuenta:hover { background: #f3e8ff; }
-    .nav-cart { background: #7c3aed; color: white; border: none; border-radius: 9999px; padding: 0.5rem 1.2rem; cursor: pointer; font-family: 'Nunito', sans-serif; font-size: 0.85rem; font-weight: 600; transition: background 0.2s; }
-    .nav-cart:hover { background: #6d28d9; }
+    .nav-cart-wrap { position: relative; }
+    .nav-cart-btn { background: #7c3aed; color: white; border: none; border-radius: 9999px; padding: 0.5rem 1.2rem; cursor: pointer; font-family: 'Nunito', sans-serif; font-size: 0.85rem; font-weight: 600; transition: background 0.2s; display: flex; align-items: center; gap: 0.4rem; }
+    .nav-cart-btn:hover { background: #6d28d9; }
+    .cart-count-badge { position: absolute; top: -6px; right: -6px; background: #ec4899; color: white; font-size: 0.65rem; font-weight: 700; width: 18px; height: 18px; border-radius: 50%; display: none; align-items: center; justify-content: center; }
 
     /* ── HAMBURGER ── */
     .hamburger { display: none; background: none; border: none; cursor: pointer; padding: 0.5rem; flex-direction: column; gap: 5px; }
@@ -33,7 +35,8 @@
 
     /* ── HERO ── */
     .hero { position: relative; padding: 8rem 1.5rem 5rem; text-align: center; overflow: hidden; }
-    .hero-bg { position: absolute; inset: 0; background: url('https://images.unsplash.com/photo-1557053910-d9eadeed1c58?w=1200&q=60') center/cover; opacity: 0.08; }
+    .hero-bg { position: absolute; inset: 0; background: url('https://images.unsplash.com/photo-1557053910-d9eadeed1c58?w=1200&q=60') center/cover; opacity: 0.07; }
+    .hero-gradient { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(250,245,255,0.95), rgba(237,233,254,0.9)); }
     .hero-inner { position: relative; max-width: 56rem; margin: 0 auto; }
     .hero-label { font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: #a855f7; margin-bottom: 1rem; }
     .hero h1 { font-size: clamp(2rem, 6vw, 4rem); color: #4c1d95; line-height: 1.2; margin-bottom: 1.5rem; font-weight: 300; }
@@ -44,7 +47,7 @@
     .story { padding: 5rem 1.5rem; background: white; }
     .story-inner { max-width: 72rem; margin: 0 auto; display: grid; gap: 3rem; align-items: center; }
     @media(min-width: 1024px) { .story-inner { grid-template-columns: 1fr 1fr; gap: 5rem; } }
-    .story-img { aspect-ratio: 4/5; border-radius: 1.5rem; overflow: hidden; }
+    .story-img { aspect-ratio: 4/5; border-radius: 1.5rem; overflow: hidden; box-shadow: 0 20px 60px rgba(124,58,237,0.12); }
     .story-img img { width: 100%; height: 100%; object-fit: cover; }
     .story-text h2 { font-size: clamp(1.6rem, 4vw, 2.5rem); color: #4c1d95; margin-bottom: 1.5rem; font-weight: 400; }
     .story-text p  { color: #4b5563; line-height: 1.8; margin-bottom: 1rem; font-size: 0.95rem; }
@@ -57,7 +60,8 @@
     .section-label  { font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: #a855f7; margin-bottom: 0.5rem; }
     .section-title  { font-size: clamp(1.6rem, 4vw, 2.5rem); color: #4c1d95; font-weight: 400; }
     .values-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; }
-    .value-card { background: white; border-radius: 1rem; padding: 2rem; text-align: center; border: 1px solid #f3e8ff; }
+    .value-card { background: white; border-radius: 1rem; padding: 2rem; text-align: center; border: 1px solid #f3e8ff; transition: all 0.3s; }
+    .value-card:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(124,58,237,0.1); }
     .val-icon { width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.2rem; font-size: 1.5rem; }
     .ic-green  { background: #dcfce7; }
     .ic-pink   { background: #fce7f3; }
@@ -65,12 +69,18 @@
     .value-card h3 { font-size: 1.1rem; color: #4c1d95; margin-bottom: 0.8rem; font-weight: 400; }
     .value-card p  { color: #6b7280; font-size: 0.875rem; line-height: 1.7; }
 
+    /* ── STATS ── */
+    .stats { padding: 4rem 1.5rem; background: white; }
+    .stats-inner { max-width: 72rem; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 2rem; text-align: center; }
+    .stat-item h3 { font-size: 2.5rem; color: #7c3aed; font-weight: 400; margin-bottom: 0.4rem; }
+    .stat-item p  { color: #6b7280; font-size: 0.875rem; }
+
     /* ── CTA ── */
-    .cta { padding: 5rem 1.5rem; background: #4c1d95; text-align: center; }
+    .cta { padding: 5rem 1.5rem; background: linear-gradient(135deg, #2e0854, #4c1d95); text-align: center; }
     .cta h2 { font-size: clamp(1.6rem, 4vw, 2.5rem); color: white; margin-bottom: 1rem; font-weight: 400; line-height: 1.3; }
     .cta p  { color: #d8b4fe; max-width: 36rem; margin: 0 auto 2rem; line-height: 1.7; font-size: 0.95rem; }
-    .btn-white { background: white; color: #4c1d95; padding: 1rem 2.5rem; border-radius: 9999px; font-weight: 700; display: inline-block; transition: background 0.2s; font-family: 'Nunito', sans-serif; }
-    .btn-white:hover { background: #f5f3ff; }
+    .btn-white { background: white; color: #4c1d95; padding: 1rem 2.5rem; border-radius: 9999px; font-weight: 700; display: inline-block; transition: all 0.2s; font-family: 'Nunito', sans-serif; }
+    .btn-white:hover { background: #f5f3ff; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
 
     /* ── FOOTER ── */
     footer { background: #1e0a3c; color: white; padding: 3rem 1.5rem 1.5rem; }
@@ -98,6 +108,7 @@
       .values-grid { grid-template-columns: 1fr; }
       .footer-inner { grid-template-columns: 1fr; }
       .story-img { aspect-ratio: 3/2; }
+      .stats-inner { grid-template-columns: repeat(2, 1fr); }
     }
   </style>
 </head>
@@ -112,27 +123,12 @@
     </div>
     <div class="nav-right">
       <a href="login.html" class="nav-cuenta" id="btnCuenta">👤 Mi cuenta</a>
-      
-<button onclick="CartWidget.toggle()" style="
-  position:relative;
-  background:#7c3aed;color:white;border:none;
-  border-radius:9999px;padding:0.5rem 1.2rem;
-  cursor:pointer;font-family:'Nunito',sans-serif;
-  font-size:0.85rem;font-weight:600;
-  transition:background 0.2s;
-  display:flex;align-items:center;gap:0.4rem;
-" onmouseover="this.style.background='#6d28d9'"
-   onmouseout="this.style.background='#7c3aed'">
-  🛒
-  <span class="cart-count-text">0</span>
-  <span class="cart-count-badge" style="
-    display:none;position:absolute;top:-6px;right:-6px;
-    background:#ec4899;color:white;
-    font-size:0.65rem;font-weight:700;
-    width:18px;height:18px;border-radius:50%;
-    align-items:center;justify-content:center;
-  ">0</span>
-</button>
+      <div class="nav-cart-wrap">
+        <button class="nav-cart-btn" onclick="CartWidget.toggle()">
+          🛒 <span class="cart-count-text">0</span>
+        </button>
+        <span class="cart-count-badge">0</span>
+      </div>
       <button class="hamburger" onclick="toggleMenu()" aria-label="Abrir menú">
         <span></span><span></span><span></span>
       </button>
@@ -150,20 +146,22 @@
   <!-- HERO -->
   <section class="hero">
     <div class="hero-bg"></div>
+    <div class="hero-gradient"></div>
     <div class="hero-inner">
-      <p class="hero-label">Nuestra Historia</p>
-      <h1>Hola, somos<br /><em>Kaori</em></h1>
-      <p>Una marca familiar nacida de la pasión por la naturaleza, el arte y la energía. Cada producto es creado con intención, amor y los mejores materiales naturales.</p>
+      <p class="hero-label" data-animate="fade-up">Nuestra Historia</p>
+      <h1 data-animate="fade-up" data-delay="100">Hola, somos<br /><em>Kaori</em></h1>
+      <p data-animate="fade-up" data-delay="200">Una marca familiar nacida de la pasión por la naturaleza, el arte y la energía. Cada producto es creado con intención, amor y los mejores materiales naturales.</p>
     </div>
   </section>
 
   <!-- HISTORIA -->
   <section class="story">
     <div class="story-inner">
-      <div class="story-img">
-        <img src="https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=800&q=80" alt="Kaori artesanía" loading="lazy" />
+      <div class="story-img" data-animate="fade-right">
+        <img src="https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=800&q=80"
+             alt="Kaori artesanía" loading="lazy" />
       </div>
-      <div class="story-text">
+      <div class="story-text" data-animate="fade-left">
         <h2>Nuestra pasión</h2>
         <p>Kaori nació de un profundo amor por lo natural y lo hecho a mano. Somos una pequeña marca familiar que crea productos artesanales con un propósito especial: llevar luz, arte y energía positiva a cada hogar.</p>
         <p>Cada vela que vertemos, cada mineral que seleccionamos y cada pieza de resina que moldeamos, lo hacemos con intención y cariño. Creemos en el poder de los objetos conscientes para transformar espacios y elevar el espíritu.</p>
@@ -172,25 +170,47 @@
     </div>
   </section>
 
+  <!-- STATS -->
+  <section class="stats">
+    <div class="stats-inner">
+      <div class="stat-item" data-animate="zoom-in" data-delay="0">
+        <h3><span data-counter data-target="500" data-suffix="+">0</span></h3>
+        <p>Clientas felices</p>
+      </div>
+      <div class="stat-item" data-animate="zoom-in" data-delay="150">
+        <h3><span data-counter data-target="100" data-suffix="%">0</span></h3>
+        <p>Natural y artesanal</p>
+      </div>
+      <div class="stat-item" data-animate="zoom-in" data-delay="300">
+        <h3><span data-counter data-target="3" data-suffix=" años">0</span></h3>
+        <p>De experiencia</p>
+      </div>
+      <div class="stat-item" data-animate="zoom-in" data-delay="450">
+        <h3><span data-counter data-target="50" data-suffix="+">0</span></h3>
+        <p>Productos únicos</p>
+      </div>
+    </div>
+  </section>
+
   <!-- VALORES -->
   <section class="values">
     <div class="values-inner">
       <div class="section-header">
-        <p class="section-label">Lo que nos define</p>
-        <h2 class="section-title">Nuestros Valores</h2>
+        <p class="section-label" data-animate="fade-up">Lo que nos define</p>
+        <h2 class="section-title" data-animate="fade-up" data-delay="100">Nuestros Valores</h2>
       </div>
       <div class="values-grid">
-        <div class="value-card">
+        <div class="value-card" data-animate="fade-up" data-delay="100">
           <div class="val-icon ic-green">🌿</div>
           <h3>Natural</h3>
           <p>Utilizamos solo ingredientes naturales, ceras vegetales, esencias puras y materiales sostenibles seleccionados con cuidado.</p>
         </div>
-        <div class="value-card">
+        <div class="value-card" data-animate="fade-up" data-delay="200">
           <div class="val-icon ic-pink">♥</div>
           <h3>Con Amor</h3>
           <p>Cada producto se crea a mano con dedicación, cariño y atención a cada detalle. Nunca fabricamos en serie.</p>
         </div>
-        <div class="value-card">
+        <div class="value-card" data-animate="fade-up" data-delay="300">
           <div class="val-icon ic-purple">✨</div>
           <h3>Consciente</h3>
           <p>Creemos en el poder de la intención. Cada pieza lleva una energía especial cargada para tu bienestar.</p>
@@ -200,7 +220,7 @@
   </section>
 
   <!-- CTA -->
-  <section class="cta">
+  <section class="cta" data-animate="fade">
     <h2>¿Lista para descubrir<br />la magia de Kaori?</h2>
     <p>Explora nuestra colección de productos artesanales creados con amor e intención para transformar tu espacio.</p>
     <a href="shop.html" class="btn-white">Explorar la Tienda →</a>
@@ -244,6 +264,8 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase.js"></script>
   <script src="auth.js"></script>
+  <script src="cart.js"></script>
+  <script src="animations.js"></script>
   <script>
     function toggleMenu() {
       document.getElementById('mobileMenu').classList.toggle('open');
@@ -251,21 +273,12 @@
     document.addEventListener('click', e => {
       const menu = document.getElementById('mobileMenu');
       const ham  = document.querySelector('.hamburger');
-      if (menu.classList.contains('open') && !menu.contains(e.target) && !ham.contains(e.target)) {
+      if (menu && ham && menu.classList.contains('open') &&
+          !menu.contains(e.target) && !ham.contains(e.target)) {
         menu.classList.remove('open');
       }
     });
 
-    // Contador carrito
-    (function() {
-      try {
-        const cart  = JSON.parse(localStorage.getItem('kaori_cart') || '[]');
-        const total = cart.reduce((s,i) => s + i.quantity, 0);
-        document.getElementById('cartCount').textContent = total;
-      } catch {}
-    })();
-
-    // Navbar dinámico
     (async () => {
       try {
         const sesion = await obtenerSesion();
@@ -281,7 +294,5 @@
       } catch(e) {}
     })();
   </script>
-  <script src="cart.js"></script>
-
 </body>
 </html>
