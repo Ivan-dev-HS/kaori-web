@@ -107,6 +107,12 @@
     /* ── ÉXITO ── */
     .success-screen { min-height: 60vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 6rem 1.5rem 4rem; }
     .success-circle { width: 88px; height: 88px; border-radius: 50%; background: linear-gradient(135deg, #dcfce7, #bbf7d0); display: flex; align-items: center; justify-content: center; font-size: 2.8rem; margin: 0 auto 1.5rem; box-shadow: 0 8px 24px rgba(22,163,74,0.2); }
+    .order-id-box { background: #faf5ff; border: 1px solid #e9d5ff; border-radius: 0.75rem; padding: 1rem; margin: 1rem auto; max-width: 300px; }
+    .order-id-box p { font-size: 0.78rem; color: #6b7280; margin-bottom: 0.3rem; }
+    .order-id-box strong { font-size: 0.95rem; color: #4c1d95; font-family: monospace; }
+
+    /* ── ERROR ── */
+    .error-msg { background: #fee2e2; border: 1px solid #fecaca; border-radius: 0.75rem; padding: 1rem; margin-top: 1rem; font-size: 0.875rem; color: #b91c1c; display: none; }
 
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
@@ -141,6 +147,7 @@
     <p class="breadcrumb" onclick="window.location.href='shop.html'">← Volver a la tienda</p>
     <h1 class="page-title" data-animate="fade-up">Finalizar Compra</h1>
 
+    <!-- Banner login -->
     <div class="login-banner" id="loginBanner" style="display:none">
       <p>💡 ¿Tienes cuenta? Inicia sesión para guardar tu historial de pedidos.</p>
       <a href="login.html">Iniciar sesión</a>
@@ -166,7 +173,7 @@
               </div>
               <div class="form-group full">
                 <label>Teléfono *</label>
-                <input name="phone" type="tel" placeholder="600 123 456" required />
+                <input name="phone" type="tel" id="inputPhone" placeholder="600 123 456" required />
               </div>
             </div>
           </div>
@@ -177,19 +184,19 @@
             <div class="form-row">
               <div class="form-group full">
                 <label>Dirección *</label>
-                <input name="address" type="text" placeholder="Calle, número, piso..." required />
+                <input name="address" type="text" id="inputAddress" placeholder="Calle, número, piso..." required />
               </div>
               <div class="form-group">
                 <label>Ciudad *</label>
-                <input name="city" type="text" placeholder="Madrid" required />
+                <input name="city" type="text" id="inputCity" placeholder="Madrid" required />
               </div>
               <div class="form-group">
                 <label>Código Postal *</label>
-                <input name="postal" type="text" placeholder="28001" required />
+                <input name="postal" type="text" id="inputPostal" placeholder="28001" required />
               </div>
               <div class="form-group full">
                 <label>Notas (opcional)</label>
-                <textarea name="notes" rows="2" placeholder="Instrucciones especiales..."></textarea>
+                <textarea name="notes" id="inputNotes" rows="2" placeholder="Instrucciones especiales..."></textarea>
               </div>
             </div>
           </div>
@@ -197,7 +204,7 @@
           <!-- 3. ENVÍO -->
           <div class="card">
             <h2><span class="step-num">3</span> Opciones de Envío</h2>
-            <div class="ship-opt sel" id="so-standard" onclick="selectShipping(this, 4.95)">
+            <div class="ship-opt sel" id="so-standard" onclick="selectShipping(this, 4.95, 'standard')">
               <input type="radio" name="shipping" value="standard" checked />
               <div class="ship-label">
                 <strong>🚚 Envío a domicilio</strong>
@@ -205,7 +212,7 @@
               </div>
               <span class="ship-cost">4,95 €</span>
             </div>
-            <div class="ship-opt" id="so-pickup" onclick="selectShipping(this, 0)">
+            <div class="ship-opt" id="so-pickup" onclick="selectShipping(this, 0, 'pickup')">
               <input type="radio" name="shipping" value="pickup" />
               <div class="ship-label">
                 <strong>🏪 Recogida en tienda</strong>
@@ -250,12 +257,15 @@
               <p class="secure-note">🔒 Pago cifrado y seguro con SSL</p>
             </div>
             <div class="transfer-info" id="transferInfo" style="display:none">
-              🏦 Tras confirmar el pedido te enviaremos los datos bancarios por email. Tu pedido se procesará cuando recibamos el pago.
+              🏦 Tras confirmar el pedido te enviaremos los datos bancarios por email.
             </div>
           </div>
 
+          <!-- ERROR -->
+          <div class="error-msg" id="errorMsg"></div>
+
           <button type="submit" class="btn-submit" id="submitBtn">
-            Pagar con Stripe · <span id="totalBtn">—</span>
+            💳 Pagar con Stripe · <span id="totalBtn">—</span>
           </button>
 
         </form>
@@ -286,22 +296,30 @@
     </div>
   </div>
 
-  <!-- ÉXITO -->
+  <!-- PANTALLA ÉXITO -->
   <div id="successScreen" class="success-screen" style="display:none">
-    <div data-animate="zoom-in">
+    <div>
       <div class="success-circle">🛍️</div>
-      <h1 style="font-size:2rem;color:#4c1d95;margin-bottom:1rem;font-weight:400">¡Pedido Recibido!</h1>
+      <h1 style="font-size:2rem;color:#4c1d95;margin-bottom:0.75rem;font-weight:400">
+        ¡Pedido Recibido!
+      </h1>
       <p style="color:#4b5563;margin-bottom:0.5rem;font-size:0.95rem">
         Gracias por tu compra. Nos pondremos en contacto contigo para gestionar el pago.
       </p>
-      <p style="color:#6b7280;font-size:0.82rem;margin-bottom:2rem">
+      <p style="color:#6b7280;font-size:0.82rem;margin-bottom:1rem">
         Te hemos enviado un email de confirmación.
       </p>
+      <!-- Número de pedido -->
+      <div class="order-id-box">
+        <p>Número de pedido</p>
+        <strong id="successOrderId">—</strong>
+      </div>
+      <br/>
       <a href="shop.html" style="
         background:linear-gradient(135deg,#7c3aed,#6d28d9);
         color:white;padding:1rem 2.5rem;border-radius:9999px;
         font-weight:700;font-family:'Nunito',sans-serif;
-        display:inline-block;
+        display:inline-block;margin-top:1rem;
         box-shadow:0 4px 14px rgba(124,58,237,0.3);
         transition:all 0.2s;
       ">Seguir Comprando →</a>
@@ -314,16 +332,22 @@
   <script src="cart.js"></script>
   <script src="animations.js"></script>
   <script>
+    // ─── ESTADO ───────────────────────────────────────────────────────────────
     let shippingCost   = 4.95;
+    let shippingType   = 'standard';
     let currentPayType = 'stripe';
 
+    // ─── CARRITO ──────────────────────────────────────────────────────────────
     function getCarrito() {
-      try { return JSON.parse(localStorage.getItem('kaori_cart') || '[]'); } catch { return []; }
+      try { return JSON.parse(localStorage.getItem('kaori_cart') || '[]'); }
+      catch { return []; }
     }
 
+    // ─── RENDER RESUMEN ───────────────────────────────────────────────────────
     function renderResumen() {
       const cart      = getCarrito();
       const container = document.getElementById('cartSummaryItems');
+
       if (!cart.length) {
         container.innerHTML = `
           <div class="empty-cart">
@@ -334,6 +358,7 @@
         document.getElementById('submitBtn').disabled = true;
         return;
       }
+
       container.innerHTML = cart.map(i => `
         <div class="order-item">
           <img src="${i.image}" alt="${i.name}"
@@ -344,17 +369,21 @@
           </div>
           <span class="order-item-price">${(i.price * i.quantity).toFixed(2)} €</span>
         </div>`).join('');
+
       actualizarTotales();
     }
 
+    // ─── TOTALES ──────────────────────────────────────────────────────────────
     function actualizarTotales() {
       const subtotal = getCarrito().reduce((s,i) => s + i.price * i.quantity, 0);
       const total    = subtotal + shippingCost;
+
       document.getElementById('subtotalDisplay').textContent = subtotal.toFixed(2) + ' €';
       const sd = document.getElementById('shippingDisplay');
       sd.textContent = shippingCost === 0 ? 'Gratis' : shippingCost.toFixed(2) + ' €';
       sd.style.color = shippingCost === 0 ? '#16a34a' : '';
       document.getElementById('totalDisplay').textContent = total.toFixed(2) + ' €';
+
       const nota = document.getElementById('freeNote');
       if (subtotal < 50 && shippingCost > 0) {
         nota.textContent   = `¡Añade ${(50 - subtotal).toFixed(2)} € más para envío gratis!`;
@@ -362,19 +391,23 @@
       } else {
         nota.style.display = 'none';
       }
+
       document.getElementById('submitBtn').innerHTML =
         `${currentPayType === 'stripe' ? '💳 Pagar con Stripe' : '🏦 Confirmar Pedido'} · <span id="totalBtn">${total.toFixed(2)} €</span>`;
     }
 
-    function selectShipping(el, cost) {
+    // ─── ENVÍO ────────────────────────────────────────────────────────────────
+    function selectShipping(el, cost, type) {
       document.querySelectorAll('.ship-opt').forEach(o => o.classList.remove('sel'));
       el.classList.add('sel');
       el.querySelector('input').checked = true;
       shippingCost = cost;
+      shippingType = type;
       document.getElementById('addressCard').style.display = cost === 0 ? 'none' : '';
       actualizarTotales();
     }
 
+    // ─── PAGO ─────────────────────────────────────────────────────────────────
     function selectPayment(type) {
       currentPayType = type;
       ['stripe','transfer'].forEach(t => {
@@ -386,6 +419,7 @@
       actualizarTotales();
     }
 
+    // ─── FORMATO TARJETA ──────────────────────────────────────────────────────
     function fmtCard(el) {
       let v = el.value.replace(/\D/g,'').slice(0,16);
       el.value = v.replace(/(\d{4})/g,'$1 ').trim();
@@ -396,26 +430,122 @@
       el.value = v;
     }
 
-    async function submitOrder(e) {
-      e.preventDefault();
-      if (!getCarrito().length) { alert('Tu carrito está vacío.'); return; }
-      const btn = document.getElementById('submitBtn');
-      btn.disabled    = true;
-      btn.textContent = '⏳ Procesando...';
-      await new Promise(r => setTimeout(r, 1500));
-      localStorage.removeItem('kaori_cart');
-      if (window.CartWidget) CartWidget.updateBadge();
-      document.getElementById('checkoutPage').style.display  = 'none';
-      document.getElementById('successScreen').style.display = 'flex';
+    // ─── MOSTRAR ERROR ────────────────────────────────────────────────────────
+    function mostrarError(msg) {
+      const el = document.getElementById('errorMsg');
+      el.textContent   = msg;
+      el.style.display = '';
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    function ocultarError() {
+      document.getElementById('errorMsg').style.display = 'none';
     }
 
+    // ─── SUBMIT — guarda en Supabase ──────────────────────────────────────────
+    async function submitOrder(e) {
+      e.preventDefault();
+      ocultarError();
+
+      const cart = getCarrito();
+      if (!cart.length) {
+        mostrarError('Tu carrito está vacío.');
+        return;
+      }
+
+      // Recoger datos del formulario
+      const nombre  = document.getElementById('inputName').value.trim();
+      const email   = document.getElementById('inputEmail').value.trim();
+      const telefono = document.getElementById('inputPhone').value.trim();
+      const direccion = document.getElementById('inputAddress')?.value.trim() || '';
+      const ciudad    = document.getElementById('inputCity')?.value.trim()    || '';
+      const postal    = document.getElementById('inputPostal')?.value.trim()  || '';
+      const notas     = document.getElementById('inputNotes')?.value.trim()   || '';
+
+      if (!nombre || !email || !telefono) {
+        mostrarError('Por favor rellena todos los campos obligatorios.');
+        return;
+      }
+
+      const btn = document.getElementById('submitBtn');
+      btn.disabled    = true;
+      btn.textContent = '⏳ Procesando pedido...';
+
+      // Calcular totales
+      const subtotal = cart.reduce((s,i) => s + i.price * i.quantity, 0);
+      const total    = subtotal + shippingCost;
+
+      // Obtener usuario si está logueado
+      let userId = null;
+      try {
+        const usuario = await obtenerUsuario();
+        if (usuario) userId = usuario.id;
+      } catch(err) {}
+
+      // ── GUARDAR EN SUPABASE ──────────────────────────────────────────────
+      try {
+        const { data, error } = await db
+          .from('pedidos')
+          .insert({
+            customer_name:       nombre,
+            customer_email:      email,
+            customer_phone:      telefono,
+            shipping_address:    direccion,
+            shipping_city:       ciudad,
+            shipping_postal_code: postal,
+            notes:               notas,
+            items:               cart.map(i => ({
+              product_id:   i.id,
+              product_name: i.name,
+              quantity:     i.quantity,
+              price:        i.price,
+              image:        i.image,
+            })),
+            subtotal:       subtotal,
+            shipping_cost:  shippingCost,
+            total:          total,
+            shipping_type:  shippingType,
+            payment_method: currentPayType,
+            status:         'pending',
+            user_id:        userId,
+          })
+          .select('id')
+          .single();
+
+        if (error) throw error;
+
+        // ── ÉXITO ───────────────────────────────────────────────────────────
+        // Mostrar número de pedido (primeros 8 caracteres del UUID)
+        const orderId = data.id.split('-')[0].toUpperCase();
+        document.getElementById('successOrderId').textContent = '#' + orderId;
+
+        // Limpiar carrito
+        localStorage.removeItem('kaori_cart');
+        if (window.CartWidget) CartWidget.updateBadge();
+
+        // Mostrar pantalla de éxito
+        document.getElementById('checkoutPage').style.display  = 'none';
+        document.getElementById('successScreen').style.display = 'flex';
+
+      } catch(err) {
+        console.error('Error guardando pedido:', err);
+        mostrarError(
+          'Hubo un problema al procesar tu pedido. Por favor inténtalo de nuevo o contáctanos en info@kaori.es'
+        );
+        btn.disabled    = false;
+        btn.innerHTML   = `${currentPayType === 'stripe' ? '💳 Pagar con Stripe' : '🏦 Confirmar Pedido'} · <span id="totalBtn">${total.toFixed(2)} €</span>`;
+      }
+    }
+
+    // ─── NAVBAR + PREFILL ─────────────────────────────────────────────────────
     (async () => {
       try {
         const sesion = await obtenerSesion();
         const btn    = document.getElementById('btnCuenta');
         if (sesion) {
           const usuario = await obtenerUsuario();
-          if (usuario) document.getElementById('inputEmail').value = usuario.email;
+          if (usuario) {
+            document.getElementById('inputEmail').value = usuario.email;
+          }
           const rol       = await obtenerRol();
           btn.href        = rol === 'admin' ? 'admin.html' : 'mi-cuenta.html';
           btn.textContent = rol === 'admin' ? '👑 Panel Admin' : '👤 Mi cuenta';
@@ -425,6 +555,7 @@
       } catch(e) {}
     })();
 
+    // ─── INIT ─────────────────────────────────────────────────────────────────
     renderResumen();
   </script>
 </body>
