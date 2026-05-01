@@ -28,7 +28,7 @@
     .btn-sm.danger:hover { background: #fef2f2; }
 
     /* ── TABS ── */
-    .tabs { display: flex; border-bottom: 2px solid #f3e8ff; margin-bottom: 2rem; gap: 0; overflow-x: auto; }
+    .tabs { display: flex; border-bottom: 2px solid #f3e8ff; margin-bottom: 2rem; overflow-x: auto; }
     .tab { padding: 0.75rem 1.5rem; font-family: 'Nunito', sans-serif; font-size: 0.875rem; font-weight: 600; color: #6b7280; border: none; background: none; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; white-space: nowrap; transition: all 0.2s; }
     .tab.active { color: #7c3aed; border-bottom-color: #7c3aed; }
     .tab-content { display: none; }
@@ -66,7 +66,7 @@
     .modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); z-index: 100; display: none; align-items: center; justify-content: center; padding: 1rem; }
     .modal-backdrop.open { display: flex; }
     .modal { background: white; border-radius: 1.25rem; padding: 2rem; width: 100%; max-width: 560px; max-height: 92vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.15); animation: modalIn 0.25s cubic-bezier(0.34,1.56,0.64,1); }
-    @keyframes modalIn { from { opacity:0; transform:scale(0.95) translateY(10px); } to { opacity:1; transform:scale(1) translateY(0); } }
+    @keyframes modalIn { from { opacity:0; transform:scale(0.95); } to { opacity:1; transform:scale(1); } }
     .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
     .modal-header h2 { font-size: 1.4rem; color: #4c1d95; font-weight: 400; }
     .modal-close { background: none; border: none; font-size: 1.3rem; cursor: pointer; color: #9ca3af; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
@@ -77,20 +77,14 @@
     .form-group { display: flex; flex-direction: column; gap: 4px; }
     .form-group.full { grid-column: 1 / -1; }
     .form-group label { font-size: 0.8rem; font-weight: 700; color: #4c1d95; }
-    .form-group input, .form-group select, .form-group textarea {
-      font-family: 'Nunito', sans-serif; border: 1.5px solid #e9d5ff; border-radius: 0.75rem;
-      padding: 0.65rem 0.9rem; font-size: 0.875rem; outline: none; width: 100%;
-      transition: all 0.2s; color: #2d1b69; background: white;
-    }
-    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-      border-color: #a855f7; box-shadow: 0 0 0 3px rgba(168,85,247,0.08);
-    }
+    .form-group input, .form-group select, .form-group textarea { font-family: 'Nunito', sans-serif; border: 1.5px solid #e9d5ff; border-radius: 0.75rem; padding: 0.65rem 0.9rem; font-size: 0.875rem; outline: none; width: 100%; transition: all 0.2s; color: #2d1b69; background: white; }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: #a855f7; box-shadow: 0 0 0 3px rgba(168,85,247,0.08); }
     .form-group textarea { resize: none; }
     .checkbox-group { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0; }
     .checkbox-group input[type=checkbox] { width: 18px; height: 18px; accent-color: #7c3aed; cursor: pointer; }
     .checkbox-group label { font-size: 0.875rem; color: #4c1d95; font-weight: 600; cursor: pointer; margin: 0; }
 
-    /* ── ZONA DE SUBIDA DE IMAGEN ── */
+    /* ── UPLOAD ── */
     .upload-zone { grid-column: 1 / -1; }
     .drop-area { border: 2px dashed #c4b5fd; border-radius: 1rem; padding: 2rem; text-align: center; cursor: pointer; transition: all 0.2s; background: #faf5ff; position: relative; }
     .drop-area:hover, .drop-area.dragover { border-color: #7c3aed; background: #f3e8ff; }
@@ -98,24 +92,19 @@
     .drop-icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
     .drop-txt { font-size: 0.875rem; color: #7c3aed; font-weight: 600; margin-bottom: 0.25rem; }
     .drop-sub { font-size: 0.75rem; color: #9ca3af; }
-
-    /* ── PREVIEW IMAGEN ── */
     .img-preview-wrap { grid-column: 1 / -1; display: none; }
     .img-preview-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 0.75rem; margin-top: 0.5rem; }
     .img-thumb { position: relative; aspect-ratio: 1; border-radius: 0.75rem; overflow: hidden; border: 2px solid #f3e8ff; }
     .img-thumb img { width: 100%; height: 100%; object-fit: cover; }
-    .img-thumb-remove { position: absolute; top: 4px; right: 4px; background: rgba(0,0,0,0.6); color: white; border: none; border-radius: 50%; width: 22px; height: 22px; cursor: pointer; font-size: 0.75rem; display: flex; align-items: center; justify-content: center; transition: background 0.15s; }
+    .img-thumb-remove { position: absolute; top: 4px; right: 4px; background: rgba(0,0,0,0.6); color: white; border: none; border-radius: 50%; width: 22px; height: 22px; cursor: pointer; font-size: 0.75rem; display: flex; align-items: center; justify-content: center; }
     .img-thumb-remove:hover { background: #ef4444; }
-
-    /* ── PROGRESS BAR ── */
     .upload-progress { grid-column: 1 / -1; display: none; }
     .progress-bar-wrap { background: #f3e8ff; border-radius: 9999px; height: 8px; overflow: hidden; margin-top: 0.5rem; }
     .progress-bar-fill { height: 100%; background: linear-gradient(90deg, #a855f7, #7c3aed); border-radius: 9999px; transition: width 0.3s ease; width: 0%; }
     .progress-txt { font-size: 0.78rem; color: #7c3aed; font-weight: 600; margin-top: 0.3rem; }
 
-    /* ── MODAL BTNS ── */
     .modal-btns { display: flex; gap: 0.75rem; justify-content: flex-end; margin-top: 1.5rem; flex-wrap: wrap; }
-    .btn-cancel { background: white; color: #6b7280; border: 1px solid #e9d5ff; border-radius: 9999px; padding: 0.6rem 1.4rem; font-family: 'Nunito', sans-serif; font-weight: 600; font-size: 0.875rem; cursor: pointer; transition: all 0.15s; }
+    .btn-cancel { background: white; color: #6b7280; border: 1px solid #e9d5ff; border-radius: 9999px; padding: 0.6rem 1.4rem; font-family: 'Nunito', sans-serif; font-weight: 600; font-size: 0.875rem; cursor: pointer; }
     .btn-cancel:hover { background: #f9fafb; }
 
     /* ── TABLA PRODUCTOS ── */
@@ -128,7 +117,6 @@
     .prod-name-cell { font-weight: 600; color: #4c1d95; }
     .prod-cat-badge { background: #f3e8ff; color: #7c3aed; font-size: 0.7rem; padding: 3px 9px; border-radius: 9999px; font-weight: 700; }
     .prod-actions { display: flex; gap: 0.5rem; }
-    .featured-star { color: #f59e0b; }
     .empty-table { text-align: center; padding: 3rem; color: #9ca3af; }
     .empty-table p.icon { font-size: 2rem; margin-bottom: 0.5rem; }
 
@@ -138,11 +126,12 @@
     .admin-search input { font-family: 'Nunito', sans-serif; border: 1px solid #e9d5ff; border-radius: 0.75rem; padding: 0.5rem 0.75rem 0.5rem 2.2rem; width: 100%; font-size: 0.875rem; outline: none; transition: border-color 0.2s; }
     .admin-search input:focus { border-color: #a855f7; }
     .admin-search .si { position: absolute; left: 0.7rem; top: 50%; transform: translateY(-50%); color: #9ca3af; pointer-events: none; }
-    .filter-pill { padding: 0.4rem 0.9rem; border-radius: 9999px; border: 1px solid #e9d5ff; background: white; font-size: 0.8rem; color: #4b5563; cursor: pointer; font-family: 'Nunito', sans-serif; transition: all 0.15s; }
+    .filter-pill { padding: 0.4rem 0.9rem; border-radius: 9999px; border: 1px solid #e9d5ff; background: white; font-size: 0.8rem; color: #4b5563; cursor: pointer; font-family: 'Nunito', sans-serif; transition: all 0.15s; white-space: nowrap; }
     .filter-pill.active { background: #7c3aed; color: white; border-color: #7c3aed; }
 
     /* ── PEDIDOS ── */
-    .order-row { background: white; border-radius: 1rem; border: 1px solid #f3e8ff; overflow: hidden; margin-bottom: 0.75rem; }
+    .order-row { background: white; border-radius: 1rem; border: 1px solid #f3e8ff; overflow: hidden; margin-bottom: 0.75rem; transition: box-shadow 0.2s; }
+    .order-row:hover { box-shadow: 0 4px 16px rgba(124,58,237,0.08); }
     .order-header { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.2rem; cursor: pointer; transition: background 0.15s; flex-wrap: wrap; }
     .order-header:hover { background: #faf5ff; }
     .order-name { flex: 1; min-width: 0; }
@@ -165,14 +154,19 @@
     .change-status { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; }
     .status-btn { padding: 0.3rem 0.75rem; border-radius: 9999px; border: 1px solid #e5e7eb; background: white; font-size: 0.75rem; font-weight: 600; cursor: pointer; font-family: 'Nunito', sans-serif; transition: all 0.15s; }
     .status-btn:hover { border-color: #a855f7; color: #7c3aed; }
+    .status-btn.current { background: #f3e8ff; border-color: #a855f7; color: #6d28d9; }
     .confirm-delete { background: #fef2f2; border-top: 1px solid #fecaca; padding: 0.75rem 1.2rem; display: none; align-items: center; justify-content: space-between; gap: 1rem; }
     .confirm-delete p { font-size: 0.875rem; color: #b91c1c; }
     .confirm-btns { display: flex; gap: 0.5rem; }
     .btn-cancel-del  { padding: 0.3rem 0.8rem; border-radius: 0.5rem; border: 1px solid #d1d5db; background: white; font-family: 'Nunito', sans-serif; cursor: pointer; font-size: 0.8rem; }
     .btn-confirm-del { padding: 0.3rem 0.8rem; border-radius: 0.5rem; background: #ef4444; color: white; border: none; font-family: 'Nunito', sans-serif; cursor: pointer; font-size: 0.8rem; }
 
+    /* ── LOADING PEDIDOS ── */
+    .loading-pedidos { text-align: center; padding: 3rem; color: #9ca3af; }
+    .loading-pedidos .sp { width: 28px; height: 28px; border: 3px solid #f3e8ff; border-top-color: #7c3aed; border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 1rem; }
+
     /* ── USUARIOS ── */
-    .user-row { background: white; border-radius: 0.75rem; border: 1px solid #f3e8ff; padding: 0.75rem 1.2rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem; transition: box-shadow 0.15s; }
+    .user-row { background: white; border-radius: 0.75rem; border: 1px solid #f3e8ff; padding: 0.75rem 1.2rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem; }
     .user-row:hover { box-shadow: 0 2px 8px rgba(124,58,237,0.08); }
     .user-info strong { display: block; color: #4c1d95; font-size: 0.875rem; }
     .user-info span   { font-size: 0.75rem; color: #9ca3af; }
@@ -181,10 +175,14 @@
     .role-client { background: #f0fdf4; color: #16a34a; }
 
     /* ── TOAST ── */
-    #adminToast { position: fixed; bottom: 1.5rem; right: 1.5rem; background: #4c1d95; color: white; padding: 0.85rem 1.5rem; border-radius: 0.75rem; font-size: 0.875rem; font-weight: 600; z-index: 300; transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1); opacity: 0; pointer-events: none; transform: translateY(10px) scale(0.95); box-shadow: 0 8px 24px rgba(76,29,149,0.3); }
+    #adminToast { position: fixed; bottom: 1.5rem; right: 1.5rem; background: #4c1d95; color: white; padding: 0.85rem 1.5rem; border-radius: 0.75rem; font-size: 0.875rem; font-weight: 600; z-index: 300; transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1); opacity: 0; pointer-events: none; transform: translateY(10px) scale(0.95); box-shadow: 0 8px 24px rgba(76,29,149,0.3); max-width: 320px; }
     #adminToast.show { opacity: 1; transform: translateY(0) scale(1); }
-    #adminToast.error { background: #ef4444; }
+    #adminToast.error   { background: #ef4444; }
     #adminToast.success { background: #16a34a; }
+
+    /* ── BADGE NUEVO PEDIDO ── */
+    .new-badge { background: #ec4899; color: white; font-size: 0.65rem; font-weight: 700; padding: 2px 7px; border-radius: 9999px; margin-left: 0.5rem; animation: pulse 1.5s infinite; }
+    @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.6; } }
 
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
@@ -193,14 +191,11 @@
       .dashboard { padding: 5rem 1rem 3rem; }
       .form-grid { grid-template-columns: 1fr; }
       .products-table th:nth-child(4), .products-table td:nth-child(4) { display: none; }
-      .tabs { gap: 0; }
       .tab { padding: 0.6rem 1rem; font-size: 0.82rem; }
     }
     @media (max-width: 480px) {
       .stats { grid-template-columns: repeat(2, 1fr); }
-      .admin-filters { flex-direction: column; }
       .modal { padding: 1.5rem; }
-      .products-table th:nth-child(5), .products-table td:nth-child(5) { display: none; }
     }
   </style>
 </head>
@@ -228,24 +223,25 @@
     <div class="dashboard">
       <div class="dash-header">
         <h1>Panel de Administración</h1>
+        <button class="btn-primary" onclick="refrescarTodo()">↻ Actualizar todo</button>
       </div>
 
       <!-- STATS -->
       <div class="stats">
         <div class="stat-card">
-          <p class="stat-val purple" id="statProductos">0</p>
+          <p class="stat-val purple" id="statProductos">—</p>
           <p class="stat-label">Productos</p>
         </div>
         <div class="stat-card">
-          <p class="stat-val" id="statPedidos">0</p>
+          <p class="stat-val" id="statPedidos">—</p>
           <p class="stat-label">Pedidos</p>
         </div>
         <div class="stat-card">
-          <p class="stat-val yellow" id="statPending">0</p>
+          <p class="stat-val yellow" id="statPending">—</p>
           <p class="stat-label">Pendientes</p>
         </div>
         <div class="stat-card">
-          <p class="stat-val green" id="statRevenue">0 €</p>
+          <p class="stat-val green" id="statRevenue">— €</p>
           <p class="stat-label">Facturación</p>
         </div>
       </div>
@@ -253,7 +249,9 @@
       <!-- TABS -->
       <div class="tabs">
         <button class="tab active" onclick="switchTab('productos', this)">🛍️ Productos</button>
-        <button class="tab" onclick="switchTab('pedidos', this)">📦 Pedidos</button>
+        <button class="tab" onclick="switchTab('pedidos', this)" id="tabPedidos">
+          📦 Pedidos
+        </button>
         <button class="tab" onclick="switchTab('usuarios', this)">👥 Usuarios</button>
       </div>
 
@@ -296,13 +294,13 @@
       <div class="tab-content" id="tab-pedidos">
         <div class="card">
           <div class="card-header">
-            <h2>Gestión de Pedidos</h2>
-            <button class="btn-primary" onclick="renderPedidos()">↻ Actualizar</button>
+            <h2>Pedidos Reales</h2>
+            <button class="btn-primary" onclick="cargarPedidos()">↻ Actualizar</button>
           </div>
           <div class="admin-filters">
             <div class="admin-search">
               <span class="si">🔍</span>
-              <input type="text" placeholder="Buscar pedido..." id="searchPedidos" oninput="renderPedidos()" />
+              <input type="text" placeholder="Buscar por nombre o email..." id="searchPedidos" oninput="filtrarPedidos()" />
             </div>
             <div style="display:flex;gap:0.5rem;flex-wrap:wrap">
               <button class="filter-pill active" onclick="setFiltroPedido('all',this)">Todos</button>
@@ -313,7 +311,12 @@
               <button class="filter-pill" onclick="setFiltroPedido('cancelled',this)">Cancelado</button>
             </div>
           </div>
-          <div id="pedidosList"></div>
+          <div id="pedidosList">
+            <div class="loading-pedidos">
+              <div class="sp"></div>
+              <p>Cargando pedidos...</p>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -341,7 +344,6 @@
         <button class="modal-close" onclick="cerrarModal()">✕</button>
       </div>
       <input type="hidden" id="productoId" />
-
       <div class="form-grid">
         <div class="form-group full">
           <label>Nombre del producto *</label>
@@ -371,37 +373,27 @@
           <label>Descripción <span style="color:#9ca3af;font-weight:400">opcional</span></label>
           <textarea id="pDescripcion" rows="2" placeholder="Describe el producto..."></textarea>
         </div>
-
-        <!-- ZONA SUBIDA DE IMAGEN -->
         <div class="upload-zone">
           <label style="font-size:0.8rem;font-weight:700;color:#4c1d95;display:block;margin-bottom:0.5rem">
             Imágenes del producto *
           </label>
           <div class="drop-area" id="dropArea">
-            <input type="file" id="fileInput" accept="image/*" multiple
-                   onchange="handleFileSelect(this.files)" />
+            <input type="file" id="fileInput" accept="image/*" multiple onchange="handleFileSelect(this.files)" />
             <div class="drop-icon">🖼️</div>
             <p class="drop-txt">Arrastra imágenes aquí o haz clic para seleccionar</p>
-            <p class="drop-sub">JPG, PNG, WEBP · Máx. 5MB por imagen · Múltiples imágenes permitidas</p>
+            <p class="drop-sub">JPG, PNG, WEBP · Máx. 5MB · Múltiples imágenes</p>
           </div>
         </div>
-
-        <!-- PROGRESS -->
         <div class="upload-progress" id="uploadProgress">
-          <p class="progress-txt" id="progressTxt">Subiendo imágenes...</p>
+          <p class="progress-txt" id="progressTxt">Subiendo...</p>
           <div class="progress-bar-wrap">
             <div class="progress-bar-fill" id="progressFill"></div>
           </div>
         </div>
-
-        <!-- PREVIEW -->
         <div class="img-preview-wrap" id="imgPreviewWrap">
-          <label style="font-size:0.8rem;font-weight:700;color:#4c1d95;display:block;margin-bottom:0.5rem">
-            Vista previa
-          </label>
+          <label style="font-size:0.8rem;font-weight:700;color:#4c1d95;display:block;margin-bottom:0.5rem">Vista previa</label>
           <div class="img-preview-grid" id="imgPreviewGrid"></div>
         </div>
-
         <div class="form-group full">
           <div class="checkbox-group">
             <input type="checkbox" id="pFeatured" />
@@ -409,12 +401,9 @@
           </div>
         </div>
       </div>
-
       <div class="modal-btns">
         <button class="btn-cancel" onclick="cerrarModal()">Cancelar</button>
-        <button class="btn-primary" onclick="guardarProducto()" id="btnGuardar">
-          Guardar producto
-        </button>
+        <button class="btn-primary" onclick="guardarProducto()" id="btnGuardar">Guardar producto</button>
       </div>
     </div>
   </div>
@@ -425,7 +414,7 @@
   <script src="supabase.js"></script>
   <script src="auth.js"></script>
   <script>
-    // ─── DATOS ────────────────────────────────────────────────────────────────
+    // ─── ESTADO GLOBAL ────────────────────────────────────────────────────────
     const STATUS = {
       pending:    { label:'Pendiente',  cls:'s-pending'    },
       processing: { label:'En proceso', cls:'s-processing'  },
@@ -434,18 +423,13 @@
       cancelled:  { label:'Cancelado',  cls:'s-cancelled'   },
     };
 
-    let pedidos = [
-      { id:'1', customer_name:'Ana García', customer_email:'ana@email.com', customer_phone:'600 111 222', status:'pending', total:40.95, shipping_cost:4.95, created_date:new Date().toISOString(), shipping_address:'Calle Mayor 1', shipping_city:'Madrid', shipping_postal_code:'28001', payment_method:'stripe', notes:'', items:[{product_name:'Vela de Lavanda',quantity:2,price:18}] },
-      { id:'2', customer_name:'Laura Martínez', customer_email:'laura@email.com', customer_phone:'600 333 444', status:'shipped', total:72.00, shipping_cost:0, created_date:new Date(Date.now()-86400000).toISOString(), shipping_address:'Av. Libertad 5', shipping_city:'Barcelona', shipping_postal_code:'08001', payment_method:'transfer', notes:'Sin gluten', items:[{product_name:'Amatista Natural',quantity:1,price:24},{product_name:'Collar de Cuarzo',quantity:1,price:32}] },
-    ];
-
+    let pedidosData     = [];
     let filtroPedido    = 'all';
     let filtroCategoria = '';
+    let imagenesSubidas = [];
+    let suscripcionRT   = null; // realtime
 
-    // ─── IMÁGENES SUBIDAS ─────────────────────────────────────────────────────
-    let imagenesSubidas = []; // URLs de imágenes ya subidas a Supabase
-
-    // ─── PROTECCIÓN ───────────────────────────────────────────────────────────
+    // ─── INIT ─────────────────────────────────────────────────────────────────
     (async () => {
       try {
         const rol = await protegerPagina('admin');
@@ -453,18 +437,283 @@
         const usuario = await obtenerUsuario();
         if (usuario) document.getElementById('adminEmail').textContent = usuario.email;
       } catch(e) {
-        console.warn('Supabase no configurado:', e.message);
+        console.warn('Auth error:', e.message);
       }
+
       document.getElementById('loadingScreen').style.display = 'none';
       document.getElementById('mainContent').style.display   = '';
+
+      // Cargar datos
       actualizarStats();
       renderTablaProductos();
-      renderPedidos();
+      await cargarPedidos();
+      iniciarRealtimePedidos();
     })();
 
-    async function hacerLogout() {
-      try { await cerrarSesion(); } catch(e) {}
-      window.location.href = 'login.html';
+    // ─── REALTIME — escucha pedidos nuevos ────────────────────────────────────
+    function iniciarRealtimePedidos() {
+      try {
+        suscripcionRT = db
+          .channel('pedidos-cambios')
+          .on('postgres_changes', {
+            event:  '*',
+            schema: 'public',
+            table:  'pedidos',
+          }, (payload) => {
+            console.log('Cambio en pedidos:', payload.eventType);
+
+            if (payload.eventType === 'INSERT') {
+              // Añadir al inicio de la lista
+              pedidosData.unshift(payload.new);
+              mostrarToastAdmin('🛍️ ¡Nuevo pedido recibido!', 'success');
+              // Badge en tab
+              const tabBadge = document.getElementById('tabPedidos');
+              if (!tabBadge.querySelector('.new-badge')) {
+                tabBadge.insertAdjacentHTML('beforeend', '<span class="new-badge">NUEVO</span>');
+              }
+            }
+            if (payload.eventType === 'UPDATE') {
+              pedidosData = pedidosData.map(p => p.id === payload.new.id ? payload.new : p);
+            }
+            if (payload.eventType === 'DELETE') {
+              pedidosData = pedidosData.filter(p => p.id !== payload.old.id);
+            }
+
+            renderPedidos();
+            actualizarStats();
+          })
+          .subscribe();
+      } catch(e) {
+        console.warn('Realtime no disponible:', e.message);
+      }
+    }
+
+    // ─── CARGAR PEDIDOS DESDE SUPABASE ───────────────────────────────────────
+    async function cargarPedidos() {
+      const list = document.getElementById('pedidosList');
+      list.innerHTML = '<div class="loading-pedidos"><div class="sp"></div><p>Cargando pedidos...</p></div>';
+
+      try {
+        const { data, error } = await db
+          .from('pedidos')
+          .select('*')
+          .order('created_at', { ascending: false });
+
+        if (error) throw error;
+
+        pedidosData = data || [];
+        renderPedidos();
+        actualizarStats();
+
+        // Quitar badge "NUEVO" al abrir tab
+        const badge = document.querySelector('#tabPedidos .new-badge');
+        if (badge) badge.remove();
+
+      } catch(e) {
+        console.error('Error cargando pedidos:', e);
+        list.innerHTML = `
+          <div style="text-align:center;padding:2rem;color:#9ca3af">
+            <p style="font-size:1.5rem;margin-bottom:0.5rem">⚠️</p>
+            <p style="margin-bottom:0.75rem">Error cargando pedidos.</p>
+            <button class="btn-primary" onclick="cargarPedidos()">Reintentar</button>
+          </div>`;
+      }
+    }
+
+    // ─── RENDER PEDIDOS ───────────────────────────────────────────────────────
+    function filtrarPedidos() {
+      renderPedidos();
+    }
+
+    function setFiltroPedido(status, btn) {
+      filtroPedido = status;
+      document.querySelectorAll('#tab-pedidos .filter-pill')
+        .forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderPedidos();
+    }
+
+    function renderPedidos() {
+      const q = (document.getElementById('searchPedidos')?.value || '').toLowerCase();
+
+      const filtered = pedidosData.filter(o => {
+        const ms  = !q
+          || o.customer_name.toLowerCase().includes(q)
+          || o.customer_email.toLowerCase().includes(q);
+        const mst = filtroPedido === 'all' || o.status === filtroPedido;
+        return ms && mst;
+      });
+
+      const list = document.getElementById('pedidosList');
+
+      if (!filtered.length) {
+        list.innerHTML = `
+          <div style="text-align:center;padding:3rem;color:#9ca3af">
+            <p style="font-size:2rem;margin-bottom:0.5rem">📦</p>
+            <p>${pedidosData.length ? 'No hay pedidos con ese filtro.' : 'Aún no hay pedidos. ¡Cuando alguien compre aparecerá aquí!'}</p>
+          </div>`;
+        return;
+      }
+
+      list.innerHTML = filtered.map(o => {
+        const st    = STATUS[o.status] || STATUS.pending;
+        const date  = new Date(o.created_at).toLocaleDateString('es-ES', {
+          day:'2-digit', month:'2-digit', year:'numeric',
+          hour:'2-digit', minute:'2-digit'
+        });
+        const orderId = o.id.split('-')[0].toUpperCase();
+
+        // Items del pedido (guardados como JSONB)
+        const items = Array.isArray(o.items)
+          ? o.items.map(i => `
+              <div class="detail-item">
+                <span>${i.product_name} × ${i.quantity}</span>
+                <span>${(i.price * i.quantity).toFixed(2)} €</span>
+              </div>`).join('')
+          : '<p style="color:#9ca3af;font-size:0.82rem">Sin detalles</p>';
+
+        const stBtns = Object.entries(STATUS).map(([k,v]) =>
+          `<button class="status-btn ${o.status===k?'current':''}"
+            onclick="cambiarEstadoPedido('${o.id}','${k}')">
+            ${v.label}
+          </button>`
+        ).join('');
+
+        return `
+          <div class="order-row" id="order-${o.id}">
+            <div class="order-header" onclick="toggleOrder('${o.id}')">
+              <div class="order-name">
+                <strong>${o.customer_name}</strong>
+                <span>${o.customer_email} · ${o.customer_phone}</span>
+              </div>
+              <span class="status-badge ${st.cls}">${st.label}</span>
+              <div class="order-total-col">
+                <strong>${Number(o.total).toFixed(2)} €</strong>
+                <span>#${orderId} · ${date}</span>
+              </div>
+              <button class="btn-delete"
+                onclick="event.stopPropagation();showConfirmDelete('${o.id}')"
+                aria-label="Eliminar pedido">🗑️</button>
+              <span id="chevron-${o.id}">▼</span>
+            </div>
+            <div class="confirm-delete" id="confirm-${o.id}">
+              <p>¿Eliminar el pedido #${orderId}?</p>
+              <div class="confirm-btns">
+                <button class="btn-cancel-del" onclick="hideConfirmDelete('${o.id}')">Cancelar</button>
+                <button class="btn-confirm-del" onclick="eliminarPedido('${o.id}')">Eliminar</button>
+              </div>
+            </div>
+            <div class="order-details" id="details-${o.id}">
+              <p class="details-label">Productos</p>
+              ${items}
+              <div class="detail-item">
+                <span>Envío (${o.shipping_type === 'pickup' ? 'Recogida' : 'Domicilio'})</span>
+                <span>${Number(o.shipping_cost) === 0 ? 'Gratis' : Number(o.shipping_cost).toFixed(2) + ' €'}</span>
+              </div>
+              <div class="detail-item" style="font-weight:700;color:#4c1d95;border-top:1px solid #f3e8ff;padding-top:0.5rem;margin-top:0.25rem">
+                <span>Total</span>
+                <span>${Number(o.total).toFixed(2)} €</span>
+              </div>
+              ${o.shipping_address
+                ? `<br/><p class="details-label">Dirección de envío</p>
+                   <p style="font-size:0.875rem;color:#4b5563">
+                     ${o.shipping_address}, ${o.shipping_city} ${o.shipping_postal_code}
+                   </p>`
+                : ''}
+              ${o.notes
+                ? `<br/><p class="details-label">Notas</p>
+                   <p style="font-size:0.875rem;color:#4b5563">${o.notes}</p>`
+                : ''}
+              <div style="margin-top:0.5rem">
+                <span class="details-label" style="display:inline">Pago: </span>
+                <span style="font-size:0.82rem;color:#4b5563">
+                  ${o.payment_method === 'stripe' ? '💳 Tarjeta' : '🏦 Transferencia'}
+                </span>
+              </div>
+              <br/>
+              <p class="details-label">Cambiar Estado</p>
+              <div class="change-status">${stBtns}</div>
+            </div>
+          </div>`;
+      }).join('');
+    }
+
+    // ─── CAMBIAR ESTADO EN SUPABASE ───────────────────────────────────────────
+    async function cambiarEstadoPedido(id, status) {
+      try {
+        const { error } = await db
+          .from('pedidos')
+          .update({ status })
+          .eq('id', id);
+
+        if (error) throw error;
+
+        // Actualizar local inmediatamente
+        pedidosData = pedidosData.map(o => o.id === id ? { ...o, status } : o);
+        renderPedidos();
+        actualizarStats();
+        mostrarToastAdmin(`✓ Estado actualizado: ${STATUS[status].label}`, 'success');
+
+      } catch(e) {
+        console.error('Error actualizando estado:', e);
+        mostrarToastAdmin('Error actualizando el estado', 'error');
+      }
+    }
+
+    // ─── ELIMINAR PEDIDO EN SUPABASE ──────────────────────────────────────────
+    async function eliminarPedido(id) {
+      try {
+        const { error } = await db
+          .from('pedidos')
+          .delete()
+          .eq('id', id);
+
+        if (error) throw error;
+
+        pedidosData = pedidosData.filter(o => o.id !== id);
+        renderPedidos();
+        actualizarStats();
+        mostrarToastAdmin('🗑️ Pedido eliminado');
+
+      } catch(e) {
+        console.error('Error eliminando pedido:', e);
+        mostrarToastAdmin('Error eliminando el pedido', 'error');
+      }
+    }
+
+    // ─── HELPERS PEDIDOS ──────────────────────────────────────────────────────
+    function toggleOrder(id) {
+      const det  = document.getElementById('details-' + id);
+      const chev = document.getElementById('chevron-' + id);
+      if (!det) return;
+      const open = det.style.display === 'block';
+      det.style.display = open ? 'none' : 'block';
+      chev.textContent  = open ? '▼' : '▲';
+    }
+    function showConfirmDelete(id) {
+      const el = document.getElementById('confirm-' + id);
+      if (el) el.style.display = 'flex';
+    }
+    function hideConfirmDelete(id) {
+      const el = document.getElementById('confirm-' + id);
+      if (el) el.style.display = 'none';
+    }
+
+    // ─── STATS ────────────────────────────────────────────────────────────────
+    function actualizarStats() {
+      const productos    = getProductos();
+      const nonCancelled = pedidosData.filter(o => o.status !== 'cancelled');
+      document.getElementById('statProductos').textContent = productos.length;
+      document.getElementById('statPedidos').textContent   = pedidosData.length;
+      document.getElementById('statPending').textContent   = pedidosData.filter(o => o.status === 'pending').length;
+      document.getElementById('statRevenue').textContent   = nonCancelled.reduce((s,o) => s + Number(o.total), 0).toFixed(2) + ' €';
+    }
+
+    // ─── REFRESCAR TODO ───────────────────────────────────────────────────────
+    async function refrescarTodo() {
+      renderTablaProductos();
+      await cargarPedidos();
+      mostrarToastAdmin('✓ Datos actualizados', 'success');
     }
 
     // ─── TABS ─────────────────────────────────────────────────────────────────
@@ -474,17 +723,11 @@
       document.getElementById('tab-' + nombre).classList.add('active');
       btn.classList.add('active');
       if (nombre === 'usuarios') cargarUsuarios();
-      if (nombre === 'pedidos')  renderPedidos();
-    }
-
-    // ─── STATS ────────────────────────────────────────────────────────────────
-    function actualizarStats() {
-      const productos    = getProductos();
-      const nonCancelled = pedidos.filter(o => o.status !== 'cancelled');
-      document.getElementById('statProductos').textContent = productos.length;
-      document.getElementById('statPedidos').textContent   = pedidos.length;
-      document.getElementById('statPending').textContent   = pedidos.filter(o => o.status === 'pending').length;
-      document.getElementById('statRevenue').textContent   = nonCancelled.reduce((s,o) => s+o.total,0).toFixed(2) + ' €';
+      if (nombre === 'pedidos') {
+        cargarPedidos();
+        const badge = btn.querySelector('.new-badge');
+        if (badge) badge.remove();
+      }
     }
 
     // ─── PRODUCTOS ────────────────────────────────────────────────────────────
@@ -512,198 +755,6 @@
       actualizarStats();
     }
 
-    // ─── SUBIDA DE IMÁGENES ───────────────────────────────────────────────────
-    // Drag and drop
-    const dropArea = document.getElementById('dropArea');
-    dropArea.addEventListener('dragover', e => {
-      e.preventDefault();
-      dropArea.classList.add('dragover');
-    });
-    dropArea.addEventListener('dragleave', () => dropArea.classList.remove('dragover'));
-    dropArea.addEventListener('drop', e => {
-      e.preventDefault();
-      dropArea.classList.remove('dragover');
-      handleFileSelect(e.dataTransfer.files);
-    });
-
-    async function handleFileSelect(files) {
-      if (!files || !files.length) return;
-      const fileArr = Array.from(files);
-
-      // Validar tamaño
-      const tooBig = fileArr.filter(f => f.size > 5 * 1024 * 1024);
-      if (tooBig.length) {
-        mostrarToastAdmin('⚠️ Algunas imágenes superan 5MB', 'error');
-        return;
-      }
-
-      // Mostrar barra de progreso
-      const progress = document.getElementById('uploadProgress');
-      const fill     = document.getElementById('progressFill');
-      const txt      = document.getElementById('progressTxt');
-      progress.style.display = '';
-      fill.style.width       = '0%';
-
-      const urls = [];
-      for (let i = 0; i < fileArr.length; i++) {
-        const file = fileArr[i];
-        txt.textContent = `Subiendo ${i + 1} de ${fileArr.length}...`;
-        fill.style.width = `${((i) / fileArr.length) * 100}%`;
-
-        try {
-          const url = await subirImagen(file);
-          if (url) urls.push(url);
-        } catch(e) {
-          console.error('Error subiendo imagen:', e);
-          mostrarToastAdmin(`Error subiendo ${file.name}`, 'error');
-        }
-
-        fill.style.width = `${((i + 1) / fileArr.length) * 100}%`;
-      }
-
-      setTimeout(() => { progress.style.display = 'none'; }, 800);
-
-      // Añadir URLs a las subidas
-      imagenesSubidas = [...imagenesSubidas, ...urls];
-      renderPreviewImagenes();
-
-      if (urls.length) {
-        mostrarToastAdmin(`✓ ${urls.length} imagen${urls.length > 1 ? 'es' : ''} subida${urls.length > 1 ? 's' : ''}`,'success');
-      }
-    }
-
-    async function subirImagen(file) {
-      // Nombre único para evitar colisiones
-      const ext      = file.name.split('.').pop();
-      const nombre   = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
-      const ruta     = `productos/${nombre}`;
-
-      const { data, error } = await db.storage
-        .from('productos')
-        .upload(ruta, file, {
-          cacheControl: '3600',
-          upsert: false,
-          contentType: file.type,
-        });
-
-      if (error) {
-        console.error('Storage error:', error);
-        throw error;
-      }
-
-      // Obtener URL pública
-      const { data: urlData } = db.storage
-        .from('productos')
-        .getPublicUrl(ruta);
-
-      return urlData.publicUrl;
-    }
-
-    function renderPreviewImagenes() {
-      const wrap = document.getElementById('imgPreviewWrap');
-      const grid = document.getElementById('imgPreviewGrid');
-
-      if (!imagenesSubidas.length) {
-        wrap.style.display = 'none';
-        return;
-      }
-
-      wrap.style.display = '';
-      grid.innerHTML = imagenesSubidas.map((url, i) => `
-        <div class="img-thumb">
-          <img src="${url}" alt="Imagen ${i+1}"
-               onerror="this.src='https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=200&q=60'" />
-          <button class="img-thumb-remove" onclick="quitarImagen(${i})" title="Eliminar">✕</button>
-        </div>`).join('');
-    }
-
-    function quitarImagen(index) {
-      imagenesSubidas.splice(index, 1);
-      renderPreviewImagenes();
-    }
-
-    // ─── MODAL ────────────────────────────────────────────────────────────────
-    function abrirModal(producto = null) {
-      imagenesSubidas = [];
-      document.getElementById('modalTitulo').textContent = producto ? 'Editar Producto' : 'Añadir Producto';
-      document.getElementById('productoId').value       = producto?.id        || '';
-      document.getElementById('pNombre').value          = producto?.name      || '';
-      document.getElementById('pCategoria').value       = producto?.category  || '';
-      document.getElementById('pPrecio').value          = producto?.price     || '';
-      document.getElementById('pCompare').value         = producto?.compare   || '';
-      document.getElementById('pDescripcion').value     = producto?.description || '';
-      document.getElementById('pFeatured').checked      = producto?.featured  || false;
-      document.getElementById('fileInput').value        = '';
-      document.getElementById('uploadProgress').style.display = 'none';
-
-      // Si edita, cargar imagen existente
-      if (producto?.image) {
-        imagenesSubidas = [producto.image];
-      }
-      renderPreviewImagenes();
-
-      document.getElementById('modalBackdrop').classList.add('open');
-      document.getElementById('pNombre').focus();
-    }
-
-    function cerrarModal() {
-      document.getElementById('modalBackdrop').classList.remove('open');
-      imagenesSubidas = [];
-      renderPreviewImagenes();
-    }
-
-    function cerrarModalSiBackdrop(e) {
-      if (e.target === document.getElementById('modalBackdrop')) cerrarModal();
-    }
-
-    function editarProducto(id) {
-      const p = getProductos().find(p => p.id === id);
-      if (p) abrirModal(p);
-    }
-
-    // ─── GUARDAR PRODUCTO ─────────────────────────────────────────────────────
-    async function guardarProducto() {
-      const nombre      = document.getElementById('pNombre').value.trim();
-      const categoria   = document.getElementById('pCategoria').value;
-      const precio      = parseFloat(document.getElementById('pPrecio').value);
-      const compare     = parseFloat(document.getElementById('pCompare').value) || null;
-      const descripcion = document.getElementById('pDescripcion').value.trim();
-      const featured    = document.getElementById('pFeatured').checked;
-      const id          = document.getElementById('productoId').value;
-
-      if (!nombre)    { mostrarToastAdmin('⚠️ El nombre es obligatorio', 'error'); return; }
-      if (!categoria) { mostrarToastAdmin('⚠️ Selecciona una categoría', 'error'); return; }
-      if (!precio || precio <= 0) { mostrarToastAdmin('⚠️ El precio no es válido', 'error'); return; }
-      if (!imagenesSubidas.length) { mostrarToastAdmin('⚠️ Añade al menos una imagen', 'error'); return; }
-
-      const btn = document.getElementById('btnGuardar');
-      btn.disabled    = true;
-      btn.textContent = 'Guardando...';
-
-      const imagen = imagenesSubidas[0]; // imagen principal
-      const lista  = getProductos();
-
-      if (id) {
-        const idx = lista.findIndex(p => p.id === id);
-        if (idx !== -1) {
-          lista[idx] = { id, name:nombre, category:categoria, price:precio, compare, image:imagen, description:descripcion, featured, images:imagenesSubidas };
-        }
-        mostrarToastAdmin('✓ Producto actualizado', 'success');
-      } else {
-        const nuevoId = Date.now().toString();
-        lista.push({ id:nuevoId, name:nombre, category:categoria, price:precio, compare, image:imagen, description:descripcion, featured, images:imagenesSubidas });
-        mostrarToastAdmin('✓ Producto añadido', 'success');
-      }
-
-      guardarProductos(lista);
-      renderTablaProductos();
-      cerrarModal();
-
-      btn.disabled    = false;
-      btn.textContent = 'Guardar producto';
-    }
-
-    // ─── FILTRO CATEGORÍA ─────────────────────────────────────────────────────
     function setFiltroCategoria(cat, btn) {
       filtroCategoria = cat;
       document.querySelectorAll('#tab-productos .filter-pill')
@@ -712,7 +763,6 @@
       renderTablaProductos();
     }
 
-    // ─── TABLA PRODUCTOS ──────────────────────────────────────────────────────
     function renderTablaProductos() {
       const q     = (document.getElementById('searchProductos')?.value || '').toLowerCase();
       const lista = getProductos().filter(p => {
@@ -720,29 +770,22 @@
         const mc = !filtroCategoria || p.category === filtroCategoria;
         return mq && mc;
       });
-
       const tbody = document.getElementById('productosTableBody');
       if (!lista.length) {
-        tbody.innerHTML = `
-          <tr><td colspan="6" class="empty-table">
-            <p class="icon">📦</p>
-            <p>No hay productos. ¡Añade el primero!</p>
-          </td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="6" class="empty-table"><p class="icon">📦</p><p>No hay productos.</p></td></tr>`;
         return;
       }
       tbody.innerHTML = lista.map(p => `
         <tr>
-          <td>
-            <img class="prod-thumb" src="${p.image}" alt="${p.name}"
-                 onerror="this.src='https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=100&q=60'" />
-          </td>
+          <td><img class="prod-thumb" src="${p.image}" alt="${p.name}"
+               onerror="this.src='https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=100&q=60'" /></td>
           <td class="prod-name-cell">${p.name}</td>
           <td><span class="prod-cat-badge">${p.category}</span></td>
           <td>
             <strong style="color:#4c1d95">${Number(p.price).toFixed(2)} €</strong>
-            ${p.compare ? `<br/><span style="color:#9ca3af;font-size:0.75rem;text-decoration:line-through">${Number(p.compare).toFixed(2)} €</span>` : ''}
+            ${p.compare?`<br/><span style="color:#9ca3af;font-size:0.75rem;text-decoration:line-through">${Number(p.compare).toFixed(2)} €</span>`:''}
           </td>
-          <td style="text-align:center;font-size:1.1rem">${p.featured ? '⭐' : '—'}</td>
+          <td style="text-align:center">${p.featured ? '⭐' : '—'}</td>
           <td>
             <div class="prod-actions">
               <button class="btn-edit"   onclick="editarProducto('${p.id}')">Editar</button>
@@ -752,91 +795,125 @@
         </tr>`).join('');
     }
 
+    // ─── MODAL PRODUCTO ───────────────────────────────────────────────────────
+    function abrirModal(producto = null) {
+      imagenesSubidas = [];
+      document.getElementById('modalTitulo').textContent = producto ? 'Editar Producto' : 'Añadir Producto';
+      document.getElementById('productoId').value    = producto?.id          || '';
+      document.getElementById('pNombre').value       = producto?.name        || '';
+      document.getElementById('pCategoria').value    = producto?.category    || '';
+      document.getElementById('pPrecio').value       = producto?.price       || '';
+      document.getElementById('pCompare').value      = producto?.compare     || '';
+      document.getElementById('pDescripcion').value  = producto?.description || '';
+      document.getElementById('pFeatured').checked   = producto?.featured    || false;
+      document.getElementById('fileInput').value     = '';
+      document.getElementById('uploadProgress').style.display = 'none';
+      if (producto?.image) imagenesSubidas = [producto.image];
+      renderPreviewImagenes();
+      document.getElementById('modalBackdrop').classList.add('open');
+      document.getElementById('pNombre').focus();
+    }
+    function cerrarModal() {
+      document.getElementById('modalBackdrop').classList.remove('open');
+      imagenesSubidas = [];
+      renderPreviewImagenes();
+    }
+    function cerrarModalSiBackdrop(e) {
+      if (e.target === document.getElementById('modalBackdrop')) cerrarModal();
+    }
+    function editarProducto(id) {
+      const p = getProductos().find(p => p.id === id);
+      if (p) abrirModal(p);
+    }
+
+    // Drag and drop
+    const dropArea = document.getElementById('dropArea');
+    dropArea.addEventListener('dragover', e => { e.preventDefault(); dropArea.classList.add('dragover'); });
+    dropArea.addEventListener('dragleave', () => dropArea.classList.remove('dragover'));
+    dropArea.addEventListener('drop', e => { e.preventDefault(); dropArea.classList.remove('dragover'); handleFileSelect(e.dataTransfer.files); });
+
+    async function handleFileSelect(files) {
+      if (!files || !files.length) return;
+      const fileArr  = Array.from(files);
+      const tooBig   = fileArr.filter(f => f.size > 5 * 1024 * 1024);
+      if (tooBig.length) { mostrarToastAdmin('⚠️ Algunas imágenes superan 5MB', 'error'); return; }
+      const progress = document.getElementById('uploadProgress');
+      const fill     = document.getElementById('progressFill');
+      const txt      = document.getElementById('progressTxt');
+      progress.style.display = '';
+      fill.style.width = '0%';
+      const urls = [];
+      for (let i = 0; i < fileArr.length; i++) {
+        txt.textContent  = `Subiendo ${i+1} de ${fileArr.length}...`;
+        fill.style.width = `${(i / fileArr.length) * 100}%`;
+        try { const url = await subirImagen(fileArr[i]); if (url) urls.push(url); }
+        catch(e) { mostrarToastAdmin(`Error subiendo ${fileArr[i].name}`, 'error'); }
+        fill.style.width = `${((i+1) / fileArr.length) * 100}%`;
+      }
+      setTimeout(() => { progress.style.display = 'none'; }, 800);
+      imagenesSubidas = [...imagenesSubidas, ...urls];
+      renderPreviewImagenes();
+      if (urls.length) mostrarToastAdmin(`✓ ${urls.length} imagen${urls.length>1?'es':''} subida${urls.length>1?'s':''}`, 'success');
+    }
+
+    async function subirImagen(file) {
+      const ext   = file.name.split('.').pop();
+      const ruta  = `productos/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+      const { error } = await db.storage.from('productos').upload(ruta, file, { cacheControl:'3600', upsert:false, contentType:file.type });
+      if (error) throw error;
+      const { data: urlData } = db.storage.from('productos').getPublicUrl(ruta);
+      return urlData.publicUrl;
+    }
+
+    function renderPreviewImagenes() {
+      const wrap = document.getElementById('imgPreviewWrap');
+      const grid = document.getElementById('imgPreviewGrid');
+      if (!imagenesSubidas.length) { wrap.style.display = 'none'; return; }
+      wrap.style.display = '';
+      grid.innerHTML = imagenesSubidas.map((url, i) => `
+        <div class="img-thumb">
+          <img src="${url}" alt="Imagen ${i+1}" onerror="this.src='https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=200&q=60'" />
+          <button class="img-thumb-remove" onclick="quitarImagen(${i})">✕</button>
+        </div>`).join('');
+    }
+    function quitarImagen(i) { imagenesSubidas.splice(i, 1); renderPreviewImagenes(); }
+
+    async function guardarProducto() {
+      const nombre      = document.getElementById('pNombre').value.trim();
+      const categoria   = document.getElementById('pCategoria').value;
+      const precio      = parseFloat(document.getElementById('pPrecio').value);
+      const compare     = parseFloat(document.getElementById('pCompare').value) || null;
+      const descripcion = document.getElementById('pDescripcion').value.trim();
+      const featured    = document.getElementById('pFeatured').checked;
+      const id          = document.getElementById('productoId').value;
+      if (!nombre)    { mostrarToastAdmin('⚠️ El nombre es obligatorio', 'error'); return; }
+      if (!categoria) { mostrarToastAdmin('⚠️ Selecciona una categoría', 'error'); return; }
+      if (!precio || precio <= 0) { mostrarToastAdmin('⚠️ El precio no es válido', 'error'); return; }
+      if (!imagenesSubidas.length) { mostrarToastAdmin('⚠️ Añade al menos una imagen', 'error'); return; }
+      const btn = document.getElementById('btnGuardar');
+      btn.disabled = true; btn.textContent = 'Guardando...';
+      const imagen = imagenesSubidas[0];
+      const lista  = getProductos();
+      if (id) {
+        const idx = lista.findIndex(p => p.id === id);
+        if (idx !== -1) lista[idx] = { id, name:nombre, category:categoria, price:precio, compare, image:imagen, description:descripcion, featured, images:imagenesSubidas };
+        mostrarToastAdmin('✓ Producto actualizado', 'success');
+      } else {
+        lista.push({ id:Date.now().toString(), name:nombre, category:categoria, price:precio, compare, image:imagen, description:descripcion, featured, images:imagenesSubidas });
+        mostrarToastAdmin('✓ Producto añadido', 'success');
+      }
+      guardarProductos(lista);
+      renderTablaProductos();
+      cerrarModal();
+      btn.disabled = false; btn.textContent = 'Guardar producto';
+    }
+
     function eliminarProducto(id) {
       if (!confirm('¿Seguro que quieres eliminar este producto?')) return;
-      const lista = getProductos().filter(p => p.id !== id);
-      guardarProductos(lista);
+      guardarProductos(getProductos().filter(p => p.id !== id));
       renderTablaProductos();
       mostrarToastAdmin('🗑️ Producto eliminado');
     }
-
-    // ─── PEDIDOS ──────────────────────────────────────────────────────────────
-    function setFiltroPedido(status, btn) {
-      filtroPedido = status;
-      document.querySelectorAll('#tab-pedidos .filter-pill')
-        .forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      renderPedidos();
-    }
-
-    function renderPedidos() {
-      const q = (document.getElementById('searchPedidos')?.value || '').toLowerCase();
-      const filtered = pedidos.filter(o => {
-        const ms  = !q || o.customer_name.toLowerCase().includes(q) || o.customer_email.toLowerCase().includes(q);
-        const mst = filtroPedido === 'all' || o.status === filtroPedido;
-        return ms && mst;
-      });
-      actualizarStats();
-      const list = document.getElementById('pedidosList');
-      if (!filtered.length) {
-        list.innerHTML = '<div style="text-align:center;padding:3rem;color:#9ca3af"><p style="font-size:2rem">📦</p><p>No hay pedidos</p></div>';
-        return;
-      }
-      list.innerHTML = filtered.map(o => {
-        const st   = STATUS[o.status] || STATUS.pending;
-        const date = new Date(o.created_date).toLocaleDateString('es-ES');
-        const items = o.items.map(i =>
-          `<div class="detail-item"><span>${i.product_name} × ${i.quantity}</span><span>${(i.price*i.quantity).toFixed(2)} €</span></div>`
-        ).join('');
-        const stBtns = Object.entries(STATUS).map(([k,v]) =>
-          `<button class="status-btn" onclick="cambiarEstado('${o.id}','${k}')"
-            style="${o.status===k?'background:#f3e8ff;border-color:#a855f7;color:#6d28d9':''}">${v.label}</button>`
-        ).join('');
-        return `
-          <div class="order-row" id="order-${o.id}">
-            <div class="order-header" onclick="toggleOrder('${o.id}')">
-              <div class="order-name">
-                <strong>${o.customer_name}</strong>
-                <span>${o.customer_email} · ${o.customer_phone}</span>
-              </div>
-              <span class="status-badge ${st.cls}">${st.label}</span>
-              <div class="order-total-col">
-                <strong>${o.total.toFixed(2)} €</strong>
-                <span>${date}</span>
-              </div>
-              <button class="btn-delete" onclick="event.stopPropagation();showConfirmDelete('${o.id}')">🗑️</button>
-              <span id="chevron-${o.id}">▼</span>
-            </div>
-            <div class="confirm-delete" id="confirm-${o.id}">
-              <p>¿Eliminar este pedido?</p>
-              <div class="confirm-btns">
-                <button class="btn-cancel-del" onclick="hideConfirmDelete('${o.id}')">Cancelar</button>
-                <button class="btn-confirm-del" onclick="eliminarPedido('${o.id}')">Eliminar</button>
-              </div>
-            </div>
-            <div class="order-details" id="details-${o.id}">
-              <p class="details-label">Productos</p>${items}
-              <div class="detail-item"><span>Envío</span><span>${o.shipping_cost===0?'Gratis':o.shipping_cost.toFixed(2)+' €'}</span></div>
-              ${o.shipping_address?`<br/><p class="details-label">Dirección</p><p style="font-size:0.875rem;color:#4b5563">${o.shipping_address}, ${o.shipping_city} ${o.shipping_postal_code}</p>`:''}
-              ${o.notes?`<br/><p class="details-label">Notas</p><p style="font-size:0.875rem;color:#4b5563">${o.notes}</p>`:''}
-              <br/><p class="details-label">Cambiar Estado</p>
-              <div class="change-status">${stBtns}</div>
-            </div>
-          </div>`;
-      }).join('');
-    }
-
-    function toggleOrder(id) {
-      const det  = document.getElementById('details-' + id);
-      const chev = document.getElementById('chevron-' + id);
-      const open = det.style.display === 'block';
-      det.style.display = open ? 'none' : 'block';
-      chev.textContent  = open ? '▼' : '▲';
-    }
-    function showConfirmDelete(id)  { document.getElementById('confirm-' + id).style.display = 'flex'; }
-    function hideConfirmDelete(id)  { document.getElementById('confirm-' + id).style.display = 'none'; }
-    function eliminarPedido(id)     { pedidos = pedidos.filter(o => o.id !== id); renderPedidos(); }
-    function cambiarEstado(id, st)  { pedidos = pedidos.map(o => o.id === id ? {...o, status:st} : o); renderPedidos(); }
 
     // ─── USUARIOS ─────────────────────────────────────────────────────────────
     async function cargarUsuarios() {
@@ -868,12 +945,19 @@
       }
     }
 
+    // ─── LOGOUT ───────────────────────────────────────────────────────────────
+    async function hacerLogout() {
+      if (suscripcionRT) await suscripcionRT.unsubscribe();
+      try { await cerrarSesion(); } catch(e) {}
+      window.location.href = 'login.html';
+    }
+
     // ─── TOAST ────────────────────────────────────────────────────────────────
     function mostrarToastAdmin(msg, tipo = '') {
       const t = document.getElementById('adminToast');
-      t.textContent  = msg;
-      t.className    = 'show' + (tipo ? ' ' + tipo : '');
-      setTimeout(() => { t.className = tipo ? tipo : ''; }, 3000);
+      t.textContent = msg;
+      t.className   = 'show' + (tipo ? ' ' + tipo : '');
+      setTimeout(() => { t.className = tipo || ''; }, 3200);
     }
   </script>
 </body>
