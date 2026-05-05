@@ -49,7 +49,6 @@
     .filter-btn { display: block; width: 100%; text-align: left; padding: 0.45rem 0.75rem; border-radius: 0.5rem; font-size: 0.875rem; cursor: pointer; border: none; background: transparent; color: #4b5563; font-family: 'Nunito', sans-serif; transition: all 0.15s; margin-bottom: 0.2rem; }
     .filter-btn.active { background: #ede9fe; color: #6d28d9; font-weight: 700; }
     .filter-btn:hover:not(.active) { background: #f5f3ff; color: #4c1d95; }
-    .filter-section { margin-bottom: 0; }
 
     /* ── MAIN ── */
     .main-area { flex: 1; min-width: 0; }
@@ -57,10 +56,19 @@
     .search-wrap { position: relative; flex: 1; min-width: 200px; }
     .search-wrap input { padding: 0.6rem 0.75rem 0.6rem 2.4rem; border: 1px solid #e9d5ff; border-radius: 9999px; font-family: 'Nunito', sans-serif; outline: none; font-size: 0.875rem; width: 100%; transition: border-color 0.2s; background: white; }
     .search-wrap input:focus { border-color: #a855f7; box-shadow: 0 0 0 3px rgba(168,85,247,0.08); }
-    .search-icon { position: absolute; left: 0.85rem; top: 50%; transform: translateY(-50%); color: #9ca3af; pointer-events: none; font-size: 0.9rem; }
-    select.sort { border: 1px solid #e9d5ff; border-radius: 9999px; padding: 0.6rem 1rem; font-family: 'Nunito', sans-serif; font-size: 0.875rem; outline: none; color: #4c1d95; background: white; cursor: pointer; transition: border-color 0.2s; }
-    select.sort:focus { border-color: #a855f7; }
+    .search-icon { position: absolute; left: 0.85rem; top: 50%; transform: translateY(-50%); color: #9ca3af; pointer-events: none; }
+    select.sort { border: 1px solid #e9d5ff; border-radius: 9999px; padding: 0.6rem 1rem; font-family: 'Nunito', sans-serif; font-size: 0.875rem; outline: none; color: #4c1d95; background: white; cursor: pointer; }
     .results-count { font-size: 0.82rem; color: #9ca3af; margin-bottom: 1rem; }
+
+    /* ── SKELETON LOADING ── */
+    .skeleton-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1.5rem; }
+    .skeleton-card { background: white; border-radius: 1rem; overflow: hidden; border: 1px solid #f3e8ff; }
+    .skeleton-img  { aspect-ratio: 1; background: linear-gradient(90deg, #f3e8ff 25%, #faf5ff 50%, #f3e8ff 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; }
+    .skeleton-body { padding: 1rem; display: flex; flex-direction: column; gap: 0.5rem; }
+    .skeleton-line { height: 12px; background: linear-gradient(90deg, #f3e8ff 25%, #faf5ff 50%, #f3e8ff 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 9999px; }
+    .skeleton-line.short { width: 60%; }
+    .skeleton-line.btn   { height: 32px; border-radius: 9999px; margin-top: 0.5rem; }
+    @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 
     /* ── GRID PRODUCTOS ── */
     .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1.5rem; }
@@ -82,9 +90,9 @@
     .add-cart-btn:hover { background: #7c3aed; color: white; }
     .add-cart-btn.added { background: #dcfce7; color: #16a34a; }
 
-    /* ── SIN RESULTADOS ── */
-    .no-products { grid-column: 1/-1; text-align: center; padding: 3rem; color: #9ca3af; }
-    .no-products .icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+    /* ── ERROR / VACÍO ── */
+    .empty-state { grid-column: 1/-1; text-align: center; padding: 3rem; color: #9ca3af; }
+    .empty-state .icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
 
     /* ── TOAST ── */
     #toast { position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%) translateY(80px); background: #4c1d95; color: white; padding: 0.85rem 1.75rem; border-radius: 9999px; font-size: 0.875rem; font-weight: 600; z-index: 200; transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1); pointer-events: none; white-space: nowrap; font-family: 'Nunito', sans-serif; box-shadow: 0 8px 24px rgba(76,29,149,0.3); }
@@ -106,7 +114,6 @@
       .products-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 1rem; }
     }
     @media (max-width: 480px) {
-      nav { padding: 0 1rem; }
       .shop-header { padding: 5rem 1rem 2rem; }
       .shop-body { padding: 1rem; }
       .products-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
@@ -153,9 +160,8 @@
   </div>
 
   <div class="shop-body">
-    <!-- SIDEBAR -->
     <aside class="sidebar">
-      <div class="sidebar-card filter-section">
+      <div class="sidebar-card">
         <h4>Categorías</h4>
         <button class="filter-btn active" onclick="setCategoria('', this)">Todas</button>
         <button class="filter-btn" onclick="setCategoria('velas', this)">🕯️ Velas</button>
@@ -165,7 +171,7 @@
         <button class="filter-btn" onclick="setCategoria('corporal', this)">🧴 Corporal</button>
         <button class="filter-btn" onclick="setCategoria('quemadores', this)">🔥 Quemadores</button>
       </div>
-      <div class="sidebar-card filter-section">
+      <div class="sidebar-card">
         <h4>Precio</h4>
         <button class="filter-btn active" onclick="setPrecio(null, null, this)">Todos</button>
         <button class="filter-btn" onclick="setPrecio(0, 15, this)">Hasta 15€</button>
@@ -175,14 +181,13 @@
       </div>
     </aside>
 
-    <!-- MAIN -->
     <div class="main-area">
       <div class="toolbar">
         <div class="search-wrap">
           <span class="search-icon">🔍</span>
-          <input type="text" placeholder="Buscar productos..." id="searchInput" oninput="renderProductos()" />
+          <input type="text" placeholder="Buscar productos..." id="searchInput" oninput="filtrarProductos()" />
         </div>
-        <select class="sort" id="sortSelect" onchange="renderProductos()">
+        <select class="sort" id="sortSelect" onchange="filtrarProductos()">
           <option value="newest">Más recientes</option>
           <option value="price-asc">Precio: menor a mayor</option>
           <option value="price-desc">Precio: mayor a menor</option>
@@ -190,11 +195,10 @@
         </select>
       </div>
       <p class="results-count" id="resultsCount"></p>
-      <div class="products-grid" id="productsGrid"></div>
+      <div id="productsGrid"></div>
     </div>
   </div>
 
-  <!-- FOOTER -->
   <footer>
     <div class="footer-bottom">
       <p>© 2024 Kaori. Todos los derechos reservados.</p>
@@ -210,56 +214,82 @@
   <script src="cart.js"></script>
   <script src="animations.js"></script>
   <script>
-    // ── Productos ─────────────────────────────────────────────────────────────
-    const PRODUCTOS_DEFAULT = [
-      { id:'1', name:'Vela Artesanal de Lavanda',  category:'velas',       price:18, compare:22,   featured:true,  image:'https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=400&q=80' },
-      { id:'2', name:'Amatista Natural',            category:'minerales',   price:24, compare:null, featured:false, image:'https://images.unsplash.com/photo-1557053910-d9eadeed1c58?w=400&q=80' },
-      { id:'3', name:'Collar de Cuarzo Rosa',       category:'joyeria',     price:32, compare:null, featured:false, image:'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=400&q=80' },
-      { id:'4', name:'Vela Energética Sándalo',     category:'velas',       price:22, compare:null, featured:false, image:'https://images.unsplash.com/photo-1603905000478-e1b9fb17b2eb?w=400&q=80' },
-      { id:'5', name:'Cuarzo Rosa Natural',         category:'minerales',   price:19, compare:25,   featured:false, image:'https://images.unsplash.com/photo-1559181567-c3190ee73a43?w=400&q=80' },
-      { id:'6', name:'Pulsera de Labradorita',      category:'joyeria',     price:28, compare:null, featured:false, image:'https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?w=400&q=80' },
-      { id:'7', name:'Incienso de Palo Santo',      category:'ambientacion',price:12, compare:null, featured:false, image:'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=400&q=80' },
-      { id:'8', name:'Crema Corporal de Lavanda',   category:'corporal',    price:16, compare:null, featured:false, image:'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=400&q=80' },
-    ];
+    // ─── ESTADO ───────────────────────────────────────────────────────────────
+    let todosLosProductos = [];
+    let categoriaActiva   = '';
+    let precioMin         = null;
+    let precioMax         = null;
 
-    function getProductos() {
-      try {
-        const g = localStorage.getItem('kaori_productos');
-        if (g) return JSON.parse(g);
-        localStorage.setItem('kaori_productos', JSON.stringify(PRODUCTOS_DEFAULT));
-        return PRODUCTOS_DEFAULT;
-      } catch { return PRODUCTOS_DEFAULT; }
+    // ─── SKELETON LOADING ─────────────────────────────────────────────────────
+    function mostrarSkeleton() {
+      const grid = document.getElementById('productsGrid');
+      grid.className = 'skeleton-grid';
+      grid.innerHTML = Array(8).fill(`
+        <div class="skeleton-card">
+          <div class="skeleton-img"></div>
+          <div class="skeleton-body">
+            <div class="skeleton-line short"></div>
+            <div class="skeleton-line"></div>
+            <div class="skeleton-line short"></div>
+            <div class="skeleton-line btn"></div>
+          </div>
+        </div>`).join('');
     }
 
-    // ── Estado filtros ────────────────────────────────────────────────────────
-    let categoriaActiva = '';
-    let precioMin = null;
-    let precioMax = null;
+    // ─── CARGAR PRODUCTOS DESDE SUPABASE ──────────────────────────────────────
+    async function cargarProductos() {
+      mostrarSkeleton();
+      try {
+        const { data, error } = await db
+          .from('productos')
+          .select('*')
+          .eq('active', true)
+          .order('created_at', { ascending: false });
 
+        if (error) throw error;
+
+        todosLosProductos = data || [];
+        filtrarProductos();
+
+      } catch(e) {
+        console.error('Error cargando productos:', e);
+        const grid = document.getElementById('productsGrid');
+        grid.className = 'products-grid';
+        grid.innerHTML = `
+          <div class="empty-state">
+            <p class="icon">⚠️</p>
+            <p>Error cargando productos.</p>
+            <button onclick="cargarProductos()" style="margin-top:1rem;background:#7c3aed;color:white;border:none;border-radius:9999px;padding:0.6rem 1.5rem;font-family:'Nunito',sans-serif;font-weight:700;cursor:pointer">
+              Reintentar
+            </button>
+          </div>`;
+      }
+    }
+
+    // ─── FILTROS ──────────────────────────────────────────────────────────────
     function setCategoria(cat, btn) {
       categoriaActiva = cat;
-      document.querySelectorAll('.filter-section:first-child .filter-btn')
+      document.querySelectorAll('.sidebar-card:first-child .filter-btn')
         .forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      renderProductos();
+      filtrarProductos();
     }
 
     function setPrecio(min, max, btn) {
       precioMin = min; precioMax = max;
-      document.querySelectorAll('.filter-section:last-child .filter-btn')
+      document.querySelectorAll('.sidebar-card:last-child .filter-btn')
         .forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      renderProductos();
+      filtrarProductos();
     }
 
-    // ── Render ────────────────────────────────────────────────────────────────
-    function renderProductos() {
+    // ─── FILTRAR Y RENDERIZAR ─────────────────────────────────────────────────
+    function filtrarProductos() {
       const q    = document.getElementById('searchInput').value.toLowerCase();
       const sort = document.getElementById('sortSelect').value;
-      const todos = getProductos();
 
-      let lista = todos.filter(p => {
-        const matchQ = !q || p.name.toLowerCase().includes(q);
+      let lista = todosLosProductos.filter(p => {
+        const matchQ = !q || p.name.toLowerCase().includes(q) || (p.description||'').toLowerCase().includes(q);
         const matchC = !categoriaActiva || p.category === categoriaActiva;
         const matchP = (precioMin === null || p.price >= precioMin)
                     && (precioMax === null || p.price <= precioMax);
@@ -273,11 +303,17 @@
       document.getElementById('resultsCount').textContent =
         `${lista.length} producto${lista.length !== 1 ? 's' : ''} encontrado${lista.length !== 1 ? 's' : ''}`;
 
+      renderProductos(lista);
+    }
+
+    // ─── RENDER PRODUCTOS ─────────────────────────────────────────────────────
+    function renderProductos(lista) {
       const grid = document.getElementById('productsGrid');
+      grid.className = 'products-grid';
 
       if (!lista.length) {
         grid.innerHTML = `
-          <div class="no-products">
+          <div class="empty-state">
             <p class="icon">🔍</p>
             <p>No se encontraron productos.</p>
           </div>`;
@@ -285,8 +321,8 @@
       }
 
       grid.innerHTML = lista.map((p, i) => {
-        const disc = p.compare && p.compare > p.price
-          ? Math.round((1 - p.price / p.compare) * 100) : 0;
+        const disc = p.compare_price && p.compare_price > p.price
+          ? Math.round((1 - p.price / p.compare_price) * 100) : 0;
         return `
           <div class="product-card" data-animate="fade-up" data-delay="${Math.min(i * 60, 400)}">
             <div class="prod-img-wrap"
@@ -294,15 +330,14 @@
               <img src="${p.image}" alt="${p.name}" loading="lazy"
                    onerror="this.src='https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=400&q=80'" />
               ${disc       ? `<span class="prod-badge badge-discount">-${disc}%</span>` : ''}
-              ${p.featured ? `<span class="prod-badge badge-featured"
-                               style="top:${disc?'32px':'8px'}">✨</span>` : ''}
+              ${p.featured ? `<span class="prod-badge badge-featured" style="top:${disc?'32px':'8px'}">✨</span>` : ''}
             </div>
             <div class="product-info">
               <p class="product-cat">${p.category}</p>
               <h4>${p.name}</h4>
               <div class="price-row">
                 <span class="product-price">${Number(p.price).toFixed(2)} €</span>
-                ${p.compare ? `<span class="product-compare">${Number(p.compare).toFixed(2)} €</span>` : ''}
+                ${p.compare_price ? `<span class="product-compare">${Number(p.compare_price).toFixed(2)} €</span>` : ''}
               </div>
               <button class="add-cart-btn" onclick="añadirAlCarrito('${p.id}', this)">
                 Añadir al carrito
@@ -311,11 +346,10 @@
           </div>`;
       }).join('');
 
-      // Re-init animaciones
       if (window.AnimationsInit) AnimationsInit();
     }
 
-    // ── Carrito ───────────────────────────────────────────────────────────────
+    // ─── CARRITO ──────────────────────────────────────────────────────────────
     function getCarrito() {
       try { return JSON.parse(localStorage.getItem('kaori_cart') || '[]'); } catch { return []; }
     }
@@ -323,20 +357,27 @@
       localStorage.setItem('kaori_cart', JSON.stringify(cart));
       if (window.CartWidget) CartWidget.updateBadge();
     }
+
     function añadirAlCarrito(id, btn) {
-      const producto = getProductos().find(p => p.id === id);
+      const producto = todosLosProductos.find(p => p.id === id);
       if (!producto) return;
       const cart     = getCarrito();
       const existing = cart.find(i => i.id === id);
       if (existing) existing.quantity++;
-      else cart.push({ id: producto.id, name: producto.name, price: Number(producto.price), image: producto.image, quantity: 1 });
+      else cart.push({
+        id:       producto.id,
+        name:     producto.name,
+        price:    Number(producto.price),
+        image:    producto.image,
+        quantity: 1,
+      });
       guardarCarrito(cart);
+      if (window.CartWidget) CartWidget.render();
       const orig = btn.textContent;
       btn.textContent = '✓ Añadido';
       btn.classList.add('added');
       setTimeout(() => { btn.textContent = orig; btn.classList.remove('added'); }, 1500);
       mostrarToast(`"${producto.name}" añadido`);
-      if (window.CartWidget) CartWidget.render();
     }
 
     function mostrarToast(msg) {
@@ -346,6 +387,7 @@
       setTimeout(() => t.classList.remove('show'), 2500);
     }
 
+    // ─── MENÚ HAMBURGUESA ─────────────────────────────────────────────────────
     function toggleMenu() {
       document.getElementById('mobileMenu').classList.toggle('open');
     }
@@ -358,7 +400,7 @@
       }
     });
 
-    // ── Navbar dinámico ───────────────────────────────────────────────────────
+    // ─── NAVBAR DINÁMICO ──────────────────────────────────────────────────────
     (async () => {
       try {
         const sesion = await obtenerSesion();
@@ -374,10 +416,10 @@
       } catch(e) {}
     })();
 
-    // ── Init ──────────────────────────────────────────────────────────────────
-    renderProductos();
+    // ─── INIT ─────────────────────────────────────────────────────────────────
+    cargarProductos();
 
-    // Leer categoría de URL si viene de un enlace filtrado
+    // Leer categoría de URL si viene filtrada
     const urlParams = new URLSearchParams(window.location.search);
     const catParam  = urlParams.get('category');
     if (catParam) {
