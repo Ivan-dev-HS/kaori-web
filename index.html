@@ -51,6 +51,17 @@
     .featured-inner { max-width: 72rem; margin: 0 auto; }
     .section-label { font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: #a855f7; margin-bottom: 0.5rem; text-align: center; }
     .section-title { font-size: clamp(1.6rem, 4vw, 2.5rem); color: #4c1d95; text-align: center; margin-bottom: 3rem; font-weight: 400; }
+
+    /* ── SKELETON ── */
+    .skeleton-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.5rem; }
+    .skeleton-card { background: white; border-radius: 1rem; overflow: hidden; border: 1px solid #f3e8ff; }
+    .skeleton-img  { aspect-ratio: 1; background: linear-gradient(90deg, #f3e8ff 25%, #faf5ff 50%, #f3e8ff 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; }
+    .skeleton-body { padding: 1rem; display: flex; flex-direction: column; gap: 0.5rem; }
+    .skeleton-line { height: 12px; background: linear-gradient(90deg, #f3e8ff 25%, #faf5ff 50%, #f3e8ff 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 9999px; }
+    .skeleton-line.short { width: 60%; }
+    .skeleton-line.btn   { height: 32px; border-radius: 9999px; margin-top: 0.5rem; }
+    @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
     .featured-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.5rem; }
     .feat-card { background: white; border-radius: 1rem; overflow: hidden; border: 1px solid #f3e8ff; transition: all 0.3s; cursor: pointer; }
     .feat-card:hover { box-shadow: 0 12px 40px rgba(124,58,237,0.15); transform: translateY(-4px); }
@@ -84,11 +95,11 @@
 
     /* ── ABOUT BANNER ── */
     .about-banner { padding: 6rem 1.5rem; background: linear-gradient(135deg, #2e0854, #4c1d95); text-align: center; position: relative; overflow: hidden; }
-    .about-banner::before { content:''; position:absolute; inset:0; background: url('https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=1200&q=40') center/cover; opacity:0.06; }
+    .about-banner::before { content:''; position:absolute; inset:0; background:url('https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=1200&q=40') center/cover; opacity:0.06; }
     .about-banner h2 { position:relative; font-size: clamp(1.8rem, 5vw, 3rem); color: white; margin-bottom: 1rem; font-weight: 400; }
     .about-banner p  { position:relative; color: #d8b4fe; max-width: 36rem; margin: 0 auto 2rem; line-height: 1.7; font-size: 0.95rem; }
     .btn-white { position:relative; background: white; color: #4c1d95; padding: 1rem 2.5rem; border-radius: 9999px; font-weight: 700; display: inline-block; transition: all 0.2s; font-family: 'Nunito', sans-serif; font-size: 0.95rem; }
-    .btn-white:hover { background: #f5f3ff; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+    .btn-white:hover { background: #f5f3ff; transform: translateY(-2px); }
 
     /* ── TOAST ── */
     #toast { position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%) translateY(80px); background: #4c1d95; color: white; padding: 0.85rem 1.75rem; border-radius: 9999px; font-size: 0.875rem; font-weight: 600; z-index: 200; transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1); pointer-events: none; white-space: nowrap; font-family: 'Nunito', sans-serif; box-shadow: 0 8px 24px rgba(76,29,149,0.3); }
@@ -175,7 +186,13 @@
     <div class="featured-inner">
       <p class="section-label" data-animate="fade-up">Más queridos</p>
       <h2 class="section-title" data-animate="fade-up" data-delay="100">Productos Destacados</h2>
-      <div class="featured-grid" id="featuredGrid"></div>
+      <div id="featuredGrid" class="skeleton-grid">
+        <!-- Skeleton mientras carga -->
+        <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line short"></div><div class="skeleton-line"></div><div class="skeleton-line btn"></div></div></div>
+        <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line short"></div><div class="skeleton-line"></div><div class="skeleton-line btn"></div></div></div>
+        <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line short"></div><div class="skeleton-line"></div><div class="skeleton-line btn"></div></div></div>
+        <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line short"></div><div class="skeleton-line"></div><div class="skeleton-line btn"></div></div></div>
+      </div>
       <div class="ver-todos" data-animate="fade-up">
         <a href="shop.html">Ver todos los productos →</a>
       </div>
@@ -230,9 +247,9 @@
         <h4>Tienda</h4>
         <ul>
           <li><a href="shop.html">Todos los productos</a></li>
-          <li><a href="shop.html">Velas</a></li>
-          <li><a href="shop.html">Minerales</a></li>
-          <li><a href="shop.html">Joyería</a></li>
+          <li><a href="shop.html?category=velas">Velas</a></li>
+          <li><a href="shop.html?category=minerales">Minerales</a></li>
+          <li><a href="shop.html?category=joyeria">Joyería</a></li>
         </ul>
       </div>
       <div class="footer-links" data-animate="fade-up" data-delay="200">
@@ -263,44 +280,50 @@
   <script src="cart.js"></script>
   <script src="animations.js"></script>
   <script>
-    // ── Productos ─────────────────────────────────────────────────────────────
-    const PRODUCTOS_DEFAULT = [
-      { id:'1', name:'Vela Artesanal de Lavanda',  category:'velas',       price:18, compare:22,   featured:true,  image:'https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=400&q=80' },
-      { id:'2', name:'Amatista Natural',            category:'minerales',   price:24, compare:null, featured:true,  image:'https://images.unsplash.com/photo-1557053910-d9eadeed1c58?w=400&q=80' },
-      { id:'3', name:'Collar de Cuarzo Rosa',       category:'joyeria',     price:32, compare:null, featured:true,  image:'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=400&q=80' },
-      { id:'4', name:'Vela Energética Sándalo',     category:'velas',       price:22, compare:null, featured:false, image:'https://images.unsplash.com/photo-1603905000478-e1b9fb17b2eb?w=400&q=80' },
-      { id:'5', name:'Cuarzo Rosa Natural',         category:'minerales',   price:19, compare:25,   featured:false, image:'https://images.unsplash.com/photo-1559181567-c3190ee73a43?w=400&q=80' },
-      { id:'6', name:'Pulsera de Labradorita',      category:'joyeria',     price:28, compare:null, featured:false, image:'https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?w=400&q=80' },
-      { id:'7', name:'Incienso de Palo Santo',      category:'ambientacion',price:12, compare:null, featured:false, image:'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=400&q=80' },
-      { id:'8', name:'Crema Corporal de Lavanda',   category:'corporal',    price:16, compare:null, featured:false, image:'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=400&q=80' },
-    ];
+    // ─── CARGAR DESTACADOS DESDE SUPABASE ─────────────────────────────────────
+    let productosDestacados = [];
 
-    function getProductos() {
+    async function cargarDestacados() {
       try {
-        const g = localStorage.getItem('kaori_productos');
-        if (g) return JSON.parse(g);
-        localStorage.setItem('kaori_productos', JSON.stringify(PRODUCTOS_DEFAULT));
-        return PRODUCTOS_DEFAULT;
-      } catch { return PRODUCTOS_DEFAULT; }
+        const { data, error } = await db
+          .from('productos')
+          .select('*')
+          .eq('active', true)
+          .eq('featured', true)
+          .order('created_at', { ascending: false })
+          .limit(4);
+
+        if (error) throw error;
+
+        productosDestacados = data || [];
+        renderDestacados();
+
+      } catch(e) {
+        console.error('Error cargando destacados:', e);
+        document.getElementById('featuredGrid').innerHTML = `
+          <div style="grid-column:1/-1;text-align:center;padding:2rem;color:#9ca3af">
+            <p>No se pudieron cargar los productos.</p>
+            <button onclick="cargarDestacados()" style="margin-top:1rem;background:#7c3aed;color:white;border:none;border-radius:9999px;padding:0.6rem 1.5rem;font-family:'Nunito',sans-serif;font-weight:700;cursor:pointer">
+              Reintentar
+            </button>
+          </div>`;
+      }
     }
 
-    function getCarrito() {
-      try { return JSON.parse(localStorage.getItem('kaori_cart') || '[]'); } catch { return []; }
-    }
-    function guardarCarrito(cart) {
-      localStorage.setItem('kaori_cart', JSON.stringify(cart));
-      if (window.CartWidget) CartWidget.updateBadge();
-    }
-
-    // ── Render destacados ─────────────────────────────────────────────────────
     function renderDestacados() {
-      const destacados = getProductos().filter(p => p.featured).slice(0, 4);
       const grid = document.getElementById('featuredGrid');
-      if (!destacados.length) {
-        grid.innerHTML = '<p style="color:#9ca3af;grid-column:1/-1;text-align:center;padding:2rem">No hay productos destacados aún.</p>';
+      grid.className = 'featured-grid';
+
+      if (!productosDestacados.length) {
+        grid.innerHTML = `
+          <div style="grid-column:1/-1;text-align:center;padding:2rem;color:#9ca3af">
+            <p>No hay productos destacados todavía.</p>
+            <a href="shop.html" style="display:inline-block;margin-top:1rem;color:#7c3aed;font-weight:600">Ver todos los productos →</a>
+          </div>`;
         return;
       }
-      grid.innerHTML = destacados.map((p, i) => `
+
+      grid.innerHTML = productosDestacados.map((p, i) => `
         <div class="feat-card" data-animate="fade-up" data-delay="${i * 100}"
              onclick="window.location.href='product.html?id=${p.id}'">
           <div class="feat-img">
@@ -312,24 +335,39 @@
             <p class="feat-cat">${p.category}</p>
             <h4>${p.name}</h4>
             <p class="feat-price">${Number(p.price).toFixed(2)} €</p>
-            <button class="feat-btn" onclick="event.stopPropagation();añadirAlCarrito('${p.id}',this)">
+            <button class="feat-btn" onclick="event.stopPropagation();añadirAlCarrito('${p.id}', this)">
               Añadir al carrito
             </button>
           </div>
         </div>`).join('');
 
-      // Re-init animaciones para los elementos nuevos
       if (window.AnimationsInit) AnimationsInit();
     }
 
+    // ─── CARRITO ──────────────────────────────────────────────────────────────
+    function getCarrito() {
+      try { return JSON.parse(localStorage.getItem('kaori_cart') || '[]'); } catch { return []; }
+    }
+    function guardarCarrito(cart) {
+      localStorage.setItem('kaori_cart', JSON.stringify(cart));
+      if (window.CartWidget) CartWidget.updateBadge();
+    }
+
     function añadirAlCarrito(id, btn) {
-      const producto = getProductos().find(p => p.id === id);
+      const producto = productosDestacados.find(p => p.id === id);
       if (!producto) return;
       const cart     = getCarrito();
       const existing = cart.find(i => i.id === id);
       if (existing) existing.quantity++;
-      else cart.push({ id: producto.id, name: producto.name, price: Number(producto.price), image: producto.image, quantity: 1 });
+      else cart.push({
+        id:       producto.id,
+        name:     producto.name,
+        price:    Number(producto.price),
+        image:    producto.image,
+        quantity: 1,
+      });
       guardarCarrito(cart);
+      if (window.CartWidget) CartWidget.render();
       const orig = btn.textContent;
       btn.textContent = '✓ Añadido';
       btn.classList.add('added');
@@ -344,6 +382,7 @@
       setTimeout(() => t.classList.remove('show'), 2500);
     }
 
+    // ─── MENÚ ─────────────────────────────────────────────────────────────────
     function toggleMenu() {
       document.getElementById('mobileMenu').classList.toggle('open');
     }
@@ -356,7 +395,7 @@
       }
     });
 
-    // ── Navbar dinámico ───────────────────────────────────────────────────────
+    // ─── NAVBAR DINÁMICO ──────────────────────────────────────────────────────
     (async () => {
       try {
         const sesion = await obtenerSesion();
@@ -372,8 +411,8 @@
       } catch(e) {}
     })();
 
-    // ── Init ──────────────────────────────────────────────────────────────────
-    renderDestacados();
+    // ─── INIT ─────────────────────────────────────────────────────────────────
+    cargarDestacados();
   </script>
 </body>
 </html>
