@@ -20,15 +20,17 @@
     .nav-right { display: flex; align-items: center; gap: 0.75rem; }
     .nav-cuenta { background: white; color: #7c3aed; border: 1px solid #e9d5ff; border-radius: 9999px; padding: 0.5rem 1.2rem; font-family: 'Nunito', sans-serif; font-size: 0.85rem; font-weight: 600; transition: all 0.2s; }
     .nav-cuenta:hover { background: #f3e8ff; }
-    .nav-cart-btn { position: relative; background: #7c3aed; color: white; border: none; border-radius: 9999px; padding: 0.5rem 1.2rem; cursor: pointer; font-family: 'Nunito', sans-serif; font-size: 0.85rem; font-weight: 600; transition: background 0.2s; }
+    .nav-cart-wrap { position: relative; }
+    .nav-cart-btn { background: #7c3aed; color: white; border: none; border-radius: 9999px; padding: 0.5rem 1.2rem; cursor: pointer; font-family: 'Nunito', sans-serif; font-size: 0.85rem; font-weight: 600; transition: background 0.2s; display: flex; align-items: center; gap: 0.4rem; }
     .nav-cart-btn:hover { background: #6d28d9; }
-    .cart-badge { position: absolute; top: -6px; right: -6px; background: #ec4899; color: white; font-size: 0.65rem; font-weight: 700; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+    .cart-count-badge { position: absolute; top: -6px; right: -6px; background: #ec4899; color: white; font-size: 0.65rem; font-weight: 700; width: 18px; height: 18px; border-radius: 50%; display: none; align-items: center; justify-content: center; }
 
     /* ── HAMBURGER ── */
     .hamburger { display: none; background: none; border: none; cursor: pointer; padding: 0.5rem; flex-direction: column; gap: 5px; }
     .hamburger span { display: block; width: 24px; height: 2px; background: #4c1d95; border-radius: 2px; }
     .mobile-menu { display: none; position: fixed; top: 72px; left: 0; right: 0; background: white; border-bottom: 1px solid #f3e8ff; padding: 1rem 2rem; z-index: 49; flex-direction: column; gap: 0.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
     .mobile-menu a { font-size: 0.95rem; color: #4c1d95; font-weight: 600; padding: 0.6rem 0; border-bottom: 1px solid #faf5ff; display: block; }
+    .mobile-menu a:last-child { border-bottom: none; }
     .mobile-menu.open { display: flex; }
 
     /* ── LOADING ── */
@@ -44,7 +46,7 @@
     .btn-volver { display: inline-block; background: #7c3aed; color: white; padding: 0.9rem 2rem; border-radius: 9999px; font-weight: 700; font-family: 'Nunito', sans-serif; font-size: 0.95rem; transition: background 0.2s; }
     .btn-volver:hover { background: #6d28d9; }
 
-    /* ── PÁGINA PRINCIPAL ── */
+    /* ── PÁGINA ── */
     .product-page { max-width: 80rem; margin: 0 auto; padding: 6rem 1.5rem 4rem; opacity: 0; animation: fadeIn 0.5s ease forwards; }
     @keyframes fadeIn { to { opacity: 1; } }
 
@@ -54,12 +56,11 @@
     .breadcrumb a:hover { color: #4c1d95; }
     .breadcrumb span { color: #d1d5db; }
 
-    /* ── GRID PRODUCTO ── */
+    /* ── GRID ── */
     .product-grid { display: grid; gap: 3rem; margin-bottom: 4rem; }
     @media(min-width: 1024px) { .product-grid { grid-template-columns: 1fr 1fr; gap: 4rem; } }
 
-    /* ── GALERÍA ── */
-    .gallery { display: flex; flex-direction: column; gap: 1rem; }
+    /* ── IMAGEN ── */
     .main-img-wrap { position: relative; aspect-ratio: 1; border-radius: 1.5rem; overflow: hidden; background: #f5f3ff; box-shadow: 0 8px 40px rgba(124,58,237,0.1); }
     .main-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
     .main-img-wrap:hover img { transform: scale(1.03); }
@@ -68,14 +69,14 @@
     .badge-discount { background: #ec4899; color: white; }
     .badge-featured { background: #7c3aed; color: white; }
 
-    /* ── INFO PRODUCTO ── */
+    /* ── INFO ── */
     .product-info { display: flex; flex-direction: column; gap: 1.5rem; }
-    .product-cat { font-size: 0.72rem; color: #a855f7; text-transform: uppercase; letter-spacing: 0.15em; font-weight: 700; }
+    .product-cat  { font-size: 0.72rem; color: #a855f7; text-transform: uppercase; letter-spacing: 0.15em; font-weight: 700; }
     .product-name { font-size: clamp(2rem, 4vw, 3rem); color: #2e0854; line-height: 1.15; font-weight: 300; }
-    .price-row { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
-    .price-main { font-size: 2rem; font-weight: 700; color: #4c1d95; font-family: 'Nunito', sans-serif; }
+    .price-row    { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+    .price-main   { font-size: 2rem; font-weight: 700; color: #4c1d95; font-family: 'Nunito', sans-serif; }
     .price-compare { font-size: 1.2rem; color: #9ca3af; text-decoration: line-through; font-family: 'Nunito', sans-serif; }
-    .price-saving { background: #dcfce7; color: #16a34a; font-size: 0.78rem; font-weight: 700; padding: 4px 10px; border-radius: 9999px; }
+    .price-saving  { background: #dcfce7; color: #16a34a; font-size: 0.78rem; font-weight: 700; padding: 4px 10px; border-radius: 9999px; }
 
     /* ── DESCRIPCIÓN ── */
     .description { color: #4b5563; line-height: 1.8; font-size: 0.95rem; border-top: 1px solid #f3e8ff; padding-top: 1.5rem; }
@@ -88,8 +89,7 @@
     /* ── CANTIDAD ── */
     .qty-section { display: flex; flex-direction: column; gap: 0.75rem; }
     .qty-label { font-size: 0.82rem; font-weight: 700; color: #4c1d95; }
-    .qty-controls { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
-    .qty-wrap { display: flex; align-items: center; background: white; border: 2px solid #e9d5ff; border-radius: 9999px; padding: 0.2rem; }
+    .qty-wrap { display: inline-flex; align-items: center; background: white; border: 2px solid #e9d5ff; border-radius: 9999px; padding: 0.2rem; }
     .qty-btn { width: 40px; height: 40px; border: none; background: transparent; cursor: pointer; font-size: 1.2rem; color: #7c3aed; border-radius: 50%; transition: background 0.15s; display: flex; align-items: center; justify-content: center; font-weight: 700; }
     .qty-btn:hover { background: #f3e8ff; }
     .qty-btn:disabled { color: #d1d5db; cursor: not-allowed; }
@@ -97,24 +97,21 @@
 
     /* ── BOTONES ACCIÓN ── */
     .action-btns { display: flex; flex-direction: column; gap: 0.75rem; }
-    .btn-cart { width: 100%; background: #7c3aed; color: white; border: none; border-radius: 9999px; padding: 1.1rem 2rem; font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 1rem; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
-    .btn-cart:hover { background: #6d28d9; transform: translateY(-1px); box-shadow: 0 8px 20px rgba(124,58,237,0.3); }
-    .btn-cart:active { transform: translateY(0); }
-    .btn-cart.added { background: #16a34a; }
-    .btn-wishlist { width: 100%; background: white; color: #7c3aed; border: 2px solid #e9d5ff; border-radius: 9999px; padding: 1rem 2rem; font-family: 'Nunito', sans-serif; font-weight: 600; font-size: 0.95rem; cursor: pointer; transition: all 0.2s; }
-    .btn-wishlist:hover { background: #faf5ff; border-color: #c4b5fd; }
+    .btn-cart { width: 100%; background: linear-gradient(135deg, #7c3aed, #6d28d9); color: white; border: none; border-radius: 9999px; padding: 1.1rem 2rem; font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 1rem; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 0.5rem; box-shadow: 0 4px 14px rgba(124,58,237,0.3); }
+    .btn-cart:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(124,58,237,0.4); }
+    .btn-cart.added { background: linear-gradient(135deg, #16a34a, #15803d); box-shadow: 0 4px 14px rgba(22,163,74,0.3); }
 
-    /* ── TRUST BADGES ── */
+    /* ── TRUST ── */
     .trust-badges { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; padding: 1.25rem; background: #faf5ff; border-radius: 1rem; border: 1px solid #f3e8ff; }
     .trust-item { text-align: center; }
     .trust-item .t-icon { font-size: 1.3rem; margin-bottom: 0.3rem; }
     .trust-item p { font-size: 0.7rem; color: #6b7280; line-height: 1.4; }
 
-    /* ── PRODUCTOS RELACIONADOS ── */
+    /* ── RELACIONADOS ── */
     .related { margin-top: 4rem; }
     .related h2 { font-size: 1.8rem; color: #4c1d95; margin-bottom: 2rem; font-weight: 400; }
     .related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1.5rem; }
-    .related-card { background: white; border-radius: 1rem; overflow: hidden; border: 1px solid #f3e8ff; transition: all 0.2s; cursor: pointer; }
+    .related-card { background: white; border-radius: 1rem; overflow: hidden; border: 1px solid #f3e8ff; transition: all 0.3s; cursor: pointer; }
     .related-card:hover { box-shadow: 0 8px 30px rgba(124,58,237,0.12); transform: translateY(-2px); }
     .related-img { aspect-ratio: 1; overflow: hidden; background: #faf5ff; }
     .related-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
@@ -128,8 +125,8 @@
     #toast.show { transform: translateX(-50%) translateY(0); }
 
     /* ── FOOTER ── */
-    footer { background: #1e0a3c; color: white; padding: 3rem 1.5rem 1.5rem; margin-top: 4rem; }
-    .footer-bottom { max-width: 72rem; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; border-top: 1px solid #3b1f6e; padding-top: 1.2rem; color: #7c5cbf; font-size: 0.78rem; }
+    footer { background: #1e0a3c; color: white; padding: 2rem 1.5rem; margin-top: 4rem; }
+    .footer-bottom { max-width: 72rem; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; color: #7c5cbf; font-size: 0.78rem; }
     .footer-bottom a { color: #a78bfa; }
 
     /* ── RESPONSIVE ── */
@@ -138,14 +135,11 @@
       .nav-links { display: none; }
       .hamburger { display: flex; }
       .product-page { padding: 5rem 1rem 3rem; }
-      .trust-badges { grid-template-columns: repeat(3, 1fr); }
       .related-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
     }
     @media (max-width: 480px) {
-      .price-main { font-size: 1.6rem; }
-      .trust-badges { grid-template-columns: 1fr 1fr 1fr; gap: 0.5rem; }
+      .trust-badges { grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
       .trust-item p { font-size: 0.65rem; }
-      .action-btns { gap: 0.5rem; }
     }
   </style>
 </head>
@@ -160,27 +154,12 @@
     </div>
     <div class="nav-right">
       <a href="login.html" class="nav-cuenta" id="btnCuenta">👤 Mi cuenta</a>
-   
-<button onclick="CartWidget.toggle()" style="
-  position:relative;
-  background:#7c3aed;color:white;border:none;
-  border-radius:9999px;padding:0.5rem 1.2rem;
-  cursor:pointer;font-family:'Nunito',sans-serif;
-  font-size:0.85rem;font-weight:600;
-  transition:background 0.2s;
-  display:flex;align-items:center;gap:0.4rem;
-" onmouseover="this.style.background='#6d28d9'"
-   onmouseout="this.style.background='#7c3aed'">
-  🛒
-  <span class="cart-count-text">0</span>
-  <span class="cart-count-badge" style="
-    display:none;position:absolute;top:-6px;right:-6px;
-    background:#ec4899;color:white;
-    font-size:0.65rem;font-weight:700;
-    width:18px;height:18px;border-radius:50%;
-    align-items:center;justify-content:center;
-  ">0</span>
-</button>
+      <div class="nav-cart-wrap">
+        <button class="nav-cart-btn" onclick="CartWidget.toggle()">
+          🛒 <span class="cart-count-text">0</span>
+        </button>
+        <span class="cart-count-badge">0</span>
+      </div>
       <button class="hamburger" onclick="toggleMenu()" aria-label="Menú">
         <span></span><span></span><span></span>
       </button>
@@ -192,7 +171,7 @@
     <a href="shop.html"    onclick="toggleMenu()">Tienda</a>
     <a href="about.html"   onclick="toggleMenu()">Nosotras</a>
     <a href="contact.html" onclick="toggleMenu()">Contacto</a>
-    <a href="login.html"   onclick="toggleMenu()">Mi cuenta</a>
+    <a href="login.html"   onclick="toggleMenu()" id="mobileLoginBtn">Mi cuenta</a>
   </div>
 
   <!-- LOADING -->
@@ -208,10 +187,9 @@
     <a href="shop.html" class="btn-volver">← Volver a la tienda</a>
   </div>
 
-  <!-- PÁGINA PRODUCTO -->
+  <!-- PRODUCTO -->
   <div class="product-page" id="productPage" style="display:none">
 
-    <!-- BREADCRUMB -->
     <nav class="breadcrumb" aria-label="Breadcrumb">
       <a href="index.html">Inicio</a>
       <span>›</span>
@@ -220,11 +198,10 @@
       <span id="breadcrumbNombre" style="color:#4c1d95;font-weight:600">—</span>
     </nav>
 
-    <!-- GRID -->
     <div class="product-grid">
 
-      <!-- GALERÍA -->
-      <div class="gallery">
+      <!-- IMAGEN -->
+      <div>
         <div class="main-img-wrap">
           <img id="mainImg" src="" alt="Producto" />
           <div class="img-badges" id="imgBadges"></div>
@@ -233,80 +210,53 @@
 
       <!-- INFO -->
       <div class="product-info">
-        <p class="product-cat" id="productCat">—</p>
+        <p class="product-cat"  id="productCat">—</p>
         <h1 class="product-name" id="productName">—</h1>
 
         <div class="price-row">
-          <span class="price-main" id="productPrice">—</span>
+          <span class="price-main"    id="productPrice">—</span>
           <span class="price-compare" id="productCompare" style="display:none">—</span>
-          <span class="price-saving" id="productSaving" style="display:none">—</span>
+          <span class="price-saving"  id="productSaving"  style="display:none">—</span>
         </div>
 
         <p class="description" id="productDesc">
-          Producto artesanal creado con intención y amor. Elaborado con materiales naturales de la más alta calidad para llevar bienestar y belleza a tu espacio.
+          Producto artesanal creado con intención y amor. Elaborado con materiales naturales de la más alta calidad.
         </p>
 
         <div class="details">
-          <div class="detail-row">
-            <div class="detail-icon">🌿</div>
-            <span>Ingredientes 100% naturales y sostenibles</span>
-          </div>
-          <div class="detail-row">
-            <div class="detail-icon">🤲</div>
-            <span>Elaborado a mano con dedicación</span>
-          </div>
-          <div class="detail-row">
-            <div class="detail-icon">📦</div>
-            <span>Envío gratuito a partir de 50€</span>
-          </div>
-          <div class="detail-row">
-            <div class="detail-icon">✨</div>
-            <span>Cargado con energía positiva e intención</span>
-          </div>
+          <div class="detail-row"><div class="detail-icon">🌿</div><span>Ingredientes 100% naturales y sostenibles</span></div>
+          <div class="detail-row"><div class="detail-icon">🤲</div><span>Elaborado a mano con dedicación</span></div>
+          <div class="detail-row"><div class="detail-icon">📦</div><span>Envío gratuito a partir de 50€</span></div>
+          <div class="detail-row"><div class="detail-icon">✨</div><span>Cargado con energía positiva e intención</span></div>
         </div>
 
         <!-- CANTIDAD -->
         <div class="qty-section">
           <p class="qty-label">Cantidad</p>
-          <div class="qty-controls">
-            <div class="qty-wrap">
-              <button class="qty-btn" onclick="cambiarQty(-1)" id="btnMenos" disabled>−</button>
-              <span class="qty-num" id="qtyNum">1</span>
-              <button class="qty-btn" onclick="cambiarQty(1)">+</button>
-            </div>
+          <div class="qty-wrap">
+            <button class="qty-btn" onclick="cambiarQty(-1)" id="btnMenos" disabled>−</button>
+            <span class="qty-num" id="qtyNum">1</span>
+            <button class="qty-btn" onclick="cambiarQty(1)">+</button>
           </div>
         </div>
 
-        <!-- BOTONES -->
+        <!-- ACCIONES -->
         <div class="action-btns">
           <button class="btn-cart" onclick="añadirAlCarrito()" id="btnCart">
             🛒 Añadir al carrito
           </button>
-          <button class="btn-wishlist">
-            🤍 Guardar en favoritos
-          </button>
         </div>
 
-        <!-- TRUST BADGES -->
+        <!-- TRUST -->
         <div class="trust-badges">
-          <div class="trust-item">
-            <div class="t-icon">🔒</div>
-            <p>Pago seguro</p>
-          </div>
-          <div class="trust-item">
-            <div class="t-icon">🚚</div>
-            <p>Envío rápido</p>
-          </div>
-          <div class="trust-item">
-            <div class="t-icon">♻️</div>
-            <p>Eco friendly</p>
-          </div>
+          <div class="trust-item"><div class="t-icon">🔒</div><p>Pago seguro</p></div>
+          <div class="trust-item"><div class="t-icon">🚚</div><p>Envío rápido</p></div>
+          <div class="trust-item"><div class="t-icon">♻️</div><p>Eco friendly</p></div>
         </div>
-
       </div>
     </div>
 
-    <!-- PRODUCTOS RELACIONADOS -->
+    <!-- RELACIONADOS -->
     <div class="related">
       <h2>También te puede gustar</h2>
       <div class="related-grid" id="relatedGrid"></div>
@@ -314,7 +264,6 @@
 
   </div>
 
-  <!-- FOOTER -->
   <footer>
     <div class="footer-bottom">
       <p>© 2024 Kaori. Todos los derechos reservados.</p>
@@ -327,66 +276,62 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase.js"></script>
   <script src="auth.js"></script>
+  <script src="cart.js"></script>
+  <script src="animations.js"></script>
   <script>
     // ─── ESTADO ───────────────────────────────────────────────────────────────
     let productoActual = null;
     let cantidad       = 1;
 
-    // ─── PRODUCTOS ────────────────────────────────────────────────────────────
-    const PRODUCTOS_DEFAULT = [
-      { id:'1', name:'Vela Artesanal de Lavanda',  category:'velas',       price:18, compare:22,   featured:true,  image:'https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=800&q=80' },
-      { id:'2', name:'Amatista Natural',            category:'minerales',   price:24, compare:null, featured:false, image:'https://images.unsplash.com/photo-1557053910-d9eadeed1c58?w=800&q=80' },
-      { id:'3', name:'Collar de Cuarzo Rosa',       category:'joyeria',     price:32, compare:null, featured:false, image:'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=800&q=80' },
-      { id:'4', name:'Vela Energética Sándalo',     category:'velas',       price:22, compare:null, featured:false, image:'https://images.unsplash.com/photo-1603905000478-e1b9fb17b2eb?w=800&q=80' },
-      { id:'5', name:'Cuarzo Rosa Natural',         category:'minerales',   price:19, compare:25,   featured:false, image:'https://images.unsplash.com/photo-1559181567-c3190ee73a43?w=800&q=80' },
-      { id:'6', name:'Pulsera de Labradorita',      category:'joyeria',     price:28, compare:null, featured:false, image:'https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?w=800&q=80' },
-      { id:'7', name:'Incienso de Palo Santo',      category:'ambientacion',price:12, compare:null, featured:false, image:'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=800&q=80' },
-      { id:'8', name:'Crema Corporal de Lavanda',   category:'corporal',    price:16, compare:null, featured:false, image:'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=800&q=80' },
-    ];
-
-    function getProductos() {
-      try {
-        const g = localStorage.getItem('kaori_productos');
-        if (g) return JSON.parse(g);
-        localStorage.setItem('kaori_productos', JSON.stringify(PRODUCTOS_DEFAULT));
-        return PRODUCTOS_DEFAULT;
-      } catch { return PRODUCTOS_DEFAULT; }
-    }
-
     // ─── OBTENER ID DE LA URL ─────────────────────────────────────────────────
     function getIdFromUrl() {
-      const params = new URLSearchParams(window.location.search);
-      return params.get('id');
+      return new URLSearchParams(window.location.search).get('id');
     }
 
-    // ─── CARGAR PRODUCTO ──────────────────────────────────────────────────────
-    function cargarProducto() {
-      const id        = getIdFromUrl();
-      const productos = getProductos();
-      const producto  = productos.find(p => p.id === id);
+    // ─── CARGAR PRODUCTO DESDE SUPABASE ───────────────────────────────────────
+    async function cargarProducto() {
+      const id = getIdFromUrl();
 
-      document.getElementById('loadingScreen').style.display = 'none';
-
-      if (!id || !producto) {
-        document.getElementById('notFound').style.display = 'flex';
+      if (!id) {
+        mostrarNotFound();
         return;
       }
 
-      productoActual = producto;
-      renderProducto(producto);
-      renderRelacionados(producto, productos);
-      document.getElementById('productPage').style.display = '';
+      try {
+        const { data, error } = await db
+          .from('productos')
+          .select('*')
+          .eq('id', id)
+          .single();
+
+        document.getElementById('loadingScreen').style.display = 'none';
+
+        if (error || !data) {
+          mostrarNotFound();
+          return;
+        }
+
+        productoActual = data;
+        renderProducto(data);
+        cargarRelacionados(data);
+        document.getElementById('productPage').style.display = '';
+
+      } catch(e) {
+        console.error('Error cargando producto:', e);
+        mostrarNotFound();
+      }
+    }
+
+    function mostrarNotFound() {
+      document.getElementById('loadingScreen').style.display = 'none';
+      document.getElementById('notFound').style.display      = 'flex';
     }
 
     // ─── RENDER PRODUCTO ──────────────────────────────────────────────────────
     function renderProducto(p) {
-      // Título de la página
       document.title = `Kaori – ${p.name}`;
-
-      // Breadcrumb
       document.getElementById('breadcrumbNombre').textContent = p.name;
 
-      // Imagen
       const img = document.getElementById('mainImg');
       img.src = p.image;
       img.alt = p.name;
@@ -396,25 +341,23 @@
 
       // Badges
       const badges = document.getElementById('imgBadges');
-      let badgesHTML = '';
-      if (p.compare && p.compare > p.price) {
-        const disc = Math.round((1 - p.price / p.compare) * 100);
-        badgesHTML += `<span class="img-badge badge-discount">-${disc}%</span>`;
+      let html = '';
+      if (p.compare_price && p.compare_price > p.price) {
+        const disc = Math.round((1 - p.price / p.compare_price) * 100);
+        html += `<span class="img-badge badge-discount">-${disc}%</span>`;
       }
-      if (p.featured) {
-        badgesHTML += `<span class="img-badge badge-featured">✨ Destacado</span>`;
-      }
-      badges.innerHTML = badgesHTML;
+      if (p.featured) html += `<span class="img-badge badge-featured">✨ Destacado</span>`;
+      badges.innerHTML = html;
 
-      // Info
-      document.getElementById('productCat').textContent   = p.category;
-      document.getElementById('productName').textContent  = p.name;
+      // Textos
+      document.getElementById('productCat').textContent  = p.category;
+      document.getElementById('productName').textContent = p.name;
       document.getElementById('productPrice').textContent = Number(p.price).toFixed(2) + ' €';
 
-      // Precio anterior y ahorro
-      if (p.compare && p.compare > p.price) {
-        const saving = (p.compare - p.price).toFixed(2);
-        document.getElementById('productCompare').textContent = Number(p.compare).toFixed(2) + ' €';
+      // Precio anterior
+      if (p.compare_price && p.compare_price > p.price) {
+        const saving = (p.compare_price - p.price).toFixed(2);
+        document.getElementById('productCompare').textContent = Number(p.compare_price).toFixed(2) + ' €';
         document.getElementById('productCompare').style.display = '';
         document.getElementById('productSaving').textContent   = `Ahorras ${saving} €`;
         document.getElementById('productSaving').style.display = '';
@@ -426,36 +369,55 @@
       }
     }
 
-    // ─── RENDER RELACIONADOS ──────────────────────────────────────────────────
-    function renderRelacionados(actual, todos) {
-      const relacionados = todos
-        .filter(p => p.id !== actual.id && p.category === actual.category)
-        .slice(0, 4);
+    // ─── RELACIONADOS DESDE SUPABASE ──────────────────────────────────────────
+    async function cargarRelacionados(actual) {
+      try {
+        const { data } = await db
+          .from('productos')
+          .select('id, name, price, image, category')
+          .eq('active', true)
+          .eq('category', actual.category)
+          .neq('id', actual.id)
+          .limit(4);
 
-      // Si no hay de la misma categoría, mostrar otros
-      const lista = relacionados.length >= 2
-        ? relacionados
-        : todos.filter(p => p.id !== actual.id).slice(0, 4);
+        let lista = data || [];
 
-      const grid = document.getElementById('relatedGrid');
-      grid.innerHTML = lista.map(p => `
-        <div class="related-card" onclick="window.location.href='product.html?id=${p.id}'">
-          <div class="related-img">
-            <img src="${p.image}" alt="${p.name}" loading="lazy"
-                 onerror="this.src='https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=400&q=80'" />
-          </div>
-          <div class="related-info">
-            <h4>${p.name}</h4>
-            <p class="related-price">${Number(p.price).toFixed(2)} €</p>
-          </div>
-        </div>`).join('');
+        // Si no hay de la misma categoría, mostrar otros
+        if (lista.length < 2) {
+          const { data: otros } = await db
+            .from('productos')
+            .select('id, name, price, image, category')
+            .eq('active', true)
+            .neq('id', actual.id)
+            .limit(4);
+          lista = otros || [];
+        }
+
+        const grid = document.getElementById('relatedGrid');
+        if (!lista.length) { grid.style.display = 'none'; return; }
+
+        grid.innerHTML = lista.map(p => `
+          <div class="related-card" onclick="window.location.href='product.html?id=${p.id}'">
+            <div class="related-img">
+              <img src="${p.image}" alt="${p.name}" loading="lazy"
+                   onerror="this.src='https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=400&q=80'" />
+            </div>
+            <div class="related-info">
+              <h4>${p.name}</h4>
+              <p class="related-price">${Number(p.price).toFixed(2)} €</p>
+            </div>
+          </div>`).join('');
+
+      } catch(e) {
+        console.error('Error cargando relacionados:', e);
+      }
     }
 
     // ─── CANTIDAD ─────────────────────────────────────────────────────────────
     function cambiarQty(delta) {
       cantidad = Math.max(1, cantidad + delta);
-      document.getElementById('qtyNum').textContent = cantidad;
-      document.getElementById('btnMenos').disabled  = cantidad <= 1;
+      document.getElementById('qtyNum').textContent    = cantidad;
+      document.getElementById('btnMenos').disabled     = cantidad <= 1;
     }
 
     // ─── AÑADIR AL CARRITO ────────────────────────────────────────────────────
@@ -474,37 +436,26 @@
       });
 
       guardarCarrito(cart);
+      if (window.CartWidget) CartWidget.render();
 
-      // Feedback visual
       const btn = document.getElementById('btnCart');
-      btn.textContent = '✓ Añadido al carrito';
+      btn.textContent = '✓ ¡Añadido al carrito!';
       btn.classList.add('added');
       setTimeout(() => {
-        btn.innerHTML   = '🛒 Añadir al carrito';
+        btn.innerHTML = '🛒 Añadir al carrito';
         btn.classList.remove('added');
       }, 2000);
 
-      mostrarToast(`"${productoActual.name}" añadido al carrito`);
+      mostrarToast(`"${productoActual.name}" añadido`);
     }
 
     // ─── CARRITO ──────────────────────────────────────────────────────────────
     function getCarrito() {
-      try { return JSON.parse(localStorage.getItem('kaori_cart') || '[]'); }
-      catch { return []; }
+      try { return JSON.parse(localStorage.getItem('kaori_cart') || '[]'); } catch { return []; }
     }
     function guardarCarrito(cart) {
       localStorage.setItem('kaori_cart', JSON.stringify(cart));
-      actualizarBadge();
-    }
-    function actualizarBadge() {
-      const total = getCarrito().reduce((s,i) => s + i.quantity, 0);
-      const badge = document.getElementById('cartBadge');
-      if (total > 0) {
-        badge.textContent    = total;
-        badge.style.display  = 'flex';
-      } else {
-        badge.style.display  = 'none';
-      }
+      if (window.CartWidget) CartWidget.updateBadge();
     }
 
     // ─── TOAST ────────────────────────────────────────────────────────────────
@@ -515,7 +466,7 @@
       setTimeout(() => t.classList.remove('show'), 2500);
     }
 
-    // ─── MENÚ HAMBURGUESA ─────────────────────────────────────────────────────
+    // ─── MENÚ ─────────────────────────────────────────────────────────────────
     function toggleMenu() {
       document.getElementById('mobileMenu').classList.toggle('open');
     }
@@ -533,19 +484,19 @@
       try {
         const sesion = await obtenerSesion();
         const btn    = document.getElementById('btnCuenta');
+        const mBtn   = document.getElementById('mobileLoginBtn');
         if (sesion) {
-          const rol       = await obtenerRol();
-          btn.href        = rol === 'admin' ? 'admin.html' : 'mi-cuenta.html';
-          btn.textContent = rol === 'admin' ? '👑 Panel Admin' : '👤 Mi cuenta';
+          const rol = await obtenerRol();
+          const href = rol === 'admin' ? 'admin.html' : 'mi-cuenta.html';
+          const txt  = rol === 'admin' ? '👑 Panel Admin' : '👤 Mi cuenta';
+          btn.href  = href; btn.textContent  = txt;
+          mBtn.href = href; mBtn.textContent = txt;
         }
       } catch(e) {}
     })();
 
     // ─── INIT ─────────────────────────────────────────────────────────────────
     cargarProducto();
-    actualizarBadge();
   </script>
-  <script src="cart.js"></script>
-
 </body>
 </html>
