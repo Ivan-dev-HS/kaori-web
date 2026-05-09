@@ -243,7 +243,7 @@
         const { data, error } = await db
           .from('productos')
           .select('*')
-          .eq('active', true)
+         .neq('active', false)
           .order('created_at', { ascending: false });
 
         if (error) throw error;
