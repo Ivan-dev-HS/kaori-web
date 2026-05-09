@@ -214,13 +214,11 @@
   <script src="cart.js"></script>
   <script src="animations.js"></script>
   <script>
-    // ─── ESTADO ───────────────────────────────────────────────────────────────
     let todosLosProductos = [];
     let categoriaActiva   = '';
     let precioMin         = null;
     let precioMax         = null;
 
-    // ─── SKELETON LOADING ─────────────────────────────────────────────────────
     function mostrarSkeleton() {
       const grid = document.getElementById('productsGrid');
       grid.className = 'skeleton-grid';
@@ -230,43 +228,66 @@
           <div class="skeleton-body">
             <div class="skeleton-line short"></div>
             <div class="skeleton-line"></div>
-            <div class="skeleton-line short"></div>
             <div class="skeleton-line btn"></div>
           </div>
         </div>`).join('');
     }
 
-    // ─── CARGAR PRODUCTOS DESDE SUPABASE ──────────────────────────────────────
     async function cargarProductos() {
       mostrarSkeleton();
+      const grid = document.getElementById('productsGrid');
+
+      // ── PASO 1: Verificar que db existe ──────────────────────────────────
+      if (typeof db === 'undefined') {
+        grid.className = 'products-grid';
+        grid.innerHTML = `<div class="empty-state">
+          <p class="icon">⚠️</p>
+          <p><strong>Error:</strong> supabase.js no cargó correctamente.</p>
+          <p style="font-size:0.8rem;margin-top:0.5rem;color:#9ca3af">Comprueba que supabase.js está en el repo y tiene URL y KEY válidas.</p>
+        </div>`;
+        return;
+      }
+
+      // ── PASO 2: Intentar consulta SIN filtros ─────────────────────────────
       try {
         const { data, error } = await db
           .from('productos')
-          .select('*')
-         .eq('active', true)
+          .select('id, name, price, compare_price, category, image, featured, active')
           .order('created_at', { ascending: false });
 
-        if (error) throw error;
+        if (error) {
+          grid.className = 'products-grid';
+          grid.innerHTML = `<div class="empty-state">
+            <p class="icon">⚠️</p>
+            <p><strong>Error Supabase:</strong> ${error.message}</p>
+            <p style="font-size:0.8rem;margin-top:0.5rem;color:#9ca3af">Código: ${error.code}</p>
+          </div>`;
+          return;
+        }
 
-        todosLosProductos = data || [];
+        if (!data || data.length === 0) {
+          grid.className = 'products-grid';
+          grid.innerHTML = `<div class="empty-state">
+            <p class="icon">📦</p>
+            <p>La consulta funcionó pero no hay productos en la tabla.</p>
+            <p style="font-size:0.8rem;margin-top:0.5rem;color:#9ca3af">Ve al panel admin y añade productos.</p>
+          </div>`;
+          return;
+        }
+
+        // Todos los productos sin filtro de active
+        todosLosProductos = data;
         filtrarProductos();
 
       } catch(e) {
-        console.error('Error cargando productos:', e);
-        const grid = document.getElementById('productsGrid');
         grid.className = 'products-grid';
-        grid.innerHTML = `
-          <div class="empty-state">
-            <p class="icon">⚠️</p>
-            <p>Error cargando productos.</p>
-            <button onclick="cargarProductos()" style="margin-top:1rem;background:#7c3aed;color:white;border:none;border-radius:9999px;padding:0.6rem 1.5rem;font-family:'Nunito',sans-serif;font-weight:700;cursor:pointer">
-              Reintentar
-            </button>
-          </div>`;
+        grid.innerHTML = `<div class="empty-state">
+          <p class="icon">⚠️</p>
+          <p><strong>Error inesperado:</strong> ${e.message}</p>
+        </div>`;
       }
     }
 
-    // ─── FILTROS ──────────────────────────────────────────────────────────────
     function setCategoria(cat, btn) {
       categoriaActiva = cat;
       document.querySelectorAll('.sidebar-card:first-child .filter-btn')
@@ -283,13 +304,12 @@
       filtrarProductos();
     }
 
-    // ─── FILTRAR Y RENDERIZAR ─────────────────────────────────────────────────
     function filtrarProductos() {
       const q    = document.getElementById('searchInput').value.toLowerCase();
       const sort = document.getElementById('sortSelect').value;
 
       let lista = todosLosProductos.filter(p => {
-        const matchQ = !q || p.name.toLowerCase().includes(q) || (p.description||'').toLowerCase().includes(q);
+        const matchQ = !q || p.name.toLowerCase().includes(q);
         const matchC = !categoriaActiva || p.category === categoriaActiva;
         const matchP = (precioMin === null || p.price >= precioMin)
                     && (precioMax === null || p.price <= precioMax);
@@ -306,17 +326,12 @@
       renderProductos(lista);
     }
 
-    // ─── RENDER PRODUCTOS ─────────────────────────────────────────────────────
     function renderProductos(lista) {
       const grid = document.getElementById('productsGrid');
       grid.className = 'products-grid';
 
       if (!lista.length) {
-        grid.innerHTML = `
-          <div class="empty-state">
-            <p class="icon">🔍</p>
-            <p>No se encontraron productos.</p>
-          </div>`;
+        grid.innerHTML = `<div class="empty-state"><p class="icon">🔍</p><p>No se encontraron productos.</p></div>`;
         return;
       }
 
@@ -325,8 +340,7 @@
           ? Math.round((1 - p.price / p.compare_price) * 100) : 0;
         return `
           <div class="product-card" data-animate="fade-up" data-delay="${Math.min(i * 60, 400)}">
-            <div class="prod-img-wrap"
-                 onclick="window.location.href='product.html?id=${p.id}'">
+            <div class="prod-img-wrap" onclick="window.location.href='product.html?id=${p.id}'">
               <img src="${p.image}" alt="${p.name}" loading="lazy"
                    onerror="this.src='https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=400&q=80'" />
               ${disc       ? `<span class="prod-badge badge-discount">-${disc}%</span>` : ''}
@@ -349,7 +363,6 @@
       if (window.AnimationsInit) AnimationsInit();
     }
 
-    // ─── CARRITO ──────────────────────────────────────────────────────────────
     function getCarrito() {
       try { return JSON.parse(localStorage.getItem('kaori_cart') || '[]'); } catch { return []; }
     }
@@ -364,13 +377,7 @@
       const cart     = getCarrito();
       const existing = cart.find(i => i.id === id);
       if (existing) existing.quantity++;
-      else cart.push({
-        id:       producto.id,
-        name:     producto.name,
-        price:    Number(producto.price),
-        image:    producto.image,
-        quantity: 1,
-      });
+      else cart.push({ id: producto.id, name: producto.name, price: Number(producto.price), image: producto.image, quantity: 1 });
       guardarCarrito(cart);
       if (window.CartWidget) CartWidget.render();
       const orig = btn.textContent;
@@ -387,7 +394,6 @@
       setTimeout(() => t.classList.remove('show'), 2500);
     }
 
-    // ─── MENÚ HAMBURGUESA ─────────────────────────────────────────────────────
     function toggleMenu() {
       document.getElementById('mobileMenu').classList.toggle('open');
     }
@@ -400,7 +406,6 @@
       }
     });
 
-    // ─── NAVBAR DINÁMICO ──────────────────────────────────────────────────────
     (async () => {
       try {
         const sesion = await obtenerSesion();
@@ -416,10 +421,8 @@
       } catch(e) {}
     })();
 
-    // ─── INIT ─────────────────────────────────────────────────────────────────
     cargarProductos();
 
-    // Leer categoría de URL si viene filtrada
     const urlParams = new URLSearchParams(window.location.search);
     const catParam  = urlParams.get('category');
     if (catParam) {
