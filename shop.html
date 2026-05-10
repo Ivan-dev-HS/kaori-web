@@ -339,7 +339,7 @@
         const disc = p.compare_price && p.compare_price > p.price
           ? Math.round((1 - p.price / p.compare_price) * 100) : 0;
         return `
-          <div class="product-card" data-animate="fade-up" data-delay="${Math.min(i * 60, 400)}">
+            <div class="product-card">
             <div class="prod-img-wrap" onclick="window.location.href='product.html?id=${p.id}'">
               <img src="${p.image}" alt="${p.name}" loading="lazy"
                    onerror="this.src='https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=400&q=80'" />
