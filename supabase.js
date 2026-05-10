@@ -1,17 +1,11 @@
-// supabase.js
-// ─────────────────────────────────────────────────────────────────────────────
-// La anon key es PÚBLICA y puede estar en el frontend.
-// NUNCA pongas aquí la service_role key. Esa solo va en servidores.
-// ─────────────────────────────────────────────────────────────────────────────
-
-const SUPABASE_URL  = 'https://zlebihuuhgyebnauyyug.supabase.co'; // ← pon la tuya
-const SUPABASE_ANON = 'sb_publishable_bfFW9zgf0b3_BlOOUZJ2Ng_sU5ZbitM';                      // ← pon la tuya
+const SUPABASE_URL  = 'https://zlebihuuhgyebnauyyug.supabase.co';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpsZWJpaHV1aGd5ZWJuYXV5eXVnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY3MjU1NDgsImV4cCI6MjA5MjMwMTU0OH0.k9HDP5e5rdQN7KP9bRPgiZZIzwsKRwtSeZE_qMpyl3I';
 
 const { createClient } = supabase;
 
 const db = createClient(SUPABASE_URL, SUPABASE_ANON, {
   auth: {
-    persistSession:   true,  // guarda sesión en localStorage
-    autoRefreshToken: true,  // refresca el token solo, sin que el usuario lo note
+    persistSession:   true,
+    autoRefreshToken: true,
   }
 });
