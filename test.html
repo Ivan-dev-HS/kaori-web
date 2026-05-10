@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>Test Supabase</title></head>
+<body style="font-family:sans-serif;padding:2rem;max-width:600px;margin:0 auto">
+
+  <h2>Test conexión Supabase</h2>
+  <div id="resultado" style="margin-top:1rem;padding:1rem;border-radius:8px;background:#f3f4f6">
+    Cargando...
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js"></script>
+  <script>
+    const res = document.getElementById('resultado');
+
+    // Test 1: ¿Carga supabase-js?
+    if (typeof supabase === 'undefined') {
+      res.style.background = '#fee2e2';
+      res.innerHTML = '❌ supabase-js no cargó. Problema con el CDN.';
+      throw new Error('supabase no definido');
+    }
+    res.innerHTML = '✅ supabase-js cargó correctamente<br>';
+
+    // Test 2: Crear cliente
+    const db = supabase.createClient(
+      'https://zlebihuuhgyebnauyyug.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpsZWJpaHV1aGd5ZWJuYXV5eXVnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY3MjU1NDgsImV4cCI6MjA5MjMwMTU0OH0.k9HDP5e5rdQN7KP9bRPgiZZIzwsKRwtSeZE_qMpyl3I'
+    );
+    res.innerHTML += '✅ Cliente creado<br>';
+
+    // Test 3: Consultar productos
+    (async () => {
+      try {
+        res.innerHTML += '⏳ Consultando tabla productos...<br>';
+        const { data, error } = await db
+          .from('productos')
+          .select('id, name, active')
+          .limit(10);
+
+        if (error) {
+          res.style.background = '#fee2e2';
+          res.innerHTML += `❌ Error Supabase: <strong>${error.message}</strong><br>Código: ${error.code}<br>Hint: ${error.hint || '—'}`;
+          return;
+        }
+
+        if (!data || data.length === 0) {
+          res.style.background = '#fef3c7';
+          res.innerHTML += '⚠️ Consulta OK pero <strong>0 productos</strong> devueltos.<br>Comprueba RLS y datos en la tabla.';
+          return;
+        }
+
+        res.style.background = '#dcfce7';
+        res.innerHTML += `✅ <strong>${data.length} productos encontrados:</strong><br>`;
+        data.forEach(p => {
+          res.innerHTML += `• ${p.name} (active: ${p.active})<br>`;
+        });
+
+      } catch(e) {
+        res.style.background = '#fee2e2';
+        res.innerHTML += `❌ Error inesperado: ${e.message}`;
+      }
+    })();
+  </script>
+</body>
+</html>
