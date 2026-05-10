@@ -10,8 +10,6 @@
     body { font-family: 'Nunito', sans-serif; background: #faf8f5; color: #2d1b69; }
     h1,h2,h3,h4 { font-family: 'Cormorant Garamond', serif; }
     a { text-decoration: none; color: inherit; }
-
-    /* ── NAVBAR ── */
     nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; height: 72px; background: rgba(250,248,245,0.97); backdrop-filter: blur(12px); border-bottom: 1px solid #f3e8ff; transition: all 0.3s; }
     .nav-logo  { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; letter-spacing: 0.2em; color: #4c1d95; }
     .nav-links { display: flex; gap: 2rem; }
@@ -24,33 +22,23 @@
     .nav-cart-btn { background: #7c3aed; color: white; border: none; border-radius: 9999px; padding: 0.5rem 1.2rem; cursor: pointer; font-family: 'Nunito', sans-serif; font-size: 0.85rem; font-weight: 600; transition: background 0.2s; display: flex; align-items: center; gap: 0.4rem; }
     .nav-cart-btn:hover { background: #6d28d9; }
     .cart-count-badge { position: absolute; top: -6px; right: -6px; background: #ec4899; color: white; font-size: 0.65rem; font-weight: 700; width: 18px; height: 18px; border-radius: 50%; display: none; align-items: center; justify-content: center; }
-
-    /* ── HAMBURGER ── */
     .hamburger { display: none; background: none; border: none; cursor: pointer; padding: 0.5rem; flex-direction: column; gap: 5px; }
     .hamburger span { display: block; width: 24px; height: 2px; background: #4c1d95; border-radius: 2px; }
     .mobile-menu { display: none; position: fixed; top: 72px; left: 0; right: 0; background: white; border-bottom: 1px solid #f3e8ff; padding: 1rem 2rem; z-index: 49; flex-direction: column; gap: 0.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
     .mobile-menu a { font-size: 0.95rem; color: #4c1d95; font-weight: 600; padding: 0.6rem 0; border-bottom: 1px solid #faf5ff; display: block; }
     .mobile-menu a:last-child { border-bottom: none; }
     .mobile-menu.open { display: flex; }
-
-    /* ── HEADER ── */
     .shop-header { padding: 6rem 1.5rem 3rem; background: linear-gradient(to bottom, #faf5ff, white); text-align: center; }
     .shop-label { font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: #a855f7; margin-bottom: 0.5rem; }
     .shop-header h1 { font-size: clamp(2rem, 5vw, 4rem); color: #4c1d95; margin-bottom: 0.8rem; font-weight: 300; }
     .shop-header p  { color: #6b7280; font-size: 0.95rem; }
-
-    /* ── BODY ── */
     .shop-body { max-width: 80rem; margin: 0 auto; padding: 2rem 1.5rem 4rem; display: flex; gap: 2rem; }
-
-    /* ── SIDEBAR ── */
     .sidebar { width: 220px; flex-shrink: 0; }
     .sidebar-card { background: white; border-radius: 1rem; padding: 1.25rem; border: 1px solid #f3e8ff; margin-bottom: 1rem; }
     .sidebar h4 { font-family: 'Nunito', sans-serif; font-weight: 700; color: #4c1d95; font-size: 0.82rem; margin-bottom: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; }
     .filter-btn { display: block; width: 100%; text-align: left; padding: 0.45rem 0.75rem; border-radius: 0.5rem; font-size: 0.875rem; cursor: pointer; border: none; background: transparent; color: #4b5563; font-family: 'Nunito', sans-serif; transition: all 0.15s; margin-bottom: 0.2rem; }
     .filter-btn.active { background: #ede9fe; color: #6d28d9; font-weight: 700; }
     .filter-btn:hover:not(.active) { background: #f5f3ff; color: #4c1d95; }
-
-    /* ── MAIN ── */
     .main-area { flex: 1; min-width: 0; }
     .toolbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; gap: 1rem; flex-wrap: wrap; }
     .search-wrap { position: relative; flex: 1; min-width: 200px; }
@@ -59,8 +47,6 @@
     .search-icon { position: absolute; left: 0.85rem; top: 50%; transform: translateY(-50%); color: #9ca3af; pointer-events: none; }
     select.sort { border: 1px solid #e9d5ff; border-radius: 9999px; padding: 0.6rem 1rem; font-family: 'Nunito', sans-serif; font-size: 0.875rem; outline: none; color: #4c1d95; background: white; cursor: pointer; }
     .results-count { font-size: 0.82rem; color: #9ca3af; margin-bottom: 1rem; }
-
-    /* ── SKELETON LOADING ── */
     .skeleton-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1.5rem; }
     .skeleton-card { background: white; border-radius: 1rem; overflow: hidden; border: 1px solid #f3e8ff; }
     .skeleton-img  { aspect-ratio: 1; background: linear-gradient(90deg, #f3e8ff 25%, #faf5ff 50%, #f3e8ff 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; }
@@ -69,10 +55,8 @@
     .skeleton-line.short { width: 60%; }
     .skeleton-line.btn   { height: 32px; border-radius: 9999px; margin-top: 0.5rem; }
     @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
-
-    /* ── GRID PRODUCTOS ── */
     .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1.5rem; }
-    .product-card { background: white; border-radius: 1rem; overflow: hidden; border: 1px solid #f3e8ff; transition: all 0.3s; }
+    .product-card { background: white; border-radius: 1rem; overflow: hidden; border: 1px solid #f3e8ff; transition: box-shadow 0.3s, transform 0.3s; }
     .product-card:hover { box-shadow: 0 12px 40px rgba(124,58,237,0.15); transform: translateY(-4px); }
     .prod-img-wrap { position: relative; aspect-ratio: 1; overflow: hidden; background: #faf5ff; cursor: pointer; }
     .prod-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
@@ -89,21 +73,13 @@
     .add-cart-btn { width: 100%; background: #f3e8ff; color: #7c3aed; border: none; border-radius: 9999px; padding: 0.6rem; font-family: 'Nunito', sans-serif; font-weight: 600; cursor: pointer; font-size: 0.82rem; transition: all 0.2s; }
     .add-cart-btn:hover { background: #7c3aed; color: white; }
     .add-cart-btn.added { background: #dcfce7; color: #16a34a; }
-
-    /* ── ERROR / VACÍO ── */
     .empty-state { grid-column: 1/-1; text-align: center; padding: 3rem; color: #9ca3af; }
     .empty-state .icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
-
-    /* ── TOAST ── */
     #toast { position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%) translateY(80px); background: #4c1d95; color: white; padding: 0.85rem 1.75rem; border-radius: 9999px; font-size: 0.875rem; font-weight: 600; z-index: 200; transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1); pointer-events: none; white-space: nowrap; font-family: 'Nunito', sans-serif; box-shadow: 0 8px 24px rgba(76,29,149,0.3); }
     #toast.show { transform: translateX(-50%) translateY(0); }
-
-    /* ── FOOTER ── */
     footer { background: #1e0a3c; color: white; padding: 2rem 1.5rem; }
     .footer-bottom { max-width: 72rem; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; color: #7c5cbf; font-size: 0.8rem; }
     .footer-bottom a { color: #a78bfa; }
-
-    /* ── RESPONSIVE ── */
     @media (max-width: 1024px) { .sidebar { width: 180px; } }
     @media (max-width: 768px) {
       nav { padding: 0 1rem; }
@@ -154,9 +130,9 @@
   </div>
 
   <div class="shop-header">
-    <p class="shop-label" data-animate="fade-up">Nuestra Tienda</p>
-    <h1 data-animate="fade-up" data-delay="100">Tienda</h1>
-    <p data-animate="fade-up" data-delay="200">Descubre nuestra selección de productos artesanales creados con amor</p>
+    <p class="shop-label">Nuestra Tienda</p>
+    <h1>Tienda</h1>
+    <p>Descubre nuestra selección de productos artesanales creados con amor</p>
   </div>
 
   <div class="shop-body">
@@ -208,7 +184,7 @@
 
   <div id="toast"></div>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js"></script>
   <script src="supabase.js"></script>
   <script src="auth.js"></script>
   <script src="cart.js"></script>
@@ -228,6 +204,7 @@
           <div class="skeleton-body">
             <div class="skeleton-line short"></div>
             <div class="skeleton-line"></div>
+            <div class="skeleton-line short"></div>
             <div class="skeleton-line btn"></div>
           </div>
         </div>`).join('');
@@ -235,56 +212,26 @@
 
     async function cargarProductos() {
       mostrarSkeleton();
-      const grid = document.getElementById('productsGrid');
-
-      // ── PASO 1: Verificar que db existe ──────────────────────────────────
-      if (typeof db === 'undefined') {
-        grid.className = 'products-grid';
-        grid.innerHTML = `<div class="empty-state">
-          <p class="icon">⚠️</p>
-          <p><strong>Error:</strong> supabase.js no cargó correctamente.</p>
-          <p style="font-size:0.8rem;margin-top:0.5rem;color:#9ca3af">Comprueba que supabase.js está en el repo y tiene URL y KEY válidas.</p>
-        </div>`;
-        return;
-      }
-
-      // ── PASO 2: Intentar consulta SIN filtros ─────────────────────────────
       try {
         const { data, error } = await db
           .from('productos')
-          .select('id, name, price, compare_price, category, image, featured, active')
+          .select('*')
           .order('created_at', { ascending: false });
 
-        if (error) {
-          grid.className = 'products-grid';
-          grid.innerHTML = `<div class="empty-state">
-            <p class="icon">⚠️</p>
-            <p><strong>Error Supabase:</strong> ${error.message}</p>
-            <p style="font-size:0.8rem;margin-top:0.5rem;color:#9ca3af">Código: ${error.code}</p>
-          </div>`;
-          return;
-        }
-
-        if (!data || data.length === 0) {
-          grid.className = 'products-grid';
-          grid.innerHTML = `<div class="empty-state">
-            <p class="icon">📦</p>
-            <p>La consulta funcionó pero no hay productos en la tabla.</p>
-            <p style="font-size:0.8rem;margin-top:0.5rem;color:#9ca3af">Ve al panel admin y añade productos.</p>
-          </div>`;
-          return;
-        }
-
-        // Todos los productos sin filtro de active
-        todosLosProductos = data;
+        if (error) throw error;
+        todosLosProductos = data || [];
         filtrarProductos();
-
       } catch(e) {
+        const grid = document.getElementById('productsGrid');
         grid.className = 'products-grid';
-        grid.innerHTML = `<div class="empty-state">
-          <p class="icon">⚠️</p>
-          <p><strong>Error inesperado:</strong> ${e.message}</p>
-        </div>`;
+        grid.innerHTML = `
+          <div class="empty-state">
+            <p class="icon">⚠️</p>
+            <p>Error cargando productos: ${e.message}</p>
+            <button onclick="cargarProductos()" style="margin-top:1rem;background:#7c3aed;color:white;border:none;border-radius:9999px;padding:0.6rem 1.5rem;font-family:'Nunito',sans-serif;font-weight:700;cursor:pointer">
+              Reintentar
+            </button>
+          </div>`;
       }
     }
 
@@ -309,7 +256,7 @@
       const sort = document.getElementById('sortSelect').value;
 
       let lista = todosLosProductos.filter(p => {
-        const matchQ = !q || p.name.toLowerCase().includes(q);
+        const matchQ = !q || p.name.toLowerCase().includes(q) || (p.description||'').toLowerCase().includes(q);
         const matchC = !categoriaActiva || p.category === categoriaActiva;
         const matchP = (precioMin === null || p.price >= precioMin)
                     && (precioMax === null || p.price <= precioMax);
@@ -331,7 +278,11 @@
       grid.className = 'products-grid';
 
       if (!lista.length) {
-        grid.innerHTML = `<div class="empty-state"><p class="icon">🔍</p><p>No se encontraron productos.</p></div>`;
+        grid.innerHTML = `
+          <div class="empty-state">
+            <p class="icon">🔍</p>
+            <p>No se encontraron productos.</p>
+          </div>`;
         return;
       }
 
@@ -339,7 +290,7 @@
         const disc = p.compare_price && p.compare_price > p.price
           ? Math.round((1 - p.price / p.compare_price) * 100) : 0;
         return `
-            <div class="product-card">
+          <div class="product-card">
             <div class="prod-img-wrap" onclick="window.location.href='product.html?id=${p.id}'">
               <img src="${p.image}" alt="${p.name}" loading="lazy"
                    onerror="this.src='https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=400&q=80'" />
@@ -360,7 +311,17 @@
           </div>`;
       }).join('');
 
-      if (window.AnimationsInit) AnimationsInit();
+      // Animación manual fade-up
+      const cards = grid.querySelectorAll('.product-card');
+      cards.forEach((card, i) => {
+        card.style.opacity    = '0';
+        card.style.transform  = 'translateY(24px)';
+        card.style.transition = `opacity 0.5s ease ${i * 60}ms, transform 0.5s ease ${i * 60}ms`;
+        setTimeout(() => {
+          card.style.opacity   = '1';
+          card.style.transform = 'translateY(0)';
+        }, 50);
+      });
     }
 
     function getCarrito() {
