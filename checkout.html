@@ -443,98 +443,110 @@
 
     // ─── SUBMIT — guarda en Supabase ──────────────────────────────────────────
     async function submitOrder(e) {
-      e.preventDefault();
-      ocultarError();
+  e.preventDefault();
+  ocultarError();
 
-      const cart = getCarrito();
-      if (!cart.length) {
-        mostrarError('Tu carrito está vacío.');
-        return;
-      }
+  const cart = getCarrito();
+  if (!cart.length) { mostrarError('Tu carrito está vacío.'); return; }
 
-      // Recoger datos del formulario
-      const nombre  = document.getElementById('inputName').value.trim();
-      const email   = document.getElementById('inputEmail').value.trim();
-      const telefono = document.getElementById('inputPhone').value.trim();
-      const direccion = document.getElementById('inputAddress')?.value.trim() || '';
-      const ciudad    = document.getElementById('inputCity')?.value.trim()    || '';
-      const postal    = document.getElementById('inputPostal')?.value.trim()  || '';
-      const notas     = document.getElementById('inputNotes')?.value.trim()   || '';
+  const nombre   = document.getElementById('inputName').value.trim();
+  const email    = document.getElementById('inputEmail').value.trim();
+  const telefono = document.getElementById('inputPhone').value.trim();
+  const direccion = document.getElementById('inputAddress')?.value.trim() || '';
+  const ciudad    = document.getElementById('inputCity')?.value.trim()    || '';
+  const postal    = document.getElementById('inputPostal')?.value.trim()  || '';
+  const notas     = document.getElementById('inputNotes')?.value.trim()   || '';
 
-      if (!nombre || !email || !telefono) {
-        mostrarError('Por favor rellena todos los campos obligatorios.');
-        return;
-      }
+  if (!nombre || !email || !telefono) {
+    mostrarError('Por favor rellena todos los campos obligatorios.');
+    return;
+  }
 
-      const btn = document.getElementById('submitBtn');
-      btn.disabled    = true;
-      btn.textContent = '⏳ Procesando pedido...';
+  const btn = document.getElementById('submitBtn');
+  btn.disabled    = true;
+  btn.textContent = '⏳ Procesando...';
 
-      // Calcular totales
-      const subtotal = cart.reduce((s,i) => s + i.price * i.quantity, 0);
-      const total    = subtotal + shippingCost;
+  const subtotal = cart.reduce((s,i) => s + i.price * i.quantity, 0);
+  const total    = subtotal + shippingCost;
 
-      // Obtener usuario si está logueado
-      let userId = null;
-      try {
-        const usuario = await obtenerUsuario();
-        if (usuario) userId = usuario.id;
-      } catch(err) {}
+  // Obtener usuario si está logueado
+  let userId = null;
+  try { const u = await obtenerUsuario(); if (u) userId = u.id; } catch(e) {}
 
-      // ── GUARDAR EN SUPABASE ──────────────────────────────────────────────
-      try {
-        const { data, error } = await db
-          .from('pedidos')
-          .insert({
-            customer_name:       nombre,
-            customer_email:      email,
-            customer_phone:      telefono,
-            shipping_address:    direccion,
-            shipping_city:       ciudad,
-            shipping_postal_code: postal,
-            notes:               notas,
-            items:               cart.map(i => ({
-              product_id:   i.id,
-              product_name: i.name,
-              quantity:     i.quantity,
-              price:        i.price,
-              image:        i.image,
-            })),
-            subtotal:       subtotal,
-            shipping_cost:  shippingCost,
-            total:          total,
-            shipping_type:  shippingType,
-            payment_method: currentPayType,
-            status:         'pending',
-            user_id:        userId,
-          })
-          .select('id')
-          .single();
+  try {
+    // 1 — Guardar pedido en Supabase primero
+    const { data: pedidoData, error: pedidoError } = await db
+      .from('pedidos')
+      .insert({
+        customer_name:        nombre,
+        customer_email:       email,
+        customer_phone:       telefono,
+        shipping_address:     direccion,
+        shipping_city:        ciudad,
+        shipping_postal_code: postal,
+        notes:                notas,
+        items:                cart.map(i => ({
+          product_id:   i.id,
+          product_name: i.name,
+          quantity:     i.quantity,
+          price:        i.price,
+          image:        i.image,
+        })),
+        subtotal,
+        shipping_cost:  shippingCost,
+        total,
+        shipping_type:  shippingType,
+        payment_method: currentPayType,
+        status:         'pending',
+        user_id:        userId,
+      })
+      .select('id')
+      .single();
 
-        if (error) throw error;
+    if (pedidoError) throw pedidoError;
 
-        // ── ÉXITO ───────────────────────────────────────────────────────────
-        // Mostrar número de pedido (primeros 8 caracteres del UUID)
-        const orderId = data.id.split('-')[0].toUpperCase();
-        document.getElementById('successOrderId').textContent = '#' + orderId;
+    const orderId = pedidoData.id.split('-')[0].toUpperCase();
 
-        // Limpiar carrito
-        localStorage.removeItem('kaori_cart');
-        if (window.CartWidget) CartWidget.updateBadge();
-
-        // Mostrar pantalla de éxito
-        document.getElementById('checkoutPage').style.display  = 'none';
-        document.getElementById('successScreen').style.display = 'flex';
-
-      } catch(err) {
-        console.error('Error guardando pedido:', err);
-        mostrarError(
-          'Hubo un problema al procesar tu pedido. Por favor inténtalo de nuevo o contáctanos en info@kaori.es'
-        );
-        btn.disabled    = false;
-        btn.innerHTML   = `${currentPayType === 'stripe' ? '💳 Pagar con Stripe' : '🏦 Confirmar Pedido'} · <span id="totalBtn">${total.toFixed(2)} €</span>`;
-      }
+    // 2 — Si pago con transferencia, mostrar éxito directamente
+    if (currentPayType === 'transfer') {
+      localStorage.removeItem('kaori_cart');
+      if (window.CartWidget) CartWidget.updateBadge();
+      document.getElementById('checkoutPage').style.display  = 'none';
+      document.getElementById('successScreen').style.display = 'flex';
+      document.getElementById('successOrderId').textContent  = '#' + orderId;
+      return;
     }
+
+    // 3 — Si pago con Stripe, crear sesión de checkout
+    const response = await fetch('/api/create-checkout', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({
+        items:         cart,
+        customerEmail: email,
+        customerName:  nombre,
+        shippingCost,
+        orderId:       pedidoData.id,
+      }),
+    });
+
+    const stripeData = await response.json();
+
+    if (!response.ok || stripeData.error) {
+      throw new Error(stripeData.error || 'Error creando sesión de pago');
+    }
+
+    // 4 — Redirigir a Stripe
+    window.location.href = stripeData.url;
+
+  } catch(err) {
+    console.error('Error:', err);
+    mostrarError('Hubo un problema al procesar tu pedido. Inténtalo de nuevo o contáctanos en info@kaori.es');
+    btn.disabled  = false;
+    btn.innerHTML = `${currentPayType === 'stripe' ? '💳 Pagar con Stripe' : '🏦 Confirmar Pedido'} · <span>${total.toFixed(2)} €</span>`;
+  }
+}
+
 
     // ─── NAVBAR + PREFILL ─────────────────────────────────────────────────────
     (async () => {
