@@ -375,10 +375,11 @@
     // ─── SUBMIT ───────────────────────────────────────────────────────────────
     async function submitOrder() {
       ocultarError();
+      alert('✅ Paso 1: Función iniciada');
 
       const cart = getCarrito();
       if (!cart.length) { mostrarError('Tu carrito está vacío.'); return; }
-
+      alert('✅ Paso 2: Carrito tiene ' + cart.length + ' productos');
       const nombre    = document.getElementById('inputName').value.trim();
       const email     = document.getElementById('inputEmail').value.trim();
       const telefono  = document.getElementById('inputPhone').value.trim();
@@ -386,11 +387,12 @@
       const ciudad    = document.getElementById('inputCity')?.value.trim()    || '';
       const postal    = document.getElementById('inputPostal')?.value.trim()  || '';
       const notas     = document.getElementById('inputNotes')?.value.trim()   || '';
-
+    
       if (!nombre)   { mostrarError('El nombre es obligatorio.'); return; }
       if (!email)    { mostrarError('El email es obligatorio.'); return; }
       if (!telefono) { mostrarError('El teléfono es obligatorio.'); return; }
-
+      alert('✅ Paso 3: Datos validados. Método de pago: ' + currentPayType);
+      
       const btn = document.getElementById('submitBtn');
       btn.disabled    = true;
       btn.textContent = '⏳ Procesando pedido...';
@@ -403,23 +405,18 @@
 
       try {
         // 1 — Guardar pedido en Supabase
+         alert('✅ Paso 4: Guardando en Supabase...');
         const { data: pedidoData, error: pedidoError } = await db
           .from('pedidos')
           .insert({
             customer_name:        nombre,
             customer_email:       email,
             customer_phone:       telefono,
-            shipping_address:     direccion,
-            shipping_city:        ciudad,
-            shipping_postal_code: postal,
-            notes:                notas,
-            items:                cart.map(i => ({
-              product_id:   i.id,
-              product_name: i.name,
-              quantity:     i.quantity,
-              price:        i.price,
-              image:        i.image,
-            })),
+            shipping_address:     document.getElementById('inputAddress')?.value.trim() || '',
+            shipping_city:        document.getElementById('inputCity')?.value.trim()    || '',
+            shipping_postal_code: document.getElementById('inputPostal')?.value.trim()  || '',
+            notes:                document.getElementById('inputNotes')?.value.trim()   || '',
+            items:                cart.map(i => ({ product_id:i.id, product_name:i.name, quantity:i.quantity, price:i.price, image:i.image })),
             subtotal,
             shipping_cost:  shippingCost,
             total,
@@ -431,8 +428,11 @@
           .select('id')
           .single();
 
-        if (pedidoError) throw new Error('Error guardando pedido: ' + pedidoError.message);
-
+         if (pedidoError) {
+      alert('❌ Error Supabase: ' + pedidoError.message);
+      throw new Error('Error guardando pedido: ' + pedidoError.message);
+    }
+ alert('✅ Paso 4: Guardando en Supabase...');
         const orderId = pedidoData.id.split('-')[0].toUpperCase();
 
         // 2 — Transferencia: mostrar éxito directamente
@@ -446,6 +446,7 @@
         }
 
         // 3 — Stripe: crear sesión de checkout
+         alert('✅ Paso 6: Llamando a /api/create-checkout...');
         btn.textContent = '⏳ Conectando con Stripe...';
 
         const response = await fetch('/api/create-checkout', {
@@ -459,21 +460,25 @@
             orderId:       pedidoData.id,
           }),
         });
-
+        
+ alert('✅ Paso 7: Respuesta recibida. Status: ' + response.status);
         const stripeData = await response.json();
-
+        
+alert('✅ Paso 8: JSON recibido: ' + JSON.stringify(stripeData).slice(0, 100));
         if (!response.ok || stripeData.error) {
           throw new Error('Error Stripe: ' + (stripeData.error || 'respuesta inesperada'));
         }
 
         // 4 — Redirigir a Stripe
+        alert('✅ Paso 8: JSON recibido: ' + JSON.stringify(stripeData).slice(0, 100));
+
         window.location.href = stripeData.url;
 
-      } catch(err) {
-        console.error('Error:', err);
-        mostrarError(err.message || 'Hubo un problema. Inténtalo de nuevo o contáctanos en info@kaori.es');
-        btn.disabled    = false;
-        actualizarTotales();
+      }  catch(err) {
+    alert('❌ ERROR FINAL: ' + err.message);
+    mostrarError(err.message || 'Error inesperado. Contacta en info@kaori.es');
+    btn.disabled = false;
+    actualizarTotales();
       }
     }
 
