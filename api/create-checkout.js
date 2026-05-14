@@ -1,25 +1,34 @@
 const Stripe = require('stripe');
 
 module.exports = async (req, res) => {
-  // Solo POST
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Método no permitido' });
   }
 
+  res.setHeader('Access-Control-Allow-Origin', '*');
+
+  // ── DIAGNÓSTICO TEMPORAL ──
+  const key = process.env.STRIPE_SECRET_KEY;
+  if (!key) {
+    return res.status(500).json({
+      error: 'Variable STRIPE_SECRET_KEY no encontrada',
+      env_keys: Object.keys(process.env).filter(k => k.includes('STRIPE'))
+    });
+  }
+  
   // CORS
   res.setHeader('Access-Control-Allow-Origin', 'https://kaori.es');
   res.setHeader('Access-Control-Allow-Methods', 'POST');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
   try {
-    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+    const stripe = new Stripe(key);
     const { items, customerEmail, customerName, shippingCost, orderId } = req.body;
 
     if (!items || !items.length) {
       return res.status(400).json({ error: 'Carrito vacío' });
     }
 
-    // Crear líneas de producto para Stripe
     const lineItems = items.map(item => ({
       price_data: {
         currency: 'eur',
@@ -27,12 +36,11 @@ module.exports = async (req, res) => {
           name:   item.name,
           images: item.image ? [item.image] : [],
         },
-        unit_amount: Math.round(item.price * 100), // Stripe usa céntimos
+        unit_amount: Math.round(item.price * 100),
       },
       quantity: item.quantity,
     }));
 
-    // Añadir envío si hay coste
     if (shippingCost && shippingCost > 0) {
       lineItems.push({
         price_data: {
@@ -44,7 +52,6 @@ module.exports = async (req, res) => {
       });
     }
 
-    // Crear sesión de checkout
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       line_items:           lineItems,
@@ -56,9 +63,6 @@ module.exports = async (req, res) => {
       metadata: {
         customer_name: customerName || '',
         order_id:      orderId      || '',
-      },
-      payment_intent_data: {
-        description: `Pedido Kaori${orderId ? ' #' + orderId : ''}`,
       },
     });
 
