@@ -3,143 +3,509 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kaori – Inicio</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <title>Kaori – Velas Artesanales Premium</title>
+  <meta name="description" content="Kaori. Velas artesanales y productos naturales creados con intención, amor y los mejores materiales. Lujo minimalista para tu hogar." />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Nunito:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
+    :root {
+      --cream:   #faf7f2;
+      --cream2:  #f5efe6;
+      --dark:    #1a1208;
+      --dark2:   #2c1f0e;
+      --gold:    #b8965a;
+      --gold2:   #d4af72;
+      --text:    #3d2e1a;
+      --muted:   #8a7560;
+      --white:   #ffffff;
+      --border:  rgba(184,150,90,0.2);
+    }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Nunito', sans-serif; background: #faf8f5; color: #2d1b69; }
-    h1,h2,h3,h4 { font-family: 'Cormorant Garamond', serif; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Nunito', sans-serif; background: var(--cream); color: var(--text); overflow-x: hidden; }
+    h1,h2,h3,h4,h5 { font-family: 'Cormorant Garamond', serif; }
     a { text-decoration: none; color: inherit; }
-    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; height: 72px; background: rgba(250,248,245,0.97); backdrop-filter: blur(12px); border-bottom: 1px solid #f3e8ff; transition: all 0.3s; }
-    .nav-logo  { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; letter-spacing: 0.2em; color: #4c1d95; }
-    .nav-links { display: flex; gap: 2rem; align-items: center; }
-    .nav-links a { font-size: 0.85rem; color: #4b5563; transition: color 0.2s; font-weight: 500; }
-    .nav-links a:hover { color: #7c3aed; }
-    .nav-right { display: flex; align-items: center; gap: 0.75rem; }
-    .nav-cuenta { background: white; color: #7c3aed; border: 1px solid #e9d5ff; border-radius: 9999px; padding: 0.5rem 1.2rem; font-family: 'Nunito', sans-serif; font-size: 0.85rem; font-weight: 600; transition: all 0.2s; }
-    .nav-cuenta:hover { background: #f3e8ff; }
+    img { max-width: 100%; }
+
+    /* ── NAVBAR ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 3rem; height: 80px;
+      background: rgba(250,247,242,0.92);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      transition: all 0.4s ease;
+    }
+    nav.scrolled { height: 64px; background: rgba(250,247,242,0.98); box-shadow: 0 2px 40px rgba(26,18,8,0.08); }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem; letter-spacing: 0.35em;
+      color: var(--dark); font-weight: 400;
+      text-transform: uppercase;
+    }
+    .nav-links { display: flex; gap: 2.5rem; }
+    .nav-links a {
+      font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--muted); font-weight: 500; transition: color 0.3s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -4px; left: 0; right: 0;
+      height: 1px; background: var(--gold); transform: scaleX(0);
+      transition: transform 0.3s ease; transform-origin: left;
+    }
+    .nav-links a:hover { color: var(--dark); }
+    .nav-links a:hover::after { transform: scaleX(1); }
+    .nav-right { display: flex; align-items: center; gap: 1rem; }
+    .nav-btn-cuenta {
+      font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--text); font-weight: 500; padding: 0.5rem 1.2rem;
+      border: 1px solid var(--border); border-radius: 0;
+      transition: all 0.3s; background: transparent;
+      font-family: 'Nunito', sans-serif;
+    }
+    .nav-btn-cuenta:hover { background: var(--dark); color: var(--white); border-color: var(--dark); }
     .nav-cart-wrap { position: relative; }
-    .nav-cart-btn { background: #7c3aed; color: white; border: none; border-radius: 9999px; padding: 0.5rem 1.2rem; cursor: pointer; font-family: 'Nunito', sans-serif; font-size: 0.85rem; font-weight: 600; transition: background 0.2s; display: flex; align-items: center; gap: 0.4rem; }
-    .nav-cart-btn:hover { background: #6d28d9; }
-    .cart-count-badge { position: absolute; top: -6px; right: -6px; background: #ec4899; color: white; font-size: 0.65rem; font-weight: 700; width: 18px; height: 18px; border-radius: 50%; display: none; align-items: center; justify-content: center; }
+    .nav-cart-btn {
+      background: var(--dark); color: var(--cream); border: none;
+      padding: 0.55rem 1.4rem; cursor: pointer;
+      font-family: 'Nunito', sans-serif; font-size: 0.72rem;
+      font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
+      transition: all 0.3s; display: flex; align-items: center; gap: 0.5rem;
+    }
+    .nav-cart-btn:hover { background: var(--gold); }
+    .cart-count-badge {
+      position: absolute; top: -6px; right: -6px;
+      background: var(--gold); color: white; font-size: 0.6rem;
+      font-weight: 700; width: 18px; height: 18px; border-radius: 50%;
+      display: none; align-items: center; justify-content: center;
+    }
     .hamburger { display: none; background: none; border: none; cursor: pointer; padding: 0.5rem; flex-direction: column; gap: 5px; }
-    .hamburger span { display: block; width: 24px; height: 2px; background: #4c1d95; border-radius: 2px; }
-    .mobile-menu { display: none; position: fixed; top: 72px; left: 0; right: 0; background: white; border-bottom: 1px solid #f3e8ff; padding: 1rem 2rem; z-index: 49; flex-direction: column; gap: 0.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
-    .mobile-menu a { font-size: 0.95rem; color: #4c1d95; font-weight: 600; padding: 0.6rem 0; border-bottom: 1px solid #faf5ff; display: block; }
-    .mobile-menu a:last-child { border-bottom: none; }
+    .hamburger span { display: block; width: 22px; height: 1px; background: var(--dark); transition: all 0.3s; }
+    .mobile-menu {
+      display: none; position: fixed; top: 80px; left: 0; right: 0;
+      background: var(--cream); border-bottom: 1px solid var(--border);
+      padding: 2rem 3rem; z-index: 99; flex-direction: column; gap: 0;
+    }
+    .mobile-menu a {
+      font-size: 0.78rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--text); font-weight: 500; padding: 1rem 0;
+      border-bottom: 1px solid var(--border); display: block;
+    }
     .mobile-menu.open { display: flex; }
-    .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 50%, #ede9fe 100%); padding-top: 72px; }
-    .hero-content { text-align: center; max-width: 56rem; padding: 2rem 1.5rem; }
-    .hero-label { font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: #a855f7; margin-bottom: 1.5rem; }
-    .hero h1 { font-size: clamp(2.5rem, 8vw, 6rem); color: #2e0854; line-height: 1.1; margin-bottom: 1.5rem; font-weight: 300; }
-    .hero h1 em { color: #9333ea; font-style: italic; }
-    .hero p { color: #6b7280; font-size: clamp(0.9rem, 2vw, 1.1rem); line-height: 1.7; max-width: 36rem; margin: 0 auto 2.5rem; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh; position: relative; display: flex;
+      align-items: center; justify-content: center; overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: url('https://images.unsplash.com/photo-1603905000478-e1b9fb17b2eb?w=1800&q=80') center/cover no-repeat;
+      transform: scale(1.05);
+      animation: heroZoom 8s ease-out forwards;
+    }
+    @keyframes heroZoom { to { transform: scale(1); } }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(26,18,8,0.72) 0%, rgba(26,18,8,0.4) 60%, rgba(26,18,8,0.55) 100%);
+    }
+    .hero-content {
+      position: relative; text-align: center; padding: 2rem 1.5rem;
+      max-width: 800px;
+      animation: heroFade 1.2s ease 0.3s both;
+    }
+    @keyframes heroFade { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:translateY(0); } }
+    .hero-eyebrow {
+      font-size: 0.68rem; letter-spacing: 0.4em; text-transform: uppercase;
+      color: var(--gold2); font-family: 'Nunito', sans-serif; font-weight: 400;
+      margin-bottom: 1.5rem; display: block;
+    }
+    .hero h1 {
+      font-size: clamp(3rem, 8vw, 6.5rem); color: var(--white);
+      font-weight: 300; line-height: 1.05; letter-spacing: 0.02em;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 em { font-style: italic; color: var(--gold2); }
+    .hero-sub {
+      font-size: clamp(0.85rem, 2vw, 1rem); color: rgba(255,255,255,0.7);
+      line-height: 1.8; max-width: 480px; margin: 0 auto 2.5rem;
+      font-weight: 300; letter-spacing: 0.03em;
+    }
     .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-    .btn-primary { background: linear-gradient(135deg, #7c3aed, #6d28d9); color: white; padding: 1rem 2rem; border-radius: 9999px; font-weight: 700; font-size: 0.95rem; transition: all 0.2s; display: inline-block; box-shadow: 0 4px 14px rgba(124,58,237,0.3); font-family: 'Nunito', sans-serif; }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(124,58,237,0.4); }
-    .btn-outline { border: 2px solid #7c3aed; color: #7c3aed; padding: 1rem 2rem; border-radius: 9999px; font-weight: 600; font-size: 0.95rem; transition: all 0.2s; display: inline-block; font-family: 'Nunito', sans-serif; }
-    .btn-outline:hover { background: #7c3aed; color: white; transform: translateY(-2px); }
-    .featured { padding: 5rem 1.5rem; background: white; }
-    .featured-inner { max-width: 72rem; margin: 0 auto; }
-    .section-label { font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: #a855f7; margin-bottom: 0.5rem; text-align: center; }
-    .section-title { font-size: clamp(1.6rem, 4vw, 2.5rem); color: #4c1d95; text-align: center; margin-bottom: 3rem; font-weight: 400; }
-    .skeleton-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.5rem; }
-    .skeleton-card { background: white; border-radius: 1rem; overflow: hidden; border: 1px solid #f3e8ff; }
-    .skeleton-img  { aspect-ratio: 1; background: linear-gradient(90deg, #f3e8ff 25%, #faf5ff 50%, #f3e8ff 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; }
-    .skeleton-body { padding: 1rem; display: flex; flex-direction: column; gap: 0.5rem; }
-    .skeleton-line { height: 12px; background: linear-gradient(90deg, #f3e8ff 25%, #faf5ff 50%, #f3e8ff 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 9999px; }
-    .skeleton-line.short { width: 60%; }
-    .skeleton-line.btn   { height: 32px; border-radius: 9999px; margin-top: 0.5rem; }
-    @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
-    .featured-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.5rem; }
-    .feat-card { background: white; border-radius: 1rem; overflow: hidden; border: 1px solid #f3e8ff; transition: box-shadow 0.3s, transform 0.3s; cursor: pointer; }
-    .feat-card:hover { box-shadow: 0 12px 40px rgba(124,58,237,0.15); transform: translateY(-4px); }
-    .feat-img { aspect-ratio: 1; overflow: hidden; background: #faf5ff; position: relative; }
-    .feat-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
-    .feat-card:hover .feat-img img { transform: scale(1.06); }
-    .feat-badge { position: absolute; top: 8px; left: 8px; background: #7c3aed; color: white; font-size: 0.68rem; font-weight: 700; padding: 2px 8px; border-radius: 9999px; }
-    .feat-info { padding: 1rem; }
-    .feat-cat  { font-size: 0.68rem; color: #a855f7; text-transform: uppercase; letter-spacing: 0.1em; }
-    .feat-info h4 { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: #4c1d95; margin: 0.25rem 0; }
-    .feat-price { color: #7c3aed; font-weight: 700; font-size: 0.95rem; font-family: 'Nunito', sans-serif; }
-    .feat-btn { width: 100%; margin-top: 0.75rem; background: #f3e8ff; color: #7c3aed; border: none; border-radius: 9999px; padding: 0.55rem; font-family: 'Nunito', sans-serif; font-weight: 600; cursor: pointer; font-size: 0.82rem; transition: all 0.2s; }
-    .feat-btn:hover { background: #7c3aed; color: white; }
-    .feat-btn.added { background: #dcfce7; color: #16a34a; }
-    .ver-todos { display: block; text-align: center; margin-top: 2.5rem; }
-    .ver-todos a { display: inline-block; background: #7c3aed; color: white; padding: 0.9rem 2.5rem; border-radius: 9999px; font-weight: 700; font-size: 0.95rem; transition: all 0.2s; font-family: 'Nunito', sans-serif; }
-    .ver-todos a:hover { background: #6d28d9; transform: translateY(-2px); }
-    .values { padding: 5rem 1.5rem; background: #faf5ff; }
-    .values-inner { max-width: 72rem; margin: 0 auto; }
-    .values-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 2rem; }
-    .value-card { text-align: center; padding: 2rem 1rem; background: white; border-radius: 1rem; border: 1px solid #f3e8ff; transition: all 0.3s; }
-    .value-card:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(124,58,237,0.1); }
-    .value-icon { width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.2rem; font-size: 1.5rem; }
-    .ic-purple { background: #f3e8ff; }
-    .ic-green  { background: #dcfce7; }
-    .ic-amber  { background: #fef3c7; }
-    .value-card h3 { font-size: 1.1rem; color: #4c1d95; margin-bottom: 0.8rem; font-weight: 400; }
-    .value-card p  { color: #6b7280; font-size: 0.875rem; line-height: 1.7; }
-    .about-banner { padding: 6rem 1.5rem; background: linear-gradient(135deg, #2e0854, #4c1d95); text-align: center; position: relative; overflow: hidden; }
-    .about-banner::before { content:''; position:absolute; inset:0; background:url('https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=1200&q=40') center/cover; opacity:0.06; }
-    .about-banner h2 { position:relative; font-size: clamp(1.8rem, 5vw, 3rem); color: white; margin-bottom: 1rem; font-weight: 400; }
-    .about-banner p  { position:relative; color: #d8b4fe; max-width: 36rem; margin: 0 auto 2rem; line-height: 1.7; font-size: 0.95rem; }
-    .btn-white { position:relative; background: white; color: #4c1d95; padding: 1rem 2.5rem; border-radius: 9999px; font-weight: 700; display: inline-block; transition: all 0.2s; font-family: 'Nunito', sans-serif; font-size: 0.95rem; }
-    .btn-white:hover { background: #f5f3ff; transform: translateY(-2px); }
-    #toast { position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%) translateY(80px); background: #4c1d95; color: white; padding: 0.85rem 1.75rem; border-radius: 9999px; font-size: 0.875rem; font-weight: 600; z-index: 200; transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1); pointer-events: none; white-space: nowrap; font-family: 'Nunito', sans-serif; box-shadow: 0 8px 24px rgba(76,29,149,0.3); }
+    .btn-hero-primary {
+      background: var(--white); color: var(--dark);
+      padding: 1rem 2.5rem; font-family: 'Nunito', sans-serif;
+      font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+      font-weight: 600; transition: all 0.3s; display: inline-block;
+      border: 1px solid var(--white);
+    }
+    .btn-hero-primary:hover { background: var(--gold); color: var(--white); border-color: var(--gold); }
+    .btn-hero-outline {
+      background: transparent; color: var(--white);
+      padding: 1rem 2.5rem; font-family: 'Nunito', sans-serif;
+      font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+      font-weight: 500; transition: all 0.3s; display: inline-block;
+      border: 1px solid rgba(255,255,255,0.5);
+    }
+    .btn-hero-outline:hover { border-color: var(--white); background: rgba(255,255,255,0.08); }
+    .hero-scroll {
+      position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+      color: rgba(255,255,255,0.5); font-size: 0.62rem; letter-spacing: 0.2em;
+      text-transform: uppercase; font-family: 'Nunito', sans-serif;
+      animation: bounce 2s infinite;
+    }
+    .hero-scroll::after { content:''; display:block; width:1px; height:40px; background: rgba(255,255,255,0.3); }
+    @keyframes bounce { 0%,100% { transform:translateX(-50%) translateY(0); } 50% { transform:translateX(-50%) translateY(-6px); } }
+
+    /* ── MARQUEE STRIP ── */
+    .marquee-strip {
+      background: var(--dark); padding: 1rem 0; overflow: hidden;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+    .marquee-track {
+      display: flex; gap: 3rem; width: max-content;
+      animation: marquee 25s linear infinite;
+    }
+    @keyframes marquee { from { transform:translateX(0); } to { transform:translateX(-50%); } }
+    .marquee-item {
+      font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--gold); font-family: 'Nunito', sans-serif; white-space: nowrap;
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .marquee-item::after { content:'✦'; color: rgba(184,150,90,0.4); }
+
+    /* ── SECCIONES ── */
+    .section { padding: 7rem 1.5rem; }
+    .section-inner { max-width: 80rem; margin: 0 auto; }
+    .section-eyebrow {
+      font-size: 0.65rem; letter-spacing: 0.35em; text-transform: uppercase;
+      color: var(--gold); font-family: 'Nunito', sans-serif; font-weight: 400;
+      display: block; text-align: center; margin-bottom: 1rem;
+    }
+    .section-title {
+      font-size: clamp(2rem, 5vw, 3.5rem); color: var(--dark);
+      font-weight: 300; text-align: center; margin-bottom: 1rem;
+      line-height: 1.15;
+    }
+    .section-title em { font-style: italic; color: var(--gold); }
+    .section-sub {
+      font-size: 0.9rem; color: var(--muted); text-align: center;
+      max-width: 500px; margin: 0 auto 4rem; line-height: 1.8;
+      font-weight: 300;
+    }
+    .divider {
+      width: 40px; height: 1px; background: var(--gold);
+      margin: 1.5rem auto;
+    }
+
+    /* ── CARRUSEL ── */
+    .carousel-section { background: var(--cream2); padding: 5rem 0; overflow: hidden; }
+    .carousel-header { padding: 0 1.5rem; max-width: 80rem; margin: 0 auto 3rem; }
+    .carousel-track-wrap { overflow: hidden; position: relative; }
+    .carousel-track-wrap::before,
+    .carousel-track-wrap::after {
+      content:''; position:absolute; top:0; bottom:0; width:120px; z-index:2; pointer-events:none;
+    }
+    .carousel-track-wrap::before { left:0; background:linear-gradient(to right, var(--cream2), transparent); }
+    .carousel-track-wrap::after  { right:0; background:linear-gradient(to left, var(--cream2), transparent); }
+    .carousel-track {
+      display: flex; gap: 1.5rem; padding: 0.5rem 1.5rem;
+      animation: carouselScroll 40s linear infinite;
+      width: max-content;
+    }
+    .carousel-track:hover { animation-play-state: paused; }
+    @keyframes carouselScroll { from { transform:translateX(0); } to { transform:translateX(-50%); } }
+    .carousel-card {
+      width: 260px; flex-shrink: 0; background: var(--white);
+      border: 1px solid var(--border); cursor: pointer;
+      transition: all 0.4s ease; position: relative; overflow: hidden;
+      group: true;
+    }
+    .carousel-card:hover { box-shadow: 0 20px 60px rgba(26,18,8,0.12); transform: translateY(-4px); }
+    .carousel-card-img {
+      aspect-ratio: 3/4; overflow: hidden; position: relative; background: var(--cream2);
+    }
+    .carousel-card-img img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.7s ease;
+    }
+    .carousel-card:hover .carousel-card-img img { transform: scale(1.06); }
+    .carousel-card-overlay {
+      position: absolute; inset: 0; background: rgba(26,18,8,0.0);
+      transition: background 0.4s; display: flex; align-items: flex-end;
+      padding: 1.5rem;
+    }
+    .carousel-card:hover .carousel-card-overlay { background: rgba(26,18,8,0.35); }
+    .carousel-card-quick {
+      background: var(--white); color: var(--dark);
+      border: none; padding: 0.7rem 1.2rem;
+      font-family: 'Nunito', sans-serif; font-size: 0.68rem;
+      letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600;
+      cursor: pointer; opacity: 0; transform: translateY(8px);
+      transition: all 0.3s; white-space: nowrap;
+    }
+    .carousel-card:hover .carousel-card-quick { opacity: 1; transform: translateY(0); }
+    .carousel-card-info { padding: 1.25rem; }
+    .carousel-card-cat {
+      font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--gold); font-family: 'Nunito', sans-serif; margin-bottom: 0.4rem;
+    }
+    .carousel-card-name {
+      font-size: 1.1rem; color: var(--dark); font-weight: 400;
+      margin-bottom: 0.5rem; line-height: 1.3;
+    }
+    .carousel-card-price {
+      font-size: 0.9rem; color: var(--muted); font-family: 'Nunito', sans-serif;
+    }
+    .carousel-card-price strong { color: var(--dark); font-weight: 600; }
+
+    /* ── FEATURED GRID ── */
+    .featured-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(240px,1fr));
+      gap: 2rem;
+    }
+    .feat-card {
+      background: var(--white); border: 1px solid var(--border);
+      cursor: pointer; transition: all 0.4s; position: relative; overflow: hidden;
+    }
+    .feat-card:hover { box-shadow: 0 20px 60px rgba(26,18,8,0.1); transform: translateY(-4px); }
+    .feat-img { aspect-ratio: 1; overflow: hidden; background: var(--cream2); position: relative; }
+    .feat-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+    .feat-card:hover .feat-img img { transform: scale(1.05); }
+    .feat-badge {
+      position: absolute; top: 1rem; left: 1rem;
+      background: var(--dark); color: var(--gold2);
+      font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase;
+      padding: 4px 10px; font-family: 'Nunito', sans-serif;
+    }
+    .feat-info { padding: 1.5rem; }
+    .feat-cat {
+      font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--gold); font-family: 'Nunito', sans-serif; margin-bottom: 0.5rem;
+    }
+    .feat-name { font-size: 1.15rem; color: var(--dark); font-weight: 400; margin-bottom: 0.75rem; }
+    .feat-price { font-size: 0.95rem; color: var(--muted); font-family: 'Nunito', sans-serif; }
+    .feat-price strong { color: var(--dark); }
+    .feat-btn {
+      width: 100%; margin-top: 1rem; background: transparent;
+      color: var(--dark); border: 1px solid var(--border);
+      padding: 0.75rem; font-family: 'Nunito', sans-serif;
+      font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase;
+      font-weight: 600; cursor: pointer; transition: all 0.3s;
+    }
+    .feat-btn:hover { background: var(--dark); color: var(--cream); border-color: var(--dark); }
+    .feat-btn.added { background: #16a34a; color: white; border-color: #16a34a; }
+
+    /* ── STORY SPLIT ── */
+    .story-section { background: var(--dark); padding: 7rem 1.5rem; }
+    .story-inner {
+      max-width: 80rem; margin: 0 auto; display: grid;
+      gap: 4rem; align-items: center;
+    }
+    @media(min-width:1024px) { .story-inner { grid-template-columns: 1fr 1fr; gap: 6rem; } }
+    .story-img { position: relative; }
+    .story-img-main { aspect-ratio: 4/5; overflow: hidden; }
+    .story-img-main img { width: 100%; height: 100%; object-fit: cover; }
+    .story-img-accent {
+      position: absolute; bottom: -2rem; right: -2rem;
+      width: 45%; aspect-ratio: 1; overflow: hidden;
+      border: 4px solid var(--dark);
+    }
+    .story-img-accent img { width: 100%; height: 100%; object-fit: cover; }
+    .story-text .section-eyebrow { text-align: left; }
+    .story-text .section-title { text-align: left; color: var(--white); }
+    .story-text p {
+      color: rgba(255,255,255,0.6); line-height: 1.9; font-size: 0.95rem;
+      font-weight: 300; margin-bottom: 1rem;
+    }
+    .story-text em { color: var(--gold2); font-style: italic; }
+    .btn-story {
+      display: inline-block; margin-top: 2rem;
+      background: transparent; color: var(--gold2);
+      border: 1px solid var(--gold); padding: 0.9rem 2.5rem;
+      font-family: 'Nunito', sans-serif; font-size: 0.68rem;
+      letter-spacing: 0.2em; text-transform: uppercase; font-weight: 500;
+      transition: all 0.3s;
+    }
+    .btn-story:hover { background: var(--gold); color: var(--dark); }
+
+    /* ── VALORES ── */
+    .values-section { background: var(--cream); padding: 7rem 1.5rem; }
+    .values-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+      gap: 0; border: 1px solid var(--border); margin-top: 4rem;
+    }
+    .value-item {
+      padding: 3rem 2rem; text-align: center;
+      border-right: 1px solid var(--border);
+      transition: background 0.3s;
+    }
+    .value-item:last-child { border-right: none; }
+    .value-item:hover { background: var(--cream2); }
+    .value-icon { font-size: 1.5rem; margin-bottom: 1.2rem; display: block; }
+    .value-item h3 {
+      font-size: 1rem; color: var(--dark); font-weight: 400;
+      margin-bottom: 0.75rem; letter-spacing: 0.05em;
+    }
+    .value-item p { font-size: 0.82rem; color: var(--muted); line-height: 1.7; font-weight: 300; }
+
+    /* ── BANNER EVENTOS ── */
+    .eventos-banner {
+      position: relative; padding: 8rem 1.5rem; overflow: hidden;
+      display: flex; align-items: center; justify-content: center; text-align: center;
+    }
+    .eventos-bg {
+      position: absolute; inset: 0;
+      background: url('https://images.unsplash.com/photo-1519741497674-611481863552?w=1600&q=80') center/cover;
+    }
+    .eventos-overlay { position: absolute; inset: 0; background: rgba(26,18,8,0.65); }
+    .eventos-content { position: relative; max-width: 600px; }
+    .eventos-content .section-eyebrow { color: var(--gold2); }
+    .eventos-content h2 {
+      font-size: clamp(2rem, 5vw, 3.5rem); color: var(--white);
+      font-weight: 300; margin-bottom: 1rem; line-height: 1.2;
+    }
+    .eventos-content p { color: rgba(255,255,255,0.7); margin-bottom: 2rem; font-size: 0.95rem; line-height: 1.8; }
+    .btn-eventos {
+      display: inline-block; background: var(--gold); color: var(--dark);
+      padding: 1rem 2.5rem; font-family: 'Nunito', sans-serif;
+      font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+      font-weight: 600; transition: all 0.3s;
+    }
+    .btn-eventos:hover { background: var(--white); }
+
+    /* ── TESTIMONIOS ── */
+    .testimonios { background: var(--cream2); padding: 7rem 1.5rem; }
+    .testimonios-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
+      gap: 2rem; margin-top: 4rem;
+    }
+    .testimonio-card { padding: 2.5rem; background: var(--white); border: 1px solid var(--border); }
+    .testimonio-stars { color: var(--gold); font-size: 0.8rem; margin-bottom: 1.25rem; letter-spacing: 0.1em; }
+    .testimonio-text {
+      font-family: 'Cormorant Garamond', serif; font-size: 1.1rem;
+      color: var(--dark); line-height: 1.7; font-style: italic;
+      margin-bottom: 1.5rem; font-weight: 300;
+    }
+    .testimonio-author { font-size: 0.72rem; color: var(--gold); letter-spacing: 0.15em; text-transform: uppercase; font-family: 'Nunito', sans-serif; }
+
+    /* ── NEWSLETTER ── */
+    .newsletter { background: var(--dark); padding: 6rem 1.5rem; text-align: center; }
+    .newsletter h2 { font-size: clamp(1.8rem,4vw,2.8rem); color: var(--white); font-weight: 300; margin-bottom: 1rem; }
+    .newsletter p { color: rgba(255,255,255,0.5); font-size: 0.875rem; margin-bottom: 2.5rem; font-weight: 300; }
+    .newsletter-form { display: flex; gap: 0; max-width: 440px; margin: 0 auto; }
+    .newsletter-form input {
+      flex: 1; padding: 1rem 1.25rem; background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.15); border-right: none;
+      color: var(--white); font-family: 'Nunito', sans-serif;
+      font-size: 0.875rem; outline: none;
+    }
+    .newsletter-form input::placeholder { color: rgba(255,255,255,0.3); }
+    .newsletter-form input:focus { border-color: var(--gold); }
+    .newsletter-form button {
+      background: var(--gold); color: var(--dark); border: none;
+      padding: 1rem 1.75rem; font-family: 'Nunito', sans-serif;
+      font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase;
+      font-weight: 700; cursor: pointer; transition: background 0.3s; white-space: nowrap;
+    }
+    .newsletter-form button:hover { background: var(--gold2); }
+
+    /* ── TOAST ── */
+    #toast {
+      position: fixed; bottom: 2rem; left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: var(--dark); color: var(--cream);
+      padding: 1rem 2rem; font-size: 0.8rem; letter-spacing: 0.05em;
+      z-index: 200; transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+      pointer-events: none; white-space: nowrap;
+      font-family: 'Nunito', sans-serif;
+      border-bottom: 2px solid var(--gold);
+      box-shadow: 0 8px 40px rgba(26,18,8,0.2);
+    }
     #toast.show { transform: translateX(-50%) translateY(0); }
-    footer { background: #1e0a3c; color: white; padding: 4rem 1.5rem 2rem; }
-    .footer-inner { max-width: 72rem; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 2.5rem; margin-bottom: 3rem; }
-    .footer-brand h3 { font-size: 1.8rem; letter-spacing: 0.2em; margin-bottom: 1rem; font-weight: 400; }
-    .footer-brand p  { color: #c4b5fd; font-size: 0.875rem; line-height: 1.7; }
-    .footer-links h4 { font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: #a78bfa; margin-bottom: 1rem; }
-    .footer-links ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
-    .footer-links a  { color: #c4b5fd; font-size: 0.875rem; transition: color 0.2s; }
-    .footer-links a:hover { color: white; }
-    .footer-bottom { border-top: 1px solid #3b1f6e; padding-top: 1.5rem; text-align: center; color: #7c5cbf; font-size: 0.8rem; }
+
+    /* ── FOOTER ── */
+    footer { background: #120d06; padding: 5rem 1.5rem 2rem; }
+    .footer-inner { max-width: 80rem; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 4rem; }
+    .footer-brand {}
+    .footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; letter-spacing: 0.35em; color: var(--white); font-weight: 300; margin-bottom: 1rem; display: block; }
+    .footer-brand p { color: rgba(255,255,255,0.4); font-size: 0.82rem; line-height: 1.8; font-weight: 300; max-width: 260px; }
+    .footer-brand .footer-social { display: flex; gap: 1rem; margin-top: 1.5rem; }
+    .footer-social a { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); transition: color 0.3s; }
+    .footer-social a:hover { color: var(--white); }
+    .footer-links h4 { font-size: 0.62rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem; font-family: 'Nunito', sans-serif; }
+    .footer-links ul { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+    .footer-links a { font-size: 0.82rem; color: rgba(255,255,255,0.4); transition: color 0.3s; font-weight: 300; }
+    .footer-links a:hover { color: var(--white); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.06); padding-top: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .footer-bottom p { font-size: 0.72rem; color: rgba(255,255,255,0.25); letter-spacing: 0.05em; }
+    .footer-bottom a { font-size: 0.72rem; color: rgba(255,255,255,0.25); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .footer-inner { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    }
     @media (max-width: 768px) {
-      nav { padding: 0 1rem; }
+      nav { padding: 0 1.5rem; }
       .nav-links { display: none; }
       .hamburger { display: flex; }
-      .featured-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
-      .values-grid { grid-template-columns: repeat(2, 1fr); }
-      .footer-inner { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
-      .about-banner { padding: 3.5rem 1rem; }
+      .story-img-accent { display: none; }
+      .values-grid { grid-template-columns: 1fr 1fr; }
+      .value-item { border-right: none; border-bottom: 1px solid var(--border); }
+      .value-item:last-child { border-bottom: none; }
+      .footer-inner { grid-template-columns: 1fr 1fr; gap: 2rem; }
+      .newsletter-form { flex-direction: column; }
+      .newsletter-form input { border-right: 1px solid rgba(255,255,255,0.15); }
     }
     @media (max-width: 480px) {
-      .nav-right .nav-cuenta { display: none; }
-      .featured-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
-      .values-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
-      .value-card { padding: 1.25rem 0.75rem; }
+      nav { padding: 0 1rem; }
+      .mobile-menu { padding: 1.5rem; }
+      .values-grid { grid-template-columns: 1fr; }
       .footer-inner { grid-template-columns: 1fr; }
+      .hero-btns { flex-direction: column; align-items: center; }
     }
+
+    /* ── ANIMACIONES SCROLL ── */
+    .reveal {
+      opacity: 0; transform: translateY(32px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-left  { opacity:0; transform:translateX(-32px); transition: opacity 0.8s ease, transform 0.8s ease; }
+    .reveal-right { opacity:0; transform:translateX(32px);  transition: opacity 0.8s ease, transform 0.8s ease; }
+    .reveal-left.visible, .reveal-right.visible { opacity:1; transform:translateX(0); }
   </style>
 </head>
 <body>
 
-  <nav>
+  <!-- NAVBAR -->
+  <nav id="navbar">
     <a href="index.html" class="nav-logo">KAORI</a>
     <div class="nav-links">
       <a href="shop.html">Tienda</a>
+      <a href="eventos.html">Eventos & Bodas</a>
       <a href="about.html">Nosotras</a>
       <a href="contact.html">Contacto</a>
     </div>
     <div class="nav-right">
-      <a href="login.html" class="nav-cuenta" id="btnCuenta">👤 Mi cuenta</a>
+      <a href="login.html" class="nav-btn-cuenta" id="btnCuenta">Mi cuenta</a>
       <div class="nav-cart-wrap">
         <button class="nav-cart-btn" onclick="CartWidget.toggle()">
-          🛒 <span class="cart-count-text">0</span>
+          ✦ <span class="cart-count-text">0</span>
         </button>
         <span class="cart-count-badge">0</span>
       </div>
-      <button class="hamburger" onclick="toggleMenu()" aria-label="Abrir menú">
+      <button class="hamburger" onclick="toggleMenu()">
         <span></span><span></span><span></span>
       </button>
     </div>
   </nav>
 
   <div class="mobile-menu" id="mobileMenu">
-    <a href="index.html"   onclick="toggleMenu()">Inicio</a>
     <a href="shop.html"    onclick="toggleMenu()">Tienda</a>
+    <a href="eventos.html" onclick="toggleMenu()">Eventos & Bodas</a>
     <a href="about.html"   onclick="toggleMenu()">Nosotras</a>
     <a href="contact.html" onclick="toggleMenu()">Contacto</a>
     <a href="login.html"   onclick="toggleMenu()" id="mobileLoginBtn">Mi cuenta</a>
@@ -147,80 +513,196 @@
 
   <!-- HERO -->
   <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
     <div class="hero-content">
-      <p class="hero-label">✦ Artesanía con alma ✦</p>
-      <h1>Luz, aroma<br />y <em>energía</em><br />en cada pieza</h1>
-      <p>Productos artesanales creados con intención, amor y los mejores materiales naturales para transformar tu espacio.</p>
+      <span class="hero-eyebrow">Artesanía · Naturaleza · Ritual</span>
+      <h1>El aroma<br />que <em>transforma</em><br />tu espacio</h1>
+      <p class="hero-sub">Velas y productos artesanales creados con intención, amor y los mejores ingredientes naturales para elevar cada momento de tu día.</p>
       <div class="hero-btns">
-        <a href="shop.html"  class="btn-primary">Explorar la tienda</a>
-        <a href="about.html" class="btn-outline">Nuestra historia</a>
+        <a href="shop.html"    class="btn-hero-primary">Explorar la colección</a>
+        <a href="about.html"   class="btn-hero-outline">Nuestra historia</a>
+      </div>
+    </div>
+    <div class="hero-scroll">Descubrir</div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-strip">
+    <div class="marquee-track">
+      <span class="marquee-item">Velas artesanales</span>
+      <span class="marquee-item">Minerales naturales</span>
+      <span class="marquee-item">Joyería consciente</span>
+      <span class="marquee-item">Ambientación premium</span>
+      <span class="marquee-item">Bodas & eventos</span>
+      <span class="marquee-item">Elaborado a mano</span>
+      <span class="marquee-item">100% natural</span>
+      <span class="marquee-item">Energía positiva</span>
+      <!-- Duplicado para loop infinito -->
+      <span class="marquee-item">Velas artesanales</span>
+      <span class="marquee-item">Minerales naturales</span>
+      <span class="marquee-item">Joyería consciente</span>
+      <span class="marquee-item">Ambientación premium</span>
+      <span class="marquee-item">Bodas & eventos</span>
+      <span class="marquee-item">Elaborado a mano</span>
+      <span class="marquee-item">100% natural</span>
+      <span class="marquee-item">Energía positiva</span>
+    </div>
+  </div>
+
+  <!-- CARRUSEL AUTOMÁTICO -->
+  <section class="carousel-section">
+    <div class="carousel-header">
+      <span class="section-eyebrow reveal">Colección completa</span>
+      <h2 class="section-title reveal">Descubre<br /><em>nuestra esencia</em></h2>
+      <div class="divider reveal"></div>
+    </div>
+    <div class="carousel-track-wrap">
+      <div class="carousel-track" id="carouselTrack">
+        <!-- Se rellena con JS -->
       </div>
     </div>
   </section>
 
-  <!-- FEATURED -->
-  <section class="featured">
-    <div class="featured-inner">
-      <p class="section-label">Más queridos</p>
-      <h2 class="section-title">Productos Destacados</h2>
-      <div id="featuredGrid" class="skeleton-grid">
-        <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line short"></div><div class="skeleton-line"></div><div class="skeleton-line btn"></div></div></div>
-        <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line short"></div><div class="skeleton-line"></div><div class="skeleton-line btn"></div></div></div>
-        <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line short"></div><div class="skeleton-line"></div><div class="skeleton-line btn"></div></div></div>
-        <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line short"></div><div class="skeleton-line"></div><div class="skeleton-line btn"></div></div></div>
+  <!-- DESTACADOS -->
+  <section class="section">
+    <div class="section-inner">
+      <span class="section-eyebrow reveal">Los más queridos</span>
+      <h2 class="section-title reveal">Productos<br /><em>Destacados</em></h2>
+      <div class="divider reveal"></div>
+      <p class="section-sub reveal">Cada pieza nace de un proceso artesanal cuidado al detalle, con ingredientes naturales seleccionados por su pureza y energía.</p>
+      <div class="featured-grid" id="featuredGrid">
+        <!-- Skeleton -->
+        <div style="background:var(--cream2);aspect-ratio:1;border:1px solid var(--border);animation:pulse 1.5s infinite"></div>
+        <div style="background:var(--cream2);aspect-ratio:1;border:1px solid var(--border);animation:pulse 1.5s infinite"></div>
+        <div style="background:var(--cream2);aspect-ratio:1;border:1px solid var(--border);animation:pulse 1.5s infinite"></div>
+        <div style="background:var(--cream2);aspect-ratio:1;border:1px solid var(--border);animation:pulse 1.5s infinite"></div>
       </div>
-      <div class="ver-todos">
-        <a href="shop.html">Ver todos los productos →</a>
+      <div style="text-align:center;margin-top:3rem" class="reveal">
+        <a href="shop.html" style="display:inline-block;background:var(--dark);color:var(--cream);padding:1rem 3rem;font-family:'Nunito',sans-serif;font-size:0.72rem;letter-spacing:0.2em;text-transform:uppercase;font-weight:600;transition:background 0.3s" onmouseover="this.style.background='var(--gold)'" onmouseout="this.style.background='var(--dark)'">
+          Ver toda la colección
+        </a>
       </div>
     </div>
   </section>
 
-  <!-- VALUES -->
-  <section class="values">
-    <div class="values-inner">
-      <p class="section-label">Por qué elegirnos</p>
-      <h2 class="section-title">Hecho con intención</h2>
+  <!-- STORY -->
+  <section class="story-section">
+    <div class="story-inner">
+      <div class="story-img reveal-left">
+        <div class="story-img-main">
+          <img src="https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=800&q=80" alt="Kaori artesanía" loading="lazy" />
+        </div>
+        <div class="story-img-accent">
+          <img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=400&q=80" alt="Detalle Kaori" loading="lazy" />
+        </div>
+      </div>
+      <div class="story-text reveal-right">
+        <span class="section-eyebrow">Nuestra historia</span>
+        <h2 class="section-title" style="text-align:left;color:white">El origen de<br /><em>Kaori</em></h2>
+        <div class="divider" style="margin:1.5rem 0"></div>
+        <p>Kaori nació del amor por lo natural, lo hecho a mano y la <em>energía que transmiten los objetos conscientes</em>. Somos una marca familiar que cree en el poder transformador de los aromas y la artesanía.</p>
+        <p>Cada vela que creamos, cada mineral que seleccionamos, lleva una intención especial. Trabajamos con los mejores ingredientes naturales y vertemos en cada pieza todo nuestro cuidado y dedicación.</p>
+        <a href="about.html" class="btn-story">Conocer nuestra historia</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- VALORES -->
+  <section class="values-section">
+    <div class="section-inner">
+      <span class="section-eyebrow reveal">Por qué elegirnos</span>
+      <h2 class="section-title reveal">Una promesa de <em>calidad</em></h2>
+      <div class="divider reveal"></div>
       <div class="values-grid">
-        <div class="value-card">
-          <div class="value-icon ic-purple">🌿</div>
+        <div class="value-item reveal">
+          <span class="value-icon">🌿</span>
           <h3>100% Natural</h3>
-          <p>Ceras vegetales, esencias puras y materiales sostenibles.</p>
+          <p>Ingredientes puros, ceras vegetales y esencias naturales sin compromisos.</p>
         </div>
-        <div class="value-card">
-          <div class="value-icon ic-green">🤲</div>
-          <h3>Artesanal</h3>
-          <p>Cada pieza se crea a mano con dedicación y cariño.</p>
+        <div class="value-item reveal">
+          <span class="value-icon">🤲</span>
+          <h3>Hecho a mano</h3>
+          <p>Cada pieza creada artesanalmente con atención y dedicación al detalle.</p>
         </div>
-        <div class="value-card">
-          <div class="value-icon ic-amber">✨</div>
-          <h3>Con Energía</h3>
-          <p>Elaboramos con intención y vibración positiva.</p>
+        <div class="value-item reveal">
+          <span class="value-icon">✦</span>
+          <h3>Con intención</h3>
+          <p>Elaboramos cada producto con una energía especial y un propósito claro.</p>
         </div>
-        <div class="value-card">
-          <div class="value-icon ic-purple">📦</div>
-          <h3>Envío Seguro</h3>
-          <p>Empaquetado con mimo. Gratis a partir de 50€.</p>
+        <div class="value-item reveal">
+          <span class="value-icon">📦</span>
+          <h3>Envío cuidado</h3>
+          <p>Empaquetado con mimo y entregado con todo el amor que cada pieza merece.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ABOUT BANNER -->
-  <section class="about-banner">
-    <h2>Una marca familiar<br />nacida del amor</h2>
-    <p>Kaori nació de la pasión por la naturaleza y el arte. Creemos en el poder de los objetos conscientes para transformar espacios y elevar el espíritu.</p>
-    <a href="about.html" class="btn-white">Conoce nuestra historia</a>
+  <!-- BANNER EVENTOS -->
+  <section class="eventos-banner">
+    <div class="eventos-bg"></div>
+    <div class="eventos-overlay"></div>
+    <div class="eventos-content reveal">
+      <span class="section-eyebrow">Servicio exclusivo</span>
+      <h2>Bodas &<br />Eventos especiales</h2>
+      <div class="divider" style="background:rgba(212,175,114,0.5);margin:1.5rem auto"></div>
+      <p>Creamos experiencias olfativas únicas para bodas, eventos corporativos y celebraciones especiales. Packs personalizados, detalles para invitados y decoración premium.</p>
+      <a href="eventos.html" class="btn-eventos">Solicitar presupuesto</a>
+    </div>
+  </section>
+
+  <!-- TESTIMONIOS -->
+  <section class="testimonios">
+    <div class="section-inner">
+      <span class="section-eyebrow reveal">Lo que dicen</span>
+      <h2 class="section-title reveal">Clientes que <em>confían</em></h2>
+      <div class="divider reveal"></div>
+      <div class="testimonios-grid">
+        <div class="testimonio-card reveal">
+          <div class="testimonio-stars">★★★★★</div>
+          <p class="testimonio-text">"Las velas de Kaori han transformado mi hogar. El aroma es delicado, dura horas y la presentación es preciosa. Son mi regalo favorito para regalar."</p>
+          <span class="testimonio-author">— María G., Madrid</span>
+        </div>
+        <div class="testimonio-card reveal">
+          <div class="testimonio-stars">★★★★★</div>
+          <p class="testimonio-text">"Pedí el servicio para mi boda y fue perfecto. Los detalles para las mesas y los regalos para invitados eran exactamente lo que buscaba. Elegancia pura."</p>
+          <span class="testimonio-author">— Laura M., Barcelona</span>
+        </div>
+        <div class="testimonio-card reveal">
+          <div class="testimonio-stars">★★★★★</div>
+          <p class="testimonio-text">"Los minerales son preciosos y los recibes con una energía especial. Se nota que hay amor en cada pieza. Compro regularmente y nunca decepciona."</p>
+          <span class="testimonio-author">— Ana R., Valencia</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER -->
+  <section class="newsletter">
+    <span class="section-eyebrow" style="color:var(--gold)">Únete a la comunidad</span>
+    <h2>El ritual comienza<br /><em style="font-style:italic;color:var(--gold2)">en tu bandeja</em></h2>
+    <div class="divider" style="background:rgba(184,150,90,0.3);margin:1.5rem auto"></div>
+    <p>Recibe novedades, rituales y acceso prioritario a nuevas colecciones.</p>
+    <div class="newsletter-form">
+      <input type="email" placeholder="Tu email..." />
+      <button type="button">Suscribirse</button>
+    </div>
   </section>
 
   <!-- FOOTER -->
   <footer>
     <div class="footer-inner">
       <div class="footer-brand">
-        <h3>KAORI</h3>
-        <p>Productos artesanales creados con amor, intención y los mejores materiales naturales.</p>
+        <span class="footer-logo">KAORI</span>
+        <p>Velas artesanales y productos naturales creados con intención, amor y los mejores materiales para transformar tu hogar.</p>
+        <div class="footer-social">
+          <a href="https://instagram.com/kaoribyjessnuan" target="_blank">Instagram</a>
+          <a href="#">Pinterest</a>
+        </div>
       </div>
       <div class="footer-links">
-        <h4>Tienda</h4>
+        <h4>Colección</h4>
         <ul>
           <li><a href="shop.html">Todos los productos</a></li>
           <li><a href="shop.html?category=velas">Velas</a></li>
@@ -229,9 +711,10 @@
         </ul>
       </div>
       <div class="footer-links">
-        <h4>Información</h4>
+        <h4>Servicios</h4>
         <ul>
-          <li><a href="about.html">Sobre Nosotras</a></li>
+          <li><a href="eventos.html">Bodas & Eventos</a></li>
+          <li><a href="about.html">Nosotras</a></li>
           <li><a href="contact.html">Contacto</a></li>
         </ul>
       </div>
@@ -239,120 +722,34 @@
         <h4>Contacto</h4>
         <ul>
           <li><a href="mailto:info@kaori.es">info@kaori.es</a></li>
-          <li><a href="https://instagram.com/kaoribyjessnuan" target="_blank" rel="noreferrer">@kaoribyjessnuan</a></li>
+          <li><a href="https://instagram.com/kaoribyjessnuan" target="_blank">@kaoribyjessnuan</a></li>
+          <li><a href="checkout.html">Finalizar compra</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
       <p>© 2024 Kaori. Todos los derechos reservados.</p>
+      <a href="#">Política de privacidad</a>
     </div>
   </footer>
 
   <div id="toast"></div>
 
+  <style>
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
+  </style>
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js"></script>
   <script src="supabase.js"></script>
   <script src="auth.js"></script>
   <script src="cart.js"></script>
-  <script src="animations.js"></script>
   <script>
-    let productosDestacados = [];
+    // ─── NAVBAR SCROLL ────────────────────────────────────────────────────────
+    window.addEventListener('scroll', () => {
+      document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+    });
 
-    async function cargarDestacados() {
-      try {
-        const { data, error } = await db
-          .from('productos')
-          .select('*')
-          .eq('featured', true)
-          .order('created_at', { ascending: false })
-          .limit(4);
-
-        if (error) throw error;
-        productosDestacados = data || [];
-        renderDestacados();
-      } catch(e) {
-        document.getElementById('featuredGrid').innerHTML = `
-          <div style="grid-column:1/-1;text-align:center;padding:2rem;color:#9ca3af">
-            <p>No se pudieron cargar los productos.</p>
-            <button onclick="cargarDestacados()" style="margin-top:1rem;background:#7c3aed;color:white;border:none;border-radius:9999px;padding:0.6rem 1.5rem;font-family:'Nunito',sans-serif;font-weight:700;cursor:pointer">Reintentar</button>
-          </div>`;
-      }
-    }
-
-    function renderDestacados() {
-      const grid = document.getElementById('featuredGrid');
-      grid.className = 'featured-grid';
-
-      if (!productosDestacados.length) {
-        grid.innerHTML = `
-          <div style="grid-column:1/-1;text-align:center;padding:2rem;color:#9ca3af">
-            <p>No hay productos destacados todavía.</p>
-            <a href="shop.html" style="display:inline-block;margin-top:1rem;color:#7c3aed;font-weight:600">Ver todos los productos →</a>
-          </div>`;
-        return;
-      }
-
-      grid.innerHTML = productosDestacados.map(p => `
-        <div class="feat-card" onclick="window.location.href='product.html?id=${p.id}'">
-          <div class="feat-img">
-            <img src="${p.image}" alt="${p.name}" loading="lazy"
-                 onerror="this.src='https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=400&q=80'" />
-            <span class="feat-badge">✨ Destacado</span>
-          </div>
-          <div class="feat-info">
-            <p class="feat-cat">${p.category}</p>
-            <h4>${p.name}</h4>
-            <p class="feat-price">${Number(p.price).toFixed(2)} €</p>
-            <button class="feat-btn" onclick="event.stopPropagation();añadirAlCarrito('${p.id}', this)">
-              Añadir al carrito
-            </button>
-          </div>
-        </div>`).join('');
-
-      // Animación manual fade-up
-      const cards = grid.querySelectorAll('.feat-card');
-      cards.forEach((card, i) => {
-        card.style.opacity    = '0';
-        card.style.transform  = 'translateY(24px)';
-        card.style.transition = `opacity 0.5s ease ${i * 100}ms, transform 0.5s ease ${i * 100}ms`;
-        setTimeout(() => {
-          card.style.opacity   = '1';
-          card.style.transform = 'translateY(0)';
-        }, 50);
-      });
-    }
-
-    function getCarrito() {
-      try { return JSON.parse(localStorage.getItem('kaori_cart') || '[]'); } catch { return []; }
-    }
-    function guardarCarrito(cart) {
-      localStorage.setItem('kaori_cart', JSON.stringify(cart));
-      if (window.CartWidget) CartWidget.updateBadge();
-    }
-
-    function añadirAlCarrito(id, btn) {
-      const producto = productosDestacados.find(p => p.id === id);
-      if (!producto) return;
-      const cart     = getCarrito();
-      const existing = cart.find(i => i.id === id);
-      if (existing) existing.quantity++;
-      else cart.push({ id: producto.id, name: producto.name, price: Number(producto.price), image: producto.image, quantity: 1 });
-      guardarCarrito(cart);
-      if (window.CartWidget) CartWidget.render();
-      const orig = btn.textContent;
-      btn.textContent = '✓ Añadido';
-      btn.classList.add('added');
-      setTimeout(() => { btn.textContent = orig; btn.classList.remove('added'); }, 1500);
-      mostrarToast(`"${producto.name}" añadido`);
-    }
-
-    function mostrarToast(msg) {
-      const t = document.getElementById('toast');
-      t.textContent = '✓ ' + msg;
-      t.classList.add('show');
-      setTimeout(() => t.classList.remove('show'), 2500);
-    }
-
+    // ─── MENÚ MÓVIL ───────────────────────────────────────────────────────────
     function toggleMenu() {
       document.getElementById('mobileMenu').classList.toggle('open');
     }
@@ -365,6 +762,137 @@
       }
     });
 
+    // ─── SCROLL REVEAL ────────────────────────────────────────────────────────
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 80);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => observer.observe(el));
+
+    // ─── CARRUSEL DESDE SUPABASE ──────────────────────────────────────────────
+    let todosProductos = [];
+
+    async function cargarCarrusel() {
+      try {
+        const { data } = await db.from('productos').select('*').order('created_at', { ascending: false });
+        if (!data?.length) return;
+        todosProductos = data;
+
+        // Duplicar para loop infinito
+        const items = [...data, ...data];
+        const track  = document.getElementById('carouselTrack');
+
+        track.innerHTML = items.map(p => `
+          <div class="carousel-card" onclick="window.location.href='product.html?id=${p.id}'">
+            <div class="carousel-card-img">
+              <img src="${p.image}" alt="${p.name}" loading="lazy"
+                   onerror="this.src='https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=400&q=80'" />
+              <div class="carousel-card-overlay">
+                <button class="carousel-card-quick" onclick="event.stopPropagation();quickAdd('${p.id}',this)">
+                  + Añadir
+                </button>
+              </div>
+            </div>
+            <div class="carousel-card-info">
+              <p class="carousel-card-cat">${p.category}</p>
+              <h3 class="carousel-card-name">${p.name}</h3>
+              <p class="carousel-card-price"><strong>${Number(p.price).toFixed(2)} €</strong></p>
+            </div>
+          </div>`).join('');
+      } catch(e) { console.error('Carrusel:', e); }
+    }
+
+    // ─── DESTACADOS DESDE SUPABASE ────────────────────────────────────────────
+    async function cargarDestacados() {
+      try {
+        const { data } = await db.from('productos').select('*').eq('featured', true).limit(4);
+        if (!data) return;
+
+        const grid = document.getElementById('featuredGrid');
+        if (!data.length) {
+          grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--muted)">
+            No hay productos destacados todavía.
+          </div>`;
+          return;
+        }
+
+        grid.innerHTML = data.map(p => `
+          <div class="feat-card" onclick="window.location.href='product.html?id=${p.id}'">
+            <div class="feat-img">
+              <img src="${p.image}" alt="${p.name}" loading="lazy"
+                   onerror="this.src='https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=400&q=80'" />
+              <span class="feat-badge">Destacado</span>
+            </div>
+            <div class="feat-info">
+              <p class="feat-cat">${p.category}</p>
+              <h3 class="feat-name">${p.name}</h3>
+              <p class="feat-price"><strong>${Number(p.price).toFixed(2)} €</strong></p>
+              <button class="feat-btn" onclick="event.stopPropagation();añadirCarrito('${p.id}',this)">
+                Añadir al carrito
+              </button>
+            </div>
+          </div>`).join('');
+
+        // Animación
+        grid.querySelectorAll('.feat-card').forEach((card, i) => {
+          card.style.opacity   = '0';
+          card.style.transform = 'translateY(24px)';
+          card.style.transition = `opacity 0.6s ease ${i*100}ms, transform 0.6s ease ${i*100}ms`;
+          setTimeout(() => { card.style.opacity='1'; card.style.transform='translateY(0)'; }, 100);
+        });
+
+      } catch(e) { console.error('Destacados:', e); }
+    }
+
+    // ─── CARRITO ──────────────────────────────────────────────────────────────
+    function getCarrito() {
+      try { return JSON.parse(localStorage.getItem('kaori_cart')||'[]'); } catch { return []; }
+    }
+    function guardarCarrito(cart) {
+      localStorage.setItem('kaori_cart', JSON.stringify(cart));
+      if (window.CartWidget) CartWidget.updateBadge();
+    }
+
+    function añadirCarrito(id, btn) {
+      const p = todosProductos.find(x => x.id === id);
+      if (!p) return;
+      const cart = getCarrito();
+      const ex   = cart.find(i => i.id === id);
+      if (ex) ex.quantity++;
+      else cart.push({ id:p.id, name:p.name, price:Number(p.price), image:p.image, quantity:1 });
+      guardarCarrito(cart);
+      if (window.CartWidget) CartWidget.render();
+      const orig = btn.textContent;
+      btn.textContent = '✓ Añadido';
+      btn.classList.add('added');
+      setTimeout(() => { btn.textContent = orig; btn.classList.remove('added'); }, 1500);
+      mostrarToast(`"${p.name}" añadido al carrito`);
+    }
+
+    function quickAdd(id, btn) {
+      const p = todosProductos.find(x => x.id === id);
+      if (!p) return;
+      const cart = getCarrito();
+      const ex   = cart.find(i => i.id === id);
+      if (ex) ex.quantity++;
+      else cart.push({ id:p.id, name:p.name, price:Number(p.price), image:p.image, quantity:1 });
+      guardarCarrito(cart);
+      if (window.CartWidget) CartWidget.render();
+      mostrarToast(`"${p.name}" añadido al carrito`);
+    }
+
+    function mostrarToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = '✦ ' + msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2800);
+    }
+
+    // ─── NAVBAR DINÁMICO ──────────────────────────────────────────────────────
     (async () => {
       try {
         const sesion = await obtenerSesion();
@@ -372,14 +900,16 @@
         const mBtn   = document.getElementById('mobileLoginBtn');
         if (sesion) {
           const rol = await obtenerRol();
-          const href = rol === 'admin' ? 'admin.html' : 'mi-cuenta.html';
-          const txt  = rol === 'admin' ? '👑 Panel Admin' : '👤 Mi cuenta';
-          btn.href  = href; btn.textContent  = txt;
-          mBtn.href = href; mBtn.textContent = txt;
+          const href = rol==='admin' ? 'admin.html' : 'mi-cuenta.html';
+          const txt  = rol==='admin' ? 'Panel Admin' : 'Mi cuenta';
+          if (btn)  { btn.href=href; btn.textContent=txt; }
+          if (mBtn) { mBtn.href=href; mBtn.textContent=txt; }
         }
       } catch(e) {}
     })();
 
+    // ─── INIT ─────────────────────────────────────────────────────────────────
+    cargarCarrusel();
     cargarDestacados();
   </script>
 </body>
