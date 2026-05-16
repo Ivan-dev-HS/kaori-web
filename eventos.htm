@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kaori – Bodas & Eventos</title>
+  <meta name="description" content="Kaori crea experiencias olfativas únicas para bodas, eventos corporativos y celebraciones especiales. Packs personalizados y decoración premium." />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --cream:#faf8f5; --cream2:#f5f0ff; --dark:#2e0854; --dark2:#1e0a3c;
+      --primary:#7c3aed; --primary2:#6d28d9; --light:#f3e8ff; --light2:#ede9fe;
+      --muted:#6b7280; --text:#2d1b69; --white:#ffffff; --border:#e9d5ff; --pink:#ec4899;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:'Nunito',sans-serif;background:var(--cream);color:var(--text);overflow-x:hidden}
+    h1,h2,h3,h4{font-family:'Cormorant Garamond',serif}
+    a{text-decoration:none;color:inherit}
+    img{max-width:100%}
+
+    /* ── NAVBAR ── */
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 3rem;height:80px;background:rgba(250,248,245,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);transition:all 0.4s}
+    nav.scrolled{height:64px;box-shadow:0 4px 30px rgba(124,58,237,0.08)}
+    .nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.7rem;letter-spacing:0.3em;color:var(--dark);font-weight:400;text-transform:uppercase}
+    .nav-links{display:flex;gap:2.5rem}
+    .nav-links a{font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);font-weight:500;transition:color 0.3s;position:relative}
+    .nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--primary);transform:scaleX(0);transition:transform 0.3s;transform-origin:left}
+    .nav-links a:hover{color:var(--primary)}
+    .nav-links a:hover::after{transform:scaleX(1)}
+    .nav-right{display:flex;align-items:center;gap:0.75rem}
+    .nav-btn-cuenta{font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--primary);font-weight:600;padding:0.5rem 1.2rem;border:1px solid var(--border);border-radius:9999px;transition:all 0.3s;background:white;font-family:'Nunito',sans-serif}
+    .nav-btn-cuenta:hover{background:var(--light);border-color:var(--primary)}
+    .nav-cart-wrap{position:relative}
+    .nav-cart-btn{background:var(--primary);color:white;border:none;padding:0.55rem 1.4rem;border-radius:9999px;cursor:pointer;font-family:'Nunito',sans-serif;font-size:0.75rem;font-weight:700;transition:all 0.3s;display:flex;align-items:center;gap:0.5rem}
+    .nav-cart-btn:hover{background:var(--primary2);transform:translateY(-1px)}
+    .cart-count-badge{position:absolute;top:-6px;right:-6px;background:var(--pink);color:white;font-size:0.6rem;font-weight:700;width:18px;height:18px;border-radius:50%;display:none;align-items:center;justify-content:center}
+    .hamburger{display:none;background:none;border:none;cursor:pointer;padding:0.5rem;flex-direction:column;gap:5px}
+    .hamburger span{display:block;width:22px;height:2px;background:var(--dark);border-radius:2px}
+    .mobile-menu{display:none;position:fixed;top:80px;left:0;right:0;background:white;border-bottom:1px solid var(--border);padding:1.5rem 2rem;z-index:99;flex-direction:column;box-shadow:0 8px 30px rgba(124,58,237,0.08)}
+    .mobile-menu a{font-size:0.78rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text);font-weight:600;padding:0.9rem 0;border-bottom:1px solid var(--border);display:block;transition:color 0.2s}
+    .mobile-menu a:hover{color:var(--primary)}
+    .mobile-menu a:last-child{border-bottom:none}
+    .mobile-menu.open{display:flex}
+
+    /* ── HERO ── */
+    .hero{min-height:100vh;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
+    .hero-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1519741497674-611481863552?w=1800&q=80') center/cover no-repeat;transform:scale(1.05);animation:heroZoom 8s ease-out forwards}
+    @keyframes heroZoom{to{transform:scale(1)}}
+    .hero-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(46,8,84,0.85) 0%,rgba(124,58,237,0.5) 60%,rgba(46,8,84,0.75) 100%)}
+    .hero-content{position:relative;text-align:center;padding:2rem 1.5rem;max-width:780px;animation:heroFade 1.2s ease 0.3s both}
+    @keyframes heroFade{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+    .hero-eyebrow{font-size:0.68rem;letter-spacing:0.4em;text-transform:uppercase;color:#c4b5fd;font-family:'Nunito',sans-serif;font-weight:400;margin-bottom:1.5rem;display:block}
+    .hero h1{font-size:clamp(3rem,8vw,6rem);color:white;font-weight:300;line-height:1.05;margin-bottom:1.5rem}
+    .hero h1 em{font-style:italic;color:#e9d5ff}
+    .hero-sub{font-size:clamp(0.85rem,2vw,1rem);color:rgba(255,255,255,0.75);line-height:1.8;max-width:480px;margin:0 auto 2.5rem;font-weight:300}
+    .hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+    .btn-hero-primary{background:white;color:var(--dark);padding:1rem 2.5rem;font-family:'Nunito',sans-serif;font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;font-weight:700;transition:all 0.3s;display:inline-block;border-radius:9999px;border:2px solid white}
+    .btn-hero-primary:hover{background:var(--primary);color:white;border-color:var(--primary);transform:translateY(-2px)}
+    .btn-hero-outline{background:transparent;color:white;padding:1rem 2.5rem;font-family:'Nunito',sans-serif;font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;font-weight:600;transition:all 0.3s;display:inline-block;border-radius:9999px;border:2px solid rgba(255,255,255,0.5)}
+    .btn-hero-outline:hover{border-color:white;background:rgba(255,255,255,0.1);transform:translateY(-2px)}
+    .hero-scroll{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:0.5rem;color:rgba(255,255,255,0.4);font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;font-family:'Nunito',sans-serif;animation:bounce 2.5s infinite}
+    .hero-scroll::after{content:'';display:block;width:1px;height:36px;background:rgba(255,255,255,0.25)}
+    @keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-6px)}}
+
+    /* ── SECCIÓN BASE ── */
+    .section{padding:7rem 1.5rem}
+    .section-inner{max-width:80rem;margin:0 auto}
+    .section-eyebrow{font-size:0.65rem;letter-spacing:0.35em;text-transform:uppercase;color:var(--primary);font-family:'Nunito',sans-serif;font-weight:600;display:block;text-align:center;margin-bottom:1rem}
+    .section-title{font-size:clamp(2rem,5vw,3.5rem);color:var(--dark);font-weight:300;text-align:center;line-height:1.15;margin-bottom:1rem}
+    .section-title em{font-style:italic;color:var(--primary)}
+    .section-sub{font-size:0.9rem;color:var(--muted);text-align:center;max-width:520px;margin:0 auto 4rem;line-height:1.8;font-weight:300}
+    .divider{width:40px;height:1px;background:var(--primary);margin:1.5rem auto;opacity:0.4}
+
+    /* ── SERVICIOS ── */
+    .servicios-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:2rem}
+    .servicio-card{background:white;border:1px solid var(--border);border-radius:1rem;overflow:hidden;transition:all 0.4s}
+    .servicio-card:hover{box-shadow:0 20px 60px rgba(124,58,237,0.14);transform:translateY(-6px);border-color:var(--light2)}
+    .servicio-img{aspect-ratio:4/3;overflow:hidden;background:var(--light)}
+    .servicio-img img{width:100%;height:100%;object-fit:cover;transition:transform 0.6s}
+    .servicio-card:hover .servicio-img img{transform:scale(1.06)}
+    .servicio-body{padding:1.75rem}
+    .servicio-icon{font-size:1.5rem;margin-bottom:1rem;display:block}
+    .servicio-body h3{font-size:1.4rem;color:var(--dark);font-weight:400;margin-bottom:0.75rem}
+    .servicio-body p{font-size:0.875rem;color:var(--muted);line-height:1.7;font-weight:300}
+    .servicio-tag{display:inline-block;margin-top:1.25rem;font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--primary);font-weight:700;font-family:'Nunito',sans-serif;border-bottom:1px solid var(--primary);padding-bottom:2px;transition:letter-spacing 0.3s}
+    .servicio-card:hover .servicio-tag{letter-spacing:0.18em}
+
+    /* ── GALERÍA MOSAICO ── */
+    .galeria-section{background:linear-gradient(135deg,#faf5ff,var(--cream));padding:7rem 1.5rem}
+    .galeria-grid{display:grid;grid-template-columns:repeat(12,1fr);grid-template-rows:auto;gap:1rem;margin-top:3rem}
+    .galeria-item{overflow:hidden;border-radius:0.75rem;background:var(--light)}
+    .galeria-item img{width:100%;height:100%;object-fit:cover;transition:transform 0.6s ease}
+    .galeria-item:hover img{transform:scale(1.05)}
+    .g1{grid-column:1/7;grid-row:1/3;aspect-ratio:4/5}
+    .g2{grid-column:7/10;grid-row:1/2;aspect-ratio:4/3}
+    .g3{grid-column:10/13;grid-row:1/2;aspect-ratio:4/3}
+    .g4{grid-column:7/10;grid-row:2/3;aspect-ratio:4/3}
+    .g5{grid-column:10/13;grid-row:2/3;aspect-ratio:4/3}
+
+    /* ── PROCESO ── */
+    .proceso-section{background:white;padding:7rem 1.5rem}
+    .proceso-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0;margin-top:4rem;border:1px solid var(--border);border-radius:1rem;overflow:hidden}
+    .proceso-item{padding:2.5rem 2rem;text-align:center;border-right:1px solid var(--border);transition:background 0.3s;position:relative}
+    .proceso-item:last-child{border-right:none}
+    .proceso-item:hover{background:var(--cream2)}
+    .proceso-num{font-family:'Cormorant Garamond',serif;font-size:3rem;color:var(--light2);font-weight:300;line-height:1;margin-bottom:1rem;display:block}
+    .proceso-icon{font-size:1.5rem;margin-bottom:1rem;display:block}
+    .proceso-item h3{font-size:1.05rem;color:var(--dark);font-weight:400;margin-bottom:0.6rem}
+    .proceso-item p{font-size:0.82rem;color:var(--muted);line-height:1.7;font-weight:300}
+
+    /* ── PACKS ── */
+    .packs-section{background:var(--cream2);padding:7rem 1.5rem}
+    .packs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem;margin-top:4rem}
+    .pack-card{background:white;border:1px solid var(--border);border-radius:1rem;padding:2.5rem;transition:all 0.4s;position:relative;overflow:hidden}
+    .pack-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--primary),var(--pink));transform:scaleX(0);transition:transform 0.4s;transform-origin:left}
+    .pack-card:hover{box-shadow:0 16px 50px rgba(124,58,237,0.12);transform:translateY(-4px)}
+    .pack-card:hover::before{transform:scaleX(1)}
+    .pack-badge{display:inline-block;background:var(--light);color:var(--primary);font-size:0.65rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;padding:4px 12px;border-radius:9999px;margin-bottom:1.25rem;font-family:'Nunito',sans-serif}
+    .pack-card h3{font-size:1.4rem;color:var(--dark);font-weight:400;margin-bottom:0.75rem}
+    .pack-card .pack-desc{font-size:0.875rem;color:var(--muted);line-height:1.7;margin-bottom:1.5rem;font-weight:300}
+    .pack-features{list-style:none;display:flex;flex-direction:column;gap:0.6rem;margin-bottom:2rem}
+    .pack-features li{font-size:0.82rem;color:var(--text);display:flex;align-items:center;gap:0.6rem}
+    .pack-features li::before{content:'✦';color:var(--primary);font-size:0.7rem;flex-shrink:0}
+    .pack-price{font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--primary);font-weight:300;margin-bottom:1.25rem}
+    .pack-price span{font-size:0.875rem;color:var(--muted);font-family:'Nunito',sans-serif;font-weight:300}
+    .pack-btn{width:100%;background:var(--light);color:var(--primary);border:none;border-radius:9999px;padding:0.85rem;font-family:'Nunito',sans-serif;font-size:0.78rem;font-weight:700;cursor:pointer;transition:all 0.3s;letter-spacing:0.08em}
+    .pack-btn:hover{background:var(--primary);color:white}
+    .pack-card.featured-pack{border-color:var(--primary);background:linear-gradient(135deg,#faf5ff,white)}
+    .pack-card.featured-pack .pack-badge{background:var(--primary);color:white}
+
+    /* ── TESTIMONIOS ── */
+    .testimonios-section{background:white;padding:7rem 1.5rem}
+    .testimonios-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-top:4rem}
+    .testimonio-card{padding:2.25rem;background:var(--cream2);border:1px solid var(--border);border-radius:1rem;transition:all 0.3s}
+    .testimonio-card:hover{box-shadow:0 8px 30px rgba(124,58,237,0.08);transform:translateY(-3px)}
+    .testimonio-stars{color:#f59e0b;font-size:0.9rem;margin-bottom:1.25rem;letter-spacing:0.1em}
+    .testimonio-text{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--dark);line-height:1.7;font-style:italic;margin-bottom:1.5rem;font-weight:300}
+    .testimonio-author{font-size:0.72rem;color:var(--primary);letter-spacing:0.15em;text-transform:uppercase;font-family:'Nunito',sans-serif;font-weight:600}
+    .testimonio-event{font-size:0.68rem;color:var(--muted);margin-top:0.25rem;font-family:'Nunito',sans-serif}
+
+    /* ── FAQ ── */
+    .faq-section{background:var(--cream);padding:7rem 1.5rem}
+    .faq-inner{max-width:56rem;margin:0 auto}
+    .faq-list{margin-top:3rem;display:flex;flex-direction:column;gap:0}
+    .faq-item{border-bottom:1px solid var(--border)}
+    .faq-question{width:100%;display:flex;align-items:center;justify-content:space-between;padding:1.5rem 0;background:none;border:none;cursor:pointer;font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:var(--dark);font-weight:400;text-align:left;transition:color 0.2s;gap:1rem}
+    .faq-question:hover{color:var(--primary)}
+    .faq-icon{flex-shrink:0;width:28px;height:28px;border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;color:var(--primary);transition:all 0.3s;font-family:'Nunito',sans-serif}
+    .faq-item.open .faq-icon{background:var(--primary);color:white;border-color:var(--primary);transform:rotate(45deg)}
+    .faq-answer{max-height:0;overflow:hidden;transition:max-height 0.4s ease,padding 0.4s ease}
+    .faq-answer p{font-size:0.9rem;color:var(--muted);line-height:1.8;font-weight:300;padding-bottom:1.5rem}
+    .faq-item.open .faq-answer{max-height:300px}
+
+    /* ── FORMULARIO ── */
+    .form-section{background:linear-gradient(135deg,var(--dark),#3b0d8a);padding:7rem 1.5rem}
+    .form-inner{max-width:56rem;margin:0 auto}
+    .form-section .section-eyebrow{color:#c4b5fd}
+    .form-section .section-title{color:white}
+    .form-section .section-sub{color:rgba(255,255,255,0.6)}
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
+    .form-group{display:flex;flex-direction:column;gap:0.4rem}
+    .form-group.full{grid-column:1/-1}
+    .form-group label{font-size:0.72rem;font-weight:700;color:rgba(255,255,255,0.7);letter-spacing:0.08em;text-transform:uppercase;font-family:'Nunito',sans-serif}
+    .form-group input,
+    .form-group select,
+    .form-group textarea{font-family:'Nunito',sans-serif;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:0.75rem;padding:0.875rem 1rem;font-size:0.875rem;outline:none;width:100%;transition:all 0.3s;color:white}
+    .form-group input::placeholder,
+    .form-group textarea::placeholder{color:rgba(255,255,255,0.3)}
+    .form-group select option{background:var(--dark);color:white}
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus{border-color:rgba(196,181,253,0.6);background:rgba(255,255,255,0.1);box-shadow:0 0 0 3px rgba(196,181,253,0.1)}
+    .form-group textarea{resize:none}
+    .btn-form{width:100%;background:var(--primary);color:white;border:none;border-radius:9999px;padding:1.1rem;font-family:'Nunito',sans-serif;font-weight:700;font-size:0.9rem;cursor:pointer;transition:all 0.3s;box-shadow:0 4px 20px rgba(124,58,237,0.4);margin-top:0.5rem;letter-spacing:0.05em}
+    .btn-form:hover{background:var(--primary2);transform:translateY(-2px);box-shadow:0 8px 30px rgba(124,58,237,0.5)}
+    .btn-form:disabled{background:rgba(124,58,237,0.4);cursor:not-allowed;transform:none}
+    .form-nota{text-align:center;font-size:0.78rem;color:rgba(255,255,255,0.4);margin-top:1rem;font-weight:300}
+    .form-success{text-align:center;padding:3rem;display:none}
+    .form-success .s-icon{font-size:3rem;margin-bottom:1rem}
+    .form-success h3{color:white;font-size:1.5rem;margin-bottom:0.75rem;font-weight:400}
+    .form-success p{color:rgba(255,255,255,0.6);font-size:0.9rem}
+
+    /* ── REVEAL ── */
+    .reveal{opacity:0;transform:translateY(30px);transition:opacity 0.8s ease,transform 0.8s ease}
+    .reveal.visible{opacity:1;transform:translateY(0)}
+    .reveal-left{opacity:0;transform:translateX(-30px);transition:opacity 0.8s ease,transform 0.8s ease}
+    .reveal-right{opacity:0;transform:translateX(30px);transition:opacity 0.8s ease,transform 0.8s ease}
+    .reveal-left.visible,.reveal-right.visible{opacity:1;transform:translate(0)}
+
+    /* ── TOAST ── */
+    #toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(80px);background:var(--dark);color:white;padding:1rem 2rem;border-radius:9999px;font-size:0.8rem;z-index:200;transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);pointer-events:none;white-space:nowrap;font-family:'Nunito',sans-serif;font-weight:600;box-shadow:0 8px 30px rgba(46,8,84,0.3);border-bottom:2px solid var(--primary)}
+    #toast.show{transform:translateX(-50%) translateY(0)}
+
+    /* ── FOOTER ── */
+    footer{background:var(--dark2);padding:4rem 1.5rem 2rem}
+    .footer-inner{max-width:80rem;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;margin-bottom:2rem}
+    .footer-logo{font-family:'Cormorant Garamond',serif;font-size:1.5rem;letter-spacing:0.3em;color:white;font-weight:300}
+    .footer-links-row{display:flex;gap:2rem;flex-wrap:wrap}
+    .footer-links-row a{font-size:0.78rem;color:rgba(255,255,255,0.4);transition:color 0.3s;font-weight:300}
+    .footer-links-row a:hover{color:white}
+    .footer-bottom{border-top:1px solid rgba(255,255,255,0.06);padding-top:1.5rem;text-align:center;color:rgba(255,255,255,0.2);font-size:0.72rem;max-width:80rem;margin:0 auto}
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:1024px){
+      .galeria-grid{grid-template-columns:repeat(2,1fr);grid-template-rows:auto}
+      .g1,.g2,.g3,.g4,.g5{grid-column:auto;grid-row:auto;aspect-ratio:4/3}
+    }
+    @media(max-width:768px){
+      nav{padding:0 1.5rem}
+      .nav-links{display:none}
+      .hamburger{display:flex}
+      .form-grid{grid-template-columns:1fr}
+      .form-group.full{grid-column:1/-1}
+      .proceso-grid{grid-template-columns:1fr 1fr}
+      .proceso-item{border-bottom:1px solid var(--border)}
+      .proceso-item:nth-child(even){border-right:none}
+    }
+    @media(max-width:480px){
+      nav{padding:0 1rem}
+      .proceso-grid{grid-template-columns:1fr}
+      .proceso-item{border-right:none}
+      .hero-btns{flex-direction:column;align-items:center}
+      .btn-hero-primary,.btn-hero-outline{width:100%;max-width:280px;text-align:center}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav id="navbar">
+    <a href="index.html" class="nav-logo">KAORI</a>
+    <div class="nav-links">
+      <a href="shop.html">Tienda</a>
+      <a href="eventos.html">Eventos & Bodas</a>
+      <a href="about.html">Nosotras</a>
+      <a href="contact.html">Contacto</a>
+    </div>
+    <div class="nav-right">
+      <a href="login.html" class="nav-btn-cuenta" id="btnCuenta">Mi cuenta</a>
+      <div class="nav-cart-wrap">
+        <button class="nav-cart-btn" onclick="CartWidget.toggle()">
+          🛒 <span class="cart-count-text">0</span>
+        </button>
+        <span class="cart-count-badge">0</span>
+      </div>
+      <button class="hamburger" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="shop.html"    onclick="toggleMenu()">Tienda</a>
+    <a href="eventos.html" onclick="toggleMenu()">Eventos & Bodas</a>
+    <a href="about.html"   onclick="toggleMenu()">Nosotras</a>
+    <a href="contact.html" onclick="toggleMenu()">Contacto</a>
+    <a href="login.html"   onclick="toggleMenu()" id="mobileLoginBtn">Mi cuenta</a>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <span class="hero-eyebrow">Servicio exclusivo · Personalizado</span>
+      <h1>Bodas &<br /><em>Eventos</em><br />especiales</h1>
+      <p class="hero-sub">Creamos experiencias olfativas únicas para los momentos más especiales de tu vida. Cada detalle, diseñado con amor y elegancia.</p>
+      <div class="hero-btns">
+        <a href="#formulario" class="btn-hero-primary">Solicitar presupuesto</a>
+        <a href="#servicios"  class="btn-hero-outline">Ver servicios</a>
+      </div>
+    </div>
+    <div class="hero-scroll">Descubrir</div>
+  </section>
+
+  <!-- SERVICIOS -->
+  <section class="section" id="servicios">
+    <div class="section-inner">
+      <span class="section-eyebrow reveal">Lo que ofrecemos</span>
+      <h2 class="section-title reveal">Nuestros <em>Servicios</em></h2>
+      <div class="divider reveal"></div>
+      <p class="section-sub reveal">Cada evento es único. Por eso diseñamos cada propuesta a medida, con productos artesanales exclusivos que dejarán una huella imborrable.</p>
+      <div class="servicios-grid">
+        <div class="servicio-card reveal">
+          <div class="servicio-img">
+            <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=800&q=80" alt="Bodas" loading="lazy" />
+          </div>
+          <div class="servicio-body">
+            <span class="servicio-icon">💍</span>
+            <h3>Bodas</h3>
+            <p>Velas personalizadas, detalles para invitados y decoración aromática para el día más especial. Packaging exclusivo con los nombres de los novios.</p>
+            <span class="servicio-tag">Saber más →</span>
+          </div>
+        </div>
+        <div class="servicio-card reveal">
+          <div class="servicio-img">
+            <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=80" alt="Eventos" loading="lazy" />
+          </div>
+          <div class="servicio-body">
+            <span class="servicio-icon">🏢</span>
+            <h3>Eventos Corporativos</h3>
+            <p>Regalos de empresa con identidad de marca, detalles para conferencias y experiencias sensoriales que refuerzan tu imagen corporativa.</p>
+            <span class="servicio-tag">Saber más →</span>
+          </div>
+        </div>
+        <div class="servicio-card reveal">
+          <div class="servicio-img">
+            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80" alt="Comuniones" loading="lazy" />
+          </div>
+          <div class="servicio-body">
+            <span class="servicio-icon">🎊</span>
+            <h3>Celebraciones</h3>
+            <p>Comuniones, bautizos, cumpleaños y cualquier celebración especial. Packs personalizados que sorprenden y emocionan a tus invitados.</p>
+            <span class="servicio-tag">Saber más →</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALERÍA -->
+  <section class="galeria-section">
+    <div class="section-inner">
+      <span class="section-eyebrow reveal">Nuestra galería</span>
+      <h2 class="section-title reveal">Momentos que <em>perduran</em></h2>
+      <div class="divider reveal"></div>
+      <div class="galeria-grid reveal">
+        <div class="galeria-item g1">
+          <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=800&q=80" alt="Boda" loading="lazy" />
+        </div>
+        <div class="galeria-item g2">
+          <img src="https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=600&q=80" alt="Velas" loading="lazy" />
+        </div>
+        <div class="galeria-item g3">
+          <img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=600&q=80" alt="Incienso" loading="lazy" />
+        </div>
+        <div class="galeria-item g4">
+          <img src="https://images.unsplash.com/photo-1603905000478-e1b9fb17b2eb?w=600&q=80" alt="Vela evento" loading="lazy" />
+        </div>
+        <div class="galeria-item g5">
+          <img src="https://images.unsplash.com/photo-1523438885200-e635ba2c371e?w=600&q=80" alt="Decoración" loading="lazy" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESO -->
+  <section class="proceso-section">
+    <div class="section-inner">
+      <span class="section-eyebrow reveal">Cómo trabajamos</span>
+      <h2 class="section-title reveal">El proceso <em>creativo</em></h2>
+      <div class="divider reveal"></div>
+      <div class="proceso-grid">
+        <div class="proceso-item reveal">
+          <span class="proceso-num">01</span>
+          <span class="proceso-icon">💬</span>
+          <h3>Consulta inicial</h3>
+          <p>Nos cuentas tu visión, el tipo de evento y tus preferencias. Escuchamos cada detalle.</p>
+        </div>
+        <div class="proceso-item reveal">
+          <span class="proceso-num">02</span>
+          <span class="proceso-icon">✏️</span>
+          <h3>Propuesta a medida</h3>
+          <p>Diseñamos una propuesta personalizada con productos, packaging y presupuesto detallado.</p>
+        </div>
+        <div class="proceso-item reveal">
+          <span class="proceso-num">03</span>
+          <span class="proceso-icon">🎨</span>
+          <h3>Creación artesanal</h3>
+          <p>Elaboramos cada pieza a mano con los mejores ingredientes naturales y amor.</p>
+        </div>
+        <div class="proceso-item reveal">
+          <span class="proceso-num">04</span>
+          <span class="proceso-icon">📦</span>
+          <h3>Entrega perfecta</h3>
+          <p>Entregamos con tiempo suficiente, empaquetado con mimo y listos para sorprender.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PACKS -->
+  <section class="packs-section">
+    <div class="section-inner">
+      <span class="section-eyebrow reveal">Nuestros packs</span>
+      <h2 class="section-title reveal">Precios <em>orientativos</em></h2>
+      <div class="divider reveal"></div>
+      <p class="section-sub reveal">Todos los presupuestos son personalizados según las necesidades de tu evento. Estos son nuestros packs base más populares.</p>
+      <div class="packs-grid">
+
+        <div class="pack-card reveal">
+          <span class="pack-badge">Pack Esencial</span>
+          <h3>Detalles Básicos</h3>
+          <p class="pack-desc">Perfecto para eventos íntimos y celebraciones pequeñas con un toque artesanal.</p>
+          <ul class="pack-features">
+            <li>Desde 25 unidades</li>
+            <li>Vela pequeña artesanal personalizada</li>
+            <li>Packaging con tarjeta</li>
+            <li>1 aroma a elegir</li>
+            <li>Entrega en 2 semanas</li>
+          </ul>
+          <p class="pack-price">Desde 4€ <span>/ unidad</span></p>
+          <button class="pack-btn" onclick="document.getElementById('formulario').scrollIntoView({behavior:'smooth'})">
+            Solicitar presupuesto
+          </button>
+        </div>
+
+        <div class="pack-card featured-pack reveal">
+          <span class="pack-badge">✦ Más popular</span>
+          <h3>Pack Boda Premium</h3>
+          <p class="pack-desc">El favorito de nuestras novias. Detalles elegantes que emocionan a cada invitado.</p>
+          <ul class="pack-features">
+            <li>Desde 50 unidades</li>
+            <li>Vela mediana con nombre grabado</li>
+            <li>Caja premium personalizada</li>
+            <li>2 aromas a elegir</li>
+            <li>Etiqueta diseño exclusivo</li>
+            <li>Entrega en 3 semanas</li>
+          </ul>
+          <p class="pack-price">Desde 8€ <span>/ unidad</span></p>
+          <button class="pack-btn" onclick="document.getElementById('formulario').scrollIntoView({behavior:'smooth'})">
+            Solicitar presupuesto
+          </button>
+        </div>
+
+        <div class="pack-card reveal">
+          <span class="pack-badge">Pack Lujo</span>
+          <h3>Experiencia Completa</h3>
+          <p class="pack-desc">Para eventos que merecen lo mejor. Experiencia sensorial completa y memorable.</p>
+          <ul class="pack-features">
+            <li>Sin mínimo de unidades</li>
+            <li>Set de 3 velas artesanales</li>
+            <li>Caja luxury personalizada</li>
+            <li>Aromas ilimitados</li>
+            <li>Diseño packaging exclusivo</li>
+            <li>Entrega express disponible</li>
+          </ul>
+          <p class="pack-price">Desde 18€ <span>/ unidad</span></p>
+          <button class="pack-btn" onclick="document.getElementById('formulario').scrollIntoView({behavior:'smooth'})">
+            Solicitar presupuesto
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIOS -->
+  <section class="testimonios-section">
+    <div class="section-inner">
+      <span class="section-eyebrow reveal">Lo que dicen</span>
+      <h2 class="section-title reveal">Eventos que <em>no olvidamos</em></h2>
+      <div class="divider reveal"></div>
+      <div class="testimonios-grid">
+        <div class="testimonio-card reveal">
+          <div class="testimonio-stars">★★★★★</div>
+          <p class="testimonio-text">"Las velas para mi boda fueron absolutamente perfectas. Cada invitado se emocionó con el detalle y todos me preguntaron dónde las había encargado."</p>
+          <span class="testimonio-author">— Elena & Marco</span>
+          <span class="testimonio-event">Boda en Valencia · Junio 2024</span>
+        </div>
+        <div class="testimonio-card reveal">
+          <div class="testimonio-stars">★★★★★</div>
+          <p class="testimonio-text">"Para el evento corporativo de nuestra empresa encargamos 200 unidades. La calidad superó todas las expectativas y el servicio fue impecable."</p>
+          <span class="testimonio-author">— Sofía L., Directora de RRHH</span>
+          <span class="testimonio-event">Evento Corporativo · Marzo 2024</span>
+        </div>
+        <div class="testimonio-card reveal">
+          <div class="testimonio-stars">★★★★★</div>
+          <p class="testimonio-text">"La comunión de mi hija fue mágica gracias a los detalles de Kaori. El packaging personalizado con su nombre fue el toque perfecto."</p>
+          <span class="testimonio-author">— Carmen R.</span>
+          <span class="testimonio-event">Comunión en Madrid · Mayo 2024</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq-section">
+    <div class="section-inner">
+      <div class="faq-inner">
+        <span class="section-eyebrow reveal">Preguntas frecuentes</span>
+        <h2 class="section-title reveal">Todo lo que <em>necesitas saber</em></h2>
+        <div class="divider reveal"></div>
+        <div class="faq-list reveal">
+
+          <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">
+              ¿Con cuánta antelación debo encargar los detalles?
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Recomendamos contactarnos con al menos 4-6 semanas de antelación para pedidos estándar. Para pedidos grandes o con packaging muy personalizado, 8-10 semanas. Contamos con servicio express para urgencias.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">
+              ¿Cuál es el pedido mínimo para eventos?
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>El pedido mínimo es de 25 unidades para el Pack Esencial. Para el Pack Boda Premium, desde 50 unidades. El Pack Lujo no tiene mínimo. Para pedidos muy pequeños, contáctanos igualmente.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">
+              ¿Puedo elegir los aromas y el packaging?
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Por supuesto. Todos nuestros productos son completamente personalizables: aroma, color de la cera, color del envase, etiqueta con nombre y fecha, tipo de caja y mensajes personalizados.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">
+              ¿Hacéis envíos a toda España?
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Sí, realizamos envíos a toda España y también a Europa. Para pedidos grandes, podemos coordinar la entrega directamente en el lugar del evento.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">
+              ¿Puedo ver muestras antes de confirmar?
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Sí. Ofrecemos el servicio de muestra previa (con coste simbólico que se descuenta del pedido final) para que puedas ver y oler el producto antes de confirmar tu pedido.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FORMULARIO -->
+  <section class="form-section" id="formulario">
+    <div class="form-inner">
+      <span class="section-eyebrow reveal">Cuéntanos tu historia</span>
+      <h2 class="section-title reveal">Solicita tu <em>presupuesto</em></h2>
+      <div class="divider reveal"></div>
+      <p class="section-sub reveal">Rellena el formulario y nos pondremos en contacto contigo en menos de 24 horas para diseñar juntos la propuesta perfecta.</p>
+
+      <div id="formContainer">
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Nombre *</label>
+            <input type="text" id="fNombre" placeholder="Tu nombre" />
+          </div>
+          <div class="form-group">
+            <label>Email *</label>
+            <input type="email" id="fEmail" placeholder="tu@email.com" />
+          </div>
+          <div class="form-group">
+            <label>Teléfono</label>
+            <input type="tel" id="fTelefono" placeholder="600 123 456" />
+          </div>
+          <div class="form-group">
+            <label>Tipo de evento *</label>
+            <select id="fEvento">
+              <option value="">Seleccionar...</option>
+              <option value="boda">💍 Boda</option>
+              <option value="comunion">🎊 Comunión / Bautizo</option>
+              <option value="corporativo">🏢 Evento corporativo</option>
+              <option value="cumpleanos">🎂 Cumpleaños</option>
+              <option value="otro">✦ Otro evento</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Fecha del evento</label>
+            <input type="date" id="fFecha" />
+          </div>
+          <div class="form-group">
+            <label>Número aproximado de invitados *</label>
+            <select id="fInvitados">
+              <option value="">Seleccionar...</option>
+              <option value="menos25">Menos de 25</option>
+              <option value="25-50">25 – 50</option>
+              <option value="50-100">50 – 100</option>
+              <option value="100-200">100 – 200</option>
+              <option value="mas200">Más de 200</option>
+            </select>
+          </div>
+          <div class="form-group full">
+            <label>Cuéntanos tu idea *</label>
+            <textarea id="fMensaje" rows="4" placeholder="Describe tu evento, tus preferencias de aromas, colores, packaging... cuéntanos todo lo que imaginas."></textarea>
+          </div>
+        </div>
+        <button class="btn-form" id="btnForm" onclick="enviarFormulario()">
+          Enviar solicitud de presupuesto ✦
+        </button>
+        <p class="form-nota">Respondemos en menos de 24 horas · Sin compromiso</p>
+      </div>
+
+      <div class="form-success" id="formSuccess">
+        <div class="s-icon">💜</div>
+        <h3>¡Solicitud recibida!</h3>
+        <p>Gracias por contactarnos. Nos pondremos en contacto contigo en menos de 24 horas para diseñar juntos la propuesta perfecta para tu evento.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <span class="footer-logo">KAORI</span>
+      <div class="footer-links-row">
+        <a href="index.html">Inicio</a>
+        <a href="shop.html">Tienda</a>
+        <a href="about.html">Nosotras</a>
+        <a href="contact.html">Contacto</a>
+        <a href="mailto:info@kaori.es">info@kaori.es</a>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2024 Kaori. Todos los derechos reservados.</div>
+  </footer>
+
+  <div id="toast"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js"></script>
+  <script src="supabase.js"></script>
+  <script src="auth.js"></script>
+  <script src="cart.js"></script>
+  <script>
+    // ── NAVBAR ────────────────────────────────────────────────────────────────
+    window.addEventListener('scroll', () => {
+      document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    function toggleMenu() {
+      document.getElementById('mobileMenu').classList.toggle('open');
+    }
+    document.addEventListener('click', e => {
+      const menu = document.getElementById('mobileMenu');
+      const ham  = document.querySelector('.hamburger');
+      if (menu && ham && menu.classList.contains('open') &&
+          !menu.contains(e.target) && !ham.contains(e.target)) {
+        menu.classList.remove('open');
+      }
+    });
+
+    // ── SCROLL REVEAL ─────────────────────────────────────────────────────────
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 80);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => observer.observe(el));
+
+    // ── FAQ ───────────────────────────────────────────────────────────────────
+    function toggleFaq(btn) {
+      const item = btn.closest('.faq-item');
+      const open = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!open) item.classList.add('open');
+    }
+
+    // ── FORMULARIO ────────────────────────────────────────────────────────────
+    async function enviarFormulario() {
+      const nombre    = document.getElementById('fNombre').value.trim();
+      const email     = document.getElementById('fEmail').value.trim();
+      const evento    = document.getElementById('fEvento').value;
+      const invitados = document.getElementById('fInvitados').value;
+      const mensaje   = document.getElementById('fMensaje').value.trim();
+
+      if (!nombre || !email || !evento || !invitados || !mensaje) {
+        mostrarToast('Por favor rellena todos los campos obligatorios');
+        return;
+      }
+
+      const btn = document.getElementById('btnForm');
+      btn.disabled    = true;
+      btn.textContent = '⏳ Enviando...';
+
+      // Simulación de envío (aquí puedes conectar un servicio de email)
+      await new Promise(r => setTimeout(r, 1500));
+
+      document.getElementById('formContainer').style.display = 'none';
+      document.getElementById('formSuccess').style.display   = 'block';
+      mostrarToast('✦ Solicitud enviada correctamente');
+    }
+
+    // ── TOAST ─────────────────────────────────────────────────────────────────
+    function mostrarToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 3000);
+    }
+
+    // ── NAVBAR DINÁMICO ───────────────────────────────────────────────────────
+    (async () => {
+      try {
+        const sesion = await obtenerSesion();
+        const btn    = document.getElementById('btnCuenta');
+        const mBtn   = document.getElementById('mobileLoginBtn');
+        if (sesion) {
+          const rol = await obtenerRol();
+          const href = rol==='admin' ? 'admin.html' : 'mi-cuenta.html';
+          const txt  = rol==='admin' ? '👑 Panel Admin' : 'Mi cuenta';
+          if(btn) { btn.href=href; btn.textContent=txt; }
+          if(mBtn){ mBtn.href=href; mBtn.textContent=txt; }
+        }
+      } catch(e) {}
+    })();
+  </script>
+</body>
+</html>
