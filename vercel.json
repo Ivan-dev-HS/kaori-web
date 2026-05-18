@@ -1,15 +1,7 @@
 {
-  "version": 2,
-  "outputDirectory": ".",
   "functions": {
     "api/create-checkout.js": {
       "runtime": "nodejs18.x"
     }
-  },
-  "rewrites": [
-    {
-      "source": "/api/create-checkout",
-      "destination": "/api/create-checkout.js"
-    }
-  ]
+  }
 }
