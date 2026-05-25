@@ -53,7 +53,7 @@
     .btn-back{display:inline-block;background:var(--primary);color:white;padding:0.9rem 2rem;border-radius:9999px;font-weight:700;font-family:'Nunito',sans-serif;font-size:0.82rem}
 
     /* ── PAGE ── */
-    .product-page{max-width:80rem;margin:0 auto;padding:6rem 1.5rem 5rem}
+  .product-page{max-width:80rem;margin:0 auto;padding:7.5rem 1.5rem 5rem}
 
     /* ── BREADCRUMB ── */
     .breadcrumb{display:flex;align-items:center;gap:0.5rem;font-size:0.75rem;color:var(--muted);margin-bottom:2.5rem;flex-wrap:wrap}
@@ -180,6 +180,13 @@
       .aromas-grid{gap:0.5rem}
       .aroma-btn{padding:0.45rem 0.75rem;font-size:0.72rem}
     }
+    /* ── GALERÍA MINIATURAS ── */
+.gallery-thumbs{display:flex;gap:0.6rem;margin-top:0.75rem;flex-wrap:wrap}
+.thumb-btn{width:72px;height:72px;border-radius:0.6rem;overflow:hidden;cursor:pointer;border:2px solid var(--border);transition:all 0.2s;flex-shrink:0;background:var(--light)}
+.thumb-btn img{width:100%;height:100%;object-fit:cover}
+.thumb-btn.active{border-color:var(--primary);box-shadow:0 0 0 3px rgba(124,58,237,0.2)}
+.thumb-btn:hover{border-color:var(--primary);transform:translateY(-2px)}
+
   </style>
 </head>
 <body>
@@ -240,13 +247,15 @@
 
     <div class="product-grid">
 
-      <!-- IMAGEN -->
+            <!-- IMAGEN -->
       <div>
         <div class="main-img">
           <img id="mainImg" src="" alt="Producto" />
           <div class="img-badges" id="imgBadges"></div>
         </div>
+        <div class="gallery-thumbs" id="galleryThumbs"></div>
       </div>
+
 
       <!-- INFO -->
       <div class="product-info">
@@ -408,6 +417,24 @@
       img.onerror = () => {
         img.src = 'https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=800&q=80';
       };
+      // Galería de miniaturas
+const todasImagenes = Array.isArray(p.images) && p.images.length
+  ? p.images
+  : [p.image];
+
+const thumbsContainer = document.getElementById('galleryThumbs');
+
+if (todasImagenes.length > 1) {
+  thumbsContainer.innerHTML = todasImagenes.map((url, i) => `
+    <button class="thumb-btn ${i === 0 ? 'active' : ''}"
+            onclick="cambiarImagenPrincipal('${url}', this)">
+      <img src="${url}" alt="Foto ${i+1}"
+           onerror="this.src='https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=100&q=60'" />
+    </button>`).join('');
+} else {
+  thumbsContainer.innerHTML = '';
+}
+
 
       // Badges
       let badges = '';
@@ -631,6 +658,18 @@
         }
       } catch(e) {}
     })();
+function cambiarImagenPrincipal(url, btn) {
+  const img = document.getElementById('mainImg');
+  img.classList.add('changing');
+  setTimeout(() => {
+    img.src = url;
+    img.classList.remove('changing');
+  }, 200);
+
+  // Activar miniatura seleccionada
+  document.querySelectorAll('.thumb-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
 
     // ── INIT ──────────────────────────────────────────────────────────────────
     cargarProducto();
