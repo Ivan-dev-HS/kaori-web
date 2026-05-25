@@ -53,27 +53,35 @@
     .btn-back{display:inline-block;background:var(--primary);color:white;padding:0.9rem 2rem;border-radius:9999px;font-weight:700;font-family:'Nunito',sans-serif;font-size:0.82rem}
 
     /* ── PAGE ── */
-  .product-page{max-width:80rem;margin:0 auto;padding:7.5rem 1.5rem 5rem}
+    .product-page{max-width:80rem;margin:0 auto;padding:7.5rem 1.5rem 5rem}
 
     /* ── BREADCRUMB ── */
-    .breadcrumb{display:flex;align-items:center;gap:0.5rem;font-size:0.75rem;color:var(--muted);margin-bottom:2.5rem;flex-wrap:wrap}
+    .breadcrumb{display:flex;align-items:center;gap:0.5rem;font-size:0.75rem;color:var(--muted);margin-bottom:2rem;flex-wrap:wrap;background:white;border:1px solid var(--border);border-radius:9999px;padding:0.5rem 1rem;width:fit-content}
     .breadcrumb a{color:var(--primary);transition:color 0.2s}
     .breadcrumb a:hover{color:var(--dark)}
     .breadcrumb span{color:var(--border)}
 
     /* ── GRID ── */
-    .product-grid{display:grid;gap:4rem;margin-bottom:5rem}
+    .product-grid{display:grid;gap:3.5rem;margin-bottom:5rem}
     @media(min-width:1024px){.product-grid{grid-template-columns:1fr 1fr;gap:5rem}}
 
     /* ── GALERÍA ── */
+    .gallery-wrap{display:flex;flex-direction:column;gap:0.75rem}
     .main-img{aspect-ratio:1;overflow:hidden;border-radius:1rem;background:var(--light);position:relative;box-shadow:0 8px 40px rgba(124,58,237,0.1)}
-    .main-img img{width:100%;height:100%;object-fit:cover;transition:transform 0.6s ease, opacity 0.35s ease}
+    .main-img img{width:100%;height:100%;object-fit:cover;transition:transform 0.6s ease, opacity 0.3s ease}
     .main-img img.changing{opacity:0;transform:scale(0.97)}
     .img-badges{position:absolute;top:1rem;left:1rem;display:flex;flex-direction:column;gap:0.4rem;z-index:2}
     .img-badge{font-size:0.62rem;font-weight:700;padding:4px 10px;border-radius:9999px;font-family:'Nunito',sans-serif}
     .badge-disc{background:var(--pink);color:white}
     .badge-feat{background:var(--primary);color:white}
     .badge-aroma{background:rgba(46,8,84,0.85);color:#e9d5ff;backdrop-filter:blur(4px)}
+
+    /* ── MINIATURAS ── */
+    .gallery-thumbs{display:flex;gap:0.6rem;flex-wrap:wrap}
+    .thumb-btn{width:72px;height:72px;border-radius:0.6rem;overflow:hidden;cursor:pointer;border:2px solid var(--border);transition:all 0.2s;flex-shrink:0;background:var(--light);padding:0}
+    .thumb-btn img{width:100%;height:100%;object-fit:cover;display:block}
+    .thumb-btn.active{border-color:var(--primary);box-shadow:0 0 0 3px rgba(124,58,237,0.2)}
+    .thumb-btn:hover{border-color:var(--primary);transform:translateY(-2px)}
 
     /* ── INFO ── */
     .product-info{display:flex;flex-direction:column;gap:1.75rem}
@@ -97,7 +105,6 @@
     .aroma-btn:hover{border-color:var(--primary);color:var(--primary);transform:translateY(-1px);box-shadow:0 4px 12px rgba(124,58,237,0.15)}
     .aroma-btn.selected{border-color:var(--primary);background:var(--light);color:var(--primary);box-shadow:0 4px 12px rgba(124,58,237,0.2)}
     .aroma-btn:disabled{opacity:0.45;cursor:not-allowed;text-decoration:line-through}
-    .aroma-btn:disabled:hover{border-color:var(--border);color:var(--text);transform:none;box-shadow:none}
     .aroma-img{width:28px;height:28px;border-radius:50%;object-fit:cover;border:1px solid var(--border);flex-shrink:0}
     .aroma-stock-badge{position:absolute;top:-6px;right:-6px;background:var(--pink);color:white;font-size:0.55rem;font-weight:700;padding:2px 5px;border-radius:9999px;white-space:nowrap}
     .stock-info{font-size:0.75rem;font-family:'Nunito',sans-serif;display:flex;align-items:center;gap:0.4rem;margin-top:0.25rem}
@@ -172,21 +179,16 @@
       nav{padding:0 1.5rem}
       .nav-links{display:none}
       .hamburger{display:flex}
-      .product-page{padding:5rem 1rem 4rem}
+      .product-page{padding:6rem 1rem 4rem}
+      .thumb-btn{width:60px;height:60px}
     }
     @media(max-width:480px){
       nav{padding:0 1rem}
       .related-grid{grid-template-columns:repeat(2,1fr);gap:1rem}
       .aromas-grid{gap:0.5rem}
       .aroma-btn{padding:0.45rem 0.75rem;font-size:0.72rem}
+      .thumb-btn{width:54px;height:54px}
     }
-    /* ── GALERÍA MINIATURAS ── */
-.gallery-thumbs{display:flex;gap:0.6rem;margin-top:0.75rem;flex-wrap:wrap}
-.thumb-btn{width:72px;height:72px;border-radius:0.6rem;overflow:hidden;cursor:pointer;border:2px solid var(--border);transition:all 0.2s;flex-shrink:0;background:var(--light)}
-.thumb-btn img{width:100%;height:100%;object-fit:cover}
-.thumb-btn.active{border-color:var(--primary);box-shadow:0 0 0 3px rgba(124,58,237,0.2)}
-.thumb-btn:hover{border-color:var(--primary);transform:translateY(-2px)}
-
   </style>
 </head>
 <body>
@@ -234,7 +236,7 @@
     <a href="shop.html" class="btn-back">← Volver a la tienda</a>
   </div>
 
-  <!-- PRODUCTO — visible por defecto, oculto hasta que cargue -->
+  <!-- PRODUCTO -->
   <div class="product-page" id="productPage" style="display:none">
 
     <nav class="breadcrumb">
@@ -247,15 +249,15 @@
 
     <div class="product-grid">
 
-            <!-- IMAGEN -->
-      <div>
+      <!-- GALERÍA -->
+      <div class="gallery-wrap">
         <div class="main-img">
           <img id="mainImg" src="" alt="Producto" />
           <div class="img-badges" id="imgBadges"></div>
         </div>
+        <!-- MINIATURAS -->
         <div class="gallery-thumbs" id="galleryThumbs"></div>
       </div>
-
 
       <!-- INFO -->
       <div class="product-info">
@@ -269,9 +271,9 @@
         <!-- PRECIO -->
         <div class="price-block">
           <span class="price-main"          id="prodPrice">—</span>
-          <span class="price-compare"       id="prodCompare"     style="display:none">—</span>
-          <span class="price-save"          id="prodSaving"      style="display:none">—</span>
-          <span class="price-variante-note" id="varianteNote"    style="display:none">Precio de este aroma</span>
+          <span class="price-compare"       id="prodCompare"  style="display:none">—</span>
+          <span class="price-save"          id="prodSaving"   style="display:none">—</span>
+          <span class="price-variante-note" id="varianteNote" style="display:none">Precio de este aroma</span>
         </div>
 
         <!-- SELECTOR AROMAS -->
@@ -358,20 +360,20 @@
   <script src="auth.js"></script>
   <script src="cart.js"></script>
   <script>
-    let productoActual = null;
-    let varianteActual = null;
-    let cantidad       = 1;
+    var productoActual = null;
+    var varianteActual = null;
+    var cantidad       = 1;
 
     // ── NAVBAR ────────────────────────────────────────────────────────────────
-    window.addEventListener('scroll', () => {
+    window.addEventListener('scroll', function() {
       document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
     });
     function toggleMenu() {
       document.getElementById('mobileMenu').classList.toggle('open');
     }
-    document.addEventListener('click', e => {
-      const menu = document.getElementById('mobileMenu');
-      const ham  = document.querySelector('.hamburger');
+    document.addEventListener('click', function(e) {
+      var menu = document.getElementById('mobileMenu');
+      var ham  = document.querySelector('.hamburger');
       if (menu && ham && menu.classList.contains('open') &&
           !menu.contains(e.target) && !ham.contains(e.target)) {
         menu.classList.remove('open');
@@ -380,17 +382,15 @@
 
     // ── CARGAR PRODUCTO ───────────────────────────────────────────────────────
     async function cargarProducto() {
-      const id = new URLSearchParams(window.location.search).get('id');
+      var id = new URLSearchParams(window.location.search).get('id');
       if (!id) { mostrarNotFound(); return; }
       try {
-        const { data, error } = await db
-          .from('productos').select('*').eq('id', id).single();
+        var result = await db.from('productos').select('*').eq('id', id).single();
         document.getElementById('loadingScreen').style.display = 'none';
-        if (error || !data) { mostrarNotFound(); return; }
-        productoActual = data;
-        renderProducto(data);
-        cargarRelacionados(data);
-        // Mostrar página sin animación problemática
+        if (result.error || !result.data) { mostrarNotFound(); return; }
+        productoActual = result.data;
+        renderProducto(result.data);
+        cargarRelacionados(result.data);
         document.getElementById('productPage').style.display = '';
       } catch(e) {
         console.error('Error:', e);
@@ -403,7 +403,7 @@
       document.getElementById('notFound').style.display      = 'flex';
     }
 
-    // ── RENDER ────────────────────────────────────────────────────────────────
+    // ── RENDER PRODUCTO ───────────────────────────────────────────────────────
     function renderProducto(p) {
       document.title = 'Kaori – ' + p.name;
       document.getElementById('breadcrumbNombre').textContent = p.name;
@@ -411,35 +411,18 @@
       document.getElementById('prodName').textContent         = p.name;
       if (p.description) document.getElementById('prodDesc').textContent = p.description;
 
-      const img = document.getElementById('mainImg');
-      img.src   = p.image;
-      img.alt   = p.name;
-      img.onerror = () => {
+      // Imagen principal
+      var img = document.getElementById('mainImg');
+      img.src = p.image;
+      img.alt = p.name;
+      img.onerror = function() {
         img.src = 'https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=800&q=80';
       };
-      // Galería de miniaturas
-const todasImagenes = Array.isArray(p.images) && p.images.length
-  ? p.images
-  : [p.image];
-
-const thumbsContainer = document.getElementById('galleryThumbs');
-
-if (todasImagenes.length > 1) {
-  thumbsContainer.innerHTML = todasImagenes.map((url, i) => `
-    <button class="thumb-btn ${i === 0 ? 'active' : ''}"
-            onclick="cambiarImagenPrincipal('${url}', this)">
-      <img src="${url}" alt="Foto ${i+1}"
-           onerror="this.src='https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=100&q=60'" />
-    </button>`).join('');
-} else {
-  thumbsContainer.innerHTML = '';
-}
-
 
       // Badges
-      let badges = '';
+      var badges = '';
       if (p.compare_price && p.compare_price > p.price) {
-        const disc = Math.round((1 - p.price / p.compare_price) * 100);
+        var disc = Math.round((1 - p.price / p.compare_price) * 100);
         badges += '<span class="img-badge badge-disc">-' + disc + '%</span>';
         document.getElementById('prodCompare').textContent   = Number(p.compare_price).toFixed(2) + ' €';
         document.getElementById('prodCompare').style.display = '';
@@ -452,33 +435,67 @@ if (todasImagenes.length > 1) {
       // Precio base
       document.getElementById('prodPrice').textContent = Number(p.price).toFixed(2) + ' €';
 
-      // Variantes
-      const variantes = Array.isArray(p.variantes) ? p.variantes.filter(v => v && v.nombre) : [];
-      if (variantes.length) {
-        renderAromas(variantes);
+      // ── GALERÍA DE MINIATURAS ─────────────────────────────────────────────
+      var todasImagenes = [];
+      if (Array.isArray(p.images) && p.images.length > 0) {
+        todasImagenes = p.images;
+      } else {
+        todasImagenes = [p.image];
       }
+
+      var thumbsContainer = document.getElementById('galleryThumbs');
+      if (todasImagenes.length > 1) {
+        thumbsContainer.innerHTML = todasImagenes.map(function(url, i) {
+          return '<button class="thumb-btn ' + (i === 0 ? 'active' : '') + '" ' +
+            'onclick="cambiarImagenPrincipal(\'' + url + '\', this)">' +
+            '<img src="' + url + '" alt="Foto ' + (i+1) + '" ' +
+            'onerror="this.src=\'https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=100&q=60\'" />' +
+            '</button>';
+        }).join('');
+      } else {
+        thumbsContainer.innerHTML = '';
+      }
+
+      // ── VARIANTES / AROMAS ────────────────────────────────────────────────
+      var variantes = Array.isArray(p.variantes)
+        ? p.variantes.filter(function(v) { return v && v.nombre; })
+        : [];
+      if (variantes.length) renderAromas(variantes);
+    }
+
+    // ── CAMBIAR IMAGEN PRINCIPAL ──────────────────────────────────────────────
+    function cambiarImagenPrincipal(url, btn) {
+      var img = document.getElementById('mainImg');
+      img.classList.add('changing');
+      setTimeout(function() {
+        img.src = url;
+        img.onerror = function() {
+          img.src = 'https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=800&q=80';
+        };
+        img.classList.remove('changing');
+      }, 200);
+      document.querySelectorAll('.thumb-btn').forEach(function(b) {
+        b.classList.remove('active');
+      });
+      btn.classList.add('active');
     }
 
     // ── AROMAS ────────────────────────────────────────────────────────────────
     function renderAromas(variantes) {
       document.getElementById('aromasBlock').style.display = '';
-      const grid = document.getElementById('aromasGrid');
-
+      var grid = document.getElementById('aromasGrid');
       grid.innerHTML = variantes.map(function(v, i) {
-        var sinStock = v.stock !== null && v.stock !== undefined && v.stock !== '' && Number(v.stock) <= 0;
+        var sinStock  = v.stock !== null && v.stock !== undefined && v.stock !== '' && Number(v.stock) <= 0;
         var pocoStock = v.stock && Number(v.stock) > 0 && Number(v.stock) <= 5;
-        return '<button class="aroma-btn' + (sinStock ? ' ' : '') + '"' +
-          ' id="aroma-btn-' + i + '"' +
-          ' onclick="' + (sinStock ? '' : 'seleccionarAroma(' + i + ')') + '"' +
-          (sinStock ? ' disabled' : '') + '>' +
+        return '<button class="aroma-btn" id="aroma-btn-' + i + '"' +
+          (sinStock ? ' disabled' : ' onclick="seleccionarAroma(' + i + ')"') + '>' +
           (v.imagen ? '<img class="aroma-img" src="' + v.imagen + '" alt="' + v.nombre + '" onerror="this.style.display=\'none\'" />' : '🌸') +
           v.nombre +
-          (sinStock ? '<span class="aroma-stock-badge">Agotado</span>' : '') +
+          (sinStock  ? '<span class="aroma-stock-badge">Agotado</span>' : '') +
           (pocoStock ? '<span class="aroma-stock-badge" style="background:#d97706">' + v.stock + ' uds</span>' : '') +
           '</button>';
       }).join('');
 
-      // Seleccionar primero disponible
       var primerDisponible = variantes.findIndex(function(v) {
         return !v.stock || v.stock === '' || Number(v.stock) > 0;
       });
@@ -489,7 +506,6 @@ if (todasImagenes.length > 1) {
       var variantes = productoActual.variantes.filter(function(v) { return v && v.nombre; });
       var variante  = variantes[idx];
       if (!variante) return;
-
       varianteActual = variante;
 
       // Botones
@@ -498,31 +514,29 @@ if (todasImagenes.length > 1) {
       });
 
       // Imagen con transición
-      var img = document.getElementById('mainImg');
+      var img     = document.getElementById('mainImg');
       var nuevaImg = variante.imagen || productoActual.image;
-
       img.classList.add('changing');
       setTimeout(function() {
         img.src = nuevaImg;
         img.onerror = function() { img.src = productoActual.image; };
         img.classList.remove('changing');
-
-        // Badge aroma en imagen
-        var badges = document.getElementById('imgBadges');
-        var existente = badges.querySelector('.badge-aroma');
+        // Badge aroma
+        var badgesEl   = document.getElementById('imgBadges');
+        var existente  = badgesEl.querySelector('.badge-aroma');
         if (existente) existente.remove();
         if (variante.imagen) {
-          badges.insertAdjacentHTML('beforeend',
+          badgesEl.insertAdjacentHTML('beforeend',
             '<span class="img-badge badge-aroma">🌸 ' + variante.nombre + '</span>');
         }
       }, 220);
 
       // Precio
       var precio = variante.precio ? Number(variante.precio) : Number(productoActual.price);
-      document.getElementById('prodPrice').textContent     = precio.toFixed(2) + ' €';
+      document.getElementById('prodPrice').textContent      = precio.toFixed(2) + ' €';
       document.getElementById('varianteNote').style.display = variante.precio ? '' : 'none';
 
-      // Label seleccionado
+      // Label
       var label = document.getElementById('aromaSeleccionadoLabel');
       label.textContent   = variante.nombre;
       label.style.display = '';
@@ -532,15 +546,16 @@ if (todasImagenes.length > 1) {
       if (!variante.stock && variante.stock !== 0) {
         stockEl.innerHTML = '';
       } else if (Number(variante.stock) <= 0) {
-        stockEl.innerHTML = '<span class="stock-out">✕ Sin stock disponible</span>';
+        stockEl.innerHTML = '<span class="stock-out">✕ Sin stock</span>';
       } else if (Number(variante.stock) <= 5) {
         stockEl.innerHTML = '<span class="stock-low">⚠️ Solo quedan ' + variante.stock + ' unidades</span>';
       } else {
-        stockEl.innerHTML = '<span class="stock-ok">✓ ' + variante.stock + ' unidades disponibles</span>';
+        stockEl.innerHTML = '<span class="stock-ok">✓ ' + variante.stock + ' disponibles</span>';
       }
 
       // Botón carrito
-      var sinStock = variante.stock !== null && variante.stock !== undefined && variante.stock !== '' && Number(variante.stock) <= 0;
+      var sinStock = variante.stock !== null && variante.stock !== undefined &&
+                     variante.stock !== '' && Number(variante.stock) <= 0;
       var btnCart  = document.getElementById('btnCart');
       btnCart.disabled    = sinStock;
       btnCart.textContent = sinStock ? 'Sin stock' : '🛒 Añadir al carrito';
@@ -557,7 +572,6 @@ if (todasImagenes.length > 1) {
     // ── CARRITO ───────────────────────────────────────────────────────────────
     function añadirAlCarrito() {
       if (!productoActual) return;
-
       var variantes = Array.isArray(productoActual.variantes)
         ? productoActual.variantes.filter(function(v) { return v && v.nombre; })
         : [];
@@ -569,21 +583,17 @@ if (todasImagenes.length > 1) {
       }
 
       var precio = varianteActual && varianteActual.precio
-        ? Number(varianteActual.precio)
-        : Number(productoActual.price);
-
+        ? Number(varianteActual.precio) : Number(productoActual.price);
       var nombre = varianteActual
         ? productoActual.name + ' – ' + varianteActual.nombre
         : productoActual.name;
-
       var imagen = (varianteActual && varianteActual.imagen) || productoActual.image;
-
-      var cart = getCarrito();
-      var key  = varianteActual
+      var key    = varianteActual
         ? productoActual.id + '-' + varianteActual.nombre
         : productoActual.id;
 
-      var ex = cart.find(function(i) { return i.id === key; });
+      var cart = getCarrito();
+      var ex   = cart.find(function(i) { return i.id === key; });
       if (ex) {
         ex.quantity += cantidad;
       } else {
@@ -600,7 +610,6 @@ if (todasImagenes.length > 1) {
         btn.innerHTML = '🛒 Añadir al carrito';
         btn.classList.remove('added');
       }, 2000);
-
       mostrarToast(nombre + ' añadido');
     }
 
@@ -621,19 +630,20 @@ if (todasImagenes.length > 1) {
     // ── RELACIONADOS ──────────────────────────────────────────────────────────
     async function cargarRelacionados(actual) {
       try {
-        var result = await db.from('productos').select('id,name,price,image,category')
+        var r1 = await db.from('productos').select('id,name,price,image,category')
           .eq('active', true).eq('category', actual.category).neq('id', actual.id).limit(4);
-        var data = result.data;
+        var data = r1.data;
         if (!data || !data.length) {
-          var otros = await db.from('productos').select('id,name,price,image,category')
+          var r2 = await db.from('productos').select('id,name,price,image,category')
             .eq('active', true).neq('id', actual.id).limit(4);
-          data = otros.data || [];
+          data = r2.data || [];
         }
         var grid = document.getElementById('relatedGrid');
         if (!data.length) { grid.style.display = 'none'; return; }
         grid.innerHTML = data.map(function(p) {
           return '<div class="related-card" onclick="window.location.href=\'product.html?id=' + p.id + '\'">' +
-            '<div class="related-img"><img src="' + p.image + '" alt="' + p.name + '" loading="lazy" onerror="this.src=\'https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=400&q=80\'" /></div>' +
+            '<div class="related-img"><img src="' + p.image + '" alt="' + p.name + '" loading="lazy" ' +
+            'onerror="this.src=\'https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=400&q=80\'" /></div>' +
             '<div class="related-info">' +
             '<p class="related-cat">' + p.category + '</p>' +
             '<h4 class="related-name">' + p.name + '</h4>' +
@@ -658,18 +668,6 @@ if (todasImagenes.length > 1) {
         }
       } catch(e) {}
     })();
-function cambiarImagenPrincipal(url, btn) {
-  const img = document.getElementById('mainImg');
-  img.classList.add('changing');
-  setTimeout(() => {
-    img.src = url;
-    img.classList.remove('changing');
-  }, 200);
-
-  // Activar miniatura seleccionada
-  document.querySelectorAll('.thumb-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-}
 
     // ── INIT ──────────────────────────────────────────────────────────────────
     cargarProducto();
