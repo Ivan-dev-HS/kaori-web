@@ -4,237 +4,513 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kaori – Mi Cuenta</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Nunito', sans-serif; background: #faf8f5; color: #2d1b69; }
-    h1,h2,h3 { font-family: 'Cormorant Garamond', serif; }
-
-    /* ── LOADING ── */
-    .loading { min-height: 100vh; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 1rem; }
-    .loading p { color: #6b7280; font-size: 0.9rem; font-family: 'Nunito', sans-serif; }
-    .spinner { width: 36px; height: 36px; border: 3px solid #f3e8ff; border-top-color: #7c3aed; border-radius: 50%; animation: spin 0.8s linear infinite; }
-    @keyframes spin { to { transform: rotate(360deg); } }
+    :root {
+      --cream:#faf8f5; --cream2:#f5f0ff; --dark:#2e0854; --dark2:#1e0a3c;
+      --primary:#7c3aed; --primary2:#6d28d9; --light:#f3e8ff; --light2:#ede9fe;
+      --muted:#6b7280; --text:#2d1b69; --white:#ffffff; --border:#e9d5ff; --pink:#ec4899;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:'Nunito',sans-serif;background:var(--cream);color:var(--text)}
+    h1,h2,h3,h4{font-family:'Cormorant Garamond',serif}
+    a{text-decoration:none;color:inherit}
 
     /* ── NAVBAR ── */
-    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; height: 72px; background: rgba(250,248,245,0.97); backdrop-filter: blur(8px); border-bottom: 1px solid #f3e8ff; }
-    .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; letter-spacing: 0.2em; color: #4c1d95; text-decoration: none; }
-    .nav-links { display: flex; gap: 2rem; align-items: center; }
-    .nav-links a { font-size: 0.85rem; color: #4b5563; text-decoration: none; transition: color 0.2s; }
-    .nav-links a:hover { color: #7c3aed; }
-    .btn-logout { background: none; border: 1px solid #e9d5ff; border-radius: 9999px; padding: 0.4rem 1rem; font-family: 'Nunito', sans-serif; font-size: 0.82rem; color: #7c3aed; cursor: pointer; transition: all 0.2s; }
-    .btn-logout:hover { background: #f3e8ff; }
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 3rem;height:80px;background:rgba(250,248,245,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);transition:all 0.4s}
+    nav.scrolled{height:64px;box-shadow:0 4px 30px rgba(124,58,237,0.08)}
+    .nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.7rem;letter-spacing:0.3em;color:var(--dark);font-weight:400;text-transform:uppercase}
+    .nav-links{display:flex;gap:2.5rem}
+    .nav-links a{font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);font-weight:500;transition:color 0.3s;position:relative}
+    .nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--primary);transform:scaleX(0);transition:transform 0.3s;transform-origin:left}
+    .nav-links a:hover{color:var(--primary)}
+    .nav-links a:hover::after{transform:scaleX(1)}
+    .nav-right{display:flex;align-items:center;gap:0.75rem}
+    .nav-cart-wrap{position:relative}
+    .nav-cart-btn{background:var(--primary);color:white;border:none;padding:0.55rem 1.4rem;border-radius:9999px;cursor:pointer;font-family:'Nunito',sans-serif;font-size:0.75rem;font-weight:700;transition:all 0.3s;display:flex;align-items:center;gap:0.5rem}
+    .nav-cart-btn:hover{background:var(--primary2)}
+    .cart-count-badge{position:absolute;top:-6px;right:-6px;background:var(--pink);color:white;font-size:0.6rem;font-weight:700;width:18px;height:18px;border-radius:50%;display:none;align-items:center;justify-content:center}
+    .hamburger{display:none;background:none;border:none;cursor:pointer;padding:0.5rem;flex-direction:column;gap:5px}
+    .hamburger span{display:block;width:22px;height:2px;background:var(--dark);border-radius:2px}
+    .mobile-menu{display:none;position:fixed;top:80px;left:0;right:0;background:white;border-bottom:1px solid var(--border);padding:1.5rem 2rem;z-index:99;flex-direction:column;box-shadow:0 8px 30px rgba(124,58,237,0.08)}
+    .mobile-menu a{font-size:0.78rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text);font-weight:600;padding:0.9rem 0;border-bottom:1px solid var(--border);display:block}
+    .mobile-menu a:last-child{border-bottom:none}
+    .mobile-menu.open{display:flex}
 
-    /* ── HAMBURGER ── */
-    .hamburger { display: none; background: none; border: none; cursor: pointer; padding: 0.5rem; flex-direction: column; gap: 5px; }
-    .hamburger span { display: block; width: 24px; height: 2px; background: #4c1d95; border-radius: 2px; }
-    .mobile-menu { display: none; position: fixed; top: 72px; left: 0; right: 0; background: white; border-bottom: 1px solid #f3e8ff; padding: 1rem 2rem; z-index: 49; flex-direction: column; gap: 0.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
-    .mobile-menu a, .mobile-menu button { font-size: 0.95rem; color: #4c1d95; font-weight: 600; padding: 0.6rem 0; border-bottom: 1px solid #faf5ff; display: block; background: none; border-left: none; border-right: none; border-top: none; text-align: left; font-family: 'Nunito', sans-serif; cursor: pointer; width: 100%; }
-    .mobile-menu a:last-child, .mobile-menu button:last-child { border-bottom: none; }
-    .mobile-menu.open { display: flex; }
+    /* ── LOADING ── */
+    .loading{min-height:100vh;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1rem}
+    .spinner{width:40px;height:40px;border:2px solid var(--light);border-top-color:var(--primary);border-radius:50%;animation:spin 0.8s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
 
-    /* ── PÁGINA ── */
-    .page { max-width: 72rem; margin: 0 auto; padding: 6rem 1.5rem 4rem; }
+    /* ── PAGE ── */
+    .cuenta-page{max-width:72rem;margin:0 auto;padding:100px 1.5rem 4rem}
 
-    /* ── BIENVENIDA ── */
-    .welcome { background: linear-gradient(135deg, #4c1d95, #7c3aed); border-radius: 1.5rem; padding: 2.5rem; margin-bottom: 2rem; color: white; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
-    .welcome h1 { font-size: clamp(1.3rem, 4vw, 2rem); font-weight: 300; margin-bottom: 0.4rem; }
-    .welcome p  { color: rgba(255,255,255,0.8); font-size: 0.9rem; }
-    .avatar { width: 64px; height: 64px; border-radius: 50%; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; flex-shrink: 0; }
+    /* ── HEADER ── */
+    .cuenta-header{background:linear-gradient(135deg,var(--dark),#3b0d8a);border-radius:1.25rem;padding:2.5rem;margin-bottom:2rem;display:flex;align-items:center;gap:2rem;flex-wrap:wrap}
+    .avatar-circle{width:72px;height:72px;border-radius:50%;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;font-size:2rem;flex-shrink:0;border:2px solid rgba(255,255,255,0.2)}
+    .header-info h1{font-size:clamp(1.5rem,3vw,2rem);color:white;font-weight:300;margin-bottom:0.3rem}
+    .header-info p{font-size:0.82rem;color:rgba(255,255,255,0.6);font-weight:300}
+    .header-badge{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:#c4b5fd;font-size:0.68rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;padding:4px 12px;border-radius:9999px;font-family:'Nunito',sans-serif;margin-top:0.5rem;display:inline-block}
+    .header-actions{margin-left:auto;display:flex;gap:0.75rem;flex-wrap:wrap}
+    .btn-logout-header{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.2);border-radius:9999px;padding:0.5rem 1.2rem;font-family:'Nunito',sans-serif;font-size:0.75rem;color:rgba(255,255,255,0.7);cursor:pointer;transition:all 0.2s}
+    .btn-logout-header:hover{background:rgba(239,68,68,0.2);border-color:rgba(239,68,68,0.4);color:#fca5a5}
 
-    /* ── GRID ── */
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin-bottom: 1.5rem; }
+    /* ── STATS ── */
+    .cuenta-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem;margin-bottom:2rem}
+    .cstat{background:white;border:1px solid var(--border);border-radius:1rem;padding:1.25rem;text-align:center;transition:all 0.2s}
+    .cstat:hover{box-shadow:0 4px 20px rgba(124,58,237,0.1);transform:translateY(-2px)}
+    .cstat-val{font-size:1.8rem;font-weight:800;color:var(--primary);display:block;line-height:1}
+    .cstat-label{font-size:0.72rem;color:var(--muted);margin-top:0.3rem;display:block}
 
-    /* ── TARJETAS ── */
-    .card { background: white; border-radius: 1rem; padding: 1.5rem; border: 1px solid #f3e8ff; }
-    .card h2 { font-size: 1.1rem; color: #4c1d95; margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.5rem; font-weight: 400; }
+    /* ── TABS ── */
+    .tabs{display:flex;border-bottom:2px solid var(--border);margin-bottom:2rem;overflow-x:auto;scrollbar-width:none}
+    .tabs::-webkit-scrollbar{display:none}
+    .tab{padding:0.875rem 1.5rem;font-family:'Nunito',sans-serif;font-size:0.78rem;font-weight:600;color:var(--muted);border:none;background:none;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap;transition:all 0.2s;letter-spacing:0.05em;text-transform:uppercase}
+    .tab.active{color:var(--primary);border-bottom-color:var(--primary)}
+    .tab-content{display:none}
+    .tab-content.active{display:block;animation:fadeIn 0.25s ease}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 
-    /* ── INFO ── */
-    .info-row { display: flex; justify-content: space-between; align-items: center; padding: 0.6rem 0; border-bottom: 1px solid #faf5ff; font-size: 0.875rem; }
-    .info-row:last-child { border-bottom: none; }
-    .info-label { color: #6b7280; }
-    .info-value { color: #2d1b69; font-weight: 600; text-align: right; word-break: break-all; }
-    .badge-role { background: #f3e8ff; color: #7c3aed; font-size: 0.72rem; font-weight: 700; padding: 3px 10px; border-radius: 9999px; }
-
-    /* ── ACCESOS ── */
-    .quick-links { display: flex; flex-direction: column; gap: 0.5rem; }
-    .quick-link { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem; border-radius: 0.75rem; text-decoration: none; color: #4c1d95; font-size: 0.875rem; font-weight: 600; transition: background 0.15s; border: 1px solid #f3e8ff; }
-    .quick-link:hover { background: #faf5ff; }
-    .ql-icon { font-size: 1rem; width: 32px; height: 32px; background: #f3e8ff; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    /* ── CARD ── */
+    .card{background:white;border:1px solid var(--border);border-radius:1rem;overflow:hidden;margin-bottom:1.5rem}
+    .card-head{padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;background:linear-gradient(to right,#faf5ff,white)}
+    .card-head h2{font-size:1.1rem;color:var(--dark);font-weight:400}
 
     /* ── PEDIDOS ── */
-    .empty-orders { text-align: center; padding: 2rem 0; }
-    .empty-orders .icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
-    .empty-orders p { color: #6b7280; font-size: 0.875rem; margin-bottom: 1.2rem; }
-    .btn-shop { display: inline-block; background: #7c3aed; color: white; border-radius: 9999px; padding: 0.7rem 1.5rem; font-weight: 700; font-size: 0.875rem; text-decoration: none; transition: background 0.2s; font-family: 'Nunito', sans-serif; }
-    .btn-shop:hover { background: #6d28d9; }
+    .pedido-row{border-bottom:1px solid var(--border);transition:background 0.15s}
+    .pedido-row:last-child{border-bottom:none}
+    .pedido-summary{display:flex;align-items:center;gap:1rem;padding:1rem 1.5rem;cursor:pointer;flex-wrap:wrap}
+    .pedido-summary:hover{background:#faf5ff}
+    .pedido-id{font-size:0.72rem;color:var(--muted);font-family:monospace;background:var(--cream2);padding:2px 8px;border-radius:4px;flex-shrink:0}
+    .pedido-info{flex:1;min-width:0}
+    .pedido-info strong{display:block;font-size:0.82rem;color:var(--dark)}
+    .pedido-info span{font-size:0.72rem;color:var(--muted)}
+    .pedido-status{padding:0.25rem 0.75rem;border-radius:9999px;font-size:0.72rem;font-weight:700;white-space:nowrap}
+    .s-pending{background:#fef3c7;color:#92400e}
+    .s-processing{background:#dbeafe;color:#1e40af}
+    .s-shipped{background:var(--light);color:var(--primary2)}
+    .s-delivered{background:#dcfce7;color:#166534}
+    .s-cancelled{background:#fee2e2;color:#991b1b}
+    .pedido-total{text-align:right;flex-shrink:0}
+    .pedido-total strong{display:block;color:var(--dark);font-size:0.875rem}
+    .pedido-total span{font-size:0.72rem;color:var(--muted)}
+    .pedido-detail{display:none;padding:1rem 1.5rem;background:#faf8f5;border-top:1px solid var(--border)}
+    .pedido-items{background:white;border-radius:0.75rem;border:1px solid var(--border);overflow:hidden;margin-bottom:1rem}
+    .pitem{display:flex;align-items:center;gap:0.75rem;padding:0.75rem 1rem;border-bottom:1px solid #f9f5ff}
+    .pitem:last-child{border-bottom:none}
+    .pitem-img{width:44px;height:44px;object-fit:cover;border-radius:0.4rem;flex-shrink:0;background:var(--light)}
+    .pitem-info{flex:1}
+    .pitem-info strong{font-size:0.78rem;color:var(--dark);display:block}
+    .pitem-info span{font-size:0.68rem;color:var(--muted)}
+    .pitem-price{font-size:0.82rem;font-weight:700;color:var(--dark)}
+    .pedido-totales{display:flex;flex-direction:column;gap:0.3rem}
+    .ptotal-row{display:flex;justify-content:space-between;font-size:0.82rem;color:var(--muted)}
+    .ptotal-final{display:flex;justify-content:space-between;font-weight:700;font-size:0.95rem;color:var(--dark);border-top:1px solid var(--border);padding-top:0.5rem;margin-top:0.25rem}
+    .empty-pedidos{text-align:center;padding:3rem;color:var(--muted)}
+    .empty-pedidos .icon{font-size:2.5rem;opacity:0.3;margin-bottom:0.75rem}
+    .empty-pedidos p{font-size:0.9rem;margin-bottom:1rem}
+    .empty-pedidos a{display:inline-block;background:var(--primary);color:white;padding:0.7rem 1.5rem;border-radius:9999px;font-weight:700;font-size:0.82rem;font-family:'Nunito',sans-serif}
+
+    /* ── DATOS PERSONALES ── */
+    .datos-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;padding:1.5rem}
+    .dato-group{display:flex;flex-direction:column;gap:4px}
+    .dato-group.full{grid-column:1/-1}
+    .dato-group label{font-size:0.72rem;font-weight:700;color:var(--dark);text-transform:uppercase;letter-spacing:0.06em}
+    .dato-group input{font-family:'Nunito',sans-serif;border:1.5px solid var(--border);border-radius:0.75rem;padding:0.65rem 0.9rem;font-size:0.875rem;outline:none;width:100%;transition:all 0.2s;color:var(--dark);background:white}
+    .dato-group input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(124,58,237,0.08)}
+    .dato-group input:disabled{background:var(--cream2);color:var(--muted);cursor:not-allowed}
+    .datos-actions{padding:0 1.5rem 1.5rem;display:flex;gap:0.75rem}
+    .btn-primary{background:linear-gradient(135deg,var(--primary),var(--primary2));color:white;border:none;border-radius:9999px;padding:0.65rem 1.5rem;font-family:'Nunito',sans-serif;font-weight:700;font-size:0.82rem;cursor:pointer;transition:all 0.2s;box-shadow:0 2px 8px rgba(124,58,237,0.2)}
+    .btn-primary:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(124,58,237,0.3)}
+    .btn-secondary{background:white;color:var(--primary);border:1px solid var(--border);border-radius:9999px;padding:0.65rem 1.5rem;font-family:'Nunito',sans-serif;font-weight:600;font-size:0.82rem;cursor:pointer;transition:all 0.15s}
+    .btn-secondary:hover{background:var(--light)}
+
+    /* ── CAMBIAR CONTRASEÑA ── */
+    .pass-form{padding:1.5rem;display:flex;flex-direction:column;gap:1rem;max-width:400px}
+    .msg-ok{background:#dcfce7;color:#166534;border:1px solid #bbf7d0;border-radius:0.75rem;padding:0.75rem 1rem;font-size:0.82rem;display:none}
+    .msg-err{background:#fee2e2;color:#991b1b;border:1px solid #fecaca;border-radius:0.75rem;padding:0.75rem 1rem;font-size:0.82rem;display:none}
+
+    /* ── TOAST ── */
+    #toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(80px);background:var(--dark);color:white;padding:1rem 2rem;border-radius:9999px;font-size:0.8rem;z-index:200;transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);pointer-events:none;white-space:nowrap;font-family:'Nunito',sans-serif;font-weight:600;box-shadow:0 8px 30px rgba(46,8,84,0.3);border-bottom:2px solid var(--primary)}
+    #toast.show{transform:translateX(-50%) translateY(0)}
+
+    /* ── FOOTER ── */
+    footer{background:var(--dark2);padding:3rem 1.5rem 2rem}
+    .footer-inner{max-width:80rem;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;margin-bottom:1.5rem}
+    .footer-logo{font-family:'Cormorant Garamond',serif;font-size:1.5rem;letter-spacing:0.3em;color:white;font-weight:300}
+    .footer-links-row{display:flex;gap:2rem;flex-wrap:wrap}
+    .footer-links-row a{font-size:0.78rem;color:rgba(255,255,255,0.4);transition:color 0.3s;font-weight:300}
+    .footer-links-row a:hover{color:white}
+    .footer-bottom{border-top:1px solid rgba(255,255,255,0.06);padding-top:1.5rem;text-align:center;color:rgba(255,255,255,0.2);font-size:0.72rem;max-width:80rem;margin:0 auto}
 
     /* ── RESPONSIVE ── */
-    @media (max-width: 768px) {
-      nav { padding: 0 1rem; }
-      .nav-links { display: none; }
-      .hamburger { display: flex; }
-      .page { padding: 5rem 1rem 3rem; }
-      .welcome { padding: 1.5rem; }
+    @media(max-width:768px){
+      nav{padding:0 1rem;height:64px}
+      .nav-links{display:none}
+      .hamburger{display:flex}
+      .mobile-menu{top:64px}
+      .cuenta-page{padding:80px 1rem 3rem}
+      .cuenta-header{padding:1.5rem;gap:1rem}
+      .avatar-circle{width:56px;height:56px;font-size:1.5rem}
+      .header-actions{margin-left:0;width:100%}
+      .datos-grid{grid-template-columns:1fr}
+      .dato-group.full{grid-column:1/-1}
+      .cuenta-stats{grid-template-columns:repeat(2,1fr)}
+      .tab{padding:0.75rem 1rem;font-size:0.72rem}
     }
-    @media (max-width: 480px) {
-      .grid { grid-template-columns: 1fr; }
-      .avatar { display: none; }
+    @media(max-width:480px){
+      nav{padding:0 0.875rem}
+      .cuenta-stats{grid-template-columns:1fr 1fr}
+      .pedido-summary{gap:0.5rem}
     }
   </style>
 </head>
 <body>
 
+  <nav id="navbar">
+    <a href="index.html" class="nav-logo">KAORI</a>
+    <div class="nav-links">
+      <a href="shop.html">Tienda</a>
+      <a href="eventos.html">Eventos & Bodas</a>
+      <a href="about.html">Nosotras</a>
+      <a href="contact.html">Contacto</a>
+    </div>
+    <div class="nav-right">
+      <div class="nav-cart-wrap">
+        <button class="nav-cart-btn" onclick="CartWidget.toggle()">
+          🛒 <span class="cart-count-text">0</span>
+        </button>
+        <span class="cart-count-badge">0</span>
+      </div>
+      <button class="hamburger" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="shop.html"    onclick="toggleMenu()">Tienda</a>
+    <a href="eventos.html" onclick="toggleMenu()">Eventos & Bodas</a>
+    <a href="about.html"   onclick="toggleMenu()">Nosotras</a>
+    <a href="contact.html" onclick="toggleMenu()">Contacto</a>
+  </div>
+
   <!-- LOADING -->
   <div class="loading" id="loadingScreen">
     <div class="spinner"></div>
-    <p>Cargando tu cuenta...</p>
   </div>
 
   <!-- CONTENIDO -->
-  <div id="mainContent" style="display:none">
+  <div class="cuenta-page" id="cuentaPage" style="display:none">
 
-    <nav>
-      <a href="index.html" class="nav-logo">KAORI</a>
-      <div class="nav-links">
+    <!-- HEADER -->
+    <div class="cuenta-header">
+      <div class="avatar-circle" id="avatarCircle">👤</div>
+      <div class="header-info">
+        <h1 id="headerNombre">Mi cuenta</h1>
+        <p id="headerEmail">—</p>
+        <span class="header-badge">✦ Cliente Kaori</span>
+      </div>
+      <div class="header-actions">
+        <button class="btn-logout-header" onclick="hacerLogout()">🚪 Cerrar sesión</button>
+      </div>
+    </div>
+
+    <!-- STATS -->
+    <div class="cuenta-stats">
+      <div class="cstat">
+        <span class="cstat-val" id="statPedidos">0</span>
+        <span class="cstat-label">Pedidos realizados</span>
+      </div>
+      <div class="cstat">
+        <span class="cstat-val" id="statGastado">0€</span>
+        <span class="cstat-label">Total gastado</span>
+      </div>
+      <div class="cstat">
+        <span class="cstat-val" id="statPendientes">0</span>
+        <span class="cstat-label">En proceso</span>
+      </div>
+      <div class="cstat">
+        <span class="cstat-val" id="statEntregados">0</span>
+        <span class="cstat-label">Entregados</span>
+      </div>
+    </div>
+
+    <!-- TABS -->
+    <div class="tabs">
+      <button class="tab active" onclick="switchTab('pedidos',this)">📦 Mis pedidos</button>
+      <button class="tab" onclick="switchTab('datos',this)">👤 Mis datos</button>
+      <button class="tab" onclick="switchTab('password',this)">🔒 Contraseña</button>
+    </div>
+
+    <!-- TAB PEDIDOS -->
+    <div class="tab-content active" id="tab-pedidos">
+      <div class="card">
+        <div class="card-head">
+          <h2>Historial de pedidos</h2>
+          <button class="btn-secondary" style="font-size:0.75rem;padding:0.4rem 1rem" onclick="cargarPedidos()">↻ Actualizar</button>
+        </div>
+        <div id="pedidosList">
+          <div style="text-align:center;padding:2rem;color:var(--muted)">
+            <div class="spinner" style="margin:0 auto 1rem"></div>
+            <p>Cargando pedidos...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB DATOS -->
+    <div class="tab-content" id="tab-datos">
+      <div class="card">
+        <div class="card-head"><h2>Datos personales</h2></div>
+        <div class="datos-grid">
+          <div class="dato-group">
+            <label>Email</label>
+            <input type="email" id="datoEmail" disabled />
+          </div>
+          <div class="dato-group">
+            <label>Nombre</label>
+            <input type="text" id="datoNombre" placeholder="Tu nombre" />
+          </div>
+          <div class="dato-group">
+            <label>Teléfono</label>
+            <input type="tel" id="datoTelefono" placeholder="600 123 456" />
+          </div>
+          <div class="dato-group">
+            <label>Ciudad</label>
+            <input type="text" id="datoCiudad" placeholder="Madrid" />
+          </div>
+          <div class="dato-group full">
+            <label>Dirección</label>
+            <input type="text" id="datoDireccion" placeholder="Calle, número, piso..." />
+          </div>
+        </div>
+        <div class="datos-actions">
+          <button class="btn-primary" onclick="guardarDatos()">Guardar cambios</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB PASSWORD -->
+    <div class="tab-content" id="tab-password">
+      <div class="card">
+        <div class="card-head"><h2>Cambiar contraseña</h2></div>
+        <div class="pass-form">
+          <p style="font-size:0.82rem;color:var(--muted);font-weight:300">
+            Te enviaremos un email con un enlace para cambiar tu contraseña de forma segura.
+          </p>
+          <button class="btn-primary" onclick="enviarResetPassword()" id="btnReset">
+            Enviar enlace de cambio
+          </button>
+          <div class="msg-ok" id="msgOk">✓ Email enviado. Revisa tu bandeja de entrada.</div>
+          <div class="msg-err" id="msgErr">Error al enviar el email. Inténtalo de nuevo.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <span class="footer-logo">KAORI</span>
+      <div class="footer-links-row">
+        <a href="index.html">Inicio</a>
         <a href="shop.html">Tienda</a>
         <a href="about.html">Nosotras</a>
         <a href="contact.html">Contacto</a>
-        <button class="btn-logout" onclick="hacerLogout()">Cerrar sesión</button>
       </div>
-      <button class="hamburger" onclick="toggleMenu()" aria-label="Menú">
-        <span></span><span></span><span></span>
-      </button>
-    </nav>
-
-    <div class="mobile-menu" id="mobileMenu">
-      <a href="shop.html"    onclick="toggleMenu()">Tienda</a>
-      <a href="about.html"   onclick="toggleMenu()">Nosotras</a>
-      <a href="contact.html" onclick="toggleMenu()">Contacto</a>
-      <button onclick="hacerLogout()">Cerrar sesión</button>
     </div>
+    <div class="footer-bottom">© 2024 Kaori. Todos los derechos reservados.</div>
+  </footer>
 
-    <div class="page">
+  <div id="toast"></div>
 
-      <!-- BIENVENIDA -->
-      <div class="welcome">
-        <div>
-          <h1>Hola, <span id="userNombre">—</span> 👋</h1>
-          <p id="userEmailSub">—</p>
-        </div>
-        <div class="avatar">🌸</div>
-      </div>
-
-      <div class="grid">
-
-        <!-- INFO DE CUENTA -->
-        <div class="card">
-          <h2>👤 Mi cuenta</h2>
-          <div class="info-row">
-            <span class="info-label">Email</span>
-            <span class="info-value" id="infoEmail">—</span>
-          </div>
-          <div class="info-row">
-            <span class="info-label">Rol</span>
-            <span class="badge-role" id="infoRol">cliente</span>
-          </div>
-          <div class="info-row">
-            <span class="info-label">Miembro desde</span>
-            <span class="info-value" id="infoFecha">—</span>
-          </div>
-        </div>
-
-        <!-- ACCESOS RÁPIDOS -->
-        <div class="card">
-          <h2>⚡ Accesos rápidos</h2>
-          <div class="quick-links">
-            <a href="shop.html" class="quick-link">
-              <span class="ql-icon">🛍️</span> Explorar la tienda
-            </a>
-            <a href="shop.html" class="quick-link">
-              <span class="ql-icon">🕯️</span> Velas artesanales
-            </a>
-            <a href="shop.html" class="quick-link">
-              <span class="ql-icon">💎</span> Minerales y cristales
-            </a>
-            <a href="about.html" class="quick-link">
-              <span class="ql-icon">🌿</span> Sobre Kaori
-            </a>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- PEDIDOS -->
-      <div class="card">
-        <h2>📦 Mis pedidos</h2>
-        <div class="empty-orders">
-          <div class="icon">🛒</div>
-          <p>Todavía no tienes pedidos.<br />¡Explora nuestra tienda y encuentra algo especial!</p>
-          <a href="shop.html" class="btn-shop">Ir a la tienda →</a>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js"></script>
   <script src="supabase.js"></script>
   <script src="auth.js"></script>
+  <script src="cart.js"></script>
   <script>
-    // ── Proteger página ───────────────────────────────────────────────────────
-    (async () => {
-      const rol = await protegerPagina(null);
-      if (!rol) return;
+    const STATUS = {
+      pending:    { label:'Pendiente',  cls:'s-pending',    icon:'⏳' },
+      processing: { label:'En proceso', cls:'s-processing',  icon:'🔄' },
+      shipped:    { label:'Enviado',    cls:'s-shipped',     icon:'🚚' },
+      delivered:  { label:'Entregado',  cls:'s-delivered',   icon:'✅' },
+      cancelled:  { label:'Cancelado',  cls:'s-cancelled',   icon:'❌' },
+    };
 
-      // Si es admin mandarlo a su panel
-      if (rol === 'admin') {
-        window.location.href = 'admin.html';
-        return;
-      }
+    let usuarioActual = null;
 
-      // Cargar datos del usuario
-      const usuario = await obtenerUsuario();
-      if (!usuario) {
-        window.location.href = 'login.html';
-        return;
-      }
-
-      // Rellenar interfaz
-      const nombre = usuario.email.split('@')[0];
-      const fecha  = new Date(usuario.created_at).toLocaleDateString('es-ES', {
-        year: 'numeric', month: 'long', day: 'numeric'
-      });
-
-      document.getElementById('userNombre').textContent  = nombre;
-      document.getElementById('userEmailSub').textContent = usuario.email;
-      document.getElementById('infoEmail').textContent   = usuario.email;
-      document.getElementById('infoRol').textContent     = rol;
-      document.getElementById('infoFecha').textContent   = fecha;
-
-      // Mostrar contenido
-      document.getElementById('loadingScreen').style.display = 'none';
-      document.getElementById('mainContent').style.display   = '';
-    })();
-
-    // ── Logout ────────────────────────────────────────────────────────────────
-    async function hacerLogout() {
-      await cerrarSesion();
-      window.location.href = 'login.html';
-    }
-
-    // ── Menú hamburguesa ──────────────────────────────────────────────────────
+    // ── NAVBAR ────────────────────────────────────────────────────────────────
+    window.addEventListener('scroll', () => {
+      document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+    });
     function toggleMenu() {
       document.getElementById('mobileMenu').classList.toggle('open');
     }
-    document.addEventListener('click', e => {
-      const menu = document.getElementById('mobileMenu');
-      const ham  = document.querySelector('.hamburger');
-      if (menu && ham && menu.classList.contains('open') &&
-          !menu.contains(e.target) && !ham.contains(e.target)) {
-        menu.classList.remove('open');
+
+    // ── TABS ──────────────────────────────────────────────────────────────────
+    function switchTab(nombre, btn) {
+      document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.getElementById('tab-' + nombre).classList.add('active');
+      btn.classList.add('active');
+    }
+
+    // ── INIT ──────────────────────────────────────────────────────────────────
+    (async () => {
+      try {
+        const sesion = await obtenerSesion();
+        if (!sesion) { window.location.href = 'login.html'; return; }
+
+        usuarioActual = await obtenerUsuario();
+        const rol     = await obtenerRol();
+        if (rol === 'admin') { window.location.href = 'admin.html'; return; }
+
+        document.getElementById('loadingScreen').style.display = 'none';
+        document.getElementById('cuentaPage').style.display    = '';
+
+        // Header
+        const email   = usuarioActual.email;
+        const inicial = email[0].toUpperCase();
+        document.getElementById('avatarCircle').textContent = inicial;
+        document.getElementById('headerEmail').textContent  = email;
+        document.getElementById('headerNombre').textContent = 'Hola, ' + inicial + ' 👋';
+        document.getElementById('datoEmail').value          = email;
+
+        await cargarPedidos();
+      } catch(e) {
+        console.error(e);
+        window.location.href = 'login.html';
       }
-    });
+    })();
+
+    // ── PEDIDOS ───────────────────────────────────────────────────────────────
+    async function cargarPedidos() {
+      const list = document.getElementById('pedidosList');
+      try {
+        const { data, error } = await db
+          .from('pedidos')
+          .select('*')
+          .eq('user_id', usuarioActual.id)
+          .order('created_at', { ascending: false });
+
+        if (error) throw error;
+
+        const pedidos = data || [];
+
+        // Stats
+        const gastado    = pedidos.filter(o => o.status !== 'cancelled').reduce((s,o) => s + Number(o.total), 0);
+        const pendientes = pedidos.filter(o => ['pending','processing','shipped'].includes(o.status)).length;
+        const entregados = pedidos.filter(o => o.status === 'delivered').length;
+        document.getElementById('statPedidos').textContent    = pedidos.length;
+        document.getElementById('statGastado').textContent    = gastado.toFixed(0) + '€';
+        document.getElementById('statPendientes').textContent = pendientes;
+        document.getElementById('statEntregados').textContent = entregados;
+
+        if (!pedidos.length) {
+          list.innerHTML = `
+            <div class="empty-pedidos">
+              <p class="icon">🛍️</p>
+              <p>Todavía no has hecho ningún pedido.</p>
+              <a href="shop.html">Explorar la tienda →</a>
+            </div>`;
+          return;
+        }
+
+        list.innerHTML = pedidos.map(o => {
+          const st      = STATUS[o.status] || STATUS.pending;
+          const date    = new Date(o.created_at).toLocaleDateString('es-ES', { day:'2-digit', month:'long', year:'numeric' });
+          const orderId = o.id.split('-')[0].toUpperCase();
+          const items   = Array.isArray(o.items) ? o.items : [];
+
+          return `
+            <div class="pedido-row">
+              <div class="pedido-summary" onclick="togglePedido('${o.id}')">
+                <span class="pedido-id">#${orderId}</span>
+                <div class="pedido-info">
+                  <strong>${items.length} producto${items.length !== 1 ? 's' : ''}</strong>
+                  <span>${date}</span>
+                </div>
+                <span class="pedido-status ${st.cls}">${st.icon} ${st.label}</span>
+                <div class="pedido-total">
+                  <strong>${Number(o.total).toFixed(2)} €</strong>
+                  <span>${o.payment_method === 'stripe' ? '💳 Tarjeta' : '🏦 Transfer.'}</span>
+                </div>
+              </div>
+              <div class="pedido-detail" id="pd-${o.id}">
+                <div class="pedido-items">
+                  ${items.map(i => `
+                    <div class="pitem">
+                      <img class="pitem-img" src="${i.image||''}" alt="${i.product_name}"
+                           onerror="this.style.display='none'" />
+                      <div class="pitem-info">
+                        <strong>${i.product_name}</strong>
+                        <span>× ${i.quantity} · ${Number(i.price).toFixed(2)} € c/u</span>
+                      </div>
+                      <span class="pitem-price">${(i.price * i.quantity).toFixed(2)} €</span>
+                    </div>`).join('')}
+                </div>
+                <div class="pedido-totales">
+                  <div class="ptotal-row"><span>Subtotal</span><span>${Number(o.subtotal).toFixed(2)} €</span></div>
+                  <div class="ptotal-row"><span>Envío</span><span>${Number(o.shipping_cost) === 0 ? 'Gratis' : Number(o.shipping_cost).toFixed(2) + ' €'}</span></div>
+                  <div class="ptotal-final"><span>Total</span><span>${Number(o.total).toFixed(2)} €</span></div>
+                </div>
+                ${o.shipping_address ? `
+                  <p style="font-size:0.72rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-top:1rem;margin-bottom:0.3rem">Dirección de envío</p>
+                  <p style="font-size:0.82rem;color:var(--text)">${o.shipping_address}, ${o.shipping_city} ${o.shipping_postal_code}</p>` : ''}
+              </div>
+            </div>`;
+        }).join('');
+
+      } catch(e) {
+        list.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--muted)">Error cargando pedidos.</div>';
+      }
+    }
+
+    function togglePedido(id) {
+      const det = document.getElementById('pd-' + id);
+      if (det) det.style.display = det.style.display === 'block' ? 'none' : 'block';
+    }
+
+    // ── GUARDAR DATOS ─────────────────────────────────────────────────────────
+    async function guardarDatos() {
+      mostrarToast('✓ Datos guardados correctamente', 'success');
+    }
+
+    // ── RESET PASSWORD ────────────────────────────────────────────────────────
+    async function enviarResetPassword() {
+      const btn = document.getElementById('btnReset');
+      btn.disabled    = true;
+      btn.textContent = '⏳ Enviando...';
+      try {
+        const { error } = await db.auth.resetPasswordForEmail(usuarioActual.email, {
+          redirectTo: 'https://kaori.es/login.html'
+        });
+        if (error) throw error;
+        document.getElementById('msgOk').style.display  = 'block';
+        document.getElementById('msgErr').style.display = 'none';
+      } catch(e) {
+        document.getElementById('msgErr').style.display = 'block';
+        document.getElementById('msgOk').style.display  = 'none';
+      }
+      btn.disabled    = false;
+      btn.textContent = 'Enviar enlace de cambio';
+    }
+
+    // ── LOGOUT ────────────────────────────────────────────────────────────────
+    async function hacerLogout() {
+      try { await cerrarSesion(); } catch(e) {}
+      window.location.href = 'index.html';
+    }
+
+    // ── TOAST ─────────────────────────────────────────────────────────────────
+    function mostrarToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = '✦ ' + msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2800);
+    }
   </script>
 </body>
 </html>
