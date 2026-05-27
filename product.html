@@ -490,23 +490,66 @@
       btn.classList.add('active');
     }
 
-    function renderAromas(variantes) {
-      document.getElementById('aromasBlock').style.display = '';
-      var grid = document.getElementById('aromasGrid');
-      grid.innerHTML = variantes.map(function(v, i) {
-        var sinStock  = v.stock !== null && v.stock !== undefined && v.stock !== '' && Number(v.stock) <= 0;
-        var pocoStock = v.stock && Number(v.stock) > 0 && Number(v.stock) <= 5;
-        return '<button class="aroma-btn" id="aroma-btn-' + i + '"' +
-          (sinStock ? ' disabled' : ' onclick="seleccionarAroma(' + i + ')"') + '>' +
-          (v.imagen ? '<img class="aroma-img-mini" src="' + v.imagen + '" alt="' + v.nombre + '" onerror="this.style.display=\'none\'" />' : '🌸') +
-          v.nombre +
-          (sinStock  ? '<span class="aroma-stock-badge">Agotado</span>' : '') +
-          (pocoStock ? '<span class="aroma-stock-badge" style="background:#d97706">' + v.stock + ' uds</span>' : '') +
-          '</button>';
-      }).join('');
-      var primero = variantes.findIndex(function(v) { return !v.stock || v.stock === '' || Number(v.stock) > 0; });
-      if (primero !== -1) seleccionarAroma(primero);
-    }
+function renderAromas(variantes) {
+  document.getElementById('aromasBlock').style.display = '';
+  var grid = document.getElementById('aromasGrid');
+
+  // Botón foto principal del producto
+  var btnPrincipal = '<button class="aroma-btn" id="aroma-btn-principal" onclick="verFotoPrincipal(this)">' +
+    '<img class="aroma-img-mini" src="' + productoActual.image + '" alt="Principal" onerror="this.style.display=\'none\'" />' +
+    'Ver producto' +
+    '</button>';
+
+  var botonesAromas = variantes.map(function(v, i) {
+    var sinStock  = v.stock !== null && v.stock !== undefined && v.stock !== '' && Number(v.stock) <= 0;
+    var pocoStock = v.stock && Number(v.stock) > 0 && Number(v.stock) <= 5;
+    return '<button class="aroma-btn" id="aroma-btn-' + i + '"' +
+      (sinStock ? ' disabled' : ' onclick="seleccionarAroma(' + i + ')"') + '>' +
+      (v.imagen ? '<img class="aroma-img-mini" src="' + v.imagen + '" alt="' + v.nombre + '" onerror="this.style.display=\'none\'" />' : '🌸') +
+      v.nombre +
+      (sinStock  ? '<span class="aroma-stock-badge">Agotado</span>' : '') +
+      (pocoStock ? '<span class="aroma-stock-badge" style="background:#d97706">' + v.stock + ' uds</span>' : '') +
+      '</button>';
+  }).join('');
+
+  grid.innerHTML = btnPrincipal + botonesAromas;
+
+  // Seleccionar primero disponible automáticamente
+  var primero = variantes.findIndex(function(v) { return !v.stock || v.stock === '' || Number(v.stock) > 0; });
+  if (primero !== -1) seleccionarAroma(primero);
+}
+
+function verFotoPrincipal(btn) {
+  var img = document.getElementById('mainImg');
+  img.classList.add('changing');
+  setTimeout(function() {
+    img.src = productoActual.image;
+    img.classList.remove('changing');
+    // Quitar badge aroma
+    var badgesEl  = document.getElementById('imgBadges');
+    var existente = badgesEl.querySelector('.badge-aroma');
+    if (existente) existente.remove();
+  }, 200);
+
+  // Activar botón principal, desactivar otros
+  document.querySelectorAll('.aroma-btn').forEach(function(b) { b.classList.remove('selected'); });
+  btn.classList.add('selected');
+
+  // Limpiar label y stock
+  document.getElementById('aromaSeleccionadoLabel').style.display = 'none';
+  document.getElementById('stockInfo').innerHTML = '';
+
+  // Restaurar precio base
+  document.getElementById('prodPrice').textContent      = Number(productoActual.price).toFixed(2) + ' €';
+  document.getElementById('varianteNote').style.display = 'none';
+
+  // Limpiar variante seleccionada
+  varianteActual = null;
+  var btnCart = document.getElementById('btnCart');
+  btnCart.disabled    = false;
+  btnCart.textContent = '🛒 Añadir al carrito';
+}
+
 
     function seleccionarAroma(idx) {
       var variantes = productoActual.variantes.filter(function(v) { return v && v.nombre; });
