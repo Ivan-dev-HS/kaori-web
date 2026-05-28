@@ -16,8 +16,6 @@
     body{font-family:'Nunito',sans-serif;background:var(--cream);color:var(--text);overflow-x:hidden}
     h1,h2,h3,h4{font-family:'Cormorant Garamond',serif}
     a{text-decoration:none;color:inherit}
-
-    /* ── NAVBAR ── */
     nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 3rem;height:80px;background:rgba(250,248,245,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);transition:all 0.4s}
     nav.scrolled{height:64px;box-shadow:0 4px 30px rgba(124,58,237,0.08)}
     .nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.7rem;letter-spacing:0.3em;color:var(--dark);font-weight:400;text-transform:uppercase}
@@ -39,34 +37,21 @@
     .mobile-menu a{font-size:0.78rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text);font-weight:600;padding:0.9rem 0;border-bottom:1px solid var(--border);display:block}
     .mobile-menu a:last-child{border-bottom:none}
     .mobile-menu.open{display:flex}
-
-    /* ── LOADING ── */
     .loading{min-height:100vh;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1rem;padding-top:80px}
     .spinner{width:40px;height:40px;border:2px solid var(--light);border-top-color:var(--primary);border-radius:50%;animation:spin 0.8s linear infinite}
     @keyframes spin{to{transform:rotate(360deg)}}
-
-    /* ── NOT FOUND ── */
     .not-found{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:2rem;padding-top:80px;flex-direction:column;gap:1rem}
     .not-found .icon{font-size:4rem;opacity:0.3}
     .not-found h2{font-size:2.5rem;color:var(--dark);font-weight:300}
     .not-found p{color:var(--muted);font-size:0.95rem;margin-bottom:1.5rem}
     .btn-back{display:inline-block;background:var(--primary);color:white;padding:0.9rem 2rem;border-radius:9999px;font-weight:700;font-family:'Nunito',sans-serif;font-size:0.82rem}
-
-    /* ── PAGE — padding-top = altura navbar + espacio ── */
     .product-page{max-width:80rem;margin:0 auto;padding:100px 1.5rem 5rem}
-
-    /* ── BREADCRUMB ── */
     .breadcrumb{display:flex;align-items:center;gap:0.5rem;font-size:0.75rem;color:var(--muted);margin-bottom:2rem;flex-wrap:wrap}
-    .breadcrumb a{color:var(--primary);transition:color 0.2s;font-weight:600}
-    .breadcrumb a:hover{color:var(--dark)}
+    .breadcrumb a{color:var(--primary);font-weight:600}
     .breadcrumb-sep{color:var(--border)}
     .breadcrumb-current{color:var(--text);font-weight:600}
-
-    /* ── GRID PRODUCTO ── */
     .product-grid{display:grid;gap:3rem;margin-bottom:5rem}
     @media(min-width:1024px){.product-grid{grid-template-columns:1fr 1fr;gap:4rem;align-items:start}}
-
-    /* ── GALERÍA ── */
     .gallery-wrap{display:flex;flex-direction:column;gap:0.75rem}
     .main-img-wrap{width:100%;border-radius:1rem;overflow:hidden;background:var(--light);position:relative;box-shadow:0 8px 40px rgba(124,58,237,0.12)}
     .main-img-wrap img{width:100%;height:auto;display:block;object-fit:cover;transition:opacity 0.3s ease;min-height:200px}
@@ -76,28 +61,22 @@
     .badge-disc{background:var(--pink);color:white}
     .badge-feat{background:var(--primary);color:white}
     .badge-aroma{background:rgba(46,8,84,0.85);color:#e9d5ff;backdrop-filter:blur(4px)}
-
-    /* ── MINIATURAS ── */
     .gallery-thumbs{display:flex;gap:0.6rem;flex-wrap:wrap}
     .thumb-btn{width:70px;height:70px;border-radius:0.6rem;overflow:hidden;cursor:pointer;border:2px solid var(--border);transition:all 0.2s;flex-shrink:0;background:var(--light);padding:0}
     .thumb-btn img{width:100%;height:100%;object-fit:cover;display:block}
     .thumb-btn.active{border-color:var(--primary);box-shadow:0 0 0 3px rgba(124,58,237,0.2)}
     .thumb-btn:hover{border-color:var(--primary);transform:translateY(-2px)}
-
-    /* ── INFO PRODUCTO ── */
+    .thumb-label{font-size:0.6rem;color:var(--muted);text-align:center;margin-top:3px;font-family:'Nunito',sans-serif;font-weight:600}
+    .thumb-wrap{display:flex;flex-direction:column;align-items:center}
     .product-info{display:flex;flex-direction:column;gap:1.5rem}
     .prod-eyebrow{font-size:0.65rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--primary);font-weight:600;font-family:'Nunito',sans-serif}
     .prod-name{font-size:clamp(1.8rem,4vw,3rem);color:var(--dark);font-weight:300;line-height:1.2}
     .divider-line{width:40px;height:1px;background:var(--primary);opacity:0.4}
-
-    /* ── PRECIO ── */
     .price-block{display:flex;align-items:baseline;gap:1rem;flex-wrap:wrap}
     .price-main{font-size:1.8rem;color:var(--primary);font-weight:700;font-family:'Nunito',sans-serif}
     .price-compare{font-size:1rem;color:var(--muted);text-decoration:line-through;font-family:'Nunito',sans-serif}
     .price-save{background:var(--light);color:var(--primary);font-size:0.72rem;font-weight:700;padding:4px 10px;border-radius:9999px;font-family:'Nunito',sans-serif}
     .price-variante-note{font-size:0.72rem;color:var(--primary);font-family:'Nunito',sans-serif;font-weight:600;background:var(--light);padding:3px 10px;border-radius:9999px}
-
-    /* ── AROMAS ── */
     .aromas-block{background:var(--cream2);border:1px solid var(--border);border-radius:1rem;padding:1.25rem;display:flex;flex-direction:column;gap:0.875rem}
     .aromas-top{display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap}
     .aromas-label{font-size:0.75rem;font-weight:700;color:var(--dark);letter-spacing:0.08em;text-transform:uppercase;font-family:'Nunito',sans-serif}
@@ -113,16 +92,10 @@
     .stock-ok{color:var(--primary);font-weight:600}
     .stock-low{color:#d97706;font-weight:600}
     .stock-out{color:var(--pink);font-weight:600}
-
-    /* ── DESCRIPCIÓN ── */
     .prod-desc{color:var(--muted);line-height:1.9;font-size:0.9rem;font-weight:300;border-top:1px solid var(--border);padding-top:1.25rem}
-
-    /* ── DETALLES ── */
     .prod-details{display:flex;flex-direction:column;gap:0.5rem}
     .detail-row{display:flex;align-items:center;gap:0.75rem;font-size:0.82rem;color:var(--muted)}
     .detail-icon{width:30px;height:30px;background:var(--light);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.85rem;flex-shrink:0}
-
-    /* ── CANTIDAD ── */
     .qty-block{display:flex;flex-direction:column;gap:0.5rem}
     .qty-label{font-size:0.72rem;font-weight:700;color:var(--dark);letter-spacing:0.08em;text-transform:uppercase;font-family:'Nunito',sans-serif}
     .qty-control{display:inline-flex;align-items:center;border:1px solid var(--border);border-radius:9999px;overflow:hidden}
@@ -130,8 +103,6 @@
     .qty-btn:hover{background:var(--light)}
     .qty-btn:disabled{color:var(--border);cursor:not-allowed}
     .qty-num{width:48px;text-align:center;font-size:1rem;font-weight:700;color:var(--dark);font-family:'Nunito',sans-serif}
-
-    /* ── BOTONES CTA ── */
     .cta-block{display:flex;flex-direction:column;gap:0.75rem}
     .btn-cart{width:100%;background:linear-gradient(135deg,var(--primary),var(--primary2));color:white;border:none;border-radius:9999px;padding:1rem 2rem;font-family:'Nunito',sans-serif;font-weight:700;font-size:0.95rem;cursor:pointer;transition:all 0.3s;display:flex;align-items:center;justify-content:center;gap:0.5rem;box-shadow:0 4px 20px rgba(124,58,237,0.3)}
     .btn-cart:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(124,58,237,0.4)}
@@ -139,14 +110,10 @@
     .btn-cart:disabled{background:#c4b5fd;cursor:not-allowed;transform:none;box-shadow:none}
     .btn-checkout{width:100%;background:white;color:var(--primary);border:2px solid var(--primary);border-radius:9999px;padding:0.9rem 2rem;font-family:'Nunito',sans-serif;font-weight:700;font-size:0.88rem;cursor:pointer;transition:all 0.3s}
     .btn-checkout:hover{background:var(--light)}
-
-    /* ── TRUST ── */
     .trust-row{display:grid;grid-template-columns:repeat(3,1fr);gap:0.6rem}
     .trust-item{text-align:center;padding:0.875rem 0.4rem;background:var(--cream2);border-radius:0.75rem;border:1px solid var(--border)}
     .trust-item .t-icon{font-size:1.1rem;margin-bottom:0.25rem;display:block}
     .trust-item p{font-size:0.65rem;color:var(--muted);line-height:1.4}
-
-    /* ── RELACIONADOS ── */
     .related{margin-top:4rem;padding-top:3rem;border-top:1px solid var(--border)}
     .related-header{text-align:center;margin-bottom:2.5rem}
     .related-eyebrow{font-size:0.65rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--primary);font-family:'Nunito',sans-serif;font-weight:600;display:block;margin-bottom:0.75rem}
@@ -162,12 +129,8 @@
     .related-cat{font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--primary);font-family:'Nunito',sans-serif;font-weight:600;margin-bottom:0.3rem}
     .related-name{font-size:0.9rem;color:var(--dark);font-weight:400;margin-bottom:0.3rem;line-height:1.3}
     .related-price{font-size:0.85rem;color:var(--primary);font-weight:700;font-family:'Nunito',sans-serif}
-
-    /* ── TOAST ── */
     #toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(80px);background:var(--dark);color:white;padding:0.875rem 1.75rem;border-radius:9999px;font-size:0.78rem;z-index:200;transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);pointer-events:none;white-space:nowrap;font-family:'Nunito',sans-serif;font-weight:600;box-shadow:0 8px 30px rgba(46,8,84,0.3);border-bottom:2px solid var(--primary)}
     #toast.show{transform:translateX(-50%) translateY(0)}
-
-    /* ── FOOTER ── */
     footer{background:var(--dark2);padding:3rem 1.5rem 2rem}
     .footer-inner{max-width:80rem;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;margin-bottom:1.5rem}
     .footer-logo{font-family:'Cormorant Garamond',serif;font-size:1.5rem;letter-spacing:0.3em;color:white;font-weight:300}
@@ -175,48 +138,21 @@
     .footer-links-row a{font-size:0.78rem;color:rgba(255,255,255,0.4);transition:color 0.3s;font-weight:300}
     .footer-links-row a:hover{color:white}
     .footer-bottom{border-top:1px solid rgba(255,255,255,0.06);padding-top:1.5rem;text-align:center;color:rgba(255,255,255,0.2);font-size:0.72rem;max-width:80rem;margin:0 auto}
-
-    /* ── RESPONSIVE DESKTOP ── */
-    @media(min-width:1024px){
-      .product-page{padding-top:110px}
-    }
-
-    /* ── RESPONSIVE TABLET ── */
-    @media(max-width:1023px) and (min-width:769px){
-      nav{padding:0 2rem}
-      .product-page{padding:100px 2rem 4rem}
-      .product-grid{grid-template-columns:1fr;max-width:600px;margin-left:auto;margin-right:auto}
-    }
-
-    /* ── RESPONSIVE MÓVIL ── */
+    @media(min-width:1024px){.product-page{padding-top:110px}}
     @media(max-width:768px){
       nav{padding:0 1rem;height:64px}
-      nav.scrolled{height:56px}
       .nav-links{display:none}
       .hamburger{display:flex}
       .mobile-menu{top:64px}
       .product-page{padding:80px 1rem 3rem}
-      .product-grid{grid-template-columns:1fr;gap:1.5rem;margin-bottom:3rem}
-      .gallery-wrap{gap:0.5rem}
-      .main-img-wrap{border-radius:0.75rem}
-      .thumb-btn{width:58px;height:58px;border-radius:0.5rem}
-      .prod-name{font-size:1.6rem}
-      .price-main{font-size:1.5rem}
-      .trust-row{gap:0.5rem}
-      .trust-item{padding:0.75rem 0.3rem}
-      .related-grid{grid-template-columns:repeat(2,1fr);gap:1rem}
+      .product-grid{gap:1.5rem;margin-bottom:3rem}
+      .thumb-btn{width:58px;height:58px}
       .cta-block{position:sticky;bottom:0;background:white;padding:1rem;margin:0 -1rem;border-top:1px solid var(--border);z-index:10;gap:0.5rem}
-      .btn-cart{padding:0.875rem}
       .btn-checkout{display:none}
     }
-
     @media(max-width:480px){
       nav{padding:0 0.875rem}
-      .nav-logo{font-size:1.4rem;letter-spacing:0.2em}
       .product-page{padding:76px 0.875rem 100px}
-      .aromas-grid{gap:0.4rem}
-      .aroma-btn{padding:0.45rem 0.7rem;font-size:0.72rem}
-      .gallery-thumbs{gap:0.4rem}
       .thumb-btn{width:52px;height:52px}
     }
   </style>
@@ -253,12 +189,8 @@
     <a href="login.html"   onclick="toggleMenu()" id="mobileLoginBtn">Mi cuenta</a>
   </div>
 
-  <!-- LOADING -->
-  <div class="loading" id="loadingScreen">
-    <div class="spinner"></div>
-  </div>
+  <div class="loading" id="loadingScreen"><div class="spinner"></div></div>
 
-  <!-- NOT FOUND -->
   <div class="not-found" id="notFound" style="display:none">
     <div class="icon">🔍</div>
     <h2>Producto no encontrado</h2>
@@ -266,10 +198,8 @@
     <a href="shop.html" class="btn-back">← Volver a la tienda</a>
   </div>
 
-  <!-- PRODUCTO -->
   <div class="product-page" id="productPage" style="display:none">
 
-    <!-- BREADCRUMB -->
     <div class="breadcrumb">
       <a href="index.html">Inicio</a>
       <span class="breadcrumb-sep">›</span>
@@ -291,14 +221,12 @@
 
       <!-- INFO -->
       <div class="product-info">
-
         <div>
           <p class="prod-eyebrow" id="prodCat">—</p>
           <h1 class="prod-name" id="prodName">—</h1>
           <div class="divider-line" style="margin:1rem 0"></div>
         </div>
 
-        <!-- PRECIO -->
         <div class="price-block">
           <span class="price-main"          id="prodPrice">—</span>
           <span class="price-compare"       id="prodCompare"  style="display:none">—</span>
@@ -306,7 +234,6 @@
           <span class="price-variante-note" id="varianteNote" style="display:none">Precio de este aroma</span>
         </div>
 
-        <!-- SELECTOR AROMAS -->
         <div class="aromas-block" id="aromasBlock" style="display:none">
           <div class="aromas-top">
             <span class="aromas-label">🌸 Elige tu aroma</span>
@@ -316,12 +243,10 @@
           <p class="stock-info" id="stockInfo"></p>
         </div>
 
-        <!-- DESCRIPCIÓN -->
         <p class="prod-desc" id="prodDesc">
           Producto artesanal creado con intención y amor. Elaborado con materiales naturales de la más alta calidad.
         </p>
 
-        <!-- DETALLES -->
         <div class="prod-details">
           <div class="detail-row"><div class="detail-icon">🌿</div><span>Ingredientes 100% naturales</span></div>
           <div class="detail-row"><div class="detail-icon">🤲</div><span>Elaborado artesanalmente</span></div>
@@ -329,7 +254,6 @@
           <div class="detail-row"><div class="detail-icon">✦</div><span>Cargado con energía positiva</span></div>
         </div>
 
-        <!-- CANTIDAD -->
         <div class="qty-block">
           <p class="qty-label">Cantidad</p>
           <div class="qty-control">
@@ -339,7 +263,6 @@
           </div>
         </div>
 
-        <!-- CTA -->
         <div class="cta-block">
           <button class="btn-cart" id="btnCart" onclick="añadirAlCarrito()">
             🛒 Añadir al carrito
@@ -349,17 +272,14 @@
           </button>
         </div>
 
-        <!-- TRUST -->
         <div class="trust-row">
           <div class="trust-item"><span class="t-icon">🔒</span><p>Pago seguro</p></div>
           <div class="trust-item"><span class="t-icon">🚚</span><p>Envío rápido</p></div>
           <div class="trust-item"><span class="t-icon">♻️</span><p>Eco friendly</p></div>
         </div>
-
       </div>
     </div>
 
-    <!-- RELACIONADOS -->
     <div class="related">
       <div class="related-header">
         <span class="related-eyebrow">También te puede gustar</span>
@@ -410,6 +330,7 @@
       }
     });
 
+    // ── CARGAR PRODUCTO ───────────────────────────────────────────────────────
     async function cargarProducto() {
       var id = new URLSearchParams(window.location.search).get('id');
       if (!id) { mostrarNotFound(); return; }
@@ -432,6 +353,7 @@
       document.getElementById('notFound').style.display      = 'flex';
     }
 
+    // ── RENDER PRODUCTO ───────────────────────────────────────────────────────
     function renderProducto(p) {
       document.title = 'Kaori – ' + p.name;
       document.getElementById('breadcrumbNombre').textContent = p.name;
@@ -461,95 +383,84 @@
 
       document.getElementById('prodPrice').textContent = Number(p.price).toFixed(2) + ' €';
 
-      // Miniaturas
-      var imagenes = (Array.isArray(p.images) && p.images.length > 0) ? p.images : [p.image];
-      var thumbs   = document.getElementById('galleryThumbs');
-      if (imagenes.length > 1) {
-        thumbs.innerHTML = imagenes.map(function(url, i) {
-          return '<button class="thumb-btn ' + (i === 0 ? 'active' : '') + '" onclick="cambiarImagen(\'' + url.replace(/'/g, "\\'") + '\', this)">' +
-            '<img src="' + url + '" alt="Foto ' + (i+1) + '" onerror="this.src=\'https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=100&q=60\'" />' +
-            '</button>';
-        }).join('');
-      } else {
-        thumbs.innerHTML = '';
-      }
+      // Miniaturas del producto (fotos principales)
+      renderThumbsProducto();
 
-      // Variantes
+      // Variantes/aromas
       var variantes = Array.isArray(p.variantes) ? p.variantes.filter(function(v) { return v && v.nombre; }) : [];
       if (variantes.length) renderAromas(variantes);
     }
 
+    // ── MINIATURAS PRODUCTO ───────────────────────────────────────────────────
+    function renderThumbsProducto() {
+      var p       = productoActual;
+      var imagenes = (Array.isArray(p.images) && p.images.length > 1) ? p.images : [];
+      var thumbs   = document.getElementById('galleryThumbs');
+      if (imagenes.length > 1) {
+        thumbs.innerHTML = imagenes.map(function(url, i) {
+          return '<div class="thumb-wrap">' +
+            '<button class="thumb-btn ' + (i === 0 ? 'active' : '') + '" onclick="cambiarImagen(\'' + url.replace(/'/g, "\\'") + '\', this)">' +
+            '<img src="' + url + '" alt="Foto ' + (i+1) + '" onerror="this.src=\'https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=100&q=60\'" />' +
+            '</button></div>';
+        }).join('');
+      } else {
+        thumbs.innerHTML = '';
+      }
+    }
+
+    // ── MINIATURAS CUANDO HAY AROMA SELECCIONADO ──────────────────────────────
+    function renderThumbsConAroma(urlAroma, urlPrincipal) {
+      var thumbs = document.getElementById('galleryThumbs');
+      var fotos  = [
+        { url: urlAroma,     label: 'Aroma'    },
+        { url: urlPrincipal, label: 'Producto' },
+      ];
+      thumbs.innerHTML = fotos.map(function(f, i) {
+        return '<div class="thumb-wrap">' +
+          '<button class="thumb-btn ' + (i === 0 ? 'active' : '') + '" onclick="cambiarImagen(\'' + f.url.replace(/'/g, "\\'") + '\', this)">' +
+          '<img src="' + f.url + '" alt="' + f.label + '" onerror="this.src=\'https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=100&q=60\'" />' +
+          '</button>' +
+          '<span class="thumb-label">' + f.label + '</span>' +
+          '</div>';
+      }).join('');
+    }
+
+    // ── CAMBIAR IMAGEN PRINCIPAL ──────────────────────────────────────────────
     function cambiarImagen(url, btn) {
       var img = document.getElementById('mainImg');
       img.classList.add('changing');
       setTimeout(function() {
         img.src = url;
+        img.onerror = function() {
+          img.src = 'https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=800&q=80';
+        };
         img.classList.remove('changing');
       }, 200);
       document.querySelectorAll('.thumb-btn').forEach(function(b) { b.classList.remove('active'); });
       btn.classList.add('active');
     }
 
-function renderAromas(variantes) {
-  document.getElementById('aromasBlock').style.display = '';
-  var grid = document.getElementById('aromasGrid');
+    // ── AROMAS ────────────────────────────────────────────────────────────────
+    function renderAromas(variantes) {
+      document.getElementById('aromasBlock').style.display = '';
+      var grid = document.getElementById('aromasGrid');
+      grid.innerHTML = variantes.map(function(v, i) {
+        var sinStock  = v.stock !== null && v.stock !== undefined && v.stock !== '' && Number(v.stock) <= 0;
+        var pocoStock = v.stock && Number(v.stock) > 0 && Number(v.stock) <= 5;
+        return '<button class="aroma-btn" id="aroma-btn-' + i + '"' +
+          (sinStock ? ' disabled' : ' onclick="seleccionarAroma(' + i + ')"') + '>' +
+          (v.imagen ? '<img class="aroma-img-mini" src="' + v.imagen + '" alt="' + v.nombre + '" onerror="this.style.display=\'none\'" />' : '🌸') +
+          v.nombre +
+          (sinStock  ? '<span class="aroma-stock-badge">Agotado</span>' : '') +
+          (pocoStock ? '<span class="aroma-stock-badge" style="background:#d97706">' + v.stock + ' uds</span>' : '') +
+          '</button>';
+      }).join('');
 
-  // Botón foto principal del producto
-  var btnPrincipal = '<button class="aroma-btn" id="aroma-btn-principal" onclick="verFotoPrincipal(this)">' +
-    '<img class="aroma-img-mini" src="' + productoActual.image + '" alt="Principal" onerror="this.style.display=\'none\'" />' +
-    'Ver producto' +
-    '</button>';
-
-  var botonesAromas = variantes.map(function(v, i) {
-    var sinStock  = v.stock !== null && v.stock !== undefined && v.stock !== '' && Number(v.stock) <= 0;
-    var pocoStock = v.stock && Number(v.stock) > 0 && Number(v.stock) <= 5;
-    return '<button class="aroma-btn" id="aroma-btn-' + i + '"' +
-      (sinStock ? ' disabled' : ' onclick="seleccionarAroma(' + i + ')"') + '>' +
-      (v.imagen ? '<img class="aroma-img-mini" src="' + v.imagen + '" alt="' + v.nombre + '" onerror="this.style.display=\'none\'" />' : '🌸') +
-      v.nombre +
-      (sinStock  ? '<span class="aroma-stock-badge">Agotado</span>' : '') +
-      (pocoStock ? '<span class="aroma-stock-badge" style="background:#d97706">' + v.stock + ' uds</span>' : '') +
-      '</button>';
-  }).join('');
-
-  grid.innerHTML = btnPrincipal + botonesAromas;
-
-  // Seleccionar primero disponible automáticamente
-  var primero = variantes.findIndex(function(v) { return !v.stock || v.stock === '' || Number(v.stock) > 0; });
-  if (primero !== -1) seleccionarAroma(primero);
-}
-
-function verFotoPrincipal(btn) {
-  var img = document.getElementById('mainImg');
-  img.classList.add('changing');
-  setTimeout(function() {
-    img.src = productoActual.image;
-    img.classList.remove('changing');
-    // Quitar badge aroma
-    var badgesEl  = document.getElementById('imgBadges');
-    var existente = badgesEl.querySelector('.badge-aroma');
-    if (existente) existente.remove();
-  }, 200);
-
-  // Activar botón principal, desactivar otros
-  document.querySelectorAll('.aroma-btn').forEach(function(b) { b.classList.remove('selected'); });
-  btn.classList.add('selected');
-
-  // Limpiar label y stock
-  document.getElementById('aromaSeleccionadoLabel').style.display = 'none';
-  document.getElementById('stockInfo').innerHTML = '';
-
-  // Restaurar precio base
-  document.getElementById('prodPrice').textContent      = Number(productoActual.price).toFixed(2) + ' €';
-  document.getElementById('varianteNote').style.display = 'none';
-
-  // Limpiar variante seleccionada
-  varianteActual = null;
-  var btnCart = document.getElementById('btnCart');
-  btnCart.disabled    = false;
-  btnCart.textContent = '🛒 Añadir al carrito';
-}
-
+      var primero = variantes.findIndex(function(v) {
+        return !v.stock || v.stock === '' || Number(v.stock) > 0;
+      });
+      if (primero !== -1) seleccionarAroma(primero);
+    }
 
     function seleccionarAroma(idx) {
       var variantes = productoActual.variantes.filter(function(v) { return v && v.nombre; });
@@ -557,9 +468,12 @@ function verFotoPrincipal(btn) {
       if (!v) return;
       varianteActual = v;
 
-      document.querySelectorAll('.aroma-btn').forEach(function(b, i) { b.classList.toggle('selected', i === idx); });
+      // Activar botón
+      document.querySelectorAll('.aroma-btn').forEach(function(b, i) {
+        b.classList.toggle('selected', i === idx);
+      });
 
-      // Cambiar imagen
+      // Cambiar imagen principal
       var nuevaImg = v.imagen || productoActual.image;
       var img = document.getElementById('mainImg');
       img.classList.add('changing');
@@ -567,18 +481,31 @@ function verFotoPrincipal(btn) {
         img.src = nuevaImg;
         img.onerror = function() { img.src = productoActual.image; };
         img.classList.remove('changing');
+
+        // Badge aroma en imagen
         var badgesEl  = document.getElementById('imgBadges');
         var existente = badgesEl.querySelector('.badge-aroma');
         if (existente) existente.remove();
-        if (v.imagen) badgesEl.insertAdjacentHTML('beforeend', '<span class="img-badge badge-aroma">🌸 ' + v.nombre + '</span>');
+        if (v.imagen) {
+          badgesEl.insertAdjacentHTML('beforeend',
+            '<span class="img-badge badge-aroma">🌸 ' + v.nombre + '</span>');
+        }
       }, 200);
+
+      // ── MINIATURAS: foto del aroma + foto principal del producto ──────────
+      if (v.imagen) {
+        renderThumbsConAroma(v.imagen, productoActual.image);
+      } else {
+        // Sin imagen propia → miniaturas normales del producto
+        renderThumbsProducto();
+      }
 
       // Precio
       var precio = v.precio ? Number(v.precio) : Number(productoActual.price);
       document.getElementById('prodPrice').textContent      = precio.toFixed(2) + ' €';
       document.getElementById('varianteNote').style.display = v.precio ? '' : 'none';
 
-      // Label
+      // Label seleccionado
       var label = document.getElementById('aromaSeleccionadoLabel');
       label.textContent   = v.nombre;
       label.style.display = '';
@@ -590,12 +517,14 @@ function verFotoPrincipal(btn) {
       else if (Number(v.stock) <= 5) { stockEl.innerHTML = '<span class="stock-low">⚠️ Solo ' + v.stock + ' uds</span>'; }
       else { stockEl.innerHTML = '<span class="stock-ok">✓ ' + v.stock + ' disponibles</span>'; }
 
+      // Botón carrito
       var sinStock = v.stock !== null && v.stock !== undefined && v.stock !== '' && Number(v.stock) <= 0;
       var btnCart  = document.getElementById('btnCart');
       btnCart.disabled    = sinStock;
       btnCart.textContent = sinStock ? 'Sin stock' : '🛒 Añadir al carrito';
     }
 
+    // ── CANTIDAD ──────────────────────────────────────────────────────────────
     function cambiarQty(delta) {
       var max = (varianteActual && varianteActual.stock) ? Number(varianteActual.stock) : 99;
       cantidad = Math.max(1, Math.min(cantidad + delta, max));
@@ -603,6 +532,7 @@ function verFotoPrincipal(btn) {
       document.getElementById('btnMenos').disabled   = cantidad <= 1;
     }
 
+    // ── CARRITO ───────────────────────────────────────────────────────────────
     function añadirAlCarrito() {
       if (!productoActual) return;
       var variantes = Array.isArray(productoActual.variantes)
@@ -637,6 +567,7 @@ function verFotoPrincipal(btn) {
       setTimeout(function() { t.classList.remove('show'); }, 2800);
     }
 
+    // ── RELACIONADOS ──────────────────────────────────────────────────────────
     async function cargarRelacionados(actual) {
       try {
         var r = await db.from('productos').select('id,name,price,image,category')
@@ -658,6 +589,7 @@ function verFotoPrincipal(btn) {
       } catch(e) {}
     }
 
+    // ── NAVBAR DINÁMICO ───────────────────────────────────────────────────────
     (async function() {
       try {
         var sesion = await obtenerSesion();
