@@ -3,53 +3,326 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kaori – ¡Gracias por tu compra!</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <title>Kaori – ¡Gracias por tu pedido!</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Nunito', sans-serif; background: #faf8f5; color: #2d1b69; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem; }
-    .card { background: white; border-radius: 1.5rem; padding: 3rem 2rem; text-align: center; max-width: 480px; width: 100%; border: 1px solid #f3e8ff; box-shadow: 0 8px 40px rgba(124,58,237,0.1); animation: fadeIn 0.5s ease; }
-    @keyframes fadeIn { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
-    .success-circle { width: 88px; height: 88px; border-radius: 50%; background: linear-gradient(135deg, #dcfce7, #bbf7d0); display: flex; align-items: center; justify-content: center; font-size: 2.8rem; margin: 0 auto 1.5rem; box-shadow: 0 8px 24px rgba(22,163,74,0.2); }
-    h1 { font-size: 2rem; color: #4c1d95; margin-bottom: 0.75rem; font-weight: 400; }
-    p  { color: #6b7280; font-size: 0.95rem; line-height: 1.7; margin-bottom: 0.5rem; }
-    .order-box { background: #faf5ff; border: 1px solid #e9d5ff; border-radius: 0.75rem; padding: 1rem; margin: 1.5rem 0; }
-    .order-box p { font-size: 0.78rem; color: #6b7280; margin-bottom: 0.3rem; }
-    .order-box strong { font-size: 0.95rem; color: #4c1d95; font-family: monospace; }
-    .btns { display: flex; flex-direction: column; gap: 0.75rem; margin-top: 1.5rem; }
-    .btn-primary { background: linear-gradient(135deg,#7c3aed,#6d28d9); color: white; padding: 0.9rem 2rem; border-radius: 9999px; font-weight: 700; font-family: 'Nunito', sans-serif; font-size: 0.95rem; text-decoration: none; display: block; transition: all 0.2s; }
-    .btn-primary:hover { transform: translateY(-2px); }
-    .btn-outline { border: 2px solid #e9d5ff; color: #7c3aed; padding: 0.9rem 2rem; border-radius: 9999px; font-weight: 600; font-family: 'Nunito', sans-serif; font-size: 0.95rem; text-decoration: none; display: block; transition: all 0.2s; }
-    .btn-outline:hover { background: #f3e8ff; }
-    .logo { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; letter-spacing: 0.2em; color: #4c1d95; margin-bottom: 2rem; text-decoration: none; display: block; }
+    :root {
+      --cream:#faf8f5; --cream2:#f5f0ff; --dark:#2e0854; --dark2:#1e0a3c;
+      --primary:#7c3aed; --primary2:#6d28d9; --light:#f3e8ff; --light2:#ede9fe;
+      --muted:#6b7280; --text:#2d1b69; --white:#ffffff; --border:#e9d5ff; --pink:#ec4899;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:'Nunito',sans-serif;background:var(--cream);color:var(--text);min-height:100vh;display:flex;flex-direction:column}
+    h1,h2,h3{font-family:'Cormorant Garamond',serif}
+    a{text-decoration:none;color:inherit}
+
+    /* ── NAVBAR ── */
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 3rem;height:80px;background:rgba(250,248,245,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+    .nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.7rem;letter-spacing:0.3em;color:var(--dark);font-weight:400;text-transform:uppercase}
+    .nav-right{display:flex;align-items:center;gap:0.75rem}
+    .nav-btn{background:var(--primary);color:white;border:none;padding:0.55rem 1.4rem;border-radius:9999px;cursor:pointer;font-family:'Nunito',sans-serif;font-size:0.75rem;font-weight:700;transition:all 0.3s}
+    .nav-btn:hover{background:var(--primary2)}
+
+    /* ── CONFETTI ── */
+    .confetti-wrap{position:fixed;inset:0;pointer-events:none;z-index:50;overflow:hidden}
+    .confetti-piece{position:absolute;width:10px;height:10px;border-radius:2px;opacity:0;animation:confettiFall linear forwards}
+    @keyframes confettiFall{
+      0%{opacity:1;transform:translateY(-20px) rotate(0deg)}
+      100%{opacity:0;transform:translateY(100vh) rotate(720deg)}
+    }
+
+    /* ── HERO ── */
+    .hero{flex:1;display:flex;align-items:center;justify-content:center;padding:7rem 1.5rem 3rem;text-align:center}
+    .hero-inner{max-width:640px}
+    .success-icon{width:96px;height:96px;background:linear-gradient(135deg,var(--primary),var(--pink));border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 2rem;font-size:2.5rem;box-shadow:0 8px 40px rgba(124,58,237,0.3);animation:popIn 0.6s cubic-bezier(0.34,1.56,0.64,1) 0.2s both}
+    @keyframes popIn{from{opacity:0;transform:scale(0.5)}to{opacity:1;transform:scale(1)}}
+    .hero-eyebrow{font-size:0.65rem;letter-spacing:0.35em;text-transform:uppercase;color:var(--primary);font-family:'Nunito',sans-serif;font-weight:600;display:block;margin-bottom:1rem;animation:fadeUp 0.6s ease 0.4s both}
+    .hero h1{font-size:clamp(2.5rem,6vw,4rem);color:var(--dark);font-weight:300;line-height:1.1;margin-bottom:1rem;animation:fadeUp 0.6s ease 0.5s both}
+    .hero h1 em{font-style:italic;color:var(--primary)}
+    .hero-sub{font-size:0.95rem;color:var(--muted);line-height:1.8;font-weight:300;max-width:480px;margin:0 auto 2.5rem;animation:fadeUp 0.6s ease 0.6s both}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+    /* ── ORDER ID ── */
+    .order-id-wrap{display:inline-flex;align-items:center;gap:0.75rem;background:white;border:1px solid var(--border);border-radius:9999px;padding:0.6rem 1.25rem;margin-bottom:2.5rem;animation:fadeUp 0.6s ease 0.65s both}
+    .order-id-label{font-size:0.72rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:0.08em}
+    .order-id-val{font-size:0.82rem;color:var(--primary);font-weight:700;font-family:monospace}
+
+    /* ── PASOS ── */
+    .steps{display:flex;justify-content:center;gap:0;margin-bottom:3rem;animation:fadeUp 0.6s ease 0.7s both;flex-wrap:wrap}
+    .step{display:flex;flex-direction:column;align-items:center;gap:0.5rem;padding:1.25rem 1.5rem;position:relative;min-width:120px}
+    .step:not(:last-child)::after{content:'';position:absolute;top:2rem;right:-1px;width:100%;height:2px;background:var(--border);z-index:0}
+    .step-circle{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.1rem;position:relative;z-index:1;background:var(--light);border:2px solid var(--border);transition:all 0.4s}
+    .step.done .step-circle{background:linear-gradient(135deg,var(--primary),var(--primary2));border-color:var(--primary);color:white;box-shadow:0 4px 12px rgba(124,58,237,0.3)}
+    .step.active .step-circle{background:white;border-color:var(--primary);color:var(--primary);box-shadow:0 4px 12px rgba(124,58,237,0.2)}
+    .step-label{font-size:0.68rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:0.06em;text-align:center}
+    .step.done .step-label{color:var(--primary)}
+
+    /* ── BOTONES ── */
+    .hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;animation:fadeUp 0.6s ease 0.8s both}
+    .btn-primary{display:inline-block;background:linear-gradient(135deg,var(--primary),var(--primary2));color:white;padding:1rem 2.5rem;border-radius:9999px;font-family:'Nunito',sans-serif;font-size:0.82rem;font-weight:700;letter-spacing:0.08em;transition:all 0.3s;box-shadow:0 4px 16px rgba(124,58,237,0.3);border:none;cursor:pointer}
+    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(124,58,237,0.4)}
+    .btn-outline{display:inline-block;background:white;color:var(--primary);border:2px solid var(--primary);padding:1rem 2.5rem;border-radius:9999px;font-family:'Nunito',sans-serif;font-size:0.82rem;font-weight:700;letter-spacing:0.08em;transition:all 0.3s}
+    .btn-outline:hover{background:var(--light);transform:translateY(-2px)}
+
+    /* ── RESUMEN PEDIDO ── */
+    .resumen-section{padding:3rem 1.5rem 5rem;max-width:680px;margin:0 auto;width:100%}
+    .resumen-card{background:white;border:1px solid var(--border);border-radius:1.25rem;overflow:hidden;animation:fadeUp 0.6s ease 0.9s both}
+    .resumen-head{padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;background:linear-gradient(to right,#faf5ff,white)}
+    .resumen-head h2{font-size:1.1rem;color:var(--dark);font-weight:400}
+    .resumen-items{padding:0}
+    .resumen-item{display:flex;align-items:center;gap:1rem;padding:1rem 1.5rem;border-bottom:1px solid #f9f5ff}
+    .resumen-item:last-child{border-bottom:none}
+    .resumen-img{width:52px;height:52px;object-fit:cover;border-radius:0.6rem;flex-shrink:0;background:var(--light)}
+    .resumen-info{flex:1}
+    .resumen-info strong{display:block;font-size:0.82rem;color:var(--dark)}
+    .resumen-info span{font-size:0.72rem;color:var(--muted)}
+    .resumen-price{font-size:0.875rem;font-weight:700;color:var(--dark)}
+    .resumen-totales{padding:1rem 1.5rem;border-top:1px solid var(--border);background:#faf8f5}
+    .total-row{display:flex;justify-content:space-between;font-size:0.82rem;color:var(--muted);padding:0.2rem 0}
+    .total-final{display:flex;justify-content:space-between;font-weight:800;font-size:1rem;color:var(--dark);border-top:1px solid var(--border);padding-top:0.75rem;margin-top:0.5rem}
+    .resumen-envio{padding:1.25rem 1.5rem;border-top:1px solid var(--border);display:flex;align-items:center;gap:0.75rem}
+    .envio-icon{width:36px;height:36px;background:var(--light);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+    .envio-info strong{display:block;font-size:0.82rem;color:var(--dark)}
+    .envio-info span{font-size:0.72rem;color:var(--muted)}
+
+    /* ── COMPARTIR ── */
+    .compartir-section{padding:0 1.5rem 5rem;max-width:680px;margin:0 auto;width:100%;text-align:center}
+    .compartir-section p{font-size:0.85rem;color:var(--muted);margin-bottom:1.25rem;font-weight:300}
+    .share-btns{display:flex;justify-content:center;gap:0.75rem;flex-wrap:wrap}
+    .share-btn{display:inline-flex;align-items:center;gap:0.5rem;padding:0.6rem 1.25rem;background:white;border:1px solid var(--border);border-radius:9999px;font-size:0.75rem;font-weight:600;color:var(--text);transition:all 0.2s;font-family:'Nunito',sans-serif;cursor:pointer}
+    .share-btn:hover{border-color:var(--primary);color:var(--primary);transform:translateY(-1px)}
+
+    /* ── FOOTER ── */
+    footer{background:var(--dark2);padding:3rem 1.5rem 2rem;margin-top:auto}
+    .footer-inner{max-width:80rem;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;margin-bottom:1.5rem}
+    .footer-logo{font-family:'Cormorant Garamond',serif;font-size:1.5rem;letter-spacing:0.3em;color:white;font-weight:300}
+    .footer-links-row{display:flex;gap:2rem;flex-wrap:wrap}
+    .footer-links-row a{font-size:0.78rem;color:rgba(255,255,255,0.4);transition:color 0.3s;font-weight:300}
+    .footer-links-row a:hover{color:white}
+    .footer-bottom{border-top:1px solid rgba(255,255,255,0.06);padding-top:1.5rem;text-align:center;color:rgba(255,255,255,0.2);font-size:0.72rem;max-width:80rem;margin:0 auto}
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:768px){
+      nav{padding:0 1rem}
+      .hero{padding:6rem 1rem 2rem}
+      .step{padding:1rem;min-width:90px}
+      .step:not(:last-child)::after{display:none}
+      .resumen-section,.compartir-section{padding:2rem 1rem}
+      .hero-btns{flex-direction:column;align-items:center}
+      .btn-primary,.btn-outline{width:100%;max-width:280px;text-align:center}
+    }
+    @media(max-width:480px){
+      nav{padding:0 0.875rem}
+      .steps{gap:0}
+      .step-label{font-size:0.6rem}
+    }
   </style>
 </head>
 <body>
-  <a href="index.html" class="logo">KAORI</a>
-  <div class="card">
-    <div class="success-circle">🛍️</div>
-    <h1>¡Pago completado!</h1>
-    <p>Gracias por tu compra. Hemos recibido tu pedido y lo estamos preparando con mucho cariño.</p>
-    <p>Recibirás un email de confirmación en breve.</p>
-    <div class="order-box">
-      <p>Número de pedido</p>
-      <strong id="orderId">—</strong>
+
+  <!-- CONFETTI -->
+  <div class="confetti-wrap" id="confettiWrap"></div>
+
+  <!-- NAVBAR -->
+  <nav>
+    <a href="index.html" class="nav-logo">KAORI</a>
+    <div class="nav-right">
+      <a href="mi-cuenta.html" class="nav-btn">Mi cuenta</a>
     </div>
-    <div class="btns">
-      <a href="shop.html"  class="btn-primary">Seguir comprando →</a>
-      <a href="index.html" class="btn-outline">Volver al inicio</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="success-icon">✦</div>
+      <span class="hero-eyebrow">Pedido confirmado</span>
+      <h1>¡Gracias por tu<br /><em>confianza!</em></h1>
+      <p class="hero-sub">
+        Tu pedido ha sido recibido y está siendo preparado con mucho amor y cuidado.
+        Recibirás un email de confirmación en breve.
+      </p>
+
+      <div class="order-id-wrap" id="orderIdWrap" style="display:none">
+        <span class="order-id-label">Pedido</span>
+        <span class="order-id-val" id="orderIdVal">—</span>
+      </div>
+
+      <!-- PASOS -->
+      <div class="steps">
+        <div class="step done">
+          <div class="step-circle">✓</div>
+          <span class="step-label">Confirmado</span>
+        </div>
+        <div class="step active">
+          <div class="step-circle">🤲</div>
+          <span class="step-label">Preparando</span>
+        </div>
+        <div class="step">
+          <div class="step-circle">🚚</div>
+          <span class="step-label">En camino</span>
+        </div>
+        <div class="step">
+          <div class="step-circle">🏠</div>
+          <span class="step-label">Entregado</span>
+        </div>
+      </div>
+
+      <div class="hero-btns">
+        <a href="mi-cuenta.html" class="btn-primary">Ver mis pedidos →</a>
+        <a href="shop.html"      class="btn-outline">Seguir comprando</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESUMEN PEDIDO -->
+  <div class="resumen-section" id="resumenSection" style="display:none">
+    <div class="resumen-card">
+      <div class="resumen-head">
+        <h2>Resumen del pedido</h2>
+        <span style="font-size:0.72rem;color:var(--muted)" id="resumenFecha">—</span>
+      </div>
+      <div class="resumen-items" id="resumenItems"></div>
+      <div class="resumen-totales" id="resumenTotales"></div>
+      <div class="resumen-envio">
+        <div class="envio-icon">📦</div>
+        <div class="envio-info">
+          <strong>Envío estimado</strong>
+          <span>2–4 días laborables · Recibirás un email con el número de seguimiento</span>
+        </div>
+      </div>
     </div>
   </div>
 
-  <script>
-    // Limpiar carrito
-    localStorage.removeItem('kaori_cart');
+  <!-- COMPARTIR -->
+  <div class="compartir-section">
+    <p>¿Te ha encantado tu pedido? ¡Cuéntaselo a tus amigas!</p>
+    <div class="share-btns">
+      <button class="share-btn" onclick="compartirWhatsApp()">💬 WhatsApp</button>
+      <button class="share-btn" onclick="compartirInstagram()">📷 Instagram</button>
+      <button class="share-btn" onclick="copiarLink()">🔗 Copiar enlace</button>
+    </div>
+  </div>
 
-    // Mostrar número de pedido si viene en la URL
-    const params  = new URLSearchParams(window.location.search);
-    const orderId = params.get('order_id');
-    if (orderId) {
-      document.getElementById('orderId').textContent = '#' + orderId.slice(0,8).toUpperCase();
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <span class="footer-logo">KAORI</span>
+      <div class="footer-links-row">
+        <a href="index.html">Inicio</a>
+        <a href="shop.html">Tienda</a>
+        <a href="mi-cuenta.html">Mi cuenta</a>
+        <a href="contact.html">Contacto</a>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2024 Kaori. Todos los derechos reservados.</div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js"></script>
+  <script src="supabase.js"></script>
+  <script src="auth.js"></script>
+  <script>
+    // ── CONFETTI ──────────────────────────────────────────────────────────────
+    var COLORES = ['#7c3aed','#a855f7','#ec4899','#c4b5fd','#f3e8ff','#e9d5ff','#6d28d9'];
+
+    function lanzarConfetti() {
+      var wrap = document.getElementById('confettiWrap');
+      for (var i = 0; i < 80; i++) {
+        (function(idx) {
+          setTimeout(function() {
+            var el = document.createElement('div');
+            el.className = 'confetti-piece';
+            var size  = Math.random() * 10 + 6;
+            var dur   = Math.random() * 3 + 2;
+            var delay = Math.random() * 2;
+            el.style.cssText = [
+              'left:'   + Math.random() * 100 + 'vw',
+              'width:'  + size + 'px',
+              'height:' + size + 'px',
+              'background:' + COLORES[Math.floor(Math.random() * COLORES.length)],
+              'animation-duration:' + dur + 's',
+              'animation-delay:' + delay + 's',
+              'border-radius:' + (Math.random() > 0.5 ? '50%' : '2px'),
+            ].join(';');
+            wrap.appendChild(el);
+            setTimeout(function() { el.remove(); }, (dur + delay + 0.5) * 1000);
+          }, idx * 30);
+        })(i);
+      }
+    }
+
+    // ── CARGAR PEDIDO ─────────────────────────────────────────────────────────
+    (async function() {
+      lanzarConfetti();
+
+      // Limpiar carrito
+      localStorage.removeItem('kaori_cart');
+
+      // Obtener ID del pedido desde URL
+      var params  = new URLSearchParams(window.location.search);
+      var pedidoId = params.get('pedido') || params.get('session_id');
+
+      if (!pedidoId) return;
+
+      try {
+        // Mostrar ID del pedido
+        var idCorto = pedidoId.split('-')[0].toUpperCase();
+        document.getElementById('orderIdVal').textContent = '#' + idCorto;
+        document.getElementById('orderIdWrap').style.display = '';
+
+        // Buscar pedido en Supabase
+        var filtro   = pedidoId.startsWith('cs_') ? 'stripe_session_id' : 'id';
+        var resultado = await db.from('pedidos').select('*').eq(filtro, pedidoId).single();
+
+        if (resultado.error || !resultado.data) return;
+
+        var pedido = resultado.data;
+        document.getElementById('resumenSection').style.display = '';
+
+        // Fecha
+        var fecha = new Date(pedido.created_at).toLocaleDateString('es-ES', {
+          day:'2-digit', month:'long', year:'numeric'
+        });
+        document.getElementById('resumenFecha').textContent = fecha;
+
+        // Items
+        var items = Array.isArray(pedido.items) ? pedido.items : [];
+        document.getElementById('resumenItems').innerHTML = items.map(function(i) {
+          return '<div class="resumen-item">' +
+            '<img class="resumen-img" src="' + (i.image||'') + '" alt="' + i.product_name + '" onerror="this.style.display=\'none\'" />' +
+            '<div class="resumen-info"><strong>' + i.product_name + '</strong>' +
+            '<span>× ' + i.quantity + ' · ' + Number(i.price).toFixed(2) + ' € c/u</span></div>' +
+            '<span class="resumen-price">' + (i.price * i.quantity).toFixed(2) + ' €</span>' +
+            '</div>';
+        }).join('');
+
+        // Totales
+        document.getElementById('resumenTotales').innerHTML =
+          '<div class="total-row"><span>Subtotal</span><span>' + Number(pedido.subtotal).toFixed(2) + ' €</span></div>' +
+          '<div class="total-row"><span>Envío</span><span>' + (Number(pedido.shipping_cost) === 0 ? 'Gratis' : Number(pedido.shipping_cost).toFixed(2) + ' €') + '</span></div>' +
+          '<div class="total-final"><span>Total pagado</span><span>' + Number(pedido.total).toFixed(2) + ' €</span></div>';
+
+      } catch(e) {
+        console.error('Error cargando pedido:', e);
+      }
+    })();
+
+    // ── COMPARTIR ─────────────────────────────────────────────────────────────
+    function compartirWhatsApp() {
+      var msg = '¡Acabo de hacer un pedido en Kaori! 🕯️✨ Las mejores velas artesanales en kaori.es';
+      window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
+    }
+
+    function compartirInstagram() {
+      window.open('https://instagram.com/kaoribyjessnuan', '_blank');
+    }
+
+    function copiarLink() {
+      navigator.clipboard.writeText('https://kaori.es').then(function() {
+        var btn = event.target;
+        btn.textContent = '✓ ¡Copiado!';
+        setTimeout(function() { btn.textContent = '🔗 Copiar enlace'; }, 2000);
+      });
     }
   </script>
 </body>
