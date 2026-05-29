@@ -3,23 +3,32 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kaori – Sobre Nosotras</title>
-  <meta name="description" content="Conoce la historia de Kaori, una marca familiar nacida del amor por la naturaleza, la artesanía y la energía consciente." />
+  <title>Nosotras – Kaori | La historia detrás de cada vela</title>
+  <meta name="description" content="Conoce la historia de Kaori. Una marca familiar nacida del amor por la naturaleza, la artesanía consciente y la energía que transmiten los objetos hechos a mano." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://kaori.es/about.html" />
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://kaori.es/about.html" />
+  <meta property="og:title"       content="Nosotras – La historia de Kaori" />
+  <meta property="og:description" content="Una marca familiar nacida del amor por la naturaleza y la artesanía consciente." />
+  <meta property="og:image"       content="https://kaori.es/og-image.jpg" />
+  <meta property="og:locale"      content="es_ES" />
+  <meta property="og:site_name"   content="Kaori" />
+  <meta name="twitter:card"  content="summary_large_image" />
+  <meta name="twitter:image" content="https://kaori.es/og-image.jpg" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
-    :root {
-      --cream:#faf8f5; --cream2:#f5f0ff; --dark:#2e0854; --dark2:#1e0a3c;
-      --primary:#7c3aed; --primary2:#6d28d9; --light:#f3e8ff; --light2:#ede9fe;
-      --muted:#6b7280; --text:#2d1b69; --white:#ffffff; --border:#e9d5ff; --pink:#ec4899;
-    }
+    :root{--cream:#faf8f5;--cream2:#f5f0ff;--dark:#2e0854;--dark2:#1e0a3c;--primary:#7c3aed;--primary2:#6d28d9;--light:#f3e8ff;--light2:#ede9fe;--muted:#6b7280;--text:#2d1b69;--white:#ffffff;--border:#e9d5ff;--pink:#ec4899}
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth}
     body{font-family:'Nunito',sans-serif;background:var(--cream);color:var(--text);overflow-x:hidden}
     h1,h2,h3,h4{font-family:'Cormorant Garamond',serif}
     a{text-decoration:none;color:inherit}
     img{max-width:100%}
-
-    /* ── NAVBAR ── */
     nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 3rem;height:80px;background:rgba(250,248,245,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);transition:all 0.4s}
     nav.scrolled{height:64px;box-shadow:0 4px 30px rgba(124,58,237,0.08)}
     .nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.7rem;letter-spacing:0.3em;color:var(--dark);font-weight:400;text-transform:uppercase}
@@ -42,8 +51,6 @@
     .mobile-menu a:hover{color:var(--primary)}
     .mobile-menu a:last-child{border-bottom:none}
     .mobile-menu.open{display:flex}
-
-    /* ── HERO ── */
     .hero{min-height:90vh;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
     .hero-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=1800&q=80') center/cover no-repeat;transform:scale(1.05);animation:heroZoom 8s ease-out forwards}
     @keyframes heroZoom{to{transform:scale(1)}}
@@ -54,8 +61,6 @@
     .hero h1{font-size:clamp(3rem,7vw,5.5rem);color:white;font-weight:300;line-height:1.1;margin-bottom:1.5rem}
     .hero h1 em{font-style:italic;color:#e9d5ff}
     .hero-sub{font-size:clamp(0.85rem,2vw,1rem);color:rgba(255,255,255,0.72);line-height:1.8;max-width:440px;margin:0 auto;font-weight:300}
-
-    /* ── SECCIÓN BASE ── */
     .section{padding:7rem 1.5rem}
     .section-inner{max-width:80rem;margin:0 auto}
     .section-eyebrow{font-size:0.65rem;letter-spacing:0.35em;text-transform:uppercase;color:var(--primary);font-family:'Nunito',sans-serif;font-weight:600;display:block;margin-bottom:1rem}
@@ -63,25 +68,17 @@
     .section-title em{font-style:italic;color:var(--primary)}
     .divider{width:40px;height:1px;background:var(--primary);opacity:0.4;margin:1.5rem 0}
     .divider.center{margin:1.5rem auto}
-
-    /* ── INTRO ── */
     .intro-section{background:white;padding:7rem 1.5rem}
     .intro-grid{display:grid;gap:4rem;align-items:center}
     @media(min-width:1024px){.intro-grid{grid-template-columns:1fr 1fr;gap:6rem}}
-    .intro-img{position:relative}
     .intro-img-main{aspect-ratio:4/5;overflow:hidden;border-radius:1rem;box-shadow:0 20px 60px rgba(124,58,237,0.12)}
     .intro-img-main img{width:100%;height:100%;object-fit:cover;transition:transform 0.6s}
     .intro-img-main:hover img{transform:scale(1.03)}
-    .intro-img-float{position:absolute;bottom:-2rem;right:-2rem;width:42%;aspect-ratio:1;overflow:hidden;border-radius:1rem;border:4px solid white;box-shadow:0 12px 40px rgba(124,58,237,0.15)}
-    .intro-img-float img{width:100%;height:100%;object-fit:cover}
-    .intro-text{}
     .intro-text p{color:var(--muted);line-height:1.9;font-size:0.95rem;font-weight:300;margin-bottom:1.25rem}
     .intro-text em{color:var(--primary);font-style:italic}
     .intro-text strong{color:var(--dark);font-weight:600}
     .btn-primary-outline{display:inline-block;margin-top:1.5rem;background:transparent;color:var(--primary);border:2px solid var(--primary);border-radius:9999px;padding:0.9rem 2.5rem;font-family:'Nunito',sans-serif;font-size:0.78rem;letter-spacing:0.15em;text-transform:uppercase;font-weight:700;transition:all 0.3s}
     .btn-primary-outline:hover{background:var(--primary);color:white;transform:translateY(-2px)}
-
-    /* ── STATS ── */
     .stats-section{background:linear-gradient(135deg,var(--dark),#3b0d8a);padding:5rem 1.5rem}
     .stats-grid{max-width:80rem;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:0;text-align:center}
     .stat-item{padding:3rem 2rem;border-right:1px solid rgba(255,255,255,0.08)}
@@ -89,8 +86,6 @@
     .stat-num{font-family:'Cormorant Garamond',serif;font-size:3.5rem;color:white;font-weight:300;line-height:1;display:block;margin-bottom:0.5rem}
     .stat-num em{font-style:normal;color:#c4b5fd}
     .stat-label{font-size:0.75rem;color:rgba(255,255,255,0.5);letter-spacing:0.12em;text-transform:uppercase;font-family:'Nunito',sans-serif}
-
-    /* ── VALORES ── */
     .valores-section{background:var(--cream2);padding:7rem 1.5rem}
     .valores-inner{max-width:80rem;margin:0 auto}
     .valores-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:2rem;margin-top:4rem}
@@ -101,8 +96,6 @@
     .valor-icon{font-size:2rem;margin-bottom:1.25rem;display:block}
     .valor-card h3{font-size:1.3rem;color:var(--dark);font-weight:400;margin-bottom:0.75rem}
     .valor-card p{font-size:0.875rem;color:var(--muted);line-height:1.7;font-weight:300}
-
-    /* ── PROCESO ARTESANAL ── */
     .proceso-section{background:white;padding:7rem 1.5rem}
     .proceso-inner{max-width:80rem;margin:0 auto}
     .proceso-timeline{margin-top:4rem;display:flex;flex-direction:column;gap:0}
@@ -114,22 +107,6 @@
     .paso-content p{font-size:0.875rem;color:var(--muted);line-height:1.7;font-weight:300}
     .paso-img{width:120px;height:120px;border-radius:1rem;overflow:hidden;flex-shrink:0}
     .paso-img img{width:100%;height:100%;object-fit:cover}
-
-    /* ── EQUIPO ── */
-    .equipo-section{background:linear-gradient(135deg,#faf5ff,var(--cream));padding:7rem 1.5rem}
-    .equipo-inner{max-width:80rem;margin:0 auto;text-align:center}
-    .equipo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2rem;margin-top:4rem}
-    .equipo-card{background:white;border:1px solid var(--border);border-radius:1rem;overflow:hidden;transition:all 0.4s}
-    .equipo-card:hover{box-shadow:0 16px 50px rgba(124,58,237,0.1);transform:translateY(-4px)}
-    .equipo-foto{aspect-ratio:1;overflow:hidden;background:var(--light)}
-    .equipo-foto img{width:100%;height:100%;object-fit:cover;transition:transform 0.6s}
-    .equipo-card:hover .equipo-foto img{transform:scale(1.05)}
-    .equipo-info{padding:1.5rem}
-    .equipo-info h3{font-size:1.3rem;color:var(--dark);font-weight:400;margin-bottom:0.3rem}
-    .equipo-info .rol{font-size:0.72rem;color:var(--primary);letter-spacing:0.15em;text-transform:uppercase;font-family:'Nunito',sans-serif;font-weight:600;margin-bottom:0.75rem;display:block}
-    .equipo-info p{font-size:0.82rem;color:var(--muted);line-height:1.7;font-weight:300}
-
-    /* ── COMPROMISO ── */
     .compromiso-section{background:var(--dark);padding:7rem 1.5rem}
     .compromiso-inner{max-width:80rem;margin:0 auto;display:grid;gap:4rem;align-items:center}
     @media(min-width:1024px){.compromiso-inner{grid-template-columns:1fr 1fr;gap:6rem}}
@@ -144,30 +121,20 @@
     .c-content span{font-size:0.8rem;color:rgba(255,255,255,0.5);font-weight:300}
     .compromiso-img{aspect-ratio:4/5;overflow:hidden;border-radius:1rem;box-shadow:0 20px 60px rgba(0,0,0,0.3)}
     .compromiso-img img{width:100%;height:100%;object-fit:cover}
-
-    /* ── CTA ── */
     .cta-section{background:var(--cream2);padding:7rem 1.5rem;text-align:center}
     .cta-inner{max-width:56rem;margin:0 auto}
-    .cta-section .section-eyebrow{text-align:center}
-    .cta-section .section-title{text-align:center}
     .cta-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:2.5rem}
     .btn-primary-solid{display:inline-block;background:var(--primary);color:white;padding:1rem 2.5rem;border-radius:9999px;font-family:'Nunito',sans-serif;font-size:0.78rem;letter-spacing:0.15em;text-transform:uppercase;font-weight:700;transition:all 0.3s;box-shadow:0 4px 14px rgba(124,58,237,0.3)}
-    .btn-primary-solid:hover{background:var(--primary2);transform:translateY(-2px);box-shadow:0 8px 24px rgba(124,58,237,0.4)}
+    .btn-primary-solid:hover{background:var(--primary2);transform:translateY(-2px)}
     .btn-outline-dark{display:inline-block;background:transparent;color:var(--dark);border:2px solid var(--border);border-radius:9999px;padding:1rem 2.5rem;font-family:'Nunito',sans-serif;font-size:0.78rem;letter-spacing:0.15em;text-transform:uppercase;font-weight:700;transition:all 0.3s}
     .btn-outline-dark:hover{border-color:var(--primary);color:var(--primary);transform:translateY(-2px)}
-
-    /* ── REVEAL ── */
     .reveal{opacity:0;transform:translateY(30px);transition:opacity 0.8s ease,transform 0.8s ease}
     .reveal.visible{opacity:1;transform:translateY(0)}
     .reveal-left{opacity:0;transform:translateX(-30px);transition:opacity 0.8s ease,transform 0.8s ease}
     .reveal-right{opacity:0;transform:translateX(30px);transition:opacity 0.8s ease,transform 0.8s ease}
     .reveal-left.visible,.reveal-right.visible{opacity:1;transform:translate(0)}
-
-    /* ── TOAST ── */
     #toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(80px);background:var(--dark);color:white;padding:1rem 2rem;border-radius:9999px;font-size:0.8rem;z-index:200;transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);pointer-events:none;white-space:nowrap;font-family:'Nunito',sans-serif;font-weight:600;box-shadow:0 8px 30px rgba(46,8,84,0.3);border-bottom:2px solid var(--primary)}
     #toast.show{transform:translateX(-50%) translateY(0)}
-
-    /* ── FOOTER ── */
     footer{background:var(--dark2);padding:4rem 1.5rem 2rem}
     .footer-inner{max-width:80rem;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:4rem}
     .footer-logo{font-family:'Cormorant Garamond',serif;font-size:1.8rem;letter-spacing:0.3em;color:white;font-weight:300;margin-bottom:1rem;display:block}
@@ -181,30 +148,12 @@
     .footer-links a:hover{color:white}
     .footer-bottom{border-top:1px solid rgba(255,255,255,0.06);padding-top:2rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
     .footer-bottom p,.footer-bottom a{font-size:0.72rem;color:rgba(255,255,255,0.2)}
-
-    /* ── RESPONSIVE ── */
     @media(max-width:1024px){.footer-inner{grid-template-columns:1fr 1fr;gap:2rem}}
-    @media(max-width:768px){
-      nav{padding:0 1.5rem}
-      .nav-links{display:none}
-      .hamburger{display:flex}
-      .intro-img-float{display:none}
-      .paso-img{display:none}
-      .proceso-step{grid-template-columns:auto 1fr}
-      .stats-grid{grid-template-columns:repeat(2,1fr)}
-      .stat-item{border-right:none;border-bottom:1px solid rgba(255,255,255,0.08)}
-      .footer-inner{grid-template-columns:1fr 1fr;gap:1.5rem}
-    }
-    @media(max-width:480px){
-      nav{padding:0 1rem}
-      .stats-grid{grid-template-columns:1fr 1fr}
-      .footer-inner{grid-template-columns:1fr}
-      .cta-btns{flex-direction:column;align-items:center}
-    }
+    @media(max-width:768px){nav{padding:0 1.5rem}.nav-links{display:none}.hamburger{display:flex}.paso-img{display:none}.proceso-step{grid-template-columns:auto 1fr}.stats-grid{grid-template-columns:repeat(2,1fr)}.stat-item{border-right:none;border-bottom:1px solid rgba(255,255,255,0.08)}.footer-inner{grid-template-columns:1fr 1fr;gap:1.5rem}}
+    @media(max-width:480px){nav{padding:0 1rem}.stats-grid{grid-template-columns:1fr 1fr}.footer-inner{grid-template-columns:1fr}.cta-btns{flex-direction:column;align-items:center}}
   </style>
 </head>
 <body>
-
   <nav id="navbar">
     <a href="index.html" class="nav-logo">KAORI</a>
     <div class="nav-links">
@@ -216,17 +165,12 @@
     <div class="nav-right">
       <a href="login.html" class="nav-btn-cuenta" id="btnCuenta">Mi cuenta</a>
       <div class="nav-cart-wrap">
-        <button class="nav-cart-btn" onclick="CartWidget.toggle()">
-          🛒 <span class="cart-count-text">0</span>
-        </button>
+        <button class="nav-cart-btn" onclick="CartWidget.toggle()">🛒 <span class="cart-count-text">0</span></button>
         <span class="cart-count-badge">0</span>
       </div>
-      <button class="hamburger" onclick="toggleMenu()">
-        <span></span><span></span><span></span>
-      </button>
+      <button class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
     </div>
   </nav>
-
   <div class="mobile-menu" id="mobileMenu">
     <a href="shop.html"    onclick="toggleMenu()">Tienda</a>
     <a href="eventos.html" onclick="toggleMenu()">Eventos & Bodas</a>
@@ -234,8 +178,6 @@
     <a href="contact.html" onclick="toggleMenu()">Contacto</a>
     <a href="login.html"   onclick="toggleMenu()" id="mobileLoginBtn">Mi cuenta</a>
   </div>
-
-  <!-- HERO -->
   <section class="hero">
     <div class="hero-bg"></div>
     <div class="hero-overlay"></div>
@@ -245,137 +187,62 @@
       <p class="hero-sub">Una marca familiar nacida del amor por la naturaleza, el arte y la energía consciente. Cada producto lleva un pedacito de nuestra alma.</p>
     </div>
   </section>
-
-  <!-- INTRO -->
   <section class="intro-section">
     <div class="section-inner">
       <div class="intro-grid">
-        <div class="intro-img reveal-left">
+        <div class="reveal-left">
           <div class="intro-img-main">
             <img src="https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=800&q=80" alt="Kaori artesanía" loading="lazy" />
-          </div>
-          <div class="intro-img-float">
-            <img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=400&q=80" alt="Detalle Kaori" loading="lazy" />
           </div>
         </div>
         <div class="reveal-right">
           <span class="section-eyebrow">Quiénes somos</span>
           <h2 class="section-title">El origen de<br /><em>nuestra pasión</em></h2>
           <div class="divider"></div>
-          <p>Kaori nació de un profundo amor por lo natural y lo hecho a mano. Somos una pequeña marca familiar que crea productos artesanales con un propósito especial: <em>llevar luz, arte y energía positiva a cada hogar</em>.</p>
-          <p>Nuestro nombre, <strong>Kaori</strong>, significa "fragancia" en japonés — representando la esencia invisible pero poderosa que cada uno de nuestros productos aporta a tu vida.</p>
-          <p>Cada vela que vertemos, cada mineral que seleccionamos, lo hacemos con intención, cariño y una atención al detalle que va mucho más allá de lo que se ve a simple vista.</p>
+          <div class="intro-text">
+            <p>Kaori nació de un profundo amor por lo natural y lo hecho a mano. Somos una pequeña marca familiar que crea productos artesanales con un propósito especial: <em>llevar luz, arte y energía positiva a cada hogar</em>.</p>
+            <p>Nuestro nombre, <strong>Kaori</strong>, significa "fragancia" en japonés — representando la esencia invisible pero poderosa que cada uno de nuestros productos aporta a tu vida.</p>
+            <p>Cada vela que vertemos, cada mineral que seleccionamos, lo hacemos con intención, cariño y una atención al detalle que va mucho más allá de lo que se ve a simple vista.</p>
+          </div>
           <a href="shop.html" class="btn-primary-outline">Explorar la colección</a>
         </div>
       </div>
     </div>
   </section>
-
-  <!-- STATS -->
   <section class="stats-section">
     <div class="stats-grid">
-      <div class="stat-item reveal">
-        <span class="stat-num">500<em>+</em></span>
-        <span class="stat-label">Clientas felices</span>
-      </div>
-      <div class="stat-item reveal">
-        <span class="stat-num">100<em>%</em></span>
-        <span class="stat-label">Natural y artesanal</span>
-      </div>
-      <div class="stat-item reveal">
-        <span class="stat-num">3<em>+</em></span>
-        <span class="stat-label">Años de experiencia</span>
-      </div>
-      <div class="stat-item reveal">
-        <span class="stat-num">50<em>+</em></span>
-        <span class="stat-label">Productos únicos</span>
-      </div>
+      <div class="stat-item reveal"><span class="stat-num">500<em>+</em></span><span class="stat-label">Clientas felices</span></div>
+      <div class="stat-item reveal"><span class="stat-num">100<em>%</em></span><span class="stat-label">Natural y artesanal</span></div>
+      <div class="stat-item reveal"><span class="stat-num">3<em>+</em></span><span class="stat-label">Años de experiencia</span></div>
+      <div class="stat-item reveal"><span class="stat-num">50<em>+</em></span><span class="stat-label">Productos únicos</span></div>
     </div>
   </section>
-
-  <!-- VALORES -->
   <section class="valores-section">
     <div class="valores-inner">
       <span class="section-eyebrow reveal">Lo que nos define</span>
       <h2 class="section-title reveal">Nuestros <em>Valores</em></h2>
-      <div class="divider reveal"></div>
+      <div class="divider center reveal"></div>
       <div class="valores-grid">
-        <div class="valor-card reveal">
-          <span class="valor-icon">🌿</span>
-          <h3>Natural</h3>
-          <p>Utilizamos solo ingredientes naturales, ceras vegetales, esencias puras y materiales sostenibles seleccionados con el mayor cuidado.</p>
-        </div>
-        <div class="valor-card reveal">
-          <span class="valor-icon">♥</span>
-          <h3>Con Amor</h3>
-          <p>Cada producto se crea a mano con dedicación absoluta. Nunca fabricamos en serie porque creemos que el amor se nota en cada detalle.</p>
-        </div>
-        <div class="valor-card reveal">
-          <span class="valor-icon">✦</span>
-          <h3>Consciente</h3>
-          <p>Creemos en el poder de la intención. Cada pieza lleva una energía especial cargada para tu bienestar y el de tu hogar.</p>
-        </div>
-        <div class="valor-card reveal">
-          <span class="valor-icon">🌍</span>
-          <h3>Sostenible</h3>
-          <p>Trabajamos con proveedores responsables y packaging ecológico porque el futuro del planeta es tan importante como el presente.</p>
-        </div>
+        <div class="valor-card reveal"><span class="valor-icon">🌿</span><h3>Natural</h3><p>Utilizamos solo ingredientes naturales, ceras vegetales, esencias puras y materiales sostenibles seleccionados con el mayor cuidado.</p></div>
+        <div class="valor-card reveal"><span class="valor-icon">♥</span><h3>Con Amor</h3><p>Cada producto se crea a mano con dedicación absoluta. Nunca fabricamos en serie porque creemos que el amor se nota en cada detalle.</p></div>
+        <div class="valor-card reveal"><span class="valor-icon">✦</span><h3>Consciente</h3><p>Creemos en el poder de la intención. Cada pieza lleva una energía especial cargada para tu bienestar y el de tu hogar.</p></div>
+        <div class="valor-card reveal"><span class="valor-icon">🌍</span><h3>Sostenible</h3><p>Trabajamos con proveedores responsables y packaging ecológico porque el futuro del planeta es tan importante como el presente.</p></div>
       </div>
     </div>
   </section>
-
-  <!-- PROCESO ARTESANAL -->
   <section class="proceso-section">
     <div class="proceso-inner">
       <span class="section-eyebrow reveal">Cómo lo hacemos</span>
       <h2 class="section-title reveal">El proceso <em>artesanal</em></h2>
       <div class="divider reveal"></div>
       <div class="proceso-timeline">
-        <div class="proceso-step reveal">
-          <span class="paso-num">01</span>
-          <div class="paso-content">
-            <h3>Selección de ingredientes</h3>
-            <p>Cada ingrediente pasa por un riguroso proceso de selección. Solo los mejores materiales naturales llegan a formar parte de nuestros productos.</p>
-          </div>
-          <div class="paso-img">
-            <img src="https://images.unsplash.com/photo-1559181567-c3190ee73a43?w=300&q=80" alt="Ingredientes" loading="lazy" />
-          </div>
-        </div>
-        <div class="proceso-step reveal">
-          <span class="paso-num">02</span>
-          <div class="paso-content">
-            <h3>Elaboración artesanal</h3>
-            <p>Cada pieza se crea a mano, con paciencia y dedicación. El proceso de vertido, enfriado y acabado se cuida al milímetro.</p>
-          </div>
-          <div class="paso-img">
-            <img src="https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=300&q=80" alt="Elaboración" loading="lazy" />
-          </div>
-        </div>
-        <div class="proceso-step reveal">
-          <span class="paso-num">03</span>
-          <div class="paso-content">
-            <h3>Carga de energía e intención</h3>
-            <p>Antes de empaquetar cada producto, lo cargamos con intención positiva. Creemos que la energía que ponemos se transmite a quien lo recibe.</p>
-          </div>
-          <div class="paso-img">
-            <img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=300&q=80" alt="Energía" loading="lazy" />
-          </div>
-        </div>
-        <div class="proceso-step reveal">
-          <span class="paso-num">04</span>
-          <div class="paso-content">
-            <h3>Empaquetado con mimo</h3>
-            <p>El packaging es parte de la experiencia. Cada pedido se prepara con cuidado especial para que la primera impresión sea tan especial como el producto.</p>
-          </div>
-          <div class="paso-img">
-            <img src="https://images.unsplash.com/photo-1603905000478-e1b9fb17b2eb?w=300&q=80" alt="Packaging" loading="lazy" />
-          </div>
-        </div>
+        <div class="proceso-step reveal"><span class="paso-num">01</span><div class="paso-content"><h3>Selección de ingredientes</h3><p>Cada ingrediente pasa por un riguroso proceso de selección. Solo los mejores materiales naturales llegan a formar parte de nuestros productos.</p></div><div class="paso-img"><img src="https://images.unsplash.com/photo-1559181567-c3190ee73a43?w=300&q=80" alt="Ingredientes" loading="lazy" /></div></div>
+        <div class="proceso-step reveal"><span class="paso-num">02</span><div class="paso-content"><h3>Elaboración artesanal</h3><p>Cada pieza se crea a mano, con paciencia y dedicación. El proceso de vertido, enfriado y acabado se cuida al milímetro.</p></div><div class="paso-img"><img src="https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=300&q=80" alt="Elaboración" loading="lazy" /></div></div>
+        <div class="proceso-step reveal"><span class="paso-num">03</span><div class="paso-content"><h3>Carga de energía e intención</h3><p>Antes de empaquetar cada producto, lo cargamos con intención positiva. Creemos que la energía que ponemos se transmite a quien lo recibe.</p></div><div class="paso-img"><img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=300&q=80" alt="Energía" loading="lazy" /></div></div>
+        <div class="proceso-step reveal"><span class="paso-num">04</span><div class="paso-content"><h3>Empaquetado con mimo</h3><p>El packaging es parte de la experiencia. Cada pedido se prepara con cuidado especial para que la primera impresión sea tan especial como el producto.</p></div><div class="paso-img"><img src="https://images.unsplash.com/photo-1603905000478-e1b9fb17b2eb?w=300&q=80" alt="Packaging" loading="lazy" /></div></div>
       </div>
     </div>
   </section>
-
-  <!-- COMPROMISO -->
   <section class="compromiso-section">
     <div class="section-inner">
       <div class="compromiso-inner">
@@ -385,34 +252,10 @@
           <div class="divider"></div>
           <p>En Kaori no hacemos promesas que no podamos cumplir. Nos comprometemos con la <em>calidad real, la transparencia y la autenticidad</em> en cada uno de nuestros productos.</p>
           <div class="compromiso-items">
-            <div class="compromiso-item">
-              <div class="c-icon">🌿</div>
-              <div class="c-content">
-                <strong>Ingredientes verificados</strong>
-                <span>Trazabilidad completa de todos nuestros materiales</span>
-              </div>
-            </div>
-            <div class="compromiso-item">
-              <div class="c-icon">🤲</div>
-              <div class="c-content">
-                <strong>100% artesanal</strong>
-                <span>Nunca usamos procesos industriales para nuestros productos</span>
-              </div>
-            </div>
-            <div class="compromiso-item">
-              <div class="c-icon">💜</div>
-              <div class="c-content">
-                <strong>Atención personalizada</strong>
-                <span>Cada cliente es único y merece una atención especial</span>
-              </div>
-            </div>
-            <div class="compromiso-item">
-              <div class="c-icon">♻️</div>
-              <div class="c-content">
-                <strong>Compromiso ecológico</strong>
-                <span>Packaging sostenible y responsabilidad con el medio ambiente</span>
-              </div>
-            </div>
+            <div class="compromiso-item"><div class="c-icon">🌿</div><div class="c-content"><strong>Ingredientes verificados</strong><span>Trazabilidad completa de todos nuestros materiales</span></div></div>
+            <div class="compromiso-item"><div class="c-icon">🤲</div><div class="c-content"><strong>100% artesanal</strong><span>Nunca usamos procesos industriales para nuestros productos</span></div></div>
+            <div class="compromiso-item"><div class="c-icon">💜</div><div class="c-content"><strong>Atención personalizada</strong><span>Cada cliente es único y merece una atención especial</span></div></div>
+            <div class="compromiso-item"><div class="c-icon">♻️</div><div class="c-content"><strong>Compromiso ecológico</strong><span>Packaging sostenible y responsabilidad con el medio ambiente</span></div></div>
           </div>
         </div>
         <div class="compromiso-img reveal-right">
@@ -421,112 +264,39 @@
       </div>
     </div>
   </section>
-
-  <!-- CTA -->
   <section class="cta-section">
     <div class="cta-inner">
       <span class="section-eyebrow reveal">¿Lista para comenzar?</span>
       <h2 class="section-title reveal">Descubre la magia<br />de <em>Kaori</em></h2>
       <div class="divider center reveal"></div>
-      <p class="reveal" style="color:var(--muted);font-size:0.95rem;line-height:1.8;max-width:440px;margin:0 auto;font-weight:300">
-        Explora nuestra colección completa de productos artesanales o contáctanos para una experiencia personalizada.
-      </p>
+      <p class="reveal" style="color:var(--muted);font-size:0.95rem;line-height:1.8;max-width:440px;margin:0 auto;font-weight:300">Explora nuestra colección completa de productos artesanales o contáctanos para una experiencia personalizada.</p>
       <div class="cta-btns">
         <a href="shop.html"    class="btn-primary-solid reveal">Explorar la tienda</a>
         <a href="eventos.html" class="btn-outline-dark reveal">Eventos & Bodas</a>
       </div>
     </div>
   </section>
-
-  <!-- FOOTER -->
   <footer>
     <div class="footer-inner">
-      <div class="footer-brand">
-        <span class="footer-logo">KAORI</span>
-        <p>Velas artesanales y productos naturales creados con intención, amor y los mejores materiales para transformar tu hogar.</p>
-        <div class="footer-social">
-          <a href="https://instagram.com/kaoribyjessnuan" target="_blank">Instagram</a>
-          <a href="#">Pinterest</a>
-        </div>
-      </div>
-      <div class="footer-links">
-        <h4>Colección</h4>
-        <ul>
-          <li><a href="shop.html">Todos los productos</a></li>
-          <li><a href="shop.html?category=velas">Velas</a></li>
-          <li><a href="shop.html?category=minerales">Minerales</a></li>
-          <li><a href="shop.html?category=joyeria">Joyería</a></li>
-        </ul>
-      </div>
-      <div class="footer-links">
-        <h4>Kaori</h4>
-        <ul>
-          <li><a href="about.html">Nosotras</a></li>
-          <li><a href="eventos.html">Eventos & Bodas</a></li>
-          <li><a href="contact.html">Contacto</a></li>
-        </ul>
-      </div>
-      <div class="footer-links">
-        <h4>Contacto</h4>
-        <ul>
-          <li><a href="mailto:info@kaori.es">info@kaori.es</a></li>
-          <li><a href="https://instagram.com/kaoribyjessnuan" target="_blank">@kaoribyjessnuan</a></li>
-        </ul>
-      </div>
+      <div class="footer-brand"><span class="footer-logo">KAORI</span><p>Velas artesanales y productos naturales creados con intención, amor y los mejores materiales para transformar tu hogar.</p><div class="footer-social"><a href="https://instagram.com/kaoribyjessnuan" target="_blank">Instagram</a><a href="#">Pinterest</a></div></div>
+      <div class="footer-links"><h4>Colección</h4><ul><li><a href="shop.html">Todos los productos</a></li><li><a href="shop.html?category=velas">Velas</a></li><li><a href="shop.html?category=minerales">Minerales</a></li><li><a href="shop.html?category=joyeria">Joyería</a></li></ul></div>
+      <div class="footer-links"><h4>Kaori</h4><ul><li><a href="about.html">Nosotras</a></li><li><a href="eventos.html">Eventos & Bodas</a></li><li><a href="contact.html">Contacto</a></li></ul></div>
+      <div class="footer-links"><h4>Contacto</h4><ul><li><a href="mailto:info@kaori.es">info@kaori.es</a></li><li><a href="https://instagram.com/kaoribyjessnuan" target="_blank">@kaoribyjessnuan</a></li></ul></div>
     </div>
-    <div class="footer-bottom">
-      <p>© 2024 Kaori. Todos los derechos reservados.</p>
-      <a href="#">Política de privacidad</a>
-    </div>
+    <div class="footer-bottom"><p>© 2024 Kaori. Todos los derechos reservados.</p><a href="#">Política de privacidad</a></div>
   </footer>
-
   <div id="toast"></div>
-
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js"></script>
   <script src="supabase.js"></script>
   <script src="auth.js"></script>
   <script src="cart.js"></script>
   <script>
-    window.addEventListener('scroll', () => {
-      document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
-    });
-
-    function toggleMenu() {
-      document.getElementById('mobileMenu').classList.toggle('open');
-    }
-    document.addEventListener('click', e => {
-      const menu = document.getElementById('mobileMenu');
-      const ham  = document.querySelector('.hamburger');
-      if (menu && ham && menu.classList.contains('open') &&
-          !menu.contains(e.target) && !ham.contains(e.target)) {
-        menu.classList.remove('open');
-      }
-    });
-
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach((entry, i) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => entry.target.classList.add('visible'), i * 80);
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.12 });
-    document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => observer.observe(el));
-
-    (async () => {
-      try {
-        const sesion = await obtenerSesion();
-        const btn    = document.getElementById('btnCuenta');
-        const mBtn   = document.getElementById('mobileLoginBtn');
-        if (sesion) {
-          const rol = await obtenerRol();
-          const href = rol==='admin' ? 'admin.html' : 'mi-cuenta.html';
-          const txt  = rol==='admin' ? '👑 Panel Admin' : 'Mi cuenta';
-          if(btn) { btn.href=href; btn.textContent=txt; }
-          if(mBtn){ mBtn.href=href; mBtn.textContent=txt; }
-        }
-      } catch(e) {}
-    })();
+    window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>50)});
+    function toggleMenu(){document.getElementById('mobileMenu').classList.toggle('open')}
+    document.addEventListener('click',e=>{const menu=document.getElementById('mobileMenu');const ham=document.querySelector('.hamburger');if(menu&&ham&&menu.classList.contains('open')&&!menu.contains(e.target)&&!ham.contains(e.target))menu.classList.remove('open')});
+    const observer=new IntersectionObserver(entries=>{entries.forEach((entry,i)=>{if(entry.isIntersecting){setTimeout(()=>entry.target.classList.add('visible'),i*80);observer.unobserve(entry.target)}})},{threshold:0.12});
+    document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el=>observer.observe(el));
+    (async()=>{try{const sesion=await obtenerSesion();const btn=document.getElementById('btnCuenta');const mBtn=document.getElementById('mobileLoginBtn');if(sesion){const rol=await obtenerRol();const href=rol==='admin'?'admin.html':'mi-cuenta.html';const txt=rol==='admin'?'👑 Panel Admin':'Mi cuenta';if(btn){btn.href=href;btn.textContent=txt}if(mBtn){mBtn.href=href;mBtn.textContent=txt}}}catch(e){}})();
   </script>
 </body>
 </html>
