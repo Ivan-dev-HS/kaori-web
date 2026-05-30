@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Política de Privacidad y Cookies – Kaori</title>
+  <meta name="description" content="Política de privacidad, cookies y aviso legal de Kaori. Información sobre el tratamiento de datos personales conforme al RGPD." />
+  <meta name="robots" content="noindex, follow" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root{--cream:#faf8f5;--cream2:#f5f0ff;--dark:#2e0854;--dark2:#1e0a3c;--primary:#7c3aed;--primary2:#6d28d9;--light:#f3e8ff;--muted:#6b7280;--text:#2d1b69;--border:#e9d5ff;--pink:#ec4899}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:'Nunito',sans-serif;background:var(--cream);color:var(--text);overflow-x:hidden}
+    h1,h2,h3{font-family:'Cormorant Garamond',serif}
+    a{text-decoration:none;color:var(--primary)}
+    a:hover{text-decoration:underline}
+
+    /* ── NAVBAR ── */
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 3rem;height:80px;background:rgba(250,248,245,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+    .nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.7rem;letter-spacing:0.3em;color:var(--dark);font-weight:400;text-transform:uppercase;text-decoration:none}
+    .nav-back{font-size:0.78rem;color:var(--primary);font-weight:600;display:flex;align-items:center;gap:0.4rem}
+    .nav-back:hover{text-decoration:none;color:var(--primary2)}
+
+    /* ── HERO ── */
+    .hero{padding:8rem 1.5rem 4rem;background:linear-gradient(135deg,#faf5ff,#f0e6ff,var(--cream));text-align:center}
+    .hero-eyebrow{font-size:0.65rem;letter-spacing:0.35em;text-transform:uppercase;color:var(--primary);font-family:'Nunito',sans-serif;font-weight:600;display:block;margin-bottom:1rem}
+    .hero h1{font-size:clamp(2rem,5vw,3.5rem);color:var(--dark);font-weight:300;margin-bottom:1rem}
+    .hero h1 em{font-style:italic;color:var(--primary)}
+    .hero-meta{font-size:0.78rem;color:var(--muted);font-weight:300}
+    .divider{width:40px;height:1px;background:var(--primary);margin:1.5rem auto;opacity:0.4}
+
+    /* ── ÍNDICE ── */
+    .indice{max-width:56rem;margin:0 auto;padding:2rem 1.5rem}
+    .indice-card{background:white;border:1px solid var(--border);border-radius:1rem;padding:1.75rem}
+    .indice-card h2{font-size:1rem;color:var(--dark);font-weight:400;margin-bottom:1rem;font-family:'Nunito',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;font-size:0.78rem;color:var(--muted)}
+    .indice-list{list-style:none;display:flex;flex-direction:column;gap:0.4rem}
+    .indice-list li a{font-size:0.875rem;color:var(--primary);font-weight:500;display:flex;align-items:center;gap:0.5rem}
+    .indice-list li a::before{content:'→';font-size:0.75rem;opacity:0.6}
+    .indice-list li a:hover{text-decoration:underline}
+
+    /* ── CONTENIDO ── */
+    .content{max-width:56rem;margin:0 auto;padding:1rem 1.5rem 5rem}
+    .section{margin-bottom:3rem;background:white;border:1px solid var(--border);border-radius:1rem;overflow:hidden}
+    .section-header{padding:1.5rem 2rem;border-bottom:1px solid var(--border);background:linear-gradient(to right,#faf5ff,white);display:flex;align-items:center;gap:0.75rem}
+    .section-num{width:28px;height:28px;background:var(--primary);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.68rem;font-weight:700;flex-shrink:0;font-family:'Nunito',sans-serif}
+    .section-header h2{font-size:1.2rem;color:var(--dark);font-weight:400}
+    .section-body{padding:1.75rem 2rem;display:flex;flex-direction:column;gap:1rem}
+    .section-body p{font-size:0.875rem;color:var(--muted);line-height:1.9;font-weight:300}
+    .section-body strong{color:var(--dark);font-weight:600}
+    .section-body ul{list-style:none;display:flex;flex-direction:column;gap:0.5rem;padding-left:0}
+    .section-body ul li{font-size:0.875rem;color:var(--muted);line-height:1.7;padding-left:1.25rem;position:relative;font-weight:300}
+    .section-body ul li::before{content:'✦';position:absolute;left:0;color:var(--primary);font-size:0.6rem;top:0.3rem}
+    .section-body a{color:var(--primary);font-weight:600}
+    .info-box{background:var(--cream2);border:1px solid var(--border);border-radius:0.75rem;padding:1.25rem;font-size:0.82rem;color:var(--text);line-height:1.7}
+    .info-box strong{color:var(--dark)}
+    .warning-box{background:#fef3c7;border:1px solid #fde68a;border-radius:0.75rem;padding:1.25rem;font-size:0.82rem;color:#92400e;line-height:1.7}
+
+    /* ── TABLA COOKIES ── */
+    .cookies-table{width:100%;border-collapse:collapse;font-size:0.8rem}
+    .cookies-table th{text-align:left;padding:0.75rem 1rem;background:var(--cream2);color:var(--dark);font-weight:700;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.06em;border-bottom:2px solid var(--border)}
+    .cookies-table td{padding:0.75rem 1rem;border-bottom:1px solid #f9f5ff;color:var(--muted);vertical-align:top;line-height:1.5}
+    .cookies-table tr:last-child td{border-bottom:none}
+    .cookie-type{display:inline-block;padding:2px 8px;border-radius:9999px;font-size:0.65rem;font-weight:700;font-family:'Nunito',sans-serif}
+    .ct-necesaria{background:var(--light);color:var(--primary2)}
+    .ct-analitica{background:#fef3c7;color:#92400e}
+    .ct-terceros{background:#fce7f3;color:#9d174d}
+
+    /* ── BANNER COOKIES ── */
+    #cookieBanner{position:fixed;bottom:0;left:0;right:0;background:var(--dark2);border-top:2px solid var(--primary);padding:1.25rem 2rem;z-index:200;display:none;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap}
+    #cookieBanner.show{display:flex}
+    .cookie-text{flex:1;min-width:200px}
+    .cookie-text p{font-size:0.82rem;color:rgba(255,255,255,0.75);line-height:1.6;font-weight:300}
+    .cookie-text a{color:#c4b5fd;font-weight:600}
+    .cookie-btns{display:flex;gap:0.75rem;flex-wrap:wrap;flex-shrink:0}
+    .btn-accept{background:var(--primary);color:white;border:none;border-radius:9999px;padding:0.65rem 1.5rem;font-family:'Nunito',sans-serif;font-size:0.78rem;font-weight:700;cursor:pointer;transition:all 0.2s}
+    .btn-accept:hover{background:var(--primary2)}
+    .btn-reject{background:transparent;color:rgba(255,255,255,0.5);border:1px solid rgba(255,255,255,0.2);border-radius:9999px;padding:0.65rem 1.5rem;font-family:'Nunito',sans-serif;font-size:0.78rem;font-weight:600;cursor:pointer;transition:all 0.2s}
+    .btn-reject:hover{border-color:rgba(255,255,255,0.4);color:white}
+    .btn-config{background:transparent;color:rgba(255,255,255,0.4);border:none;font-family:'Nunito',sans-serif;font-size:0.72rem;cursor:pointer;text-decoration:underline;padding:0}
+    .btn-config:hover{color:white}
+
+    /* ── FOOTER ── */
+    footer{background:var(--dark2);padding:3rem 1.5rem 2rem}
+    .footer-inner{max-width:80rem;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;margin-bottom:1.5rem}
+    .footer-logo{font-family:'Cormorant Garamond',serif;font-size:1.5rem;letter-spacing:0.3em;color:white;font-weight:300;text-decoration:none}
+    .footer-links-row{display:flex;gap:2rem;flex-wrap:wrap}
+    .footer-links-row a{font-size:0.78rem;color:rgba(255,255,255,0.4);transition:color 0.3s;font-weight:300}
+    .footer-links-row a:hover{color:white;text-decoration:none}
+    .footer-bottom{border-top:1px solid rgba(255,255,255,0.06);padding-top:1.5rem;text-align:center;color:rgba(255,255,255,0.2);font-size:0.72rem;max-width:80rem;margin:0 auto}
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:768px){
+      nav{padding:0 1.5rem}
+      .hero{padding:6rem 1rem 3rem}
+      .indice,.content{padding-left:1rem;padding-right:1rem}
+      .section-body{padding:1.25rem}
+      .section-header{padding:1.25rem}
+      #cookieBanner{padding:1rem}
+      .cookies-table{font-size:0.72rem}
+      .cookies-table th,.cookies-table td{padding:0.5rem 0.6rem}
+    }
+    @media(max-width:480px){
+      nav{padding:0 1rem}
+      .cookie-btns{width:100%}
+      .btn-accept,.btn-reject{flex:1;text-align:center}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+    <a href="index.html" class="nav-logo">KAORI</a>
+    <a href="index.html" class="nav-back">← Volver al inicio</a>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <span class="hero-eyebrow">Legal · Privacidad · Cookies</span>
+    <h1>Política de <em>Privacidad</em><br />y Cookies</h1>
+    <div class="divider"></div>
+    <p class="hero-meta">Última actualización: enero de 2025 · Conforme al RGPD y LOPDGDD</p>
+  </div>
+
+  <!-- ÍNDICE -->
+  <div class="indice">
+    <div class="indice-card">
+      <h2>Contenido</h2>
+      <ul class="indice-list">
+        <li><a href="#responsable">1. Responsable del tratamiento</a></li>
+        <li><a href="#datos">2. Datos que recopilamos</a></li>
+        <li><a href="#finalidad">3. Finalidad del tratamiento</a></li>
+        <li><a href="#base">4. Base legal</a></li>
+        <li><a href="#conservacion">5. Conservación de datos</a></li>
+        <li><a href="#derechos">6. Tus derechos</a></li>
+        <li><a href="#cookies">7. Política de cookies</a></li>
+        <li><a href="#terceros">8. Transferencias a terceros</a></li>
+        <li><a href="#menores">9. Menores de edad</a></li>
+        <li><a href="#cambios">10. Cambios en esta política</a></li>
+        <li><a href="#contacto">11. Contacto</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- CONTENIDO -->
+  <div class="content">
+
+    <!-- 1. RESPONSABLE -->
+    <div class="section" id="responsable">
+      <div class="section-header">
+        <span class="section-num">1</span>
+        <h2>Responsable del tratamiento</h2>
+      </div>
+      <div class="section-body">
+        <div class="info-box">
+          <strong>Kaori by Jessnuan</strong><br />
+          Actividad: Venta de velas artesanales y productos naturales<br />
+          Email: <a href="mailto:info@kaori.es">info@kaori.es</a><br />
+          Web: <a href="https://kaori.es">kaori.es</a><br />
+          Instagram: <a href="https://instagram.com/kaoribyjessnuan" target="_blank">@kaoribyjessnuan</a>
+        </div>
+        <p>En Kaori nos tomamos muy en serio la protección de tu privacidad. Esta política explica de forma clara y transparente cómo recopilamos, usamos y protegemos tu información personal cuando utilizas nuestra web o realizas una compra.</p>
+      </div>
+    </div>
+
+    <!-- 2. DATOS -->
+    <div class="section" id="datos">
+      <div class="section-header">
+        <span class="section-num">2</span>
+        <h2>Datos que recopilamos</h2>
+      </div>
+      <div class="section-body">
+        <p><strong>Datos que nos proporcionas directamente:</strong></p>
+        <ul>
+          <li>Nombre y apellidos al realizar un pedido o registrarte</li>
+          <li>Dirección de email para gestionar tu cuenta y pedidos</li>
+          <li>Dirección postal para el envío de pedidos</li>
+          <li>Número de teléfono (opcional, para contacto sobre tu pedido)</li>
+          <li>Datos de pago (gestionados de forma segura por Stripe, nunca los almacenamos)</li>
+          <li>Mensajes que nos envíes a través del formulario de contacto</li>
+        </ul>
+        <p><strong>Datos que recopilamos automáticamente:</strong></p>
+        <ul>
+          <li>Dirección IP y tipo de navegador (datos técnicos de acceso)</li>
+          <li>Páginas visitadas y tiempo de permanencia (analytics anónimos)</li>
+          <li>Cookies técnicas necesarias para el funcionamiento de la web</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 3. FINALIDAD -->
+    <div class="section" id="finalidad">
+      <div class="section-header">
+        <span class="section-num">3</span>
+        <h2>Finalidad del tratamiento</h2>
+      </div>
+      <div class="section-body">
+        <p>Utilizamos tus datos exclusivamente para las siguientes finalidades:</p>
+        <ul>
+          <li><strong>Gestión de pedidos:</strong> procesar, preparar y enviar tus compras, y comunicarte el estado de tu pedido</li>
+          <li><strong>Gestión de tu cuenta:</strong> permitirte acceder a tu historial de pedidos y datos personales</li>
+          <li><strong>Atención al cliente:</strong> responder tus consultas, gestionar devoluciones e incidencias</li>
+          <li><strong>Comunicaciones comerciales:</strong> enviarte novedades y ofertas, solo si has dado tu consentimiento explícito</li>
+          <li><strong>Cumplimiento legal:</strong> conservar facturas y datos de transacciones según la legislación fiscal vigente</li>
+          <li><strong>Seguridad:</strong> prevenir fraudes y proteger la integridad de nuestra plataforma</li>
+        </ul>
+        <div class="info-box">
+          <strong>Importante:</strong> nunca vendemos, cedemos ni compartimos tus datos personales con terceros con fines comerciales propios.
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. BASE LEGAL -->
+    <div class="section" id="base">
+      <div class="section-header">
+        <span class="section-num">4</span>
+        <h2>Base legal del tratamiento</h2>
+      </div>
+      <div class="section-body">
+        <p>El tratamiento de tus datos se realiza bajo las siguientes bases legales conforme al RGPD (Reglamento UE 2016/679):</p>
+        <ul>
+          <li><strong>Ejecución de contrato (art. 6.1.b):</strong> para gestionar tus pedidos y la relación comercial</li>
+          <li><strong>Consentimiento (art. 6.1.a):</strong> para el envío de comunicaciones comerciales y uso de cookies no esenciales</li>
+          <li><strong>Obligación legal (art. 6.1.c):</strong> para el cumplimiento de obligaciones fiscales y contables</li>
+          <li><strong>Interés legítimo (art. 6.1.f):</strong> para la prevención del fraude y la seguridad de la plataforma</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 5. CONSERVACIÓN -->
+    <div class="section" id="conservacion">
+      <div class="section-header">
+        <span class="section-num">5</span>
+        <h2>Conservación de datos</h2>
+      </div>
+      <div class="section-body">
+        <ul>
+          <li><strong>Datos de cuenta:</strong> mientras mantengas tu cuenta activa. Si la eliminas, los datos se borrarán en 30 días salvo obligación legal</li>
+          <li><strong>Datos de pedidos:</strong> 5 años desde la fecha del pedido, conforme a la legislación fiscal española</li>
+          <li><strong>Comunicaciones de contacto:</strong> 1 año desde la última comunicación</li>
+          <li><strong>Datos de newsletter:</strong> hasta que retires tu consentimiento</li>
+          <li><strong>Cookies:</strong> según el tipo, entre la sesión y 2 años (ver tabla de cookies)</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 6. DERECHOS -->
+    <div class="section" id="derechos">
+      <div class="section-header">
+        <span class="section-num">6</span>
+        <h2>Tus derechos</h2>
+      </div>
+      <div class="section-body">
+        <p>Conforme al RGPD y la LOPDGDD, tienes derecho a:</p>
+        <ul>
+          <li><strong>Acceso:</strong> conocer qué datos tenemos sobre ti</li>
+          <li><strong>Rectificación:</strong> corregir datos inexactos o incompletos</li>
+          <li><strong>Supresión:</strong> solicitar el borrado de tus datos ("derecho al olvido")</li>
+          <li><strong>Oposición:</strong> oponerte a ciertos tratamientos, incluido el marketing directo</li>
+          <li><strong>Portabilidad:</strong> recibir tus datos en formato estructurado</li>
+          <li><strong>Limitación:</strong> solicitar que limitemos el tratamiento de tus datos</li>
+          <li><strong>Retirar el consentimiento:</strong> en cualquier momento, sin que afecte a lo anterior</li>
+        </ul>
+        <p>Para ejercer cualquiera de estos derechos, escríbenos a <a href="mailto:info@kaori.es">info@kaori.es</a> con el asunto "Derechos RGPD". Responderemos en un plazo máximo de 30 días.</p>
+        <p>También tienes derecho a presentar una reclamación ante la <strong>Agencia Española de Protección de Datos (AEPD)</strong> en <a href="https://www.aepd.es" target="_blank">www.aepd.es</a>.</p>
+      </div>
+    </div>
+
+    <!-- 7. COOKIES -->
+    <div class="section" id="cookies">
+      <div class="section-header">
+        <span class="section-num">7</span>
+        <h2>Política de cookies</h2>
+      </div>
+      <div class="section-body">
+        <p>Las cookies son pequeños archivos de texto que se almacenan en tu dispositivo cuando visitas nuestra web. Las usamos para garantizar el correcto funcionamiento del sitio y mejorar tu experiencia.</p>
+
+        <p><strong>Tipos de cookies que utilizamos:</strong></p>
+
+        <div style="overflow-x:auto">
+          <table class="cookies-table">
+            <thead>
+              <tr>
+                <th>Cookie</th>
+                <th>Tipo</th>
+                <th>Finalidad</th>
+                <th>Duración</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>kaori_cart</code></td>
+                <td><span class="cookie-type ct-necesaria">Necesaria</span></td>
+                <td>Guarda el carrito de compra en tu dispositivo</td>
+                <td>Sesión / localStorage</td>
+              </tr>
+              <tr>
+                <td><code>sb-*</code> (Supabase)</td>
+                <td><span class="cookie-type ct-necesaria">Necesaria</span></td>
+                <td>Mantiene tu sesión iniciada de forma segura</td>
+                <td>7 días</td>
+              </tr>
+              <tr>
+                <td><code>stripe-*</code></td>
+                <td><span class="cookie-type ct-necesaria">Necesaria</span></td>
+                <td>Procesamiento seguro de pagos mediante Stripe</td>
+                <td>Sesión</td>
+              </tr>
+              <tr>
+                <td>Google Fonts</td>
+                <td><span class="cookie-type ct-terceros">Terceros</span></td>
+                <td>Carga de tipografías desde servidores de Google</td>
+                <td>1 año</td>
+              </tr>
+              <tr>
+                <td>Unsplash CDN</td>
+                <td><span class="cookie-type ct-terceros">Terceros</span></td>
+                <td>Imágenes de muestra cargadas desde Unsplash</td>
+                <td>Sesión</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="warning-box">
+          ⚠️ Nuestra web no utiliza cookies de seguimiento publicitario ni de remarketing. No compartimos datos de navegación con redes publicitarias.
+        </div>
+
+        <p><strong>Cómo gestionar las cookies:</strong></p>
+        <p>Puedes configurar tu navegador para rechazar las cookies o eliminar las existentes. Ten en cuenta que deshabilitar las cookies necesarias puede afectar al funcionamiento de la web (por ejemplo, no podrás mantener el carrito de compra).</p>
+        <ul>
+          <li><a href="https://support.google.com/chrome/answer/95647" target="_blank">Google Chrome</a></li>
+          <li><a href="https://support.mozilla.org/es/kb/habilitar-y-deshabilitar-cookies-sitios-web-rastrear-preferencias" target="_blank">Mozilla Firefox</a></li>
+          <li><a href="https://support.apple.com/es-es/guide/safari/sfri11471/mac" target="_blank">Safari</a></li>
+          <li><a href="https://support.microsoft.com/es-es/windows/eliminar-y-administrar-cookies-168dab11-0753-043d-7c16-ede5947fc64d" target="_blank">Microsoft Edge</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 8. TERCEROS -->
+    <div class="section" id="terceros">
+      <div class="section-header">
+        <span class="section-num">8</span>
+        <h2>Transferencias a terceros</h2>
+      </div>
+      <div class="section-body">
+        <p>Para poder ofrecerte nuestros servicios trabajamos con los siguientes proveedores que pueden tener acceso a tus datos:</p>
+        <ul>
+          <li><strong>Supabase (EE.UU.):</strong> base de datos y autenticación. Cumple con el marco de privacidad UE-EE.UU. Más info en <a href="https://supabase.com/privacy" target="_blank">supabase.com/privacy</a></li>
+          <li><strong>Stripe (EE.UU.):</strong> procesamiento de pagos. No almacenamos datos de tarjetas. Más info en <a href="https://stripe.com/es/privacy" target="_blank">stripe.com/es/privacy</a></li>
+          <li><strong>Vercel (EE.UU.):</strong> alojamiento web. Más info en <a href="https://vercel.com/legal/privacy-policy" target="_blank">vercel.com/legal/privacy-policy</a></li>
+          <li><strong>Empresa de mensajería:</strong> tus datos de envío (nombre y dirección) se comparten con el transportista únicamente para la entrega de tu pedido</li>
+        </ul>
+        <p>Todos nuestros proveedores ofrecen garantías adecuadas de protección de datos conforme al RGPD.</p>
+      </div>
+    </div>
+
+    <!-- 9. MENORES -->
+    <div class="section" id="menores">
+      <div class="section-header">
+        <span class="section-num">9</span>
+        <h2>Menores de edad</h2>
+      </div>
+      <div class="section-body">
+        <p>Nuestra web no está dirigida a menores de 16 años. No recopilamos conscientemente datos personales de menores. Si eres padre o tutor y crees que tu hijo nos ha proporcionado datos personales, contáctanos en <a href="mailto:info@kaori.es">info@kaori.es</a> y los eliminaremos de inmediato.</p>
+      </div>
+    </div>
+
+    <!-- 10. CAMBIOS -->
+    <div class="section" id="cambios">
+      <div class="section-header">
+        <span class="section-num">10</span>
+        <h2>Cambios en esta política</h2>
+      </div>
+      <div class="section-body">
+        <p>Podemos actualizar esta política de privacidad para adaptarla a cambios legales o en nuestros servicios. Te notificaremos los cambios relevantes mediante un aviso destacado en la web o por email si eres cliente registrado.</p>
+        <p>La fecha de la última actualización aparece siempre al inicio de este documento. Te recomendamos revisarla periódicamente.</p>
+      </div>
+    </div>
+
+    <!-- 11. CONTACTO -->
+    <div class="section" id="contacto">
+      <div class="section-header">
+        <span class="section-num">11</span>
+        <h2>Contacto</h2>
+      </div>
+      <div class="section-body">
+        <p>Para cualquier consulta relacionada con tu privacidad o el ejercicio de tus derechos, puedes contactarnos en:</p>
+        <div class="info-box">
+          <strong>Kaori by Jessnuan</strong><br />
+          📧 <a href="mailto:info@kaori.es">info@kaori.es</a><br />
+          📷 <a href="https://instagram.com/kaoribyjessnuan" target="_blank">@kaoribyjessnuan</a><br /><br />
+          Responderemos en un plazo máximo de <strong>30 días hábiles</strong>.
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <a href="index.html" class="footer-logo">KAORI</a>
+      <div class="footer-links-row">
+        <a href="index.html">Inicio</a>
+        <a href="shop.html">Tienda</a>
+        <a href="about.html">Nosotras</a>
+        <a href="contact.html">Contacto</a>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2024 Kaori. Todos los derechos reservados.</div>
+  </footer>
+
+  <!-- BANNER COOKIES -->
+  <div id="cookieBanner">
+    <div class="cookie-text">
+      <p>🍪 Usamos cookies necesarias para el carrito y tu sesión, y cookies de terceros para fuentes y pagos seguros. <a href="privacidad.html">Más información</a></p>
+    </div>
+    <div class="cookie-btns">
+      <button class="btn-reject" onclick="rechazarCookies()">Solo necesarias</button>
+      <button class="btn-accept" onclick="aceptarCookies()">Aceptar todas</button>
+    </div>
+  </div>
+
+  <script>
+    // ── BANNER COOKIES ─────────────────────────────────────────────────────────
+    (function() {
+      var consent = localStorage.getItem('kaori_cookie_consent');
+      if (!consent) {
+        setTimeout(function() {
+          document.getElementById('cookieBanner').classList.add('show');
+        }, 1200);
+      }
+    })();
+
+    function aceptarCookies() {
+      localStorage.setItem('kaori_cookie_consent', 'all');
+      document.getElementById('cookieBanner').classList.remove('show');
+    }
+
+    function rechazarCookies() {
+      localStorage.setItem('kaori_cookie_consent', 'necessary');
+      document.getElementById('cookieBanner').classList.remove('show');
+    }
+  </script>
+</body>
+</html>
