@@ -48,16 +48,17 @@
 
     /* ── HEADER ── */
     .cuenta-header{background:linear-gradient(135deg,var(--dark),#3b0d8a);border-radius:1.25rem;padding:2.5rem;margin-bottom:2rem;display:flex;align-items:center;gap:2rem;flex-wrap:wrap}
-    .avatar-circle{width:72px;height:72px;border-radius:50%;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;font-size:2rem;flex-shrink:0;border:2px solid rgba(255,255,255,0.2)}
-    .header-info h1{font-size:clamp(1.5rem,3vw,2rem);color:white;font-weight:300;margin-bottom:0.3rem}
-    .header-info p{font-size:0.82rem;color:rgba(255,255,255,0.6);font-weight:300}
+    .avatar-circle{width:72px;height:72px;border-radius:50%;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;font-size:1.6rem;flex-shrink:0;border:2px solid rgba(255,255,255,0.2);font-family:'Cormorant Garamond',serif;color:white;font-weight:300}
+    .header-info{flex:1;min-width:0}
+    .header-info h1{font-size:clamp(1.3rem,3vw,1.8rem);color:white;font-weight:300;margin-bottom:0.3rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .header-info p{font-size:0.82rem;color:rgba(255,255,255,0.6);font-weight:300;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .header-badge{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:#c4b5fd;font-size:0.68rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;padding:4px 12px;border-radius:9999px;font-family:'Nunito',sans-serif;margin-top:0.5rem;display:inline-block}
     .header-actions{margin-left:auto;display:flex;gap:0.75rem;flex-wrap:wrap}
     .btn-logout-header{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.2);border-radius:9999px;padding:0.5rem 1.2rem;font-family:'Nunito',sans-serif;font-size:0.75rem;color:rgba(255,255,255,0.7);cursor:pointer;transition:all 0.2s}
     .btn-logout-header:hover{background:rgba(239,68,68,0.2);border-color:rgba(239,68,68,0.4);color:#fca5a5}
 
-    /* ── STATS ── */
-    .cuenta-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem;margin-bottom:2rem}
+    /* ── STATS — solo 2 ── */
+    .cuenta-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-bottom:2rem}
     .cstat{background:white;border:1px solid var(--border);border-radius:1rem;padding:1.25rem;text-align:center;transition:all 0.2s}
     .cstat:hover{box-shadow:0 4px 20px rgba(124,58,237,0.1);transform:translateY(-2px)}
     .cstat-val{font-size:1.8rem;font-weight:800;color:var(--primary);display:block;line-height:1}
@@ -84,7 +85,7 @@
     .pedido-summary:hover{background:#faf5ff}
     .pedido-id{font-size:0.72rem;color:var(--muted);font-family:monospace;background:var(--cream2);padding:2px 8px;border-radius:4px;flex-shrink:0}
     .pedido-info{flex:1;min-width:0}
-    .pedido-info strong{display:block;font-size:0.82rem;color:var(--dark)}
+    .pedido-info strong{display:block;color:var(--dark);font-size:0.82rem}
     .pedido-info span{font-size:0.72rem;color:var(--muted)}
     .pedido-status{padding:0.25rem 0.75rem;border-radius:9999px;font-size:0.72rem;font-weight:700;white-space:nowrap}
     .s-pending{background:#fef3c7;color:#92400e}
@@ -101,7 +102,7 @@
     .pitem:last-child{border-bottom:none}
     .pitem-img{width:44px;height:44px;object-fit:cover;border-radius:0.4rem;flex-shrink:0;background:var(--light)}
     .pitem-info{flex:1}
-    .pitem-info strong{font-size:0.78rem;color:var(--dark);display:block}
+    .pitem-info strong{display:block;font-size:0.78rem;color:var(--dark)}
     .pitem-info span{font-size:0.68rem;color:var(--muted)}
     .pitem-price{font-size:0.82rem;font-weight:700;color:var(--dark)}
     .pedido-totales{display:flex;flex-direction:column;gap:0.3rem}
@@ -120,13 +121,17 @@
     .dato-group input{font-family:'Nunito',sans-serif;border:1.5px solid var(--border);border-radius:0.75rem;padding:0.65rem 0.9rem;font-size:0.875rem;outline:none;width:100%;transition:all 0.2s;color:var(--dark);background:white}
     .dato-group input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(124,58,237,0.08)}
     .dato-group input:disabled{background:var(--cream2);color:var(--muted);cursor:not-allowed}
-    .datos-actions{padding:0 1.5rem 1.5rem;display:flex;gap:0.75rem}
+    .dato-group input.guardado{border-color:#16a34a;background:#f0fdf4}
+    .datos-actions{padding:0 1.5rem 1.5rem;display:flex;gap:0.75rem;align-items:center}
     .btn-primary{background:linear-gradient(135deg,var(--primary),var(--primary2));color:white;border:none;border-radius:9999px;padding:0.65rem 1.5rem;font-family:'Nunito',sans-serif;font-weight:700;font-size:0.82rem;cursor:pointer;transition:all 0.2s;box-shadow:0 2px 8px rgba(124,58,237,0.2)}
     .btn-primary:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(124,58,237,0.3)}
+    .btn-primary:disabled{background:#c4b5fd;cursor:not-allowed;transform:none;box-shadow:none}
     .btn-secondary{background:white;color:var(--primary);border:1px solid var(--border);border-radius:9999px;padding:0.65rem 1.5rem;font-family:'Nunito',sans-serif;font-weight:600;font-size:0.82rem;cursor:pointer;transition:all 0.15s}
     .btn-secondary:hover{background:var(--light)}
+    .save-msg{font-size:0.78rem;color:#16a34a;font-weight:600;display:none;align-items:center;gap:0.3rem}
+    .save-msg.show{display:flex}
 
-    /* ── CAMBIAR CONTRASEÑA ── */
+    /* ── CONTRASEÑA ── */
     .pass-form{padding:1.5rem;display:flex;flex-direction:column;gap:1rem;max-width:400px}
     .msg-ok{background:#dcfce7;color:#166534;border:1px solid #bbf7d0;border-radius:0.75rem;padding:0.75rem 1rem;font-size:0.82rem;display:none}
     .msg-err{background:#fee2e2;color:#991b1b;border:1px solid #fecaca;border-radius:0.75rem;padding:0.75rem 1rem;font-size:0.82rem;display:none}
@@ -152,17 +157,15 @@
       .mobile-menu{top:64px}
       .cuenta-page{padding:80px 1rem 3rem}
       .cuenta-header{padding:1.5rem;gap:1rem}
-      .avatar-circle{width:56px;height:56px;font-size:1.5rem}
+      .avatar-circle{width:56px;height:56px;font-size:1.3rem}
       .header-actions{margin-left:0;width:100%}
       .datos-grid{grid-template-columns:1fr}
       .dato-group.full{grid-column:1/-1}
-      .cuenta-stats{grid-template-columns:repeat(2,1fr)}
       .tab{padding:0.75rem 1rem;font-size:0.72rem}
     }
     @media(max-width:480px){
       nav{padding:0 0.875rem}
       .cuenta-stats{grid-template-columns:1fr 1fr}
-      .pedido-summary{gap:0.5rem}
     }
   </style>
 </head>
@@ -206,7 +209,7 @@
 
     <!-- HEADER -->
     <div class="cuenta-header">
-      <div class="avatar-circle" id="avatarCircle">👤</div>
+      <div class="avatar-circle" id="avatarCircle">✦</div>
       <div class="header-info">
         <h1 id="headerNombre">Mi cuenta</h1>
         <p id="headerEmail">—</p>
@@ -217,16 +220,8 @@
       </div>
     </div>
 
-    <!-- STATS -->
+    <!-- STATS — solo En proceso y Entregados -->
     <div class="cuenta-stats">
-      <div class="cstat">
-        <span class="cstat-val" id="statPedidos">0</span>
-        <span class="cstat-label">Pedidos realizados</span>
-      </div>
-      <div class="cstat">
-        <span class="cstat-val" id="statGastado">0€</span>
-        <span class="cstat-label">Total gastado</span>
-      </div>
       <div class="cstat">
         <span class="cstat-val" id="statPendientes">0</span>
         <span class="cstat-label">En proceso</span>
@@ -263,15 +258,22 @@
     <!-- TAB DATOS -->
     <div class="tab-content" id="tab-datos">
       <div class="card">
-        <div class="card-head"><h2>Datos personales</h2></div>
+        <div class="card-head">
+          <h2>Datos personales</h2>
+          <span style="font-size:0.72rem;color:var(--muted);font-weight:300">Los campos con * son obligatorios</span>
+        </div>
         <div class="datos-grid">
-          <div class="dato-group">
-            <label>Email</label>
+          <div class="dato-group full">
+            <label>Email (no editable)</label>
             <input type="email" id="datoEmail" disabled />
           </div>
           <div class="dato-group">
-            <label>Nombre</label>
+            <label>Nombre *</label>
             <input type="text" id="datoNombre" placeholder="Tu nombre" />
+          </div>
+          <div class="dato-group">
+            <label>Apellidos</label>
+            <input type="text" id="datoApellidos" placeholder="Tus apellidos" />
           </div>
           <div class="dato-group">
             <label>Teléfono</label>
@@ -285,9 +287,20 @@
             <label>Dirección</label>
             <input type="text" id="datoDireccion" placeholder="Calle, número, piso..." />
           </div>
+          <div class="dato-group">
+            <label>Código postal</label>
+            <input type="text" id="datoCP" placeholder="28001" />
+          </div>
+          <div class="dato-group">
+            <label>Provincia</label>
+            <input type="text" id="datoProvincia" placeholder="Madrid" />
+          </div>
         </div>
         <div class="datos-actions">
-          <button class="btn-primary" onclick="guardarDatos()">Guardar cambios</button>
+          <button class="btn-primary" id="btnGuardarDatos" onclick="guardarDatos()">
+            💾 Guardar cambios
+          </button>
+          <span class="save-msg" id="saveMsg">✓ Datos guardados correctamente</span>
         </div>
       </div>
     </div>
@@ -297,7 +310,7 @@
       <div class="card">
         <div class="card-head"><h2>Cambiar contraseña</h2></div>
         <div class="pass-form">
-          <p style="font-size:0.82rem;color:var(--muted);font-weight:300">
+          <p style="font-size:0.82rem;color:var(--muted);font-weight:300;line-height:1.7">
             Te enviaremos un email con un enlace para cambiar tu contraseña de forma segura.
           </p>
           <button class="btn-primary" onclick="enviarResetPassword()" id="btnReset">
@@ -321,29 +334,19 @@
         <a href="contact.html">Contacto</a>
       </div>
     </div>
-  <div class="footer-bottom">© 2024 Kaori. Todos los derechos reservados. · <a href="privacidad.html" style="color:rgba(255,255,255,0.2)">Política de privacidad</a></div>
+    <div class="footer-bottom">© 2024 Kaori. Todos los derechos reservados. · <a href="privacidad.html" style="color:rgba(255,255,255,0.2)">Política de privacidad</a></div>
   </footer>
 
   <div id="toast"></div>
-  <!-- BANNER COOKIES -->
-<div id="cookieBanner" style="position:fixed;bottom:0;left:0;right:0;background:#1e0a3c;border-top:2px solid #7c3aed;padding:1.25rem 2rem;z-index:300;display:none;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap">
-  <p style="font-size:0.82rem;color:rgba(255,255,255,0.75);line-height:1.6;font-weight:300;flex:1;min-width:200px">
-    🍪 Usamos cookies necesarias para el carrito y tu sesión.
-    <a href="privacidad.html" style="color:#c4b5fd;font-weight:600">Más información</a>
-  </p>
-  <div style="display:flex;gap:0.75rem;flex-shrink:0;flex-wrap:wrap">
-    <button onclick="localStorage.setItem('kaori_cookie_consent','necessary');document.getElementById('cookieBanner').style.display='none'" style="background:transparent;color:rgba(255,255,255,0.5);border:1px solid rgba(255,255,255,0.2);border-radius:9999px;padding:0.6rem 1.25rem;font-family:'Nunito',sans-serif;font-size:0.78rem;font-weight:600;cursor:pointer">Solo necesarias</button>
-    <button onclick="localStorage.setItem('kaori_cookie_consent','all');document.getElementById('cookieBanner').style.display='none'" style="background:#7c3aed;color:white;border:none;border-radius:9999px;padding:0.6rem 1.25rem;font-family:'Nunito',sans-serif;font-size:0.78rem;font-weight:700;cursor:pointer">Aceptar todas</button>
-  </div>
-</div>
-<script>
-  if (!localStorage.getItem('kaori_cookie_consent')) {
-    setTimeout(function() {
-      document.getElementById('cookieBanner').style.display = 'flex';
-    }, 1200);
-  }
-</script>
 
+  <!-- BANNER COOKIES -->
+  <div id="cookieBanner" style="position:fixed;bottom:0;left:0;right:0;background:#1e0a3c;border-top:2px solid #7c3aed;padding:1.25rem 2rem;z-index:300;display:none;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap">
+    <p style="font-size:0.82rem;color:rgba(255,255,255,0.75);line-height:1.6;font-weight:300;flex:1;min-width:200px">🍪 Usamos cookies necesarias para el carrito y tu sesión. <a href="privacidad.html" style="color:#c4b5fd;font-weight:600">Más información</a></p>
+    <div style="display:flex;gap:0.75rem;flex-shrink:0">
+      <button onclick="localStorage.setItem('kaori_cookie_consent','necessary');document.getElementById('cookieBanner').style.display='none'" style="background:transparent;color:rgba(255,255,255,0.5);border:1px solid rgba(255,255,255,0.2);border-radius:9999px;padding:0.6rem 1.25rem;font-family:'Nunito',sans-serif;font-size:0.78rem;font-weight:600;cursor:pointer">Solo necesarias</button>
+      <button onclick="localStorage.setItem('kaori_cookie_consent','all');document.getElementById('cookieBanner').style.display='none'" style="background:#7c3aed;color:white;border:none;border-radius:9999px;padding:0.6rem 1.25rem;font-family:'Nunito',sans-serif;font-size:0.78rem;font-weight:700;cursor:pointer">Aceptar todas</button>
+    </div>
+  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js"></script>
   <script src="supabase.js"></script>
@@ -351,14 +354,15 @@
   <script src="cart.js"></script>
   <script>
     const STATUS = {
-      pending:    { label:'Pendiente',  cls:'s-pending',    icon:'⏳' },
-      processing: { label:'En proceso', cls:'s-processing',  icon:'🔄' },
-      shipped:    { label:'Enviado',    cls:'s-shipped',     icon:'🚚' },
-      delivered:  { label:'Entregado',  cls:'s-delivered',   icon:'✅' },
-      cancelled:  { label:'Cancelado',  cls:'s-cancelled',   icon:'❌' },
+      pending:    { label:'Pendiente',  cls:'s-pending',   icon:'⏳' },
+      processing: { label:'En proceso', cls:'s-processing', icon:'🔄' },
+      shipped:    { label:'Enviado',    cls:'s-shipped',    icon:'🚚' },
+      delivered:  { label:'Entregado',  cls:'s-delivered',  icon:'✅' },
+      cancelled:  { label:'Cancelado',  cls:'s-cancelled',  icon:'❌' },
     };
 
     let usuarioActual = null;
+    let datosPerfil   = {};
 
     // ── NAVBAR ────────────────────────────────────────────────────────────────
     window.addEventListener('scroll', () => {
@@ -389,20 +393,124 @@
         document.getElementById('loadingScreen').style.display = 'none';
         document.getElementById('cuentaPage').style.display    = '';
 
-        // Header
-        const email   = usuarioActual.email;
-        const inicial = email[0].toUpperCase();
-        document.getElementById('avatarCircle').textContent = inicial;
-        document.getElementById('headerEmail').textContent  = email;
-        document.getElementById('headerNombre').textContent = 'Hola, ' + inicial + ' 👋';
-        document.getElementById('datoEmail').value          = email;
+        const email = usuarioActual.email;
+        document.getElementById('datoEmail').value = email;
+        document.getElementById('headerEmail').textContent = email;
 
+        // Cargar datos del perfil guardados
+        await cargarPerfil();
         await cargarPedidos();
+
       } catch(e) {
         console.error(e);
         window.location.href = 'login.html';
       }
+
+      // Cookies
+      if (!localStorage.getItem('kaori_cookie_consent')) {
+        setTimeout(() => { document.getElementById('cookieBanner').style.display = 'flex'; }, 1200);
+      }
     })();
+
+    // ── CARGAR PERFIL ─────────────────────────────────────────────────────────
+    async function cargarPerfil() {
+      try {
+        const { data } = await db
+          .from('profiles')
+          .select('*')
+          .eq('id', usuarioActual.id)
+          .single();
+
+        if (data) {
+          datosPerfil = data;
+
+          // Rellenar formulario
+          if (data.nombre)    document.getElementById('datoNombre').value    = data.nombre;
+          if (data.apellidos) document.getElementById('datoApellidos').value = data.apellidos;
+          if (data.telefono)  document.getElementById('datoTelefono').value  = data.telefono;
+          if (data.ciudad)    document.getElementById('datoCiudad').value    = data.ciudad;
+          if (data.direccion) document.getElementById('datoDireccion').value = data.direccion;
+          if (data.cp)        document.getElementById('datoCP').value        = data.cp;
+          if (data.provincia) document.getElementById('datoProvincia').value = data.provincia;
+
+          // Header — mostrar nombre completo si existe
+          actualizarHeader(data);
+        }
+      } catch(e) {
+        console.warn('Perfil no encontrado, se usará solo el email');
+        actualizarHeader(null);
+      }
+    }
+
+    function actualizarHeader(data) {
+      const email  = usuarioActual.email;
+      const nombre = data?.nombre || '';
+      const apellidos = data?.apellidos || '';
+      const nombreCompleto = [nombre, apellidos].filter(Boolean).join(' ');
+
+      const avatarEl = document.getElementById('avatarCircle');
+      const headerEl = document.getElementById('headerNombre');
+
+      if (nombreCompleto) {
+        // Mostrar nombre completo
+        headerEl.textContent = 'Hola, ' + nombreCompleto + ' 👋';
+        // Avatar con inicial del nombre
+        avatarEl.textContent = nombre[0].toUpperCase();
+      } else {
+        // Sin nombre guardado — mostrar email
+        headerEl.textContent = 'Hola 👋';
+        avatarEl.textContent = email[0].toUpperCase();
+      }
+    }
+
+    // ── GUARDAR DATOS ─────────────────────────────────────────────────────────
+    async function guardarDatos() {
+      const nombre    = document.getElementById('datoNombre').value.trim();
+      const apellidos = document.getElementById('datoApellidos').value.trim();
+      const telefono  = document.getElementById('datoTelefono').value.trim();
+      const ciudad    = document.getElementById('datoCiudad').value.trim();
+      const direccion = document.getElementById('datoDireccion').value.trim();
+      const cp        = document.getElementById('datoCP').value.trim();
+      const provincia = document.getElementById('datoProvincia').value.trim();
+
+      const btn = document.getElementById('btnGuardarDatos');
+      btn.disabled    = true;
+      btn.textContent = '⏳ Guardando...';
+
+      try {
+        const { error } = await db
+          .from('profiles')
+          .upsert({
+            id:        usuarioActual.id,
+            email:     usuarioActual.email,
+            nombre,
+            apellidos,
+            telefono,
+            ciudad,
+            direccion,
+            cp,
+            provincia,
+          }, { onConflict: 'id' });
+
+        if (error) throw error;
+
+        // Actualizar header con el nuevo nombre
+        actualizarHeader({ nombre, apellidos });
+
+        // Feedback visual
+        const msg = document.getElementById('saveMsg');
+        msg.classList.add('show');
+        setTimeout(() => msg.classList.remove('show'), 3000);
+        mostrarToast('✓ Datos guardados correctamente');
+
+      } catch(e) {
+        console.error('Error guardando:', e);
+        mostrarToast('Error al guardar los datos');
+      }
+
+      btn.disabled    = false;
+      btn.textContent = '💾 Guardar cambios';
+    }
 
     // ── PEDIDOS ───────────────────────────────────────────────────────────────
     async function cargarPedidos() {
@@ -419,11 +527,8 @@
         const pedidos = data || [];
 
         // Stats
-        const gastado    = pedidos.filter(o => o.status !== 'cancelled').reduce((s,o) => s + Number(o.total), 0);
         const pendientes = pedidos.filter(o => ['pending','processing','shipped'].includes(o.status)).length;
         const entregados = pedidos.filter(o => o.status === 'delivered').length;
-        document.getElementById('statPedidos').textContent    = pedidos.length;
-        document.getElementById('statGastado').textContent    = gastado.toFixed(0) + '€';
         document.getElementById('statPendientes').textContent = pendientes;
         document.getElementById('statEntregados').textContent = entregados;
 
@@ -461,8 +566,7 @@
                 <div class="pedido-items">
                   ${items.map(i => `
                     <div class="pitem">
-                      <img class="pitem-img" src="${i.image||''}" alt="${i.product_name}"
-                           onerror="this.style.display='none'" />
+                      <img class="pitem-img" src="${i.image||''}" alt="${i.product_name}" onerror="this.style.display='none'" />
                       <div class="pitem-info">
                         <strong>${i.product_name}</strong>
                         <span>× ${i.quantity} · ${Number(i.price).toFixed(2)} € c/u</span>
@@ -490,11 +594,6 @@
     function togglePedido(id) {
       const det = document.getElementById('pd-' + id);
       if (det) det.style.display = det.style.display === 'block' ? 'none' : 'block';
-    }
-
-    // ── GUARDAR DATOS ─────────────────────────────────────────────────────────
-    async function guardarDatos() {
-      mostrarToast('✓ Datos guardados correctamente', 'success');
     }
 
     // ── RESET PASSWORD ────────────────────────────────────────────────────────
