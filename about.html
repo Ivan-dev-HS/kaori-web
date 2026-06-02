@@ -286,6 +286,25 @@
     <div class="footer-bottom"><p>© 2024 Kaori. Todos los derechos reservados.</p><a href="privacidad.html">Política de privacidad</a></div>
   </footer>
   <div id="toast"></div>
+  <!-- BANNER COOKIES -->
+<div id="cookieBanner" style="position:fixed;bottom:0;left:0;right:0;background:#1e0a3c;border-top:2px solid #7c3aed;padding:1.25rem 2rem;z-index:300;display:none;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap">
+  <p style="font-size:0.82rem;color:rgba(255,255,255,0.75);line-height:1.6;font-weight:300;flex:1;min-width:200px">
+    🍪 Usamos cookies necesarias para el carrito y tu sesión.
+    <a href="privacidad.html" style="color:#c4b5fd;font-weight:600">Más información</a>
+  </p>
+  <div style="display:flex;gap:0.75rem;flex-shrink:0;flex-wrap:wrap">
+    <button onclick="localStorage.setItem('kaori_cookie_consent','necessary');document.getElementById('cookieBanner').style.display='none'" style="background:transparent;color:rgba(255,255,255,0.5);border:1px solid rgba(255,255,255,0.2);border-radius:9999px;padding:0.6rem 1.25rem;font-family:'Nunito',sans-serif;font-size:0.78rem;font-weight:600;cursor:pointer">Solo necesarias</button>
+    <button onclick="localStorage.setItem('kaori_cookie_consent','all');document.getElementById('cookieBanner').style.display='none'" style="background:#7c3aed;color:white;border:none;border-radius:9999px;padding:0.6rem 1.25rem;font-family:'Nunito',sans-serif;font-size:0.78rem;font-weight:700;cursor:pointer">Aceptar todas</button>
+  </div>
+</div>
+<script>
+  if (!localStorage.getItem('kaori_cookie_consent')) {
+    setTimeout(function() {
+      document.getElementById('cookieBanner').style.display = 'flex';
+    }, 1200);
+  }
+</script>
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js"></script>
   <script src="supabase.js"></script>
   <script src="auth.js"></script>
