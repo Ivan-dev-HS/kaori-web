@@ -278,6 +278,56 @@
   <script src="supabase.js"></script>
   <script src="auth.js"></script>
   <script src="cart.js"></script>
+  <script>
+// ── PRERELLENAR DATOS DEL PERFIL ──────────────────────────────────────────
+(async function() {
+  try {
+    const sesion = await obtenerSesion();
+    if (!sesion) return;
+
+    const usuario = await obtenerUsuario();
+    if (!usuario) return;
+
+    const { data } = await db
+      .from('profiles')
+      .select('*')
+      .eq('id', usuario.id)
+      .single();
+
+    if (!data) return;
+
+    // ── DATOS DE CONTACTO ────────────────────────────────────────────────
+    const camposContacto = {
+      // ID del campo en checkout.html : valor del perfil
+      'customerName':  [data.nombre, data.apellidos].filter(Boolean).join(' '),
+      'customerEmail': usuario.email,
+      'customerPhone': data.telefono || '',
+    };
+
+    // ── DATOS DE ENVÍO ───────────────────────────────────────────────────
+    const camposEnvio = {
+      'shippingAddress':    data.direccion  || '',
+      'shippingCity':       data.ciudad     || '',
+      'shippingPostalCode': data.cp         || '',
+    };
+
+    // Rellenar solo si el campo existe y está vacío
+    const rellenar = (campos) => {
+      Object.entries(campos).forEach(([id, valor]) => {
+        const el = document.getElementById(id);
+        if (el && !el.value && valor) el.value = valor;
+      });
+    };
+
+    rellenar(camposContacto);
+    rellenar(camposEnvio);
+
+  } catch(e) {
+    console.warn('No se pudieron cargar datos del perfil:', e);
+  }
+})();
+</script>
+
   <script src="animations.js"></script>
   <script>
     // ─── ESTADO ───────────────────────────────────────────────────────────────
