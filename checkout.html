@@ -34,14 +34,17 @@
     label { font-size: 0.82rem; font-weight: 600; color: #4c1d95; }
     input, textarea { font-family: 'Nunito', sans-serif; border: 1px solid #e9d5ff; border-radius: 0.75rem; padding: 0.75rem 1rem; font-size: 0.9rem; outline: none; background: white; color: #2d1b69; width: 100%; transition: all 0.2s; }
     input:focus, textarea:focus { border-color: #a855f7; box-shadow: 0 0 0 3px rgba(168,85,247,0.08); }
+    input.prefilled { border-color: #a855f7; background: #fdf8ff; }
     textarea { resize: none; }
+    .prefill-banner { background: #f5f0ff; border: 1px solid #e9d5ff; border-radius: 0.75rem; padding: 0.75rem 1rem; margin-bottom: 1.25rem; font-size: 0.82rem; color: #6d28d9; display: none; align-items: center; gap: 0.5rem; }
+    .prefill-banner.show { display: flex; }
     .ship-opt { display: flex; align-items: center; gap: 1rem; padding: 1rem; border: 2px solid #f3e8ff; border-radius: 0.75rem; cursor: pointer; margin-bottom: 0.75rem; transition: all 0.2s; }
     .ship-opt:hover { border-color: #c4b5fd; background: #faf5ff; }
     .ship-opt.sel { border-color: #7c3aed; background: #faf5ff; }
     .ship-opt input[type=radio] { accent-color: #7c3aed; width: 18px; height: 18px; flex-shrink: 0; cursor: pointer; }
     .ship-label { flex: 1; }
     .ship-label strong { display: block; font-size: 0.9rem; color: #4c1d95; }
-    .ship-label span   { font-size: 0.8rem; color: #6b7280; }
+    .ship-label span { font-size: 0.8rem; color: #6b7280; }
     .ship-cost { font-weight: 700; color: #7c3aed; font-size: 0.9rem; white-space: nowrap; }
     .pay-opt { display: flex; align-items: center; gap: 1rem; padding: 1rem; border: 2px solid #f3e8ff; border-radius: 0.75rem; cursor: pointer; margin-bottom: 0.75rem; transition: all 0.2s; }
     .pay-opt:hover { border-color: #c4b5fd; background: #faf5ff; }
@@ -50,7 +53,7 @@
     .pay-dot.checked { border-color: #7c3aed; background: #7c3aed; }
     .pay-dot.checked::after { content:''; display:block; width:7px; height:7px; border-radius:50%; background:white; }
     .pay-label strong { display: block; font-size: 0.875rem; color: #4c1d95; }
-    .pay-label span   { font-size: 0.75rem; color: #6b7280; }
+    .pay-label span { font-size: 0.75rem; color: #6b7280; }
     .card-fields { border: 1px solid #e9d5ff; border-radius: 0.75rem; padding: 1rem; margin-top: 0.75rem; background: #faf5ff; }
     .secure-note { font-size: 0.75rem; color: #9ca3af; display: flex; align-items: center; gap: 0.3rem; margin-top: 0.75rem; }
     .transfer-info { background: #fffbeb; border: 1px solid #fde68a; border-radius: 0.75rem; padding: 1rem; font-size: 0.875rem; color: #92400e; margin-top: 0.75rem; }
@@ -59,8 +62,8 @@
     .order-item img { width: 64px; height: 64px; object-fit: cover; border-radius: 0.75rem; flex-shrink: 0; border: 1px solid #f3e8ff; }
     .order-item-info { flex: 1; min-width: 0; }
     .order-item-info h4 { font-family: 'Nunito', sans-serif; font-weight: 600; font-size: 0.82rem; color: #4c1d95; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .order-item-info p  { font-size: 0.75rem; color: #6b7280; }
-    .order-item-price   { font-weight: 700; font-size: 0.875rem; color: #4c1d95; white-space: nowrap; }
+    .order-item-info p { font-size: 0.75rem; color: #6b7280; }
+    .order-item-price { font-weight: 700; font-size: 0.875rem; color: #4c1d95; white-space: nowrap; }
     .totals { border-top: 1px solid #f3e8ff; padding-top: 1rem; display: flex; flex-direction: column; gap: 0.5rem; }
     .total-row { display: flex; justify-content: space-between; font-size: 0.875rem; color: #4b5563; }
     .total-final { display: flex; justify-content: space-between; font-weight: 700; font-size: 1.1rem; border-top: 1px solid #f3e8ff; padding-top: 0.75rem; margin-top: 0.5rem; color: #4c1d95; }
@@ -91,6 +94,16 @@
 </head>
 <body>
 
+  <!-- ERROR VISIBLE EN PANTALLA -->
+  <script>
+    window.onerror = function(msg, src, line) {
+      const div = document.createElement('div');
+      div.style.cssText = 'position:fixed;bottom:0;left:0;right:0;background:#ef4444;color:white;padding:1rem;font-size:0.8rem;z-index:9999;font-family:monospace';
+      div.textContent = 'JS Error: ' + msg + ' (línea ' + line + ')';
+      document.body.appendChild(div);
+    };
+  </script>
+
   <nav>
     <a href="index.html" class="nav-logo">KAORI</a>
     <div class="nav-right">
@@ -110,7 +123,7 @@
     <h1 class="page-title">Finalizar Compra</h1>
 
     <div class="login-banner" id="loginBanner" style="display:none">
-      <p>💡 ¿Tienes cuenta? Inicia sesión para guardar tu historial de pedidos.</p>
+      <p>💡 ¿Tienes cuenta? Inicia sesión para rellenar tus datos automáticamente.</p>
       <a href="login.html">Iniciar sesión</a>
     </div>
 
@@ -122,6 +135,10 @@
         <!-- 1. CONTACTO -->
         <div class="card">
           <h2><span class="step-num">1</span> Datos de Contacto</h2>
+          <!-- Banner pre-relleno -->
+          <div class="prefill-banner" id="prefillBanner">
+            ✦ Hemos rellenado tus datos guardados. Compruébalos antes de continuar.
+          </div>
           <div class="form-row">
             <div class="form-group">
               <label>Nombre completo *</label>
@@ -224,7 +241,7 @@
       <div>
         <div class="card summary-sticky">
           <h2 style="font-family:'Nunito',sans-serif;font-weight:700;font-size:1rem;color:#4c1d95;margin-bottom:1rem">
-            🛍️ Resumen del Pedido
+            🛒 Resumen del Pedido
           </h2>
           <div id="cartSummaryItems"></div>
           <div class="totals">
@@ -248,7 +265,7 @@
   <!-- ÉXITO TRANSFERENCIA -->
   <div id="successScreen" class="success-screen" style="display:none">
     <div>
-      <div class="success-circle">🛍️</div>
+      <div class="success-circle">🛒</div>
       <h1 style="font-size:2rem;color:#4c1d95;margin-bottom:0.75rem;font-weight:400">¡Pedido Recibido!</h1>
       <p style="color:#4b5563;margin-bottom:0.5rem;font-size:0.95rem">
         Gracias por tu compra. Te enviaremos los datos bancarios por email.
@@ -264,84 +281,23 @@
     </div>
   </div>
 
-  <!-- ERROR VISIBLE EN PANTALLA -->
-  <script>
-    window.onerror = function(msg, src, line) {
-      const div = document.createElement('div');
-      div.style.cssText = 'position:fixed;bottom:0;left:0;right:0;background:#ef4444;color:white;padding:1rem;font-size:0.8rem;z-index:9999;font-family:monospace';
-      div.textContent = `JS Error: ${msg} (línea ${line})`;
-      document.body.appendChild(div);
-    };
-  </script>
-
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js"></script>
   <script src="supabase.js"></script>
   <script src="auth.js"></script>
   <script src="cart.js"></script>
   <script>
-// ── PRERELLENAR DATOS DEL PERFIL ──────────────────────────────────────────
-(async function() {
-  try {
-    const sesion = await obtenerSesion();
-    if (!sesion) return;
-
-    const usuario = await obtenerUsuario();
-    if (!usuario) return;
-
-    const { data } = await db
-      .from('profiles')
-      .select('*')
-      .eq('id', usuario.id)
-      .single();
-
-    if (!data) return;
-
-    // ── DATOS DE CONTACTO ────────────────────────────────────────────────
-    const camposContacto = {
-      // ID del campo en checkout.html : valor del perfil
-      'customerName':  [data.nombre, data.apellidos].filter(Boolean).join(' '),
-      'customerEmail': usuario.email,
-      'customerPhone': data.telefono || '',
-    };
-
-    // ── DATOS DE ENVÍO ───────────────────────────────────────────────────
-    const camposEnvio = {
-      'shippingAddress':    data.direccion  || '',
-      'shippingCity':       data.ciudad     || '',
-      'shippingPostalCode': data.cp         || '',
-    };
-
-    // Rellenar solo si el campo existe y está vacío
-    const rellenar = (campos) => {
-      Object.entries(campos).forEach(([id, valor]) => {
-        const el = document.getElementById(id);
-        if (el && !el.value && valor) el.value = valor;
-      });
-    };
-
-    rellenar(camposContacto);
-    rellenar(camposEnvio);
-
-  } catch(e) {
-    console.warn('No se pudieron cargar datos del perfil:', e);
-  }
-})();
-</script>
-
-  <script src="animations.js"></script>
-  <script>
-    // ─── ESTADO ───────────────────────────────────────────────────────────────
+    // ── ESTADO ────────────────────────────────────────────────────────────────
     let shippingCost   = 4.95;
     let shippingType   = 'standard';
     let currentPayType = 'stripe';
 
-    // ─── CARRITO ──────────────────────────────────────────────────────────────
+    // ── CARRITO ───────────────────────────────────────────────────────────────
     function getCarrito() {
       try { return JSON.parse(localStorage.getItem('kaori_cart') || '[]'); }
       catch { return []; }
     }
 
-    // ─── RENDER RESUMEN ───────────────────────────────────────────────────────
+    // ── RENDER RESUMEN ────────────────────────────────────────────────────────
     function renderResumen() {
       const cart      = getCarrito();
       const container = document.getElementById('cartSummaryItems');
@@ -368,7 +324,7 @@
       actualizarTotales();
     }
 
-    // ─── TOTALES ──────────────────────────────────────────────────────────────
+    // ── TOTALES ───────────────────────────────────────────────────────────────
     function actualizarTotales() {
       const subtotal = getCarrito().reduce((s,i) => s + i.price * i.quantity, 0);
       const total    = subtotal + shippingCost;
@@ -388,7 +344,7 @@
       document.getElementById('submitBtn').innerHTML = `${label} · <span>${total.toFixed(2)} €</span>`;
     }
 
-    // ─── ENVÍO ────────────────────────────────────────────────────────────────
+    // ── ENVÍO ─────────────────────────────────────────────────────────────────
     function selectShipping(el, cost, type) {
       document.querySelectorAll('.ship-opt').forEach(o => o.classList.remove('sel'));
       el.classList.add('sel');
@@ -399,7 +355,7 @@
       actualizarTotales();
     }
 
-    // ─── PAGO ─────────────────────────────────────────────────────────────────
+    // ── PAGO ──────────────────────────────────────────────────────────────────
     function selectPayment(type) {
       currentPayType = type;
       ['stripe','transfer'].forEach(t => {
@@ -411,7 +367,7 @@
       actualizarTotales();
     }
 
-    // ─── ERRORES ──────────────────────────────────────────────────────────────
+    // ── ERRORES ───────────────────────────────────────────────────────────────
     function mostrarError(msg) {
       const el = document.getElementById('errorMsg');
       el.textContent   = '⚠️ ' + msg;
@@ -422,14 +378,59 @@
       document.getElementById('errorMsg').style.display = 'none';
     }
 
-    // ─── SUBMIT ───────────────────────────────────────────────────────────────
+    // ── PRE-RELLENAR CAMPO (solo si está vacío) ───────────────────────────────
+    function prefill(id, valor) {
+      const el = document.getElementById(id);
+      if (el && valor && !el.value) {
+        el.value = valor;
+        el.classList.add('prefilled');
+      }
+    }
+
+    // ── CARGAR PERFIL Y PRE-RELLENAR ──────────────────────────────────────────
+    async function cargarYPrellenar(usuario) {
+      try {
+        // Email siempre desde la sesión
+        prefill('inputEmail', usuario.email);
+
+        // Cargar perfil desde Supabase
+        const { data } = await db
+          .from('profiles')
+          .select('nombre, apellidos, telefono, direccion, ciudad, cp')
+          .eq('id', usuario.id)
+          .single();
+
+        if (!data) return;
+
+        const nombreCompleto = [data.nombre, data.apellidos].filter(Boolean).join(' ');
+        prefill('inputName',    nombreCompleto);
+        prefill('inputPhone',   data.telefono);
+        prefill('inputAddress', data.direccion);
+        prefill('inputCity',    data.ciudad);
+        prefill('inputPostal',  data.cp);
+
+        // Mostrar banner si se rellenó algo
+        const algoCargado = nombreCompleto || data.telefono || data.direccion;
+        if (algoCargado) {
+          document.getElementById('prefillBanner').classList.add('show');
+          // Ocultar banner tras 5 segundos
+          setTimeout(() => {
+            document.getElementById('prefillBanner').classList.remove('show');
+          }, 5000);
+        }
+
+      } catch(e) {
+        console.warn('No se pudo cargar el perfil:', e.message);
+      }
+    }
+
+    // ── SUBMIT ────────────────────────────────────────────────────────────────
     async function submitOrder() {
       ocultarError();
-      alert('✅ Paso 1: Función iniciada');
 
       const cart = getCarrito();
       if (!cart.length) { mostrarError('Tu carrito está vacío.'); return; }
-      alert('✅ Paso 2: Carrito tiene ' + cart.length + ' productos');
+
       const nombre    = document.getElementById('inputName').value.trim();
       const email     = document.getElementById('inputEmail').value.trim();
       const telefono  = document.getElementById('inputPhone').value.trim();
@@ -437,12 +438,11 @@
       const ciudad    = document.getElementById('inputCity')?.value.trim()    || '';
       const postal    = document.getElementById('inputPostal')?.value.trim()  || '';
       const notas     = document.getElementById('inputNotes')?.value.trim()   || '';
-    
+
       if (!nombre)   { mostrarError('El nombre es obligatorio.'); return; }
       if (!email)    { mostrarError('El email es obligatorio.'); return; }
       if (!telefono) { mostrarError('El teléfono es obligatorio.'); return; }
-      alert('✅ Paso 3: Datos validados. Método de pago: ' + currentPayType);
-      
+
       const btn = document.getElementById('submitBtn');
       btn.disabled    = true;
       btn.textContent = '⏳ Procesando pedido...';
@@ -455,18 +455,23 @@
 
       try {
         // 1 — Guardar pedido en Supabase
-         alert('✅ Paso 4: Guardando en Supabase...');
         const { data: pedidoData, error: pedidoError } = await db
           .from('pedidos')
           .insert({
             customer_name:        nombre,
             customer_email:       email,
             customer_phone:       telefono,
-            shipping_address:     document.getElementById('inputAddress')?.value.trim() || '',
-            shipping_city:        document.getElementById('inputCity')?.value.trim()    || '',
-            shipping_postal_code: document.getElementById('inputPostal')?.value.trim()  || '',
-            notes:                document.getElementById('inputNotes')?.value.trim()   || '',
-            items:                cart.map(i => ({ product_id:i.id, product_name:i.name, quantity:i.quantity, price:i.price, image:i.image })),
+            shipping_address:     direccion,
+            shipping_city:        ciudad,
+            shipping_postal_code: postal,
+            notes:                notas,
+            items:                cart.map(i => ({
+              product_id:   i.id,
+              product_name: i.name,
+              quantity:     i.quantity,
+              price:        i.price,
+              image:        i.image,
+            })),
             subtotal,
             shipping_cost:  shippingCost,
             total,
@@ -478,14 +483,11 @@
           .select('id')
           .single();
 
-         if (pedidoError) {
-      alert('❌ Error Supabase: ' + pedidoError.message);
-      throw new Error('Error guardando pedido: ' + pedidoError.message);
-    }
- alert('✅ Paso 4: Guardando en Supabase...');
+        if (pedidoError) throw new Error('Error guardando pedido: ' + pedidoError.message);
+
         const orderId = pedidoData.id.split('-')[0].toUpperCase();
 
-        // 2 — Transferencia: mostrar éxito directamente
+        // 2 — Transferencia: éxito directo
         if (currentPayType === 'transfer') {
           localStorage.removeItem('kaori_cart');
           if (window.CartWidget) CartWidget.updateBadge();
@@ -495,8 +497,7 @@
           return;
         }
 
-        // 3 — Stripe: crear sesión de checkout
-         alert('✅ Paso 6: Llamando a /api/create-checkout...');
+        // 3 — Stripe: crear sesión
         btn.textContent = '⏳ Conectando con Stripe...';
 
         const response = await fetch('/api/create-checkout', {
@@ -510,47 +511,49 @@
             orderId:       pedidoData.id,
           }),
         });
-        
- alert('✅ Paso 7: Respuesta recibida. Status: ' + response.status);
+
         const stripeData = await response.json();
-        
-alert('✅ Paso 8: JSON recibido: ' + JSON.stringify(stripeData).slice(0, 100));
+
         if (!response.ok || stripeData.error) {
           throw new Error('Error Stripe: ' + (stripeData.error || 'respuesta inesperada'));
         }
 
         // 4 — Redirigir a Stripe
-        alert('✅ Paso 8: JSON recibido: ' + JSON.stringify(stripeData).slice(0, 100));
-
         window.location.href = stripeData.url;
 
-      }  catch(err) {
-    alert('❌ ERROR FINAL: ' + err.message);
-    mostrarError(err.message || 'Error inesperado. Contacta en info@kaori.es');
-    btn.disabled = false;
-    actualizarTotales();
+      } catch(err) {
+        console.error('Error:', err);
+        mostrarError(err.message || 'Hubo un problema. Inténtalo de nuevo o contáctanos en info@kaori.es');
+        btn.disabled = false;
+        actualizarTotales();
       }
     }
 
-    // ─── NAVBAR ───────────────────────────────────────────────────────────────
+    // ── INIT ──────────────────────────────────────────────────────────────────
     (async () => {
       try {
         const sesion = await obtenerSesion();
         const btn    = document.getElementById('btnCuenta');
+
         if (sesion) {
           const usuario = await obtenerUsuario();
-          if (usuario) document.getElementById('inputEmail').value = usuario.email;
+          if (usuario) {
+            // Pre-rellenar con datos del perfil
+            await cargarYPrellenar(usuario);
+          }
           const rol       = await obtenerRol();
           btn.href        = rol === 'admin' ? 'admin.html' : 'mi-cuenta.html';
           btn.textContent = rol === 'admin' ? '👑 Panel Admin' : '👤 Mi cuenta';
         } else {
+          // No logueado: mostrar banner de login
           document.getElementById('loginBanner').style.display = '';
         }
-      } catch(e) {}
-    })();
+      } catch(e) {
+        console.warn('Auth error:', e);
+      }
 
-    // ─── INIT ─────────────────────────────────────────────────────────────────
-    renderResumen();
+      renderResumen();
+    })();
   </script>
 </body>
 </html>
