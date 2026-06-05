@@ -33,7 +33,7 @@
     "name": "Kaori",
     "description": "Velas artesanales y productos naturales creados con intención y amor",
     "url": "https://kaori.es",
-    "logo": "https://kaori.es/apple-touch-icon.png",
+    "logo": "https://kaori.es/logo.png",
     "image": "https://kaori.es/og-image.jpg",
     "priceRange": "€€",
     "currenciesAccepted": "EUR",
@@ -56,9 +56,13 @@
     h1,h2,h3,h4,h5{font-family:'Cormorant Garamond',serif}
     a{text-decoration:none;color:inherit}
     img{max-width:100%}
+
+    /* ── NAV ── */
     nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 3rem;height:80px;background:rgba(250,248,245,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);transition:all 0.4s ease}
     nav.scrolled{height:64px;box-shadow:0 4px 30px rgba(124,58,237,0.08)}
-    .nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.7rem;letter-spacing:0.3em;color:var(--dark);font-weight:400;text-transform:uppercase}
+    .nav-logo{display:flex;align-items:center;height:100%;padding:8px 0}
+    .nav-logo img{height:52px;width:auto;object-fit:contain;display:block;transition:height 0.4s ease}
+    nav.scrolled .nav-logo img{height:42px}
     .nav-links{display:flex;gap:2.5rem}
     .nav-links a{font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);font-weight:500;transition:color 0.3s;position:relative}
     .nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--primary);transform:scaleX(0);transition:transform 0.3s ease;transform-origin:left}
@@ -78,6 +82,8 @@
     .mobile-menu a:hover{color:var(--primary)}
     .mobile-menu a:last-child{border-bottom:none}
     .mobile-menu.open{display:flex}
+
+    /* ── HERO ── */
     .hero{min-height:100vh;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
     .hero-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1603905000478-e1b9fb17b2eb?w=1800&q=80') center/cover no-repeat;transform:scale(1.05);animation:heroZoom 8s ease-out forwards}
     @keyframes heroZoom{to{transform:scale(1)}}
@@ -96,11 +102,15 @@
     .hero-scroll{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:0.5rem;color:rgba(255,255,255,0.4);font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;font-family:'Nunito',sans-serif;animation:bounce 2.5s infinite}
     .hero-scroll::after{content:'';display:block;width:1px;height:36px;background:rgba(255,255,255,0.25)}
     @keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-6px)}}
+
+    /* ── MARQUEE ── */
     .marquee-strip{background:var(--dark);padding:0.9rem 0;overflow:hidden}
     .marquee-track{display:flex;gap:3rem;width:max-content;animation:marquee 25s linear infinite}
     @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
     .marquee-item{font-size:0.65rem;letter-spacing:0.3em;text-transform:uppercase;color:#c4b5fd;font-family:'Nunito',sans-serif;white-space:nowrap;display:flex;align-items:center;gap:1rem}
     .marquee-item::after{content:'✦';color:rgba(196,181,253,0.35)}
+
+    /* ── SECTIONS ── */
     .section{padding:7rem 1.5rem}
     .section-inner{max-width:80rem;margin:0 auto}
     .section-eyebrow{font-size:0.65rem;letter-spacing:0.35em;text-transform:uppercase;color:var(--primary);font-family:'Nunito',sans-serif;font-weight:600;display:block;text-align:center;margin-bottom:1rem}
@@ -108,6 +118,8 @@
     .section-title em{font-style:italic;color:var(--primary)}
     .section-sub{font-size:0.9rem;color:var(--muted);text-align:center;max-width:500px;margin:0 auto 4rem;line-height:1.8;font-weight:300}
     .divider{width:40px;height:1px;background:var(--primary);margin:1.5rem auto;opacity:0.4}
+
+    /* ── CAROUSEL ── */
     .carousel-section{background:var(--cream2);padding:5rem 0;overflow:hidden}
     .carousel-header{padding:0 1.5rem;max-width:80rem;margin:0 auto 3rem}
     .carousel-track-wrap{overflow:hidden;position:relative}
@@ -131,6 +143,8 @@
     .carousel-card-cat{font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--primary);font-family:'Nunito',sans-serif;margin-bottom:0.4rem;font-weight:600}
     .carousel-card-name{font-size:1.05rem;color:var(--dark);font-weight:400;margin-bottom:0.4rem;line-height:1.3}
     .carousel-card-price{font-size:0.88rem;color:var(--muted);font-family:'Nunito',sans-serif;font-weight:600}
+
+    /* ── FEATURED ── */
     .featured-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:1.75rem}
     .feat-card{background:white;border:1px solid var(--border);border-radius:1rem;cursor:pointer;transition:all 0.4s;overflow:hidden}
     .feat-card:hover{box-shadow:0 16px 50px rgba(124,58,237,0.15);transform:translateY(-6px)}
@@ -146,6 +160,8 @@
     .feat-btn{width:100%;margin-top:1rem;background:var(--light);color:var(--primary);border:none;border-radius:9999px;padding:0.7rem;font-family:'Nunito',sans-serif;font-size:0.78rem;font-weight:700;cursor:pointer;transition:all 0.3s;letter-spacing:0.05em}
     .feat-btn:hover{background:var(--primary);color:white}
     .feat-btn.added{background:#dcfce7;color:#16a34a}
+
+    /* ── STORY ── */
     .story-section{background:linear-gradient(135deg,var(--dark) 0%,#3b0d8a 100%);padding:7rem 1.5rem}
     .story-inner{max-width:80rem;margin:0 auto;display:grid;gap:4rem;align-items:center}
     @media(min-width:1024px){.story-inner{grid-template-columns:1fr 1fr;gap:6rem}}
@@ -157,6 +173,8 @@
     .story-text em{color:#e9d5ff;font-style:italic}
     .btn-story{display:inline-block;margin-top:2rem;background:transparent;color:#c4b5fd;border:1px solid rgba(196,181,253,0.4);border-radius:9999px;padding:0.9rem 2.5rem;font-family:'Nunito',sans-serif;font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;font-weight:600;transition:all 0.3s}
     .btn-story:hover{background:var(--primary);color:white;border-color:var(--primary)}
+
+    /* ── VALUES ── */
     .values-section{background:var(--cream);padding:7rem 1.5rem}
     .values-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.5rem;margin-top:4rem}
     .value-item{padding:2.5rem 1.75rem;text-align:center;background:white;border:1px solid var(--border);border-radius:1rem;transition:all 0.3s}
@@ -164,6 +182,8 @@
     .value-icon{font-size:1.75rem;margin-bottom:1.2rem;display:block}
     .value-item h3{font-size:1.05rem;color:var(--dark);font-weight:400;margin-bottom:0.75rem}
     .value-item p{font-size:0.82rem;color:var(--muted);line-height:1.7;font-weight:300}
+
+    /* ── EVENTOS BANNER ── */
     .eventos-banner{position:relative;padding:8rem 1.5rem;overflow:hidden;display:flex;align-items:center;justify-content:center;text-align:center}
     .eventos-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1519741497674-611481863552?w=1600&q=80') center/cover}
     .eventos-overlay{position:absolute;inset:0;background:rgba(46,8,84,0.7)}
@@ -174,6 +194,8 @@
     .eventos-content p{color:rgba(255,255,255,0.7);margin-bottom:2rem;font-size:0.95rem;line-height:1.8}
     .btn-eventos{display:inline-block;background:var(--primary);color:white;padding:1rem 2.5rem;border-radius:9999px;font-family:'Nunito',sans-serif;font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;font-weight:700;transition:all 0.3s;border:2px solid var(--primary)}
     .btn-eventos:hover{background:white;color:var(--primary);border-color:white;transform:translateY(-2px)}
+
+    /* ── TESTIMONIOS ── */
     .testimonios{background:var(--cream2);padding:7rem 1.5rem}
     .testimonios-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-top:4rem}
     .testimonio-card{padding:2.25rem;background:white;border:1px solid var(--border);border-radius:1rem;transition:all 0.3s}
@@ -181,6 +203,8 @@
     .testimonio-stars{color:#f59e0b;font-size:0.9rem;margin-bottom:1.25rem;letter-spacing:0.1em}
     .testimonio-text{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--dark);line-height:1.7;font-style:italic;margin-bottom:1.5rem;font-weight:300}
     .testimonio-author{font-size:0.72rem;color:var(--primary);letter-spacing:0.15em;text-transform:uppercase;font-family:'Nunito',sans-serif;font-weight:600}
+
+    /* ── NEWSLETTER ── */
     .newsletter{background:linear-gradient(135deg,var(--dark),#3b0d8a);padding:6rem 1.5rem;text-align:center}
     .newsletter h2{font-size:clamp(1.8rem,4vw,2.8rem);color:white;font-weight:300;margin-bottom:1rem}
     .newsletter p{color:rgba(255,255,255,0.55);font-size:0.9rem;margin-bottom:2.5rem;font-weight:300}
@@ -189,11 +213,15 @@
     .newsletter-form input::placeholder{color:rgba(255,255,255,0.3)}
     .newsletter-form button{background:var(--primary);color:white;border:none;padding:1rem 1.75rem;font-family:'Nunito',sans-serif;font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;font-weight:700;cursor:pointer;transition:background 0.3s;white-space:nowrap}
     .newsletter-form button:hover{background:var(--primary2)}
+
+    /* ── TOAST ── */
     #toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(80px);background:var(--dark);color:white;padding:1rem 2rem;border-radius:9999px;font-size:0.8rem;z-index:200;transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);pointer-events:none;white-space:nowrap;font-family:'Nunito',sans-serif;font-weight:600;box-shadow:0 8px 30px rgba(46,8,84,0.3);border-bottom:2px solid var(--primary)}
     #toast.show{transform:translateX(-50%) translateY(0)}
+
+    /* ── FOOTER ── */
     footer{background:var(--dark2);padding:5rem 1.5rem 2rem}
     .footer-inner{max-width:80rem;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:4rem}
-    .footer-logo{font-family:'Cormorant Garamond',serif;font-size:1.8rem;letter-spacing:0.35em;color:white;font-weight:300;margin-bottom:1rem;display:block}
+    .footer-logo{height:48px;width:auto;object-fit:contain;margin-bottom:1rem;display:block;filter:brightness(0) invert(1);opacity:0.85}
     .footer-brand p{color:rgba(255,255,255,0.4);font-size:0.82rem;line-height:1.8;font-weight:300;max-width:250px}
     .footer-social{display:flex;gap:1.25rem;margin-top:1.5rem}
     .footer-social a{font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:#c4b5fd;transition:color 0.3s;font-family:'Nunito',sans-serif;font-weight:600}
@@ -204,18 +232,21 @@
     .footer-links a:hover{color:white}
     .footer-bottom{border-top:1px solid rgba(255,255,255,0.06);padding-top:2rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
     .footer-bottom p,.footer-bottom a{font-size:0.72rem;color:rgba(255,255,255,0.2)}
+
+    /* ── REVEAL ── */
     .reveal{opacity:0;transform:translateY(30px);transition:opacity 0.8s ease,transform 0.8s ease}
     .reveal.visible{opacity:1;transform:translateY(0)}
     .reveal-left{opacity:0;transform:translateX(-30px);transition:opacity 0.8s ease,transform 0.8s ease}
     .reveal-right{opacity:0;transform:translateX(30px);transition:opacity 0.8s ease,transform 0.8s ease}
     .reveal-left.visible,.reveal-right.visible{opacity:1;transform:translate(0)}
     @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+
+    /* ── RESPONSIVE ── */
     @media(max-width:1024px){.footer-inner{grid-template-columns:1fr 1fr;gap:2rem}}
     @media(max-width:768px){
       nav{padding:0 1.5rem}
       .nav-links{display:none}
       .hamburger{display:flex}
-      .story-img-main img{border-radius:0.75rem}
       .values-grid{grid-template-columns:1fr 1fr}
       .footer-inner{grid-template-columns:1fr 1fr;gap:2rem}
       .newsletter-form{flex-direction:column;border-radius:1rem}
@@ -224,6 +255,7 @@
     }
     @media(max-width:480px){
       nav{padding:0 1rem}
+      .nav-logo img{height:40px}
       .mobile-menu{padding:1rem 1.5rem}
       .values-grid{grid-template-columns:1fr}
       .footer-inner{grid-template-columns:1fr}
@@ -234,9 +266,8 @@
 </head>
 <body>
   <nav id="navbar">
-    <a href="index.html" style="display:flex; align-items:center; height:100%" >
-      <img scr="logo.png"  alt="kaori by Jessnuan" 
-      style="heigth: 56px; width:auto; object-fit:contain; display:block" />
+    <a href="index.html" class="nav-logo">
+      <img src="logo.png" alt="Kaori by Jessnuan" />
     </a>
     <div class="nav-links">
       <a href="shop.html">Tienda</a>
@@ -253,6 +284,7 @@
       <button class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
     </div>
   </nav>
+
   <div class="mobile-menu" id="mobileMenu">
     <a href="shop.html"    onclick="toggleMenu()">Tienda</a>
     <a href="eventos.html" onclick="toggleMenu()">Eventos & Bodas</a>
@@ -260,6 +292,7 @@
     <a href="contact.html" onclick="toggleMenu()">Contacto</a>
     <a href="login.html"   onclick="toggleMenu()" id="mobileLoginBtn">Mi cuenta</a>
   </div>
+
   <section class="hero">
     <div class="hero-bg"></div>
     <div class="hero-overlay"></div>
@@ -274,12 +307,14 @@
     </div>
     <div class="hero-scroll">Descubrir</div>
   </section>
+
   <div class="marquee-strip">
     <div class="marquee-track">
-      <span class="marquee-item">Velas artesanales</span><span class="marquee-item">Minerales naturales</span><span class="marquee-item">Joyería consciente</span><span class="marquee-item">Ambientación premium</span><span class="marquee-item">Bodas & eventos</span><span class="marquee-item">Elaborado a mano</span><span class="marquee-item">natural</span><span class="marquee-item">Energía positiva</span>
-      <span class="marquee-item">Velas artesanales</span><span class="marquee-item">Minerales naturales</span><span class="marquee-item">Joyería consciente</span><span class="marquee-item">Ambientación premium</span><span class="marquee-item">Bodas & eventos</span><span class="marquee-item">Elaborado a mano</span><span class="marquee-item">natural</span><span class="marquee-item">Energía positiva</span>
+      <span class="marquee-item">Velas artesanales</span><span class="marquee-item">Minerales naturales</span><span class="marquee-item">Joyería consciente</span><span class="marquee-item">Ambientación premium</span><span class="marquee-item">Bodas & eventos</span><span class="marquee-item">Elaborado a mano</span><span class="marquee-item">100% natural</span><span class="marquee-item">Energía positiva</span>
+      <span class="marquee-item">Velas artesanales</span><span class="marquee-item">Minerales naturales</span><span class="marquee-item">Joyería consciente</span><span class="marquee-item">Ambientación premium</span><span class="marquee-item">Bodas & eventos</span><span class="marquee-item">Elaborado a mano</span><span class="marquee-item">100% natural</span><span class="marquee-item">Energía positiva</span>
     </div>
   </div>
+
   <section class="carousel-section">
     <div class="carousel-header">
       <span class="section-eyebrow reveal">Colección completa</span>
@@ -290,6 +325,7 @@
       <div class="carousel-track" id="carouselTrack"></div>
     </div>
   </section>
+
   <section class="section" style="background:white">
     <div class="section-inner">
       <span class="section-eyebrow reveal">Los más queridos</span>
@@ -307,6 +343,7 @@
       </div>
     </div>
   </section>
+
   <section class="story-section">
     <div class="story-inner">
       <div class="reveal-left">
@@ -322,19 +359,21 @@
       </div>
     </div>
   </section>
+
   <section class="values-section">
     <div class="section-inner">
       <span class="section-eyebrow reveal">Por qué elegirnos</span>
       <h2 class="section-title reveal">Una promesa de <em>calidad</em></h2>
       <div class="divider reveal"></div>
       <div class="values-grid">
-        <div class="value-item reveal"><span class="value-icon">🌿</span><h3>Natural</h3><p>Ingredientes puros, ceras vegetales y esencias naturales sin compromisos.</p></div>
+        <div class="value-item reveal"><span class="value-icon">🌿</span><h3>100% Natural</h3><p>Ingredientes puros, ceras vegetales y esencias naturales sin compromisos.</p></div>
         <div class="value-item reveal"><span class="value-icon">🤲</span><h3>Hecho a mano</h3><p>Cada pieza creada artesanalmente con atención y dedicación al detalle.</p></div>
         <div class="value-item reveal"><span class="value-icon">✦</span><h3>Con intención</h3><p>Elaboramos cada producto con una energía especial y un propósito claro.</p></div>
         <div class="value-item reveal"><span class="value-icon">📦</span><h3>Envío cuidado</h3><p>Empaquetado con mimo y entregado con todo el amor que cada pieza merece.</p></div>
       </div>
     </div>
   </section>
+
   <section class="eventos-banner">
     <div class="eventos-bg"></div>
     <div class="eventos-overlay"></div>
@@ -346,6 +385,7 @@
       <a href="eventos.html" class="btn-eventos">Solicitar presupuesto</a>
     </div>
   </section>
+
   <section class="testimonios">
     <div class="section-inner">
       <span class="section-eyebrow reveal">Lo que dicen</span>
@@ -358,6 +398,7 @@
       </div>
     </div>
   </section>
+
   <section class="newsletter">
     <span class="section-eyebrow" style="color:#a78bfa">Únete a la comunidad</span>
     <h2>El ritual comienza<br /><em style="font-style:italic;color:#c4b5fd">en tu bandeja</em></h2>
@@ -368,10 +409,11 @@
       <button type="button">Suscribirse</button>
     </div>
   </section>
+
   <footer>
     <div class="footer-inner">
       <div class="footer-brand">
-        <span class="footer-logo">KAORI</span>
+        <img src="logo.png" alt="Kaori" class="footer-logo" />
         <p>Velas artesanales y productos naturales creados con intención, amor y los mejores materiales para transformar tu hogar.</p>
         <div class="footer-social">
           <a href="https://instagram.com/kaoribyjessnuan" target="_blank">Instagram</a>
@@ -384,25 +426,17 @@
     </div>
     <div class="footer-bottom"><p>© 2024 Kaori. Todos los derechos reservados.</p><a href="privacidad.html">Política de privacidad</a></div>
   </footer>
+
   <div id="toast"></div>
+
   <!-- BANNER COOKIES -->
-<div id="cookieBanner" style="position:fixed;bottom:0;left:0;right:0;background:#1e0a3c;border-top:2px solid #7c3aed;padding:1.25rem 2rem;z-index:300;display:none;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap">
-  <p style="font-size:0.82rem;color:rgba(255,255,255,0.75);line-height:1.6;font-weight:300;flex:1;min-width:200px">
-    🍪 Usamos cookies necesarias para el carrito y tu sesión.
-    <a href="privacidad.html" style="color:#c4b5fd;font-weight:600">Más información</a>
-  </p>
-  <div style="display:flex;gap:0.75rem;flex-shrink:0;flex-wrap:wrap">
-    <button onclick="localStorage.setItem('kaori_cookie_consent','necessary');document.getElementById('cookieBanner').style.display='none'" style="background:transparent;color:rgba(255,255,255,0.5);border:1px solid rgba(255,255,255,0.2);border-radius:9999px;padding:0.6rem 1.25rem;font-family:'Nunito',sans-serif;font-size:0.78rem;font-weight:600;cursor:pointer">Solo necesarias</button>
-    <button onclick="localStorage.setItem('kaori_cookie_consent','all');document.getElementById('cookieBanner').style.display='none'" style="background:#7c3aed;color:white;border:none;border-radius:9999px;padding:0.6rem 1.25rem;font-family:'Nunito',sans-serif;font-size:0.78rem;font-weight:700;cursor:pointer">Aceptar todas</button>
+  <div id="cookieBanner" style="position:fixed;bottom:0;left:0;right:0;background:#1e0a3c;border-top:2px solid #7c3aed;padding:1.25rem 2rem;z-index:300;display:none;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap">
+    <p style="font-size:0.82rem;color:rgba(255,255,255,0.75);line-height:1.6;font-weight:300;flex:1;min-width:200px">🍪 Usamos cookies necesarias para el carrito y tu sesión. <a href="privacidad.html" style="color:#c4b5fd;font-weight:600">Más información</a></p>
+    <div style="display:flex;gap:0.75rem;flex-shrink:0;flex-wrap:wrap">
+      <button onclick="localStorage.setItem('kaori_cookie_consent','necessary');document.getElementById('cookieBanner').style.display='none'" style="background:transparent;color:rgba(255,255,255,0.5);border:1px solid rgba(255,255,255,0.2);border-radius:9999px;padding:0.6rem 1.25rem;font-family:'Nunito',sans-serif;font-size:0.78rem;font-weight:600;cursor:pointer">Solo necesarias</button>
+      <button onclick="localStorage.setItem('kaori_cookie_consent','all');document.getElementById('cookieBanner').style.display='none'" style="background:#7c3aed;color:white;border:none;border-radius:9999px;padding:0.6rem 1.25rem;font-family:'Nunito',sans-serif;font-size:0.78rem;font-weight:700;cursor:pointer">Aceptar todas</button>
+    </div>
   </div>
-</div>
-<script>
-  if (!localStorage.getItem('kaori_cookie_consent')) {
-    setTimeout(function() {
-      document.getElementById('cookieBanner').style.display = 'flex';
-    }, 1200);
-  }
-</script>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js"></script>
   <script src="supabase.js"></script>
@@ -423,8 +457,9 @@
     function quickAdd(id,btn){const p=todosProductos.find(x=>x.id===id);if(!p)return;const cart=getCarrito();const ex=cart.find(i=>i.id===id);if(ex)ex.quantity++;else cart.push({id:p.id,name:p.name,price:Number(p.price),image:p.image,quantity:1});guardarCarrito(cart);if(window.CartWidget)CartWidget.render();mostrarToast(`"${p.name}" añadido al carrito`)}
     function mostrarToast(msg){const t=document.getElementById('toast');t.textContent='✦ '+msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800)}
     (async()=>{try{const sesion=await obtenerSesion();const btn=document.getElementById('btnCuenta');const mBtn=document.getElementById('mobileLoginBtn');if(sesion){const rol=await obtenerRol();const href=rol==='admin'?'admin.html':'mi-cuenta.html';const txt=rol==='admin'?'👑 Panel Admin':'Mi cuenta';if(btn){btn.href=href;btn.textContent=txt}if(mBtn){mBtn.href=href;mBtn.textContent=txt}}}catch(e){}})();
-    cargarCarrusel();cargarDestacados();
+    cargarCarrusel();
+    cargarDestacados();
+    if(!localStorage.getItem('kaori_cookie_consent')){setTimeout(()=>{document.getElementById('cookieBanner').style.display='flex'},1200)}
   </script>
 </body>
 </html>
-
