@@ -7,14 +7,14 @@
   <meta name="description" content="Descubre la colección completa de Kaori. Velas artesanales, minerales naturales, joyería y productos de ambientación. Elaborados a mano con ingredientes naturales." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://kaori.es/shop.html" />
-  <meta property="og:type"        content="website" />
-  <meta property="og:url"         content="https://kaori.es/shop.html" />
-  <meta property="og:title"       content="Tienda Kaori – Colección Completa" />
-  <meta property="og:description" content="Velas, minerales, joyería y ambientación artesanal. Elaborado con amor." />
-  <meta property="og:image"       content="https://kaori.es/og-image.jpg" />
-  <meta property="og:locale"      content="es_ES" />
-  <meta property="og:site_name"   content="Kaori" />
-  <meta name="twitter:card"  content="summary_large_image" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://kaori.es/shop.html" />
+  <meta property="og:title" content="Tienda Kaori – Colección Completa" />
+  <meta property="og:description" content="Velas, minerales, joyería y ambientación artesanal." />
+  <meta property="og:image" content="https://kaori.es/og-image.jpg" />
+  <meta property="og:locale" content="es_ES" />
+  <meta property="og:site_name" content="Kaori" />
+  <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://kaori.es/og-image.jpg" />
   <link rel="icon" type="image/x-icon" href="/favicon.ico" />
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
@@ -22,20 +22,17 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
-    :root {
-      --cream:#faf8f5; --cream2:#f5f0ff; --dark:#2e0854; --dark2:#1e0a3c;
-      --primary:#7c3aed; --primary2:#6d28d9; --light:#f3e8ff; --light2:#ede9fe;
-      --accent:#a855f7; --muted:#6b7280; --text:#2d1b69; --white:#ffffff;
-      --border:#e9d5ff; --pink:#ec4899;
-    }
+    :root{--cream:#faf8f5;--cream2:#f5f0ff;--dark:#2e0854;--dark2:#1e0a3c;--primary:#7c3aed;--primary2:#6d28d9;--light:#f3e8ff;--light2:#ede9fe;--muted:#6b7280;--text:#2d1b69;--border:#e9d5ff;--pink:#ec4899}
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth}
     body{font-family:'Nunito',sans-serif;background:var(--cream);color:var(--text);overflow-x:hidden}
     h1,h2,h3,h4{font-family:'Cormorant Garamond',serif}
     a{text-decoration:none;color:inherit}
-    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 3rem;height:80px;background:rgba(250,248,245,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);transition:all 0.4s}
-    nav.scrolled{height:64px;box-shadow:0 4px 30px rgba(124,58,237,0.08)}
-    .nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.7rem;letter-spacing:0.3em;color:var(--dark);font-weight:400;text-transform:uppercase}
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 3rem;height:90px;background:rgba(250,248,245,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);transition:all 0.4s}
+    nav.scrolled{height:72px;box-shadow:0 4px 30px rgba(124,58,237,0.08)}
+    .nav-logo{display:flex;align-items:center;height:100%;padding:8px 0}
+    .nav-logo img{height:68px;width:auto;object-fit:contain;display:block;transition:height 0.4s ease}
+    nav.scrolled .nav-logo img{height:56px}
     .nav-links{display:flex;gap:2.5rem}
     .nav-links a{font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);font-weight:500;transition:color 0.3s;position:relative}
     .nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--primary);transform:scaleX(0);transition:transform 0.3s;transform-origin:left}
@@ -50,20 +47,20 @@
     .cart-count-badge{position:absolute;top:-6px;right:-6px;background:var(--pink);color:white;font-size:0.6rem;font-weight:700;width:18px;height:18px;border-radius:50%;display:none;align-items:center;justify-content:center}
     .hamburger{display:none;background:none;border:none;cursor:pointer;padding:0.5rem;flex-direction:column;gap:5px}
     .hamburger span{display:block;width:22px;height:2px;background:var(--dark);border-radius:2px}
-    .mobile-menu{display:none;position:fixed;top:80px;left:0;right:0;background:white;border-bottom:1px solid var(--border);padding:1.5rem 2rem;z-index:99;flex-direction:column;box-shadow:0 8px 30px rgba(124,58,237,0.08)}
-    .mobile-menu a{font-size:0.78rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text);font-weight:600;padding:0.9rem 0;border-bottom:1px solid var(--border);display:block;transition:color 0.2s}
-    .mobile-menu a:hover{color:var(--primary)}
+    .mobile-menu{display:none;position:fixed;top:90px;left:0;right:0;background:white;border-bottom:1px solid var(--border);padding:1.5rem 2rem;z-index:99;flex-direction:column;box-shadow:0 8px 30px rgba(124,58,237,0.08)}
+    .mobile-menu a{font-size:0.78rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text);font-weight:600;padding:0.9rem 0;border-bottom:1px solid var(--border);display:block}
     .mobile-menu a:last-child{border-bottom:none}
     .mobile-menu.open{display:flex}
-    .shop-hero{padding:9rem 1.5rem 4rem;background:linear-gradient(135deg,#faf5ff 0%,#f0e6ff 50%,var(--cream) 100%);text-align:center;position:relative;overflow:hidden}
-    .shop-hero::before{content:'KAORI';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Cormorant Garamond',serif;font-size:clamp(6rem,20vw,18rem);color:rgba(124,58,237,0.04);font-weight:300;letter-spacing:0.2em;white-space:nowrap;pointer-events:none;user-select:none}
+    .shop-hero{padding:10rem 1.5rem 4rem;background:linear-gradient(135deg,#faf5ff 0%,#f0e6ff 50%,var(--cream) 100%);text-align:center;position:relative;overflow:hidden}
+    .shop-hero::before{content:'KAORI';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Cormorant Garamond',serif;font-size:clamp(6rem,20vw,18rem);color:rgba(124,58,237,0.04);font-weight:300;letter-spacing:0.2em;white-space:nowrap;pointer-events:none}
     .shop-eyebrow{font-size:0.65rem;letter-spacing:0.35em;text-transform:uppercase;color:var(--primary);font-family:'Nunito',sans-serif;font-weight:600;display:block;margin-bottom:1rem}
     .shop-hero h1{font-size:clamp(2.5rem,6vw,4.5rem);color:var(--dark);font-weight:300;margin-bottom:1rem}
     .shop-hero h1 em{font-style:italic;color:var(--primary)}
     .shop-hero p{color:var(--muted);font-size:0.95rem;max-width:460px;margin:0 auto;line-height:1.8;font-weight:300}
     .divider{width:40px;height:1px;background:var(--primary);margin:1.5rem auto;opacity:0.4}
-    .filters-bar{background:white;border-bottom:1px solid var(--border);padding:0;position:sticky;top:80px;z-index:40;transition:top 0.4s}
-    .filters-inner{max-width:80rem;margin:0 auto;display:flex;align-items:center;gap:0;padding:0 1.5rem;overflow-x:auto;scrollbar-width:none}
+    .filters-bar{background:white;border-bottom:1px solid var(--border);position:sticky;top:90px;z-index:40;transition:top 0.4s}
+    nav.scrolled~.filters-bar{top:72px}
+    .filters-inner{max-width:80rem;margin:0 auto;display:flex;align-items:center;padding:0 1.5rem;overflow-x:auto;scrollbar-width:none}
     .filters-inner::-webkit-scrollbar{display:none}
     .filter-cat{font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);font-weight:500;padding:1.1rem 1.25rem;cursor:pointer;border:none;background:none;font-family:'Nunito',sans-serif;white-space:nowrap;border-bottom:2px solid transparent;transition:all 0.2s}
     .filter-cat:hover{color:var(--primary)}
@@ -74,16 +71,14 @@
     .search-wrap input{padding:0.55rem 0.9rem 0.55rem 2rem;border:1px solid var(--border);border-radius:9999px;font-family:'Nunito',sans-serif;font-size:0.78rem;outline:none;background:var(--cream);color:var(--text);width:200px;transition:all 0.3s}
     .search-wrap input:focus{border-color:var(--primary);background:white;width:240px;box-shadow:0 0 0 3px rgba(124,58,237,0.08)}
     .search-icon{position:absolute;left:0.7rem;top:50%;transform:translateY(-50%);color:var(--muted);font-size:0.8rem;pointer-events:none}
-    .sort-select{border:1px solid var(--border);border-radius:9999px;padding:0.55rem 1rem;font-family:'Nunito',sans-serif;font-size:0.78rem;outline:none;color:var(--text);background:var(--cream);cursor:pointer;transition:border-color 0.2s}
-    .sort-select:focus{border-color:var(--primary)}
+    .sort-select{border:1px solid var(--border);border-radius:9999px;padding:0.55rem 1rem;font-family:'Nunito',sans-serif;font-size:0.78rem;outline:none;color:var(--text);background:var(--cream);cursor:pointer}
     .price-pills{max-width:80rem;margin:0 auto;padding:0.75rem 1.5rem;display:flex;gap:0.5rem;flex-wrap:wrap;align-items:center}
     .price-pill-label{font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-right:0.25rem}
     .price-pill{font-size:0.72rem;padding:0.3rem 0.9rem;border-radius:9999px;border:1px solid var(--border);background:white;color:var(--muted);cursor:pointer;font-family:'Nunito',sans-serif;font-weight:500;transition:all 0.2s}
     .price-pill:hover{border-color:var(--primary);color:var(--primary)}
     .price-pill.active{background:var(--primary);color:white;border-color:var(--primary)}
     .shop-body{max-width:80rem;margin:0 auto;padding:2.5rem 1.5rem 5rem}
-    .results-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;flex-wrap:wrap;gap:0.5rem}
-    .results-count{font-size:0.8rem;color:var(--muted);font-weight:300}
+    .results-count{font-size:0.8rem;color:var(--muted);margin-bottom:2rem}
     .results-count strong{color:var(--text);font-weight:700}
     .skeleton-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:2rem}
     .skeleton-card{background:white;border-radius:1rem;overflow:hidden;border:1px solid var(--border)}
@@ -95,65 +90,49 @@
     @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
     .products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:2rem}
     .product-card{background:white;border:1px solid var(--border);border-radius:1rem;overflow:hidden;transition:all 0.4s;position:relative}
-    .product-card:hover{box-shadow:0 20px 60px rgba(124,58,237,0.14);transform:translateY(-6px);border-color:var(--light2)}
+    .product-card:hover{box-shadow:0 20px 60px rgba(124,58,237,0.14);transform:translateY(-6px)}
     .prod-img-wrap{aspect-ratio:1;overflow:hidden;background:var(--light);position:relative;cursor:pointer}
-    .prod-img-wrap img{width:100%;height:100%;object-fit:cover;transition:transform 0.6s ease}
+    .prod-img-wrap img{width:100%;height:100%;object-fit:cover;transition:transform 0.6s}
     .product-card:hover .prod-img-wrap img{transform:scale(1.06)}
     .badges{position:absolute;top:0.875rem;left:0.875rem;display:flex;flex-direction:column;gap:0.35rem;z-index:2}
-    .badge{font-size:0.6rem;font-weight:700;padding:3px 9px;border-radius:9999px;font-family:'Nunito',sans-serif;letter-spacing:0.08em}
+    .badge{font-size:0.6rem;font-weight:700;padding:3px 9px;border-radius:9999px;font-family:'Nunito',sans-serif}
     .badge-discount{background:var(--pink);color:white}
     .badge-featured{background:var(--primary);color:white}
     .prod-overlay{position:absolute;inset:0;background:rgba(46,8,84,0);transition:background 0.4s;display:flex;align-items:flex-end;padding:1rem}
     .product-card:hover .prod-overlay{background:rgba(46,8,84,0.35)}
-    .prod-quick{width:100%;background:white;color:var(--dark);border:none;border-radius:9999px;padding:0.7rem;font-family:'Nunito',sans-serif;font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;opacity:0;transform:translateY(8px);transition:all 0.3s}
+    .prod-quick{width:100%;background:white;color:var(--dark);border:none;border-radius:9999px;padding:0.7rem;font-family:'Nunito',sans-serif;font-size:0.72rem;font-weight:700;cursor:pointer;opacity:0;transform:translateY(8px);transition:all 0.3s}
     .product-card:hover .prod-quick{opacity:1;transform:translateY(0)}
     .prod-quick:hover{background:var(--primary);color:white}
     .prod-info{padding:1.25rem}
     .prod-cat{font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--primary);font-family:'Nunito',sans-serif;font-weight:600;margin-bottom:0.4rem}
     .prod-name{font-size:1.1rem;color:var(--dark);font-weight:400;margin-bottom:0.6rem;line-height:1.3}
-    .prod-prices{display:flex;align-items:center;gap:0.6rem;margin-bottom:1rem;flex-wrap:wrap}
+    .prod-prices{display:flex;align-items:center;gap:0.6rem;margin-bottom:1rem}
     .prod-price{font-size:1rem;color:var(--primary);font-weight:700;font-family:'Nunito',sans-serif}
     .prod-compare{font-size:0.82rem;color:var(--muted);text-decoration:line-through;font-family:'Nunito',sans-serif}
-    .prod-btn{width:100%;background:var(--light);color:var(--primary);border:none;border-radius:9999px;padding:0.7rem;font-family:'Nunito',sans-serif;font-size:0.78rem;font-weight:700;cursor:pointer;transition:all 0.3s;letter-spacing:0.05em}
+    .prod-btn{width:100%;background:var(--light);color:var(--primary);border:none;border-radius:9999px;padding:0.7rem;font-family:'Nunito',sans-serif;font-size:0.78rem;font-weight:700;cursor:pointer;transition:all 0.3s}
     .prod-btn:hover{background:var(--primary);color:white}
     .prod-btn.added{background:#dcfce7;color:#16a34a}
     .empty-state{grid-column:1/-1;text-align:center;padding:5rem 2rem}
-    .empty-icon{font-size:3rem;margin-bottom:1rem;opacity:0.4}
     .empty-state h3{font-size:1.5rem;color:var(--dark);font-weight:400;margin-bottom:0.75rem}
     .empty-state p{color:var(--muted);font-size:0.9rem;margin-bottom:1.5rem}
-    .empty-state a{display:inline-block;background:var(--primary);color:white;padding:0.8rem 2rem;border-radius:9999px;font-family:'Nunito',sans-serif;font-size:0.78rem;font-weight:700;transition:background 0.3s}
-    .empty-state a:hover{background:var(--primary2)}
+    .empty-state a{display:inline-block;background:var(--primary);color:white;padding:0.8rem 2rem;border-radius:9999px;font-family:'Nunito',sans-serif;font-size:0.78rem;font-weight:700}
     #toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(80px);background:var(--dark);color:white;padding:1rem 2rem;border-radius:9999px;font-size:0.8rem;z-index:200;transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);pointer-events:none;white-space:nowrap;font-family:'Nunito',sans-serif;font-weight:600;box-shadow:0 8px 30px rgba(46,8,84,0.3);border-bottom:2px solid var(--primary)}
     #toast.show{transform:translateX(-50%) translateY(0)}
     footer{background:var(--dark2);padding:4rem 1.5rem 2rem}
     .footer-inner{max-width:80rem;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;margin-bottom:2rem}
-    .footer-logo{font-family:'Cormorant Garamond',serif;font-size:1.5rem;letter-spacing:0.3em;color:white;font-weight:300}
+    .footer-logo-img{height:44px;width:auto;object-fit:contain;filter:brightness(0) invert(1);opacity:0.8}
     .footer-links-row{display:flex;gap:2rem;flex-wrap:wrap}
     .footer-links-row a{font-size:0.78rem;color:rgba(255,255,255,0.4);transition:color 0.3s;font-weight:300}
     .footer-links-row a:hover{color:white}
     .footer-bottom{border-top:1px solid rgba(255,255,255,0.06);padding-top:1.5rem;text-align:center;color:rgba(255,255,255,0.2);font-size:0.72rem;max-width:80rem;margin:0 auto}
-    @media(max-width:768px){
-      nav{padding:0 1.5rem}
-      .nav-links{display:none}
-      .hamburger{display:flex}
-      .filters-right{display:none}
-      .products-grid{grid-template-columns:repeat(2,1fr);gap:1rem}
-      .prod-info{padding:0.875rem}
-      .prod-name{font-size:0.95rem}
-      .shop-hero{padding:7rem 1rem 3rem}
-    }
-    @media(max-width:480px){
-      nav{padding:0 1rem}
-      .products-grid{grid-template-columns:repeat(2,1fr);gap:0.75rem}
-      .price-pills{padding:0.75rem 1rem}
-      .shop-body{padding:1.5rem 1rem 4rem}
-    }
+    .footer-bottom a{color:rgba(255,255,255,0.2)}
+    @media(max-width:768px){nav{padding:0 1.5rem}.nav-links{display:none}.hamburger{display:flex}.filters-right{display:none}.products-grid{grid-template-columns:repeat(2,1fr);gap:1rem}.shop-hero{padding:8rem 1rem 3rem}}
+    @media(max-width:480px){nav{padding:0 1rem}.nav-logo img{height:52px}.products-grid{grid-template-columns:repeat(2,1fr);gap:0.75rem}.shop-body{padding:1.5rem 1rem 4rem}}
   </style>
 </head>
 <body>
-
   <nav id="navbar">
-    <a href="index.html" class="nav-logo">KAORI</a>
+    <a href="index.html" class="nav-logo"><img src="logo.png" alt="Kaori by Jessnuan" /></a>
     <div class="nav-links">
       <a href="shop.html">Tienda</a>
       <a href="eventos.html">Eventos & Bodas</a>
@@ -169,22 +148,19 @@
       <button class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
     </div>
   </nav>
-
   <div class="mobile-menu" id="mobileMenu">
-    <a href="shop.html"    onclick="toggleMenu()">Tienda</a>
+    <a href="shop.html" onclick="toggleMenu()">Tienda</a>
     <a href="eventos.html" onclick="toggleMenu()">Eventos & Bodas</a>
-    <a href="about.html"   onclick="toggleMenu()">Nosotras</a>
+    <a href="about.html" onclick="toggleMenu()">Nosotras</a>
     <a href="contact.html" onclick="toggleMenu()">Contacto</a>
-    <a href="login.html"   onclick="toggleMenu()" id="mobileLoginBtn">Mi cuenta</a>
+    <a href="login.html" onclick="toggleMenu()" id="mobileLoginBtn">Mi cuenta</a>
   </div>
-
   <div class="shop-hero">
     <span class="shop-eyebrow">Colección completa</span>
     <h1>Nuestra <em>Tienda</em></h1>
     <div class="divider"></div>
     <p>Descubre nuestra selección de productos artesanales creados con amor, intención y los mejores ingredientes naturales.</p>
   </div>
-
   <div class="filters-bar" id="filtersBar">
     <div class="filters-inner">
       <button class="filter-cat active" onclick="setCategoria('',this)">Todas</button>
@@ -196,10 +172,7 @@
       <button class="filter-cat" onclick="setCategoria('corporal',this)">🧴 Corporal</button>
       <button class="filter-cat" onclick="setCategoria('quemadores',this)">🔥 Quemadores</button>
       <div class="filters-right">
-        <div class="search-wrap">
-          <span class="search-icon">🔍</span>
-          <input type="text" placeholder="Buscar..." id="searchInput" oninput="filtrarProductos()" />
-        </div>
+        <div class="search-wrap"><span class="search-icon">🔍</span><input type="text" placeholder="Buscar..." id="searchInput" oninput="filtrarProductos()" /></div>
         <select class="sort-select" id="sortSelect" onchange="filtrarProductos()">
           <option value="newest">Más recientes</option>
           <option value="price-asc">Precio: menor a mayor</option>
@@ -217,11 +190,8 @@
       <button class="price-pill" onclick="setPrecio(50,null,this)">+50€</button>
     </div>
   </div>
-
   <div class="shop-body">
-    <div class="results-bar">
-      <p class="results-count" id="resultsCount"></p>
-    </div>
+    <p class="results-count" id="resultsCount"></p>
     <div id="productsGrid" class="skeleton-grid">
       <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line short"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div><div class="skeleton-line btn"></div></div></div>
       <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line short"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div><div class="skeleton-line btn"></div></div></div>
@@ -229,161 +199,45 @@
       <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line short"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div><div class="skeleton-line btn"></div></div></div>
     </div>
   </div>
-
   <footer>
     <div class="footer-inner">
-      <span class="footer-logo">KAORI</span>
+      <img src="logo.png" alt="Kaori" class="footer-logo-img" />
       <div class="footer-links-row">
-        <a href="index.html">Inicio</a>
-        <a href="about.html">Nosotras</a>
-        <a href="eventos.html">Eventos & Bodas</a>
-        <a href="contact.html">Contacto</a>
-        <a href="mailto:info@kaori.es">info@kaori.es</a>
+        <a href="index.html">Inicio</a><a href="about.html">Nosotras</a><a href="eventos.html">Eventos & Bodas</a><a href="contact.html">Contacto</a><a href="mailto:info@kaori.es">info@kaori.es</a>
       </div>
     </div>
-  <div class="footer-bottom">© 2024 Kaori. Todos los derechos reservados. · <a href="privacidad.html" style="color:rgba(255,255,255,0.2)">Política de privacidad</a></div>
-
+    <div class="footer-bottom">© 2024 Kaori. Todos los derechos reservados. · <a href="privacidad.html">Política de privacidad</a></div>
   </footer>
-
   <div id="toast"></div>
-  <!-- BANNER COOKIES -->
-<div id="cookieBanner" style="position:fixed;bottom:0;left:0;right:0;background:#1e0a3c;border-top:2px solid #7c3aed;padding:1.25rem 2rem;z-index:300;display:none;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap">
-  <p style="font-size:0.82rem;color:rgba(255,255,255,0.75);line-height:1.6;font-weight:300;flex:1;min-width:200px">
-    🍪 Usamos cookies necesarias para el carrito y tu sesión.
-    <a href="privacidad.html" style="color:#c4b5fd;font-weight:600">Más información</a>
-  </p>
-  <div style="display:flex;gap:0.75rem;flex-shrink:0;flex-wrap:wrap">
-    <button onclick="localStorage.setItem('kaori_cookie_consent','necessary');document.getElementById('cookieBanner').style.display='none'" style="background:transparent;color:rgba(255,255,255,0.5);border:1px solid rgba(255,255,255,0.2);border-radius:9999px;padding:0.6rem 1.25rem;font-family:'Nunito',sans-serif;font-size:0.78rem;font-weight:600;cursor:pointer">Solo necesarias</button>
-    <button onclick="localStorage.setItem('kaori_cookie_consent','all');document.getElementById('cookieBanner').style.display='none'" style="background:#7c3aed;color:white;border:none;border-radius:9999px;padding:0.6rem 1.25rem;font-family:'Nunito',sans-serif;font-size:0.78rem;font-weight:700;cursor:pointer">Aceptar todas</button>
-  </div>
-</div>
-<script>
-  if (!localStorage.getItem('kaori_cookie_consent')) {
-    setTimeout(function() {
-      document.getElementById('cookieBanner').style.display = 'flex';
-    }, 1200);
-  }
-</script>
-
-
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js"></script>
-  <script src="supabase.js"></script>
-  <script src="auth.js"></script>
-  <script src="cart.js"></script>
+  <script src="supabase.js"></script><script src="auth.js"></script><script src="cart.js"></script>
   <script>
-    let todosLosProductos=[];
-    let categoriaActiva='';
-    let precioMin=null,precioMax=null;
-
+    let todosLosProductos=[],categoriaActiva='',precioMin=null,precioMax=null;
     window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>50)});
     function toggleMenu(){document.getElementById('mobileMenu').classList.toggle('open')}
-    document.addEventListener('click',e=>{const menu=document.getElementById('mobileMenu');const ham=document.querySelector('.hamburger');if(menu&&ham&&menu.classList.contains('open')&&!menu.contains(e.target)&&!ham.contains(e.target))menu.classList.remove('open')});
-
-    async function cargarProductos(){
-      try{
-        const{data,error}=await db.from('productos').select('*').order('created_at',{ascending:false});
-        if(error)throw error;
-        todosLosProductos=data||[];
-        filtrarProductos();
-      }catch(e){
-        document.getElementById('productsGrid').className='products-grid';
-        document.getElementById('productsGrid').innerHTML=`<div class="empty-state"><div class="empty-icon">⚠️</div><h3>Error cargando productos</h3><p>${e.message}</p><a href="javascript:cargarProductos()">Reintentar</a></div>`;
-      }
-    }
-
-    function setCategoria(cat,btn){
-      categoriaActiva=cat;
-      document.querySelectorAll('.filter-cat').forEach(b=>b.classList.remove('active'));
-      btn.classList.add('active');
-      filtrarProductos();
-    }
-
-    function setPrecio(min,max,btn){
-      precioMin=min;precioMax=max;
-      document.querySelectorAll('.price-pill').forEach(b=>b.classList.remove('active'));
-      btn.classList.add('active');
-      filtrarProductos();
-    }
-
-    function filtrarProductos(){
-      const q=(document.getElementById('searchInput')?.value||'').toLowerCase();
-      const sort=document.getElementById('sortSelect')?.value||'newest';
-      let lista=todosLosProductos.filter(p=>{
-        const mq=!q||p.name.toLowerCase().includes(q)||(p.description||'').toLowerCase().includes(q);
-        const mc=!categoriaActiva||p.category===categoriaActiva;
-        const mp=(precioMin===null||p.price>=precioMin)&&(precioMax===null||p.price<=precioMax);
-        return mq&&mc&&mp;
-      });
-      if(sort==='price-asc')lista.sort((a,b)=>a.price-b.price);
-      if(sort==='price-desc')lista.sort((a,b)=>b.price-a.price);
-      if(sort==='name')lista.sort((a,b)=>a.name.localeCompare(b.name));
-      const count=document.getElementById('resultsCount');
-      count.innerHTML=`<strong>${lista.length}</strong> producto${lista.length!==1?'s':''} encontrado${lista.length!==1?'s':''}`;
-      renderProductos(lista);
-    }
-
-    function renderProductos(lista){
-      const grid=document.getElementById('productsGrid');
-      grid.className='products-grid';
-      if(!lista.length){
-        grid.innerHTML=`<div class="empty-state"><div class="empty-icon">🔍</div><h3>Sin resultados</h3><p>No encontramos productos con ese filtro.</p><a href="javascript:void(0)" onclick="resetFiltros()">Ver todos los productos</a></div>`;
-        return;
-      }
-      grid.innerHTML=lista.map(p=>{
-        const disc=p.compare_price&&p.compare_price>p.price?Math.round((1-p.price/p.compare_price)*100):0;
-        return `<div class="product-card"><div class="prod-img-wrap" onclick="window.location.href='product.html?id=${p.id}'"><img src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=400&q=80'" /><div class="badges">${disc?`<span class="badge badge-discount">-${disc}%</span>`:''} ${p.featured?`<span class="badge badge-featured">✨ Destac.</span>`:''}</div><div class="prod-overlay"><button class="prod-quick" onclick="event.stopPropagation();quickAdd('${p.id}',this)">+ Añadir al carrito</button></div></div><div class="prod-info"><p class="prod-cat">${p.category}</p><h3 class="prod-name">${p.name}</h3><div class="prod-prices"><span class="prod-price">${Number(p.price).toFixed(2)} €</span>${p.compare_price?`<span class="prod-compare">${Number(p.compare_price).toFixed(2)} €</span>`:''}</div><button class="prod-btn" onclick="añadirCarrito('${p.id}',this)">Añadir al carrito</button></div></div>`;
-      }).join('');
-      grid.querySelectorAll('.product-card').forEach((card,i)=>{
-        card.style.opacity='0';card.style.transform='translateY(20px)';
-        card.style.transition=`opacity 0.5s ease ${i*50}ms,transform 0.5s ease ${i*50}ms`;
-        setTimeout(()=>{card.style.opacity='1';card.style.transform='translateY(0)'},60);
-      });
-    }
-
-    function resetFiltros(){
-      categoriaActiva='';precioMin=null;precioMax=null;
-      document.querySelectorAll('.filter-cat').forEach((b,i)=>b.classList.toggle('active',i===0));
-      document.querySelectorAll('.price-pill').forEach((b,i)=>b.classList.toggle('active',i===0));
-      document.getElementById('searchInput').value='';
-      filtrarProductos();
-    }
-
+    document.addEventListener('click',e=>{const m=document.getElementById('mobileMenu'),h=document.querySelector('.hamburger');if(m&&h&&m.classList.contains('open')&&!m.contains(e.target)&&!h.contains(e.target))m.classList.remove('open')});
+    async function cargarProductos(){try{const{data,error}=await db.from('productos').select('*').order('created_at',{ascending:false});if(error)throw error;todosLosProductos=data||[];filtrarProductos()}catch(e){document.getElementById('productsGrid').className='products-grid';document.getElementById('productsGrid').innerHTML=`<div class="empty-state"><h3>Error cargando productos</h3><p>${e.message}</p></div>`}}
+    function setCategoria(cat,btn){categoriaActiva=cat;document.querySelectorAll('.filter-cat').forEach(b=>b.classList.remove('active'));btn.classList.add('active');filtrarProductos()}
+    function setPrecio(min,max,btn){precioMin=min;precioMax=max;document.querySelectorAll('.price-pill').forEach(b=>b.classList.remove('active'));btn.classList.add('active');filtrarProductos()}
+    function filtrarProductos(){const q=(document.getElementById('searchInput')?.value||'').toLowerCase();const sort=document.getElementById('sortSelect')?.value||'newest';let lista=todosLosProductos.filter(p=>{const mq=!q||p.name.toLowerCase().includes(q)||(p.description||'').toLowerCase().includes(q);const mc=!categoriaActiva||p.category===categoriaActiva;const mp=(precioMin===null||p.price>=precioMin)&&(precioMax===null||p.price<=precioMax);return mq&&mc&&mp});if(sort==='price-asc')lista.sort((a,b)=>a.price-b.price);if(sort==='price-desc')lista.sort((a,b)=>b.price-a.price);if(sort==='name')lista.sort((a,b)=>a.name.localeCompare(b.name));document.getElementById('resultsCount').innerHTML=`<strong>${lista.length}</strong> producto${lista.length!==1?'s':''} encontrado${lista.length!==1?'s':''}`;renderProductos(lista)}
+    function renderProductos(lista){const grid=document.getElementById('productsGrid');grid.className='products-grid';if(!lista.length){grid.innerHTML=`<div class="empty-state"><h3>Sin resultados</h3><p>No encontramos productos con ese filtro.</p><a href="javascript:void(0)" onclick="resetFiltros()">Ver todos</a></div>`;return}grid.innerHTML=lista.map(p=>{const disc=p.compare_price&&p.compare_price>p.price?Math.round((1-p.price/p.compare_price)*100):0;return`<div class="product-card"><div class="prod-img-wrap" onclick="window.location.href='product.html?id=${p.id}'"><img src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=400&q=80'"/><div class="badges">${disc?`<span class="badge badge-discount">-${disc}%</span>`:''} ${p.featured?`<span class="badge badge-featured">✨ Destac.</span>`:''}</div><div class="prod-overlay"><button class="prod-quick" onclick="event.stopPropagation();quickAdd('${p.id}',this)">+ Añadir</button></div></div><div class="prod-info"><p class="prod-cat">${p.category}</p><h3 class="prod-name">${p.name}</h3><div class="prod-prices"><span class="prod-price">${Number(p.price).toFixed(2)} €</span>${p.compare_price?`<span class="prod-compare">${Number(p.compare_price).toFixed(2)} €</span>`:''}</div><button class="prod-btn" onclick="añadirCarrito('${p.id}',this)">Añadir al carrito</button></div></div>`}).join('');grid.querySelectorAll('.product-card').forEach((card,i)=>{card.style.opacity='0';card.style.transform='translateY(20px)';card.style.transition=`opacity 0.5s ease ${i*50}ms,transform 0.5s ease ${i*50}ms`;setTimeout(()=>{card.style.opacity='1';card.style.transform='translateY(0)'},60)})}
+    function resetFiltros(){categoriaActiva='';precioMin=null;precioMax=null;document.querySelectorAll('.filter-cat').forEach((b,i)=>b.classList.toggle('active',i===0));document.querySelectorAll('.price-pill').forEach((b,i)=>b.classList.toggle('active',i===0));document.getElementById('searchInput').value='';filtrarProductos()}
     function getCarrito(){try{return JSON.parse(localStorage.getItem('kaori_cart')||'[]')}catch{return[]}}
     function guardarCarrito(cart){localStorage.setItem('kaori_cart',JSON.stringify(cart));if(window.CartWidget)CartWidget.updateBadge()}
-
-    function añadirCarrito(id,btn){
-      const p=todosLosProductos.find(x=>x.id===id);if(!p)return;
-      const cart=getCarrito();const ex=cart.find(i=>i.id===id);
-      if(ex)ex.quantity++;else cart.push({id:p.id,name:p.name,price:Number(p.price),image:p.image,quantity:1});
-      guardarCarrito(cart);if(window.CartWidget)CartWidget.render();
-      const orig=btn.textContent;btn.textContent='✓ Añadido';btn.classList.add('added');
-      setTimeout(()=>{btn.textContent=orig;btn.classList.remove('added')},1500);
-      mostrarToast(`"${p.name}" añadido`);
-    }
-
-    function quickAdd(id,btn){
-      const p=todosLosProductos.find(x=>x.id===id);if(!p)return;
-      const cart=getCarrito();const ex=cart.find(i=>i.id===id);
-      if(ex)ex.quantity++;else cart.push({id:p.id,name:p.name,price:Number(p.price),image:p.image,quantity:1});
-      guardarCarrito(cart);if(window.CartWidget)CartWidget.render();
-      mostrarToast(`"${p.name}" añadido`);
-    }
-
+    function añadirCarrito(id,btn){const p=todosLosProductos.find(x=>x.id===id);if(!p)return;const cart=getCarrito();const ex=cart.find(i=>i.id===id);if(ex)ex.quantity++;else cart.push({id:p.id,name:p.name,price:Number(p.price),image:p.image,quantity:1});guardarCarrito(cart);if(window.CartWidget)CartWidget.render();const orig=btn.textContent;btn.textContent='✓ Añadido';btn.classList.add('added');setTimeout(()=>{btn.textContent=orig;btn.classList.remove('added')},1500);mostrarToast(`"${p.name}" añadido`)}
+    function quickAdd(id){const p=todosLosProductos.find(x=>x.id===id);if(!p)return;const cart=getCarrito();const ex=cart.find(i=>i.id===id);if(ex)ex.quantity++;else cart.push({id:p.id,name:p.name,price:Number(p.price),image:p.image,quantity:1});guardarCarrito(cart);if(window.CartWidget)CartWidget.render();mostrarToast(`"${p.name}" añadido`)}
     function mostrarToast(msg){const t=document.getElementById('toast');t.textContent='✦ '+msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800)}
-
-    (async()=>{
-      try{
-        const sesion=await obtenerSesion();
-        const btn=document.getElementById('btnCuenta');const mBtn=document.getElementById('mobileLoginBtn');
-        if(sesion){const rol=await obtenerRol();const href=rol==='admin'?'admin.html':'mi-cuenta.html';const txt=rol==='admin'?'👑 Panel Admin':'Mi cuenta';if(btn){btn.href=href;btn.textContent=txt}if(mBtn){mBtn.href=href;mBtn.textContent=txt}}
-      }catch(e){}
-    })();
-
-    const urlParams=new URLSearchParams(window.location.search);
-    const catParam=urlParams.get('category');
-    if(catParam){const btn=Array.from(document.querySelectorAll('.filter-cat')).find(b=>b.textContent.toLowerCase().includes(catParam));if(btn){categoriaActiva=catParam;document.querySelectorAll('.filter-cat').forEach(b=>b.classList.remove('active'));btn.classList.add('active')}}
-
+    (async()=>{try{const sesion=await obtenerSesion();const btn=document.getElementById('btnCuenta');const mBtn=document.getElementById('mobileLoginBtn');if(sesion){const rol=await obtenerRol();const href=rol==='admin'?'admin.html':'mi-cuenta.html';const txt=rol==='admin'?'👑 Panel Admin':'Mi cuenta';if(btn){btn.href=href;btn.textContent=txt}if(mBtn){mBtn.href=href;mBtn.textContent=txt}}}catch(e){}})();
+    const urlParams=new URLSearchParams(window.location.search);const catParam=urlParams.get('category');if(catParam){const btn=Array.from(document.querySelectorAll('.filter-cat')).find(b=>b.textContent.toLowerCase().includes(catParam));if(btn){categoriaActiva=catParam;document.querySelectorAll('.filter-cat').forEach(b=>b.classList.remove('active'));btn.classList.add('active')}}
     cargarProductos();
+    if(!localStorage.getItem('kaori_cookie_consent')){setTimeout(()=>{document.getElementById('cookieBanner').style.display='flex'},1200)}
   </script>
+  <div id="cookieBanner" style="position:fixed;bottom:0;left:0;right:0;background:#1e0a3c;border-top:2px solid #7c3aed;padding:1.25rem 2rem;z-index:300;display:none;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap">
+    <p style="font-size:0.82rem;color:rgba(255,255,255,0.75);line-height:1.6;font-weight:300;flex:1;min-width:200px">🍪 Usamos cookies necesarias para el carrito y tu sesión. <a href="privacidad.html" style="color:#c4b5fd;font-weight:600">Más información</a></p>
+    <div style="display:flex;gap:0.75rem;flex-shrink:0">
+      <button onclick="localStorage.setItem('kaori_cookie_consent','necessary');document.getElementById('cookieBanner').style.display='none'" style="background:transparent;color:rgba(255,255,255,0.5);border:1px solid rgba(255,255,255,0.2);border-radius:9999px;padding:0.6rem 1.25rem;font-family:'Nunito',sans-serif;font-size:0.78rem;font-weight:600;cursor:pointer">Solo necesarias</button>
+      <button onclick="localStorage.setItem('kaori_cookie_consent','all');document.getElementById('cookieBanner').style.display='none'" style="background:#7c3aed;color:white;border:none;border-radius:9999px;padding:0.6rem 1.25rem;font-family:'Nunito',sans-serif;font-size:0.78rem;font-weight:700;cursor:pointer">Aceptar todas</button>
+    </div>
+  </div>
 </body>
 </html>
