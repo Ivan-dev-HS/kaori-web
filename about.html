@@ -7,14 +7,14 @@
   <meta name="description" content="Conoce la historia de Kaori. Una marca familiar nacida del amor por la naturaleza, la artesanía consciente y la energía que transmiten los objetos hechos a mano." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://kaori.es/about.html" />
-  <meta property="og:type"        content="website" />
-  <meta property="og:url"         content="https://kaori.es/about.html" />
-  <meta property="og:title"       content="Nosotras – La historia de Kaori" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://kaori.es/about.html" />
+  <meta property="og:title" content="Nosotras – La historia de Kaori" />
   <meta property="og:description" content="Una marca familiar nacida del amor por la naturaleza y la artesanía consciente." />
-  <meta property="og:image"       content="https://kaori.es/og-image.jpg" />
-  <meta property="og:locale"      content="es_ES" />
-  <meta property="og:site_name"   content="Kaori" />
-  <meta name="twitter:card"  content="summary_large_image" />
+  <meta property="og:image" content="https://kaori.es/og-image.jpg" />
+  <meta property="og:locale" content="es_ES" />
+  <meta property="og:site_name" content="Kaori" />
+  <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://kaori.es/og-image.jpg" />
   <link rel="icon" type="image/x-icon" href="/favicon.ico" />
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
@@ -22,16 +22,18 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
-    :root{--cream:#faf8f5;--cream2:#f5f0ff;--dark:#2e0854;--dark2:#1e0a3c;--primary:#7c3aed;--primary2:#6d28d9;--light:#f3e8ff;--light2:#ede9fe;--muted:#6b7280;--text:#2d1b69;--white:#ffffff;--border:#e9d5ff;--pink:#ec4899}
+    :root{--cream:#faf8f5;--cream2:#f5f0ff;--dark:#2e0854;--dark2:#1e0a3c;--primary:#7c3aed;--primary2:#6d28d9;--light:#f3e8ff;--light2:#ede9fe;--muted:#6b7280;--text:#2d1b69;--border:#e9d5ff;--pink:#ec4899}
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth}
     body{font-family:'Nunito',sans-serif;background:var(--cream);color:var(--text);overflow-x:hidden}
     h1,h2,h3,h4{font-family:'Cormorant Garamond',serif}
     a{text-decoration:none;color:inherit}
     img{max-width:100%}
-    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 3rem;height:80px;background:rgba(250,248,245,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);transition:all 0.4s}
-    nav.scrolled{height:64px;box-shadow:0 4px 30px rgba(124,58,237,0.08)}
-    .nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.7rem;letter-spacing:0.3em;color:var(--dark);font-weight:400;text-transform:uppercase}
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 3rem;height:90px;background:rgba(250,248,245,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);transition:all 0.4s}
+    nav.scrolled{height:72px;box-shadow:0 4px 30px rgba(124,58,237,0.08)}
+    .nav-logo{display:flex;align-items:center;height:100%;padding:8px 0}
+    .nav-logo img{height:68px;width:auto;object-fit:contain;display:block;transition:height 0.4s ease}
+    nav.scrolled .nav-logo img{height:56px}
     .nav-links{display:flex;gap:2.5rem}
     .nav-links a{font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);font-weight:500;transition:color 0.3s;position:relative}
     .nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--primary);transform:scaleX(0);transition:transform 0.3s;transform-origin:left}
@@ -46,9 +48,8 @@
     .cart-count-badge{position:absolute;top:-6px;right:-6px;background:var(--pink);color:white;font-size:0.6rem;font-weight:700;width:18px;height:18px;border-radius:50%;display:none;align-items:center;justify-content:center}
     .hamburger{display:none;background:none;border:none;cursor:pointer;padding:0.5rem;flex-direction:column;gap:5px}
     .hamburger span{display:block;width:22px;height:2px;background:var(--dark);border-radius:2px}
-    .mobile-menu{display:none;position:fixed;top:80px;left:0;right:0;background:white;border-bottom:1px solid var(--border);padding:1.5rem 2rem;z-index:99;flex-direction:column;box-shadow:0 8px 30px rgba(124,58,237,0.08)}
-    .mobile-menu a{font-size:0.78rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text);font-weight:600;padding:0.9rem 0;border-bottom:1px solid var(--border);display:block;transition:color 0.2s}
-    .mobile-menu a:hover{color:var(--primary)}
+    .mobile-menu{display:none;position:fixed;top:90px;left:0;right:0;background:white;border-bottom:1px solid var(--border);padding:1.5rem 2rem;z-index:99;flex-direction:column;box-shadow:0 8px 30px rgba(124,58,237,0.08)}
+    .mobile-menu a{font-size:0.78rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text);font-weight:600;padding:0.9rem 0;border-bottom:1px solid var(--border);display:block}
     .mobile-menu a:last-child{border-bottom:none}
     .mobile-menu.open{display:flex}
     .hero{min-height:90vh;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
@@ -72,8 +73,7 @@
     .intro-grid{display:grid;gap:4rem;align-items:center}
     @media(min-width:1024px){.intro-grid{grid-template-columns:1fr 1fr;gap:6rem}}
     .intro-img-main{aspect-ratio:4/5;overflow:hidden;border-radius:1rem;box-shadow:0 20px 60px rgba(124,58,237,0.12)}
-    .intro-img-main img{width:100%;height:100%;object-fit:cover;transition:transform 0.6s}
-    .intro-img-main:hover img{transform:scale(1.03)}
+    .intro-img-main img{width:100%;height:100%;object-fit:cover}
     .intro-text p{color:var(--muted);line-height:1.9;font-size:0.95rem;font-weight:300;margin-bottom:1.25rem}
     .intro-text em{color:var(--primary);font-style:italic}
     .intro-text strong{color:var(--dark);font-weight:600}
@@ -98,11 +98,11 @@
     .valor-card p{font-size:0.875rem;color:var(--muted);line-height:1.7;font-weight:300}
     .proceso-section{background:white;padding:7rem 1.5rem}
     .proceso-inner{max-width:80rem;margin:0 auto}
-    .proceso-timeline{margin-top:4rem;display:flex;flex-direction:column;gap:0}
+    .proceso-timeline{margin-top:4rem;display:flex;flex-direction:column}
     .proceso-step{display:grid;gap:2rem;align-items:center;padding:3rem 0;border-bottom:1px solid var(--border)}
     .proceso-step:last-child{border-bottom:none}
     @media(min-width:768px){.proceso-step{grid-template-columns:auto 1fr auto;gap:3rem}}
-    .paso-num{font-family:'Cormorant Garamond',serif;font-size:4rem;color:var(--light2);font-weight:300;line-height:1;flex-shrink:0;width:80px;text-align:center}
+    .paso-num{font-family:'Cormorant Garamond',serif;font-size:4rem;color:var(--light2);font-weight:300;line-height:1;width:80px;text-align:center}
     .paso-content h3{font-size:1.4rem;color:var(--dark);font-weight:400;margin-bottom:0.6rem}
     .paso-content p{font-size:0.875rem;color:var(--muted);line-height:1.7;font-weight:300}
     .paso-img{width:120px;height:120px;border-radius:1rem;overflow:hidden;flex-shrink:0}
@@ -116,7 +116,7 @@
     .compromiso-text em{color:#e9d5ff;font-style:italic}
     .compromiso-items{display:flex;flex-direction:column;gap:1.25rem;margin-top:2rem}
     .compromiso-item{display:flex;align-items:flex-start;gap:1rem}
-    .c-icon{width:36px;height:36px;background:rgba(124,58,237,0.3);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;margin-top:2px}
+    .c-icon{width:36px;height:36px;background:rgba(124,58,237,0.3);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
     .c-content strong{display:block;color:white;font-size:0.875rem;margin-bottom:0.25rem}
     .c-content span{font-size:0.8rem;color:rgba(255,255,255,0.5);font-weight:300}
     .compromiso-img{aspect-ratio:4/5;overflow:hidden;border-radius:1rem;box-shadow:0 20px 60px rgba(0,0,0,0.3)}
@@ -124,7 +124,7 @@
     .cta-section{background:var(--cream2);padding:7rem 1.5rem;text-align:center}
     .cta-inner{max-width:56rem;margin:0 auto}
     .cta-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:2.5rem}
-    .btn-primary-solid{display:inline-block;background:var(--primary);color:white;padding:1rem 2.5rem;border-radius:9999px;font-family:'Nunito',sans-serif;font-size:0.78rem;letter-spacing:0.15em;text-transform:uppercase;font-weight:700;transition:all 0.3s;box-shadow:0 4px 14px rgba(124,58,237,0.3)}
+    .btn-primary-solid{display:inline-block;background:var(--primary);color:white;padding:1rem 2.5rem;border-radius:9999px;font-family:'Nunito',sans-serif;font-size:0.78rem;letter-spacing:0.15em;text-transform:uppercase;font-weight:700;transition:all 0.3s}
     .btn-primary-solid:hover{background:var(--primary2);transform:translateY(-2px)}
     .btn-outline-dark{display:inline-block;background:transparent;color:var(--dark);border:2px solid var(--border);border-radius:9999px;padding:1rem 2.5rem;font-family:'Nunito',sans-serif;font-size:0.78rem;letter-spacing:0.15em;text-transform:uppercase;font-weight:700;transition:all 0.3s}
     .btn-outline-dark:hover{border-color:var(--primary);color:var(--primary);transform:translateY(-2px)}
@@ -137,7 +137,7 @@
     #toast.show{transform:translateX(-50%) translateY(0)}
     footer{background:var(--dark2);padding:4rem 1.5rem 2rem}
     .footer-inner{max-width:80rem;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:4rem}
-    .footer-logo{font-family:'Cormorant Garamond',serif;font-size:1.8rem;letter-spacing:0.3em;color:white;font-weight:300;margin-bottom:1rem;display:block}
+    .footer-logo-img{height:48px;width:auto;object-fit:contain;filter:brightness(0) invert(1);opacity:0.8;margin-bottom:1rem;display:block}
     .footer-brand p{color:rgba(255,255,255,0.4);font-size:0.82rem;line-height:1.8;font-weight:300;max-width:250px}
     .footer-social{display:flex;gap:1.25rem;margin-top:1.5rem}
     .footer-social a{font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:#c4b5fd;transition:color 0.3s;font-family:'Nunito',sans-serif;font-weight:600}
@@ -150,12 +150,12 @@
     .footer-bottom p,.footer-bottom a{font-size:0.72rem;color:rgba(255,255,255,0.2)}
     @media(max-width:1024px){.footer-inner{grid-template-columns:1fr 1fr;gap:2rem}}
     @media(max-width:768px){nav{padding:0 1.5rem}.nav-links{display:none}.hamburger{display:flex}.paso-img{display:none}.proceso-step{grid-template-columns:auto 1fr}.stats-grid{grid-template-columns:repeat(2,1fr)}.stat-item{border-right:none;border-bottom:1px solid rgba(255,255,255,0.08)}.footer-inner{grid-template-columns:1fr 1fr;gap:1.5rem}}
-    @media(max-width:480px){nav{padding:0 1rem}.stats-grid{grid-template-columns:1fr 1fr}.footer-inner{grid-template-columns:1fr}.cta-btns{flex-direction:column;align-items:center}}
+    @media(max-width:480px){nav{padding:0 1rem}.nav-logo img{height:52px}.footer-inner{grid-template-columns:1fr}.cta-btns{flex-direction:column;align-items:center}}
   </style>
 </head>
 <body>
   <nav id="navbar">
-    <a href="index.html" class="nav-logo">KAORI</a>
+    <a href="index.html" class="nav-logo"><img src="logo.png" alt="Kaori by Jessnuan" /></a>
     <div class="nav-links">
       <a href="shop.html">Tienda</a>
       <a href="eventos.html">Eventos & Bodas</a>
@@ -172,11 +172,11 @@
     </div>
   </nav>
   <div class="mobile-menu" id="mobileMenu">
-    <a href="shop.html"    onclick="toggleMenu()">Tienda</a>
+    <a href="shop.html" onclick="toggleMenu()">Tienda</a>
     <a href="eventos.html" onclick="toggleMenu()">Eventos & Bodas</a>
-    <a href="about.html"   onclick="toggleMenu()">Nosotras</a>
+    <a href="about.html" onclick="toggleMenu()">Nosotras</a>
     <a href="contact.html" onclick="toggleMenu()">Contacto</a>
-    <a href="login.html"   onclick="toggleMenu()" id="mobileLoginBtn">Mi cuenta</a>
+    <a href="login.html" onclick="toggleMenu()" id="mobileLoginBtn">Mi cuenta</a>
   </div>
   <section class="hero">
     <div class="hero-bg"></div>
@@ -190,11 +190,7 @@
   <section class="intro-section">
     <div class="section-inner">
       <div class="intro-grid">
-        <div class="reveal-left">
-          <div class="intro-img-main">
-            <img src="https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=800&q=80" alt="Kaori artesanía" loading="lazy" />
-          </div>
-        </div>
+        <div class="reveal-left"><div class="intro-img-main"><img src="https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=800&q=80" alt="Kaori artesanía" loading="lazy" /></div></div>
         <div class="reveal-right">
           <span class="section-eyebrow">Quiénes somos</span>
           <h2 class="section-title">El origen de<br /><em>nuestra pasión</em></h2>
@@ -258,9 +254,7 @@
             <div class="compromiso-item"><div class="c-icon">♻️</div><div class="c-content"><strong>Compromiso ecológico</strong><span>Packaging sostenible y responsabilidad con el medio ambiente</span></div></div>
           </div>
         </div>
-        <div class="compromiso-img reveal-right">
-          <img src="https://images.unsplash.com/photo-1557053910-d9eadeed1c58?w=800&q=80" alt="Compromiso Kaori" loading="lazy" />
-        </div>
+        <div class="compromiso-img reveal-right"><img src="https://images.unsplash.com/photo-1557053910-d9eadeed1c58?w=800&q=80" alt="Compromiso Kaori" loading="lazy" /></div>
       </div>
     </div>
   </section>
@@ -271,14 +265,14 @@
       <div class="divider center reveal"></div>
       <p class="reveal" style="color:var(--muted);font-size:0.95rem;line-height:1.8;max-width:440px;margin:0 auto;font-weight:300">Explora nuestra colección completa de productos artesanales o contáctanos para una experiencia personalizada.</p>
       <div class="cta-btns">
-        <a href="shop.html"    class="btn-primary-solid reveal">Explorar la tienda</a>
+        <a href="shop.html" class="btn-primary-solid reveal">Explorar la tienda</a>
         <a href="eventos.html" class="btn-outline-dark reveal">Eventos & Bodas</a>
       </div>
     </div>
   </section>
   <footer>
     <div class="footer-inner">
-      <div class="footer-brand"><span class="footer-logo">KAORI</span><p>Velas artesanales y productos naturales creados con intención, amor y los mejores materiales para transformar tu hogar.</p><div class="footer-social"><a href="https://instagram.com/kaoribyjessnuan" target="_blank">Instagram</a><a href="#">Pinterest</a></div></div>
+      <div class="footer-brand"><img src="logo.png" alt="Kaori" class="footer-logo-img" /><p>Velas artesanales y productos naturales creados con intención, amor y los mejores materiales para transformar tu hogar.</p><div class="footer-social"><a href="https://instagram.com/kaoribyjessnuan" target="_blank">Instagram</a><a href="#">Pinterest</a></div></div>
       <div class="footer-links"><h4>Colección</h4><ul><li><a href="shop.html">Todos los productos</a></li><li><a href="shop.html?category=velas">Velas</a></li><li><a href="shop.html?category=minerales">Minerales</a></li><li><a href="shop.html?category=joyeria">Joyería</a></li></ul></div>
       <div class="footer-links"><h4>Kaori</h4><ul><li><a href="about.html">Nosotras</a></li><li><a href="eventos.html">Eventos & Bodas</a></li><li><a href="contact.html">Contacto</a></li></ul></div>
       <div class="footer-links"><h4>Contacto</h4><ul><li><a href="mailto:info@kaori.es">info@kaori.es</a></li><li><a href="https://instagram.com/kaoribyjessnuan" target="_blank">@kaoribyjessnuan</a></li></ul></div>
@@ -286,36 +280,23 @@
     <div class="footer-bottom"><p>© 2024 Kaori. Todos los derechos reservados.</p><a href="privacidad.html">Política de privacidad</a></div>
   </footer>
   <div id="toast"></div>
-  <!-- BANNER COOKIES -->
-<div id="cookieBanner" style="position:fixed;bottom:0;left:0;right:0;background:#1e0a3c;border-top:2px solid #7c3aed;padding:1.25rem 2rem;z-index:300;display:none;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap">
-  <p style="font-size:0.82rem;color:rgba(255,255,255,0.75);line-height:1.6;font-weight:300;flex:1;min-width:200px">
-    🍪 Usamos cookies necesarias para el carrito y tu sesión.
-    <a href="privacidad.html" style="color:#c4b5fd;font-weight:600">Más información</a>
-  </p>
-  <div style="display:flex;gap:0.75rem;flex-shrink:0;flex-wrap:wrap">
-    <button onclick="localStorage.setItem('kaori_cookie_consent','necessary');document.getElementById('cookieBanner').style.display='none'" style="background:transparent;color:rgba(255,255,255,0.5);border:1px solid rgba(255,255,255,0.2);border-radius:9999px;padding:0.6rem 1.25rem;font-family:'Nunito',sans-serif;font-size:0.78rem;font-weight:600;cursor:pointer">Solo necesarias</button>
-    <button onclick="localStorage.setItem('kaori_cookie_consent','all');document.getElementById('cookieBanner').style.display='none'" style="background:#7c3aed;color:white;border:none;border-radius:9999px;padding:0.6rem 1.25rem;font-family:'Nunito',sans-serif;font-size:0.78rem;font-weight:700;cursor:pointer">Aceptar todas</button>
-  </div>
-</div>
-<script>
-  if (!localStorage.getItem('kaori_cookie_consent')) {
-    setTimeout(function() {
-      document.getElementById('cookieBanner').style.display = 'flex';
-    }, 1200);
-  }
-</script>
-
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js"></script>
-  <script src="supabase.js"></script>
-  <script src="auth.js"></script>
-  <script src="cart.js"></script>
+  <script src="supabase.js"></script><script src="auth.js"></script><script src="cart.js"></script>
   <script>
     window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>50)});
     function toggleMenu(){document.getElementById('mobileMenu').classList.toggle('open')}
-    document.addEventListener('click',e=>{const menu=document.getElementById('mobileMenu');const ham=document.querySelector('.hamburger');if(menu&&ham&&menu.classList.contains('open')&&!menu.contains(e.target)&&!ham.contains(e.target))menu.classList.remove('open')});
+    document.addEventListener('click',e=>{const m=document.getElementById('mobileMenu'),h=document.querySelector('.hamburger');if(m&&h&&m.classList.contains('open')&&!m.contains(e.target)&&!h.contains(e.target))m.classList.remove('open')});
     const observer=new IntersectionObserver(entries=>{entries.forEach((entry,i)=>{if(entry.isIntersecting){setTimeout(()=>entry.target.classList.add('visible'),i*80);observer.unobserve(entry.target)}})},{threshold:0.12});
     document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el=>observer.observe(el));
     (async()=>{try{const sesion=await obtenerSesion();const btn=document.getElementById('btnCuenta');const mBtn=document.getElementById('mobileLoginBtn');if(sesion){const rol=await obtenerRol();const href=rol==='admin'?'admin.html':'mi-cuenta.html';const txt=rol==='admin'?'👑 Panel Admin':'Mi cuenta';if(btn){btn.href=href;btn.textContent=txt}if(mBtn){mBtn.href=href;mBtn.textContent=txt}}}catch(e){}})();
+    if(!localStorage.getItem('kaori_cookie_consent')){setTimeout(()=>{document.getElementById('cookieBanner').style.display='flex'},1200)}
   </script>
+  <div id="cookieBanner" style="position:fixed;bottom:0;left:0;right:0;background:#1e0a3c;border-top:2px solid #7c3aed;padding:1.25rem 2rem;z-index:300;display:none;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap">
+    <p style="font-size:0.82rem;color:rgba(255,255,255,0.75);line-height:1.6;font-weight:300;flex:1;min-width:200px">🍪 Usamos cookies necesarias para el carrito y tu sesión. <a href="privacidad.html" style="color:#c4b5fd;font-weight:600">Más información</a></p>
+    <div style="display:flex;gap:0.75rem;flex-shrink:0">
+      <button onclick="localStorage.setItem('kaori_cookie_consent','necessary');document.getElementById('cookieBanner').style.display='none'" style="background:transparent;color:rgba(255,255,255,0.5);border:1px solid rgba(255,255,255,0.2);border-radius:9999px;padding:0.6rem 1.25rem;font-family:'Nunito',sans-serif;font-size:0.78rem;font-weight:600;cursor:pointer">Solo necesarias</button>
+      <button onclick="localStorage.setItem('kaori_cookie_consent','all');document.getElementById('cookieBanner').style.display='none'" style="background:#7c3aed;color:white;border:none;border-radius:9999px;padding:0.6rem 1.25rem;font-family:'Nunito',sans-serif;font-size:0.78rem;font-weight:700;cursor:pointer">Aceptar todas</button>
+    </div>
+  </div>
 </body>
 </html>
