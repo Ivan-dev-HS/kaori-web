@@ -313,8 +313,8 @@
       </div>
       <div class="form-success" id="formSuccess">
         <div class="s-icon">💜</div>
-        <h3>¡Solicitud recibida!</h3>
-        <p>Gracias por contactarnos. Nos pondremos en contacto contigo en menos de 24 horas para diseñar juntos la propuesta perfecta.</p>
+        <h3>¡Casi listo!</h3>
+        <p>Hemos abierto tu gestor de correo con la solicitud ya escrita. Solo tienes que pulsar enviar y nos pondremos en contacto contigo en menos de 24 horas.</p>
       </div>
     </div>
   </section>
@@ -365,15 +365,35 @@
     async function enviarFormulario(){
       const nombre=document.getElementById('fNombre').value.trim();
       const email=document.getElementById('fEmail').value.trim();
-      const evento=document.getElementById('fEvento').value;
-      const invitados=document.getElementById('fInvitados').value;
+      const telefono=document.getElementById('fTelefono').value.trim();
+      const eventoSelect=document.getElementById('fEvento');
+      const evento=eventoSelect.value;
+      const eventoTexto=eventoSelect.options[eventoSelect.selectedIndex].text;
+      const fecha=document.getElementById('fFecha').value;
+      const invitadosSelect=document.getElementById('fInvitados');
+      const invitados=invitadosSelect.value;
+      const invitadosTexto=invitadosSelect.options[invitadosSelect.selectedIndex].text;
       const mensaje=document.getElementById('fMensaje').value.trim();
       if(!nombre||!email||!evento||!invitados||!mensaje){mostrarToast('Por favor rellena todos los campos obligatorios');return}
+      if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){mostrarToast('Introduce un email válido');return}
       const btn=document.getElementById('btnForm');btn.disabled=true;btn.textContent='⏳ Enviando...';
-      await new Promise(r=>setTimeout(r,1500));
+      await new Promise(r=>setTimeout(r,600));
+      const lineas=[
+        'Nombre: '+nombre,
+        'Email: '+email,
+        telefono?('Teléfono: '+telefono):null,
+        'Tipo de evento: '+eventoTexto,
+        fecha?('Fecha del evento: '+fecha):null,
+        'Número de invitados: '+invitadosTexto,
+        '',
+        mensaje
+      ].filter(Boolean).join('\n');
+      const mailto='mailto:info@kaori.es?subject='+encodeURIComponent('Presupuesto '+eventoTexto+' — '+nombre)+'&body='+encodeURIComponent(lineas);
+      window.location.href=mailto;
       document.getElementById('formContainer').style.display='none';
       document.getElementById('formSuccess').style.display='block';
-      mostrarToast('✦ Solicitud enviada correctamente');
+      mostrarToast('✦ Abriendo tu gestor de correo...');
+      btn.disabled=false;btn.textContent='Enviar solicitud de presupuesto ✦';
     }
     function mostrarToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000)}
     (async()=>{try{const sesion=await obtenerSesion();const btn=document.getElementById('btnCuenta');const mBtn=document.getElementById('mobileLoginBtn');if(sesion){const rol=await obtenerRol();const href=rol==='admin'?'admin.html':'mi-cuenta.html';const txt=rol==='admin'?'👑 Panel Admin':'Mi cuenta';if(btn){btn.href=href;btn.textContent=txt}if(mBtn){mBtn.href=href;mBtn.textContent=txt}}}catch(e){}})();
