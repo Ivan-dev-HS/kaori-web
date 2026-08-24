@@ -173,7 +173,7 @@
     <div class="canales-inner">
       <div class="canales-grid">
         <a href="mailto:info@kaori.es" class="canal-card reveal"><span class="canal-icon">✉️</span><h3>Email</h3><p>Para consultas generales, pedidos y colaboraciones.</p><span class="canal-link">info@kaori.es →</span></a>
-        <a href="https://instagram.com/kaoribyjessnuan" target="_blank" class="canal-card reveal"><span class="canal-icon">📷</span><h3>Instagram</h3><p>Síguenos y escríbenos por DM. Respondemos rápido.</p><span class="canal-link">@kaoribyjessnuan →</span></a>
+        <a href="https://instagram.com/kaoribyjessnuan" target="_blank" rel="noopener" class="canal-card reveal"><span class="canal-icon">📷</span><h3>Instagram</h3><p>Síguenos y escríbenos por DM. Respondemos rápido.</p><span class="canal-link">@kaoribyjessnuan →</span></a>
         <a href="eventos.html" class="canal-card reveal"><span class="canal-icon">💍</span><h3>Bodas & Eventos</h3><p>¿Tienes un evento especial? Cuéntanos tu proyecto.</p><span class="canal-link">Ver servicios →</span></a>
       </div>
     </div>
@@ -187,12 +187,12 @@
         <p class="info-desc">Somos un equipo pequeño y cercano. Cuando nos escribes, te responde una persona real que conoce cada producto que hacemos.</p>
         <div class="info-items">
           <div class="info-item"><div class="info-icon">✉️</div><div class="info-item-text"><strong>Email</strong><a href="mailto:info@kaori.es">info@kaori.es</a></div></div>
-          <div class="info-item"><div class="info-icon">📷</div><div class="info-item-text"><strong>Instagram</strong><a href="https://instagram.com/kaoribyjessnuan" target="_blank">@kaoribyjessnuan</a></div></div>
+          <div class="info-item"><div class="info-icon">📷</div><div class="info-item-text"><strong>Instagram</strong><a href="https://instagram.com/kaoribyjessnuan" target="_blank" rel="noopener">@kaoribyjessnuan</a></div></div>
           <div class="info-item"><div class="info-icon">⏰</div><div class="info-item-text"><strong>Tiempo de respuesta</strong><span>Menos de 24 horas (días laborables)</span></div></div>
           <div class="info-item"><div class="info-icon">📦</div><div class="info-item-text"><strong>Seguimiento de pedidos</strong><span>Revisa el estado en <a href="mi-cuenta.html">Mi cuenta</a></span></div></div>
         </div>
         <div class="social-row">
-          <a href="https://instagram.com/kaoribyjessnuan" target="_blank" class="social-btn">📷 Instagram</a>
+          <a href="https://instagram.com/kaoribyjessnuan" target="_blank" rel="noopener" class="social-btn">📷 Instagram</a>
           <a href="mailto:info@kaori.es" class="social-btn">✉️ Email directo</a>
         </div>
       </div>
@@ -221,8 +221,8 @@
         </div>
         <div class="form-success" id="formSuccess">
           <span class="s-icon">💜</span>
-          <h3>¡Mensaje recibido!</h3>
-          <p>Gracias por escribirnos. Te responderemos en menos de 24 horas en el email que nos has indicado.</p>
+          <h3>¡Casi listo!</h3>
+          <p>Hemos abierto tu gestor de correo con el mensaje ya escrito. Solo tienes que pulsar enviar y te responderemos en menos de 24 horas.</p>
         </div>
       </div>
     </div>
@@ -244,7 +244,7 @@
   </section>
   <footer>
     <div class="footer-inner">
-      <div class="footer-brand"><span class="footer-logo">KAORI</span><p>Velas artesanales y productos naturales creados con intención, amor y los mejores materiales para transformar tu hogar.</p><div class="footer-social"><a href="https://instagram.com/kaoribyjessnuan" target="_blank">Instagram</a><a href="#">Pinterest</a></div></div>
+      <div class="footer-brand"><span class="footer-logo">KAORI</span><p>Velas artesanales y productos naturales creados con intención, amor y los mejores materiales para transformar tu hogar.</p><div class="footer-social"><a href="https://instagram.com/kaoribyjessnuan" target="_blank" rel="noopener">Instagram</a></div></div>
       <div class="footer-links"><h4>Colección</h4><ul><li><a href="shop.html">Todos los productos</a></li><li><a href="shop.html?category=velas">Velas</a></li><li><a href="shop.html?category=minerales">Minerales</a></li><li><a href="shop.html?category=joyeria">Joyería</a></li></ul></div>
       <div class="footer-links"><h4>Kaori</h4><ul><li><a href="about.html">Nosotras</a></li><li><a href="eventos.html">Eventos & Bodas</a></li><li><a href="contact.html">Contacto</a></li></ul></div>
       <div class="footer-links"><h4>Ayuda</h4><ul><li><a href="mi-cuenta.html">Mi cuenta</a></li><li><a href="mailto:info@kaori.es">info@kaori.es</a></li><li><a href="privacidad.html">Política de privacidad</a></li></ul></div>
@@ -285,16 +285,22 @@
     async function enviarFormulario(){
       var nombre=document.getElementById('fNombre').value.trim();
       var email=document.getElementById('fEmail').value.trim();
-      var asunto=document.getElementById('fAsunto').value;
+      var asuntoSelect=document.getElementById('fAsunto');
+      var asunto=asuntoSelect.value;
+      var asuntoTexto=asuntoSelect.options[asuntoSelect.selectedIndex].text;
       var mensaje=document.getElementById('fMensaje').value.trim();
       if(!nombre||!email||!asunto||!mensaje){mostrarToast('Por favor rellena todos los campos');return}
-      if(!email.includes('@')){mostrarToast('Introduce un email válido');return}
+      if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){mostrarToast('Introduce un email válido');return}
       var btn=document.getElementById('btnEnviar');
       btn.disabled=true;btn.textContent='⏳ Enviando...';
-      await new Promise(function(r){setTimeout(r,1500)});
+      await new Promise(function(r){setTimeout(r,600)});
+      var cuerpo='Nombre: '+nombre+'\nEmail: '+email+'\n\n'+mensaje;
+      var mailto='mailto:info@kaori.es?subject='+encodeURIComponent(asuntoTexto+' — '+nombre)+'&body='+encodeURIComponent(cuerpo);
+      window.location.href=mailto;
       document.getElementById('formContainer').style.display='none';
       document.getElementById('formSuccess').style.display='block';
-      mostrarToast('✦ Mensaje enviado correctamente');
+      mostrarToast('✦ Abriendo tu gestor de correo...');
+      btn.disabled=false;btn.textContent='Enviar mensaje ✦';
     }
     function mostrarToast(msg){var t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(function(){t.classList.remove('show')},3000)}
     (async function(){try{var sesion=await obtenerSesion();var btn=document.getElementById('btnCuenta');var mBtn=document.getElementById('mobileLoginBtn');if(sesion){var rol=await obtenerRol();var href=rol==='admin'?'admin.html':'mi-cuenta.html';var txt=rol==='admin'?'👑 Panel Admin':'Mi cuenta';if(btn){btn.href=href;btn.textContent=txt}if(mBtn){mBtn.href=href;mBtn.textContent=txt}}}catch(e){}})();

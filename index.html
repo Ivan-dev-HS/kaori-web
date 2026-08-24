@@ -406,8 +406,8 @@
     <div class="divider" style="background:rgba(167,139,250,0.3);margin:1.5rem auto"></div>
     <p>Recibe novedades, rituales y acceso prioritario a nuevas colecciones.</p>
     <div class="newsletter-form">
-      <input type="email" placeholder="Tu email..." />
-      <button type="button">Suscribirse</button>
+      <input type="email" id="newsletterEmail" placeholder="Tu email..." />
+      <button type="button" onclick="suscribirNewsletter()">Suscribirse</button>
     </div>
   </section>
 
@@ -417,13 +417,12 @@
         <img src="logo.png" alt="Kaori" class="footer-logo" />
         <p>Velas artesanales y productos naturales creados con intención, amor y los mejores materiales para transformar tu hogar.</p>
         <div class="footer-social">
-          <a href="https://instagram.com/kaoribyjessnuan" target="_blank">Instagram</a>
-          <a href="#">Pinterest</a>
+          <a href="https://instagram.com/kaoribyjessnuan" target="_blank" rel="noopener">Instagram</a>
         </div>
       </div>
       <div class="footer-links"><h4>Colección</h4><ul><li><a href="shop.html">Todos los productos</a></li><li><a href="shop.html?category=velas">Velas</a></li><li><a href="shop.html?category=minerales">Minerales</a></li><li><a href="shop.html?category=joyeria">Joyería</a></li></ul></div>
       <div class="footer-links"><h4>Kaori</h4><ul><li><a href="about.html">Nosotras</a></li><li><a href="eventos.html">Eventos & Bodas</a></li><li><a href="contact.html">Contacto</a></li></ul></div>
-      <div class="footer-links"><h4>Contacto</h4><ul><li><a href="mailto:info@kaori.es">info@kaori.es</a></li><li><a href="https://instagram.com/kaoribyjessnuan" target="_blank">@kaoribyjessnuan</a></li><li><a href="checkout.html">Finalizar compra</a></li></ul></div>
+      <div class="footer-links"><h4>Contacto</h4><ul><li><a href="mailto:info@kaori.es">info@kaori.es</a></li><li><a href="https://instagram.com/kaoribyjessnuan" target="_blank" rel="noopener">@kaoribyjessnuan</a></li><li><a href="checkout.html">Finalizar compra</a></li></ul></div>
     </div>
     <div class="footer-bottom"><p>© 2024 Kaori. Todos los derechos reservados.</p><a href="privacidad.html">Política de privacidad</a></div>
   </footer>
@@ -457,6 +456,7 @@
     function añadirCarrito(id,btn){const p=todosProductos.find(x=>x.id===id);if(!p)return;const cart=getCarrito();const ex=cart.find(i=>i.id===id);if(ex)ex.quantity++;else cart.push({id:p.id,name:p.name,price:Number(p.price),image:p.image,quantity:1});guardarCarrito(cart);if(window.CartWidget)CartWidget.render();const orig=btn.textContent;btn.textContent='✓ Añadido';btn.classList.add('added');setTimeout(()=>{btn.textContent=orig;btn.classList.remove('added')},1500);mostrarToast(`"${p.name}" añadido al carrito`)}
     function quickAdd(id,btn){const p=todosProductos.find(x=>x.id===id);if(!p)return;const cart=getCarrito();const ex=cart.find(i=>i.id===id);if(ex)ex.quantity++;else cart.push({id:p.id,name:p.name,price:Number(p.price),image:p.image,quantity:1});guardarCarrito(cart);if(window.CartWidget)CartWidget.render();mostrarToast(`"${p.name}" añadido al carrito`)}
     function mostrarToast(msg){const t=document.getElementById('toast');t.textContent='✦ '+msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800)}
+    function suscribirNewsletter(){const input=document.getElementById('newsletterEmail');const email=input.value.trim();if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){mostrarToast('Introduce un email válido');return}mostrarToast('¡Gracias! Te avisaremos de nuestras novedades');input.value=''}
     (async()=>{try{const sesion=await obtenerSesion();const btn=document.getElementById('btnCuenta');const mBtn=document.getElementById('mobileLoginBtn');if(sesion){const rol=await obtenerRol();const href=rol==='admin'?'admin.html':'mi-cuenta.html';const txt=rol==='admin'?'👑 Panel Admin':'Mi cuenta';if(btn){btn.href=href;btn.textContent=txt}if(mBtn){mBtn.href=href;mBtn.textContent=txt}}}catch(e){}})();
     cargarCarrusel();
     cargarDestacados();

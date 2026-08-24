@@ -5,21 +5,16 @@ module.exports = async (req, res) => {
     return res.status(405).json({ error: 'Método no permitido' });
   }
 
-  res.setHeader('Access-Control-Allow-Origin', '*');
-
-  // ── DIAGNÓSTICO TEMPORAL ──
-  const key = process.env.STRIPE_SECRET_KEY;
-  if (!key) {
-    return res.status(500).json({
-      error: 'Variable STRIPE_SECRET_KEY no encontrada',
-      env_keys: Object.keys(process.env).filter(k => k.includes('STRIPE'))
-    });
-  }
-  
   // CORS
   res.setHeader('Access-Control-Allow-Origin', 'https://kaori.es');
   res.setHeader('Access-Control-Allow-Methods', 'POST');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+  const key = process.env.STRIPE_SECRET_KEY;
+  if (!key) {
+    console.error('STRIPE_SECRET_KEY no configurada');
+    return res.status(500).json({ error: 'No se pudo iniciar el pago. Inténtalo de nuevo más tarde.' });
+  }
 
   try {
     const stripe = new Stripe(key);

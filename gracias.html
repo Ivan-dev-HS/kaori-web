@@ -260,8 +260,12 @@
       localStorage.removeItem('kaori_cart');
 
       // Obtener ID del pedido desde URL
-      var params  = new URLSearchParams(window.location.search);
-      var pedidoId = params.get('pedido') || params.get('session_id');
+      // order_id/pedido → id real en la tabla "pedidos" (siempre disponible, se crea antes de ir a Stripe)
+      // session_id → id de sesión de Stripe (solo como último recurso)
+      var params    = new URLSearchParams(window.location.search);
+      var orderId   = params.get('order_id') || params.get('pedido');
+      var sessionId = params.get('session_id');
+      var pedidoId  = orderId || sessionId;
 
       if (!pedidoId) return;
 
@@ -272,7 +276,7 @@
         document.getElementById('orderIdWrap').style.display = '';
 
         // Buscar pedido en Supabase
-        var filtro   = pedidoId.startsWith('cs_') ? 'stripe_session_id' : 'id';
+        var filtro   = orderId ? 'id' : 'stripe_session_id';
         var resultado = await db.from('pedidos').select('*').eq(filtro, pedidoId).single();
 
         if (resultado.error || !resultado.data) return;
