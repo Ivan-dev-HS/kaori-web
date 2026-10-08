@@ -100,7 +100,7 @@
     /* ── FILTROS ── */
     .filters-bar{display:flex;gap:0.75rem;flex-wrap:wrap;align-items:center;padding:1rem 1.5rem;border-bottom:1px solid var(--border);background:#faf8f5}
     .search-wrap{position:relative;flex:1;min-width:180px}
-    .search-wrap input{font-family:'Nunito',sans-serif;border:1px solid var(--border);border-radius:0.75rem;padding:0.5rem 0.75rem 0.5rem 2.1rem;width:100%;font-size:0.82rem;outline:none;transition:border-color 0.2s;background:white}
+    .search-wrap input{font-family:'Nunito',sans-serif;border:1px solid var(--border);border-radius:0.75rem;padding:0.6rem 0.75rem 0.6rem 2.1rem;width:100%;font-size:1rem;outline:none;transition:border-color 0.2s;background:white}
     .search-wrap input:focus{border-color:var(--primary)}
     .search-wrap .si{position:absolute;left:0.7rem;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none;font-size:0.8rem}
     .filter-pill{padding:0.35rem 0.85rem;border-radius:9999px;border:1px solid var(--border);background:white;font-size:0.75rem;color:var(--muted);cursor:pointer;font-family:'Nunito',sans-serif;transition:all 0.15s;white-space:nowrap}
@@ -144,7 +144,7 @@
     .form-group{display:flex;flex-direction:column;gap:5px}
     .form-group.full{grid-column:1/-1}
     .form-group label{font-size:0.75rem;font-weight:700;color:var(--dark)}
-    .form-group input,.form-group select,.form-group textarea{font-family:'Nunito',sans-serif;border:1.5px solid var(--border);border-radius:0.75rem;padding:0.65rem 0.9rem;font-size:0.875rem;outline:none;width:100%;transition:all 0.2s;color:var(--dark);background:white}
+    .form-group input,.form-group select,.form-group textarea{font-family:'Nunito',sans-serif;border:1.5px solid var(--border);border-radius:0.75rem;padding:0.7rem 0.9rem;font-size:1rem;outline:none;width:100%;transition:all 0.2s;color:var(--dark);background:white}
     .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(124,58,237,0.08)}
     .form-group textarea{resize:none}
     .toggle-wrap{display:flex;align-items:center;justify-content:space-between;padding:0.75rem 1rem;background:var(--cream2);border-radius:0.75rem;border:1.5px solid var(--border)}
@@ -171,7 +171,7 @@
     .preview-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:0.5rem;margin-top:0.75rem}
     .preview-thumb{position:relative;aspect-ratio:1;border-radius:0.6rem;overflow:hidden;border:2px solid var(--border)}
     .preview-thumb img{width:100%;height:100%;object-fit:cover}
-    .preview-thumb .rm{position:absolute;top:3px;right:3px;background:rgba(0,0,0,0.6);color:white;border:none;border-radius:50%;width:20px;height:20px;cursor:pointer;font-size:0.68rem;display:flex;align-items:center;justify-content:center}
+    .preview-thumb .rm{position:absolute;top:3px;right:3px;background:rgba(0,0,0,0.6);color:white;border:none;border-radius:50%;width:26px;height:26px;cursor:pointer;font-size:0.8rem;display:flex;align-items:center;justify-content:center}
     .preview-thumb .rm:hover{background:var(--red)}
     .main-badge{position:absolute;bottom:3px;left:3px;background:var(--primary);color:white;font-size:0.55rem;font-weight:700;padding:1px 5px;border-radius:3px}
 
@@ -188,7 +188,16 @@
     .variante-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem}
     .variante-field{display:flex;flex-direction:column;gap:3px}
     .variante-field label{font-size:0.68rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em}
-    .variante-field input{font-family:'Nunito',sans-serif;border:1.5px solid var(--border);border-radius:0.6rem;padding:0.55rem 0.75rem;font-size:0.82rem;outline:none;background:white;color:var(--dark);transition:border-color 0.2s;width:100%}
+    .variante-field input{font-family:'Nunito',sans-serif;border:1.5px solid var(--border);border-radius:0.6rem;padding:0.6rem 0.75rem;font-size:1rem;outline:none;background:white;color:var(--dark);transition:border-color 0.2s;width:100%}
+
+    /* ── MÁS OPCIONES (colapsable) ── */
+    .mas-opciones{grid-column:1/-1;border:1.5px solid var(--border);border-radius:0.875rem;background:var(--cream2);overflow:hidden}
+    .mas-opciones summary{list-style:none;cursor:pointer;padding:0.85rem 1rem;font-size:0.82rem;font-weight:700;color:var(--primary);display:flex;align-items:center;gap:0.5rem;user-select:none}
+    .mas-opciones summary::-webkit-details-marker{display:none}
+    .mas-opciones summary::before{content:'▸';transition:transform 0.2s;font-size:0.7rem}
+    .mas-opciones[open] summary::before{transform:rotate(90deg)}
+    .mas-opciones-body{padding:0 1rem 1rem;display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+    .mas-opciones-body .form-group.full{grid-column:1/-1}
     .variante-field input:focus{border-color:var(--primary)}
     .variante-img-section{margin-top:0.75rem}
     .variante-img-label{font-size:0.68rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.4rem;display:block}
@@ -282,6 +291,17 @@
       .stats-grid{grid-template-columns:repeat(2,1fr);gap:0.75rem}
       .form-grid{grid-template-columns:1fr}
       .variante-grid{grid-template-columns:1fr}
+      .mas-opciones-body{grid-template-columns:1fr}
+
+      /* ── Tabla de productos → tarjetas en móvil ── */
+      .table-wrap table,.table-wrap thead,.table-wrap tbody,.table-wrap th,.table-wrap td,.table-wrap tr{display:block}
+      .table-wrap thead{display:none}
+      .table-wrap tr{border:1px solid var(--border);border-radius:1rem;margin-bottom:0.75rem;padding:0.9rem 1rem;background:white}
+      .table-wrap td{border:none;padding:0.4rem 0;display:flex;align-items:center;justify-content:space-between;gap:0.75rem}
+      .table-wrap td::before{content:attr(data-label);font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted);flex-shrink:0}
+      .table-wrap td:first-child{padding-bottom:0.6rem;margin-bottom:0.4rem;border-bottom:1px solid var(--border)}
+      .table-wrap td:first-child::before{display:none}
+      .table-wrap .prod-actions{justify-content:flex-end;flex-wrap:wrap}
     }
     @media(max-width:480px){
       .stats-grid{grid-template-columns:1fr 1fr}
@@ -490,6 +510,25 @@
             <label>Nombre del producto *</label>
             <input type="text" id="pNombre" placeholder="Vela Aura" />
           </div>
+
+          <!-- Imagen principal -->
+          <div class="upload-section">
+            <label style="font-size:0.75rem;font-weight:700;color:var(--dark);display:block;margin-bottom:0.5rem">
+              Foto del producto *
+            </label>
+            <div class="drop-area" id="dropArea">
+              <input type="file" id="fileInput" accept="image/*" multiple onchange="handleFiles(this.files)" />
+              <div class="drop-icon">📷</div>
+              <p class="drop-txt">Toca para hacer o elegir una foto</p>
+              <p class="drop-sub">Se optimiza automáticamente, suba lo que suba la cámara</p>
+            </div>
+            <div class="progress-wrap" id="progressWrap">
+              <p class="progress-txt" id="progressTxt">Subiendo...</p>
+              <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+            </div>
+            <div class="preview-grid" id="previewGrid"></div>
+          </div>
+
           <div class="form-group">
             <label>Categoría *</label>
             <select id="pCategoria">
@@ -503,49 +542,37 @@
             </select>
           </div>
           <div class="form-group">
-            <label>Precio base (€) *</label>
+            <label>Precio (€) *</label>
             <input type="number" id="pPrecio" placeholder="18.00" min="0" step="0.01" />
           </div>
-          <div class="form-group">
-            <label>Precio anterior (€)</label>
-            <input type="number" id="pCompare" placeholder="22.00" min="0" step="0.01" />
-          </div>
-          <div class="form-group full">
-            <label>Descripción</label>
-            <textarea id="pDescripcion" rows="2" placeholder="Describe el producto..."></textarea>
-          </div>
 
-          <!-- Imagen principal -->
-          <div class="upload-section">
-            <label style="font-size:0.75rem;font-weight:700;color:var(--dark);display:block;margin-bottom:0.5rem">
-              Imagen principal *
-            </label>
-            <div class="drop-area" id="dropArea">
-              <input type="file" id="fileInput" accept="image/*" multiple onchange="handleFiles(this.files)" />
-              <div class="drop-icon">🖼️</div>
-              <p class="drop-txt">Arrastra o pulsa para subir</p>
-              <p class="drop-sub">JPG, PNG, WEBP · Máx. 5MB</p>
-            </div>
-            <div class="progress-wrap" id="progressWrap">
-              <p class="progress-txt" id="progressTxt">Subiendo...</p>
-              <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-            </div>
-            <div class="preview-grid" id="previewGrid"></div>
-          </div>
-
-          <!-- Toggles -->
-          <div class="form-group full">
-            <div class="toggle-wrap">
-              <label for="pFeatured">✨ Producto destacado (aparece en la portada)</label>
-              <div class="toggle"><input type="checkbox" id="pFeatured" /><span class="toggle-slider"></span></div>
-            </div>
-          </div>
           <div class="form-group full">
             <div class="toggle-wrap">
               <label for="pActive">👁️ Visible en la tienda</label>
               <div class="toggle"><input type="checkbox" id="pActive" checked /><span class="toggle-slider"></span></div>
             </div>
           </div>
+
+          <!-- Más opciones (opcional, colapsado por defecto) -->
+          <details class="mas-opciones" id="masOpciones">
+            <summary>Más opciones <span style="font-weight:400;color:var(--muted);font-size:0.75rem">(precio anterior, descripción, destacado)</span></summary>
+            <div class="mas-opciones-body">
+              <div class="form-group">
+                <label>Precio anterior (€)</label>
+                <input type="number" id="pCompare" placeholder="22.00" min="0" step="0.01" />
+              </div>
+              <div class="form-group full">
+                <label>Descripción</label>
+                <textarea id="pDescripcion" rows="2" placeholder="Describe el producto..."></textarea>
+              </div>
+              <div class="form-group full">
+                <div class="toggle-wrap">
+                  <label for="pFeatured">✨ Producto destacado (aparece en la portada)</label>
+                  <div class="toggle"><input type="checkbox" id="pFeatured" /><span class="toggle-slider"></span></div>
+                </div>
+              </div>
+            </div>
+          </details>
 
           <!-- ── VARIANTES DE AROMAS ── -->
           <div class="variantes-section">
@@ -716,7 +743,7 @@
         const variantes = Array.isArray(p.variantes) ? p.variantes : [];
         return `
           <tr>
-            <td>
+            <td data-label="Producto">
               <div style="display:flex;align-items:center;gap:0.75rem">
                 <img class="prod-thumb" src="${p.image}" alt="${p.name}"
                      onerror="this.src='https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=100&q=60'" />
@@ -726,24 +753,25 @@
                 </div>
               </div>
             </td>
-            <td><span class="cat-badge">${p.category}</span></td>
-            <td>
+            <td data-label="Categoría"><span class="cat-badge">${p.category}</span></td>
+            <td data-label="Precio">
               <strong style="color:var(--dark)">${Number(p.price).toFixed(2)} €</strong>
               ${p.compare_price ? `<br/><span style="color:var(--muted);font-size:0.72rem;text-decoration:line-through">${Number(p.compare_price).toFixed(2)} €</span>` : ''}
             </td>
-            <td>
+            <td data-label="Aromas">
               ${variantes.length
                 ? `<span class="variantes-count">🌸 ${variantes.length} aroma${variantes.length>1?'s':''}</span>`
                 : `<span style="color:var(--muted);font-size:0.78rem">Sin variantes</span>`}
             </td>
-            <td>
+            <td data-label="Estado">
               <span class="status-dot ${p.active ? 'dot-active' : 'dot-inactive'}"></span>
               <span style="font-size:0.78rem">${p.active ? 'Activo' : 'Oculto'}</span>
             </td>
-            <td>
+            <td data-label="Acciones">
               <div class="prod-actions">
-                <button class="btn-edit btn-sm"   onclick="editarProducto('${p.id}')">Editar</button>
-                <button class="btn-danger btn-sm" onclick="eliminarProducto('${p.id}')">Eliminar</button>
+                <button class="btn-edit btn-sm"      onclick="editarProducto('${p.id}')">Editar</button>
+                <button class="btn-secondary btn-sm" onclick="duplicarProducto('${p.id}')">Duplicar</button>
+                <button class="btn-danger btn-sm"    onclick="eliminarProducto('${p.id}')">Eliminar</button>
               </div>
             </td>
           </tr>`;
@@ -824,12 +852,13 @@
     async function subirImagenVariante(idx, input) {
       const file = input.files[0];
       if (!file) return;
-      if (file.size > 5 * 1024 * 1024) { toast('Imagen demasiado grande (máx 5MB)', 'error'); return; }
+      if (file.size > 25 * 1024 * 1024) { toast('Imagen demasiado pesada', 'error'); return; }
 
       document.getElementById('vLoading-' + idx).style.display = 'block';
 
       try {
-        const url = await subirImagen(file);
+        const optimizada = await comprimirImagen(file);
+        const url = await subirImagen(optimizada);
         variantesData[idx].imagen = url;
 
         const thumb = document.getElementById('vThumb-' + idx);
@@ -843,7 +872,9 @@
     }
 
     // ─── MODAL ────────────────────────────────────────────────────────────────
-    function abrirModal(producto = null) {
+    function abrirModal(productoOriginal = null) {
+      // Clonamos para no mutar productosData mientras se edita (p. ej. al escribir en una variante)
+      const producto  = productoOriginal ? JSON.parse(JSON.stringify(productoOriginal)) : null;
       imagenesSubidas = [];
       variantesData   = [];
       document.getElementById('variantesList').innerHTML = '';
@@ -859,6 +890,10 @@
       document.getElementById('fileInput').value     = '';
       document.getElementById('progressWrap').style.display = 'none';
       document.getElementById('previewGrid').innerHTML      = '';
+
+      // "Más opciones" se abre solo si ya hay algo relevante que mostrar
+      document.getElementById('masOpciones').open =
+        !!(producto?.compare_price || producto?.description || producto?.featured);
 
       if (producto?.image) imagenesSubidas = [producto.image];
       renderPreview();
@@ -887,17 +922,52 @@
       if (p) abrirModal(p);
     }
 
+    function duplicarProducto(id) {
+      const p = productosData.find(p => p.id === id);
+      if (!p) return;
+      abrirModal({ ...p, id: null, name: p.name + ' (copia)' });
+      toast('✓ Producto duplicado — revisa los datos y guarda', 'success');
+    }
+
     // ─── UPLOAD IMAGEN PRINCIPAL ──────────────────────────────────────────────
     const dropArea = document.getElementById('dropArea');
     dropArea.addEventListener('dragover', e => { e.preventDefault(); dropArea.classList.add('dragover'); });
     dropArea.addEventListener('dragleave', () => dropArea.classList.remove('dragover'));
     dropArea.addEventListener('drop', e => { e.preventDefault(); dropArea.classList.remove('dragover'); handleFiles(e.dataTransfer.files); });
 
+    // Redimensiona/comprime la foto en el propio móvil antes de subirla, para que
+    // las fotos de cámara (a menudo varios MB) suban rápido y nunca superen el límite.
+    function comprimirImagen(file, maxDim = 1600, calidad = 0.82) {
+      return new Promise(resolve => {
+        if (!file.type.startsWith('image/') || file.type === 'image/gif') { resolve(file); return; }
+        const img = new Image();
+        const url = URL.createObjectURL(file);
+        img.onload = () => {
+          URL.revokeObjectURL(url);
+          let { width, height } = img;
+          if (width > maxDim || height > maxDim) {
+            if (width > height) { height = Math.round(height * maxDim / width); width = maxDim; }
+            else { width = Math.round(width * maxDim / height); height = maxDim; }
+          }
+          const canvas = document.createElement('canvas');
+          canvas.width = width; canvas.height = height;
+          canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+          canvas.toBlob(blob => {
+            if (!blob || blob.size >= file.size) { resolve(file); return; }
+            resolve(new File([blob], file.name.replace(/\.\w+$/, '.jpg'), { type: 'image/jpeg' }));
+          }, 'image/jpeg', calidad);
+        };
+        img.onerror = () => { URL.revokeObjectURL(url); resolve(file); };
+        img.src = url;
+      });
+    }
+
     async function handleFiles(files) {
       if (!files?.length) return;
-      const arr  = Array.from(files).filter(f => f.size <= 5*1024*1024);
-      const big  = Array.from(files).filter(f => f.size > 5*1024*1024);
-      if (big.length) toast(`${big.length} imagen(es) superan 5MB`, 'error');
+      // Límite generoso solo para descartar archivos absurdos; la compresión se encarga del resto.
+      const arr = Array.from(files).filter(f => f.size <= 25*1024*1024);
+      const big = Array.from(files).filter(f => f.size > 25*1024*1024);
+      if (big.length) toast(`${big.length} imagen(es) son demasiado pesadas`, 'error');
       if (!arr.length) return;
 
       const pw   = document.getElementById('progressWrap');
@@ -907,9 +977,14 @@
 
       const urls = [];
       for (let i = 0; i < arr.length; i++) {
-        txt.textContent  = `Subiendo ${i+1} de ${arr.length}...`;
         fill.style.width = `${(i / arr.length) * 100}%`;
-        try { const url = await subirImagen(arr[i]); if (url) urls.push(url); }
+        try {
+          txt.textContent = `Optimizando ${i+1} de ${arr.length}...`;
+          const optimizada = await comprimirImagen(arr[i]);
+          txt.textContent = `Subiendo ${i+1} de ${arr.length}...`;
+          const url = await subirImagen(optimizada);
+          if (url) urls.push(url);
+        }
         catch(e) { toast(`Error: ${arr[i].name}`, 'error'); }
         fill.style.width = `${((i+1) / arr.length) * 100}%`;
       }
