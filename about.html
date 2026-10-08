@@ -20,6 +20,8 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root{--cream:#faf8f5;--cream2:#f5f0ff;--dark:#2e0854;--dark2:#1e0a3c;--primary:#7c3aed;--primary2:#6d28d9;--light:#f3e8ff;--light2:#ede9fe;--muted:#6b7280;--text:#2d1b69;--border:#e9d5ff;--pink:#ec4899}
@@ -281,14 +283,14 @@
   </footer>
   <div id="toast"></div>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js"></script>
-  <script src="supabase.js"></script><script src="auth.js"></script><script src="cart.js"></script>
+  <script src="utils.js"></script><script src="supabase.js"></script><script src="auth.js"></script><script src="cart.js"></script>
   <script>
     window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>50)});
     function toggleMenu(){document.getElementById('mobileMenu').classList.toggle('open')}
     document.addEventListener('click',e=>{const m=document.getElementById('mobileMenu'),h=document.querySelector('.hamburger');if(m&&h&&m.classList.contains('open')&&!m.contains(e.target)&&!h.contains(e.target))m.classList.remove('open')});
     const observer=new IntersectionObserver(entries=>{entries.forEach((entry,i)=>{if(entry.isIntersecting){setTimeout(()=>entry.target.classList.add('visible'),i*80);observer.unobserve(entry.target)}})},{threshold:0.12});
     document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el=>observer.observe(el));
-    (async()=>{try{const sesion=await obtenerSesion();const btn=document.getElementById('btnCuenta');const mBtn=document.getElementById('mobileLoginBtn');if(sesion){const rol=await obtenerRol();const href=rol==='admin'?'admin.html':'mi-cuenta.html';const txt=rol==='admin'?'👑 Panel Admin':'Mi cuenta';if(btn){btn.href=href;btn.textContent=txt}if(mBtn){mBtn.href=href;mBtn.textContent=txt}}}catch(e){}})();
+    actualizarBotonCuenta();
     if(!localStorage.getItem('kaori_cookie_consent')){setTimeout(()=>{document.getElementById('cookieBanner').style.display='flex'},1200)}
   </script>
   <div id="cookieBanner" style="position:fixed;bottom:0;left:0;right:0;background:#1e0a3c;border-top:2px solid #7c3aed;padding:1.25rem 2rem;z-index:300;display:none;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap">

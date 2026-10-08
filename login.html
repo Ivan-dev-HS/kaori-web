@@ -4,6 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kaori – Acceder</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
@@ -161,7 +165,7 @@
           <label>Email</label>
           <div class="input-wrap">
             <span class="input-icon">✉️</span>
-            <input type="email" id="loginEmail" placeholder="tu@email.com"
+            <input type="email" id="loginEmail" placeholder="tu@email.com" autocomplete="email"
                    onkeydown="if(event.key==='Enter')hacerLogin()" />
           </div>
           <span class="field-error" id="loginEmailErr">Introduce un email válido</span>
@@ -171,7 +175,7 @@
           <label>Contraseña</label>
           <div class="input-wrap">
             <span class="input-icon">🔒</span>
-            <input type="password" id="loginPass" placeholder="Tu contraseña"
+            <input type="password" id="loginPass" placeholder="Tu contraseña" autocomplete="current-password"
                    onkeydown="if(event.key==='Enter')hacerLogin()" />
             <button class="toggle-pass" onclick="togglePass('loginPass',this)" type="button">👁️</button>
           </div>
@@ -196,7 +200,7 @@
           <label>Email</label>
           <div class="input-wrap">
             <span class="input-icon">✉️</span>
-            <input type="email" id="regEmail" placeholder="tu@email.com" />
+            <input type="email" id="regEmail" placeholder="tu@email.com" autocomplete="email" />
           </div>
           <span class="field-error" id="regEmailErr">Introduce un email válido</span>
         </div>
@@ -205,17 +209,17 @@
           <label>Contraseña</label>
           <div class="input-wrap">
             <span class="input-icon">🔒</span>
-            <input type="password" id="regPass" placeholder="Mínimo 6 caracteres" />
+            <input type="password" id="regPass" placeholder="Mínimo 8 caracteres" autocomplete="new-password" />
             <button class="toggle-pass" onclick="togglePass('regPass',this)" type="button">👁️</button>
           </div>
-          <span class="field-error" id="regPassErr">Mínimo 6 caracteres</span>
+          <span class="field-error" id="regPassErr">Mínimo 8 caracteres</span>
         </div>
 
         <div class="form-group">
           <label>Repetir contraseña</label>
           <div class="input-wrap">
             <span class="input-icon">🔒</span>
-            <input type="password" id="regPass2" placeholder="Repite tu contraseña" />
+            <input type="password" id="regPass2" placeholder="Repite tu contraseña" autocomplete="new-password" />
             <button class="toggle-pass" onclick="togglePass('regPass2',this)" type="button">👁️</button>
           </div>
           <span class="field-error" id="regPass2Err">Las contraseñas no coinciden</span>
@@ -246,12 +250,35 @@
           <label>Email</label>
           <div class="input-wrap">
             <span class="input-icon">✉️</span>
-            <input type="email" id="resetEmail" placeholder="tu@email.com" />
+            <input type="email" id="resetEmail" placeholder="tu@email.com" autocomplete="email" />
           </div>
         </div>
 
         <button class="btn-auth" id="btnReset" onclick="enviarReset()">
           Enviar enlace →
+        </button>
+      </div>
+
+      <!-- NUEVA CONTRASEÑA (al llegar desde el enlace de recuperación) -->
+      <div class="reset-panel" id="panel-nueva">
+        <div class="auth-error"   id="nuevaError"></div>
+        <div class="auth-success" id="nuevaSuccess"></div>
+        <div class="form-group">
+          <label for="nuevaPass">Nueva contraseña</label>
+          <div class="input-wrap">
+            <span class="input-icon">🔒</span>
+            <input type="password" id="nuevaPass" placeholder="Mínimo 8 caracteres" autocomplete="new-password" minlength="8" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="nuevaPass2">Repite la contraseña</label>
+          <div class="input-wrap">
+            <span class="input-icon">🔒</span>
+            <input type="password" id="nuevaPass2" placeholder="Repite la contraseña" autocomplete="new-password" minlength="8" />
+          </div>
+        </div>
+        <button class="btn-auth" id="btnNueva" onclick="guardarNuevaPassword()">
+          Guardar contraseña →
         </button>
       </div>
 
@@ -273,7 +300,7 @@
 </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js"></script>
-  <script src="supabase.js"></script>
+  <script src="utils.js"></script><script src="supabase.js"></script>
   <script src="auth.js"></script>
   <script>
     // ── TABS ──────────────────────────────────────────────────────────────────
@@ -329,10 +356,12 @@
 
     // ── LIMPIAR ERRORES ───────────────────────────────────────────────────────
     function limpiarErrores() {
-      document.querySelectorAll('.auth-error,.auth-success,.field-error').forEach(function(el) {
+      document.querySelectorAll('.auth-error,.auth-success').forEach(function(el) {
         el.style.display = 'none';
         el.textContent   = '';
       });
+      // Los .field-error tienen su texto fijo en el HTML: solo se ocultan.
+      document.querySelectorAll('.field-error').forEach(function(el) { el.style.display = 'none'; });
       document.querySelectorAll('input').forEach(function(i) { i.classList.remove('error'); });
     }
 
@@ -370,27 +399,23 @@
       btn.disabled    = true;
       btn.textContent = '⏳ Entrando...';
 
-      try {
-        var result = await db.auth.signInWithPassword({ email: email, password: pass });
-        if (result.error) throw result.error;
-
-        // Redirigir según rol
-        var rol  = await obtenerRol();
-        var dest = new URLSearchParams(window.location.search).get('redirect');
-        if (dest) {
-          window.location.href = dest;
-        } else if (rol === 'admin') {
-          window.location.href = 'admin.html';
-        } else {
-          window.location.href = 'mi-cuenta.html';
-        }
-      } catch(e) {
-        var msg = 'Email o contraseña incorrectos';
-        if (e.message && e.message.includes('confirm')) msg = 'Confirma tu email antes de entrar';
-        mostrarError('loginError', msg);
+      var r = await iniciarSesion(email, pass);
+      if (!r.ok) {
+        mostrarError('loginError', r.mensaje);
         btn.disabled    = false;
         btn.textContent = 'Entrar en mi cuenta →';
+        return;
       }
+      await redirigirTrasLogin(r.sesion);
+    }
+
+    // Tras iniciar sesión: vuelve a la página de origen (solo si es de esta web)
+    // o va al panel / a "Mi cuenta" según el rol.
+    async function redirigirTrasLogin(sesion) {
+      var rol  = await obtenerRol(sesion);
+      var dest = rutaInternaSegura(new URLSearchParams(window.location.search).get('redirect'));
+      if (dest && !/\/(admin|login)\.html/.test(dest)) window.location.href = dest;
+      else window.location.href = rol === 'admin' ? 'admin.html' : 'mi-cuenta.html';
     }
 
     // ── REGISTRO ──────────────────────────────────────────────────────────────
@@ -406,7 +431,7 @@
         document.getElementById('regEmailErr').style.display = 'block';
         ok = false;
       }
-      if (!pass || pass.length < 6) {
+      if (!pass || pass.length < 8) {
         document.getElementById('regPass').classList.add('error');
         document.getElementById('regPassErr').style.display = 'block';
         ok = false;
@@ -422,18 +447,14 @@
       btn.disabled    = true;
       btn.textContent = '⏳ Creando cuenta...';
 
-      try {
-        var result = await db.auth.signUp({ email: email, password: pass });
-        if (result.error) throw result.error;
-
+      var r = await registrarUsuario(email, pass);
+      if (r.ok) {
         mostrarExito('regSuccess', 'Cuenta creada. Revisa tu email para confirmarla.');
         document.getElementById('regEmail').value  = '';
         document.getElementById('regPass').value   = '';
         document.getElementById('regPass2').value  = '';
-      } catch(e) {
-        var msg = 'Error al crear la cuenta';
-        if (e.message && e.message.includes('already')) msg = 'Ya existe una cuenta con ese email';
-        mostrarError('regError', msg);
+      } else {
+        mostrarError('regError', r.mensaje);
       }
 
       btn.disabled    = false;
@@ -454,7 +475,7 @@
 
       try {
         var result = await db.auth.resetPasswordForEmail(email, {
-          redirectTo: 'https://kaori.es/login.html'
+          redirectTo: location.origin + '/login.html'
         });
         if (result.error) throw result.error;
         mostrarExito('resetSuccess', 'Email enviado. Revisa tu bandeja de entrada.');
@@ -466,14 +487,49 @@
       btn.textContent = 'Enviar enlace →';
     }
 
-    // ── VERIFICAR SI YA ESTÁ LOGADO ───────────────────────────────────────────
+    // ── NUEVA CONTRASEÑA ──────────────────────────────────────────────────────
+    function mostrarPanelNueva() {
+      document.querySelectorAll('.auth-panel,.reset-panel').forEach(function(p) { p.classList.remove('active'); });
+      document.getElementById('panel-nueva').classList.add('active');
+      document.getElementById('authTabs').style.display    = 'none';
+      document.getElementById('authDivider').style.display = 'none';
+      document.getElementById('formTitle').textContent = 'Elige una nueva contraseña';
+      document.getElementById('formSub').textContent   = 'Después entrarás directamente en tu cuenta';
+    }
+
+    async function guardarNuevaPassword() {
+      limpiarErrores();
+      var p1 = document.getElementById('nuevaPass').value;
+      var p2 = document.getElementById('nuevaPass2').value;
+      if (p1.length < 8) { mostrarError('nuevaError', 'La contraseña debe tener al menos 8 caracteres'); return; }
+      if (p1 !== p2)     { mostrarError('nuevaError', 'Las contraseñas no coinciden'); return; }
+      var btn = document.getElementById('btnNueva');
+      btn.disabled = true;
+      var r = await db.auth.updateUser({ password: p1 });
+      if (r.error) {
+        mostrarError('nuevaError', traducirError(r.error.message));
+        btn.disabled = false;
+        return;
+      }
+      mostrarExito('nuevaSuccess', 'Contraseña actualizada');
+      var s = await obtenerSesion();
+      setTimeout(function() { redirigirTrasLogin(s); }, 800);
+    }
+
+    // ── AL CARGAR ─────────────────────────────────────────────────────────────
+    // Si se llega desde el email de recuperación, Supabase abre una sesión
+    // temporal (evento PASSWORD_RECOVERY): hay que pedir la nueva contraseña en
+    // vez de redirigir a "Mi cuenta" como si fuera un login normal.
+    var esRecuperacion = /type=recovery/.test(window.location.hash);
+    db.auth.onAuthStateChange(function(evento) {
+      if (evento === 'PASSWORD_RECOVERY') { esRecuperacion = true; mostrarPanelNueva(); }
+    });
+    if (esRecuperacion) mostrarPanelNueva();
+
     (async function() {
       try {
         var sesion = await obtenerSesion();
-        if (sesion) {
-          var rol = await obtenerRol();
-          window.location.href = rol === 'admin' ? 'admin.html' : 'mi-cuenta.html';
-        }
+        if (sesion && !esRecuperacion) await redirigirTrasLogin(sesion);
       } catch(e) {}
     })();
   </script>

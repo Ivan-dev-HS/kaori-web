@@ -4,6 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kaori – Acceso Denegado</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -71,8 +74,8 @@
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="/supabase.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js"></script>
+  <script src="/utils.js"></script><script src="/supabase.js"></script>
   <script src="/auth.js"></script>
   <script>
     // ── Adaptar botones según si hay sesión o no ──────────────────────────────
@@ -85,9 +88,6 @@
         document.getElementById('btnLogin').style.display  = '';
       }
 
-      // Registrar intento de acceso no autorizado en consola
-      // En producción podrías enviarlo a un log de Supabase
-      console.warn('Intento de acceso no autorizado a página protegida.');
     })();
   </script>
 </body>

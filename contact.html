@@ -20,6 +20,8 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root{--cream:#faf8f5;--cream2:#f5f0ff;--dark:#2e0854;--dark2:#1e0a3c;--primary:#7c3aed;--primary2:#6d28d9;--light:#f3e8ff;--light2:#ede9fe;--muted:#6b7280;--text:#2d1b69;--white:#ffffff;--border:#e9d5ff;--pink:#ec4899}
@@ -221,8 +223,8 @@
         </div>
         <div class="form-success" id="formSuccess">
           <span class="s-icon">💜</span>
-          <h3>¡Casi listo!</h3>
-          <p>Hemos abierto tu gestor de correo con el mensaje ya escrito. Solo tienes que pulsar enviar y te responderemos en menos de 24 horas.</p>
+          <h3>¡Mensaje enviado!</h3>
+          <p id="formSuccessTxt">Gracias por escribirnos. Te responderemos en menos de 24 horas.</p>
         </div>
       </div>
     </div>
@@ -272,7 +274,7 @@
 </script>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js"></script>
-  <script src="supabase.js"></script>
+  <script src="utils.js"></script><script src="supabase.js"></script>
   <script src="auth.js"></script>
   <script src="cart.js"></script>
   <script>
@@ -282,6 +284,8 @@
     var observer=new IntersectionObserver(function(entries){entries.forEach(function(entry,i){if(entry.isIntersecting){setTimeout(function(){entry.target.classList.add('visible')},i*80);observer.unobserve(entry.target)}})},{threshold:0.12});
     document.querySelectorAll('.reveal').forEach(function(el){observer.observe(el)});
     function toggleFaq(btn){var item=btn.closest('.faq-item');var open=item.classList.contains('open');document.querySelectorAll('.faq-item').forEach(function(i){i.classList.remove('open')});if(!open)item.classList.add('open')}
+    // Guarda el mensaje en Supabase (aparece en el panel admin → Mensajes).
+    // Si falla, abre el correo con el mensaje ya escrito como alternativa.
     async function enviarFormulario(){
       var nombre=document.getElementById('fNombre').value.trim();
       var email=document.getElementById('fEmail').value.trim();
@@ -293,17 +297,19 @@
       if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){mostrarToast('Introduce un email válido');return}
       var btn=document.getElementById('btnEnviar');
       btn.disabled=true;btn.textContent='⏳ Enviando...';
-      await new Promise(function(r){setTimeout(r,600)});
-      var cuerpo='Nombre: '+nombre+'\nEmail: '+email+'\n\n'+mensaje;
-      var mailto='mailto:info@kaori.es?subject='+encodeURIComponent(asuntoTexto+' — '+nombre)+'&body='+encodeURIComponent(cuerpo);
-      window.location.href=mailto;
+      var r=await db.from('solicitudes').insert({tipo:'contacto',nombre:nombre,email:email,asunto:asuntoTexto,mensaje:mensaje});
+      btn.disabled=false;btn.textContent='Enviar mensaje ✦';
+      if(r.error){
+        console.error('Solicitud:',r.error);
+        var cuerpo='Nombre: '+nombre+'\nEmail: '+email+'\n\n'+mensaje;
+        window.location.href='mailto:info@kaori.es?subject='+encodeURIComponent(asuntoTexto+' — '+nombre)+'&body='+encodeURIComponent(cuerpo);
+        document.getElementById('formSuccessTxt').textContent='No hemos podido enviarlo desde la web, así que hemos abierto tu correo con el mensaje ya escrito. Solo tienes que pulsar enviar.';
+      }
       document.getElementById('formContainer').style.display='none';
       document.getElementById('formSuccess').style.display='block';
-      mostrarToast('✦ Abriendo tu gestor de correo...');
-      btn.disabled=false;btn.textContent='Enviar mensaje ✦';
     }
     function mostrarToast(msg){var t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(function(){t.classList.remove('show')},3000)}
-    (async function(){try{var sesion=await obtenerSesion();var btn=document.getElementById('btnCuenta');var mBtn=document.getElementById('mobileLoginBtn');if(sesion){var rol=await obtenerRol();var href=rol==='admin'?'admin.html':'mi-cuenta.html';var txt=rol==='admin'?'👑 Panel Admin':'Mi cuenta';if(btn){btn.href=href;btn.textContent=txt}if(mBtn){mBtn.href=href;mBtn.textContent=txt}}}catch(e){}})();
+    actualizarBotonCuenta();
   </script>
 </body>
 </html>

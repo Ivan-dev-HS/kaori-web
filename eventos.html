@@ -20,6 +20,8 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root{--cream:#faf8f5;--cream2:#f5f0ff;--dark:#2e0854;--dark2:#1e0a3c;--primary:#7c3aed;--primary2:#6d28d9;--light:#f3e8ff;--light2:#ede9fe;--muted:#6b7280;--text:#2d1b69;--white:#ffffff;--border:#e9d5ff;--pink:#ec4899}
@@ -313,8 +315,8 @@
       </div>
       <div class="form-success" id="formSuccess">
         <div class="s-icon">💜</div>
-        <h3>¡Casi listo!</h3>
-        <p>Hemos abierto tu gestor de correo con la solicitud ya escrita. Solo tienes que pulsar enviar y nos pondremos en contacto contigo en menos de 24 horas.</p>
+        <h3>¡Solicitud enviada!</h3>
+        <p id="formSuccessTxt">Gracias por contarnos tu evento. Te responderemos en menos de 24 horas con ideas y presupuesto.</p>
       </div>
     </div>
   </section>
@@ -352,7 +354,7 @@
 </script>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js"></script>
-  <script src="supabase.js"></script>
+  <script src="utils.js"></script><script src="supabase.js"></script>
   <script src="auth.js"></script>
   <script src="cart.js"></script>
   <script>
@@ -362,6 +364,8 @@
     const observer=new IntersectionObserver(entries=>{entries.forEach((entry,i)=>{if(entry.isIntersecting){setTimeout(()=>entry.target.classList.add('visible'),i*80);observer.unobserve(entry.target)}})},{threshold:0.12});
     document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el=>observer.observe(el));
     function toggleFaq(btn){const item=btn.closest('.faq-item');const open=item.classList.contains('open');document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));if(!open)item.classList.add('open')}
+    // Guarda la solicitud en Supabase (aparece en el panel admin → Mensajes).
+    // Si falla, abre el correo con el mensaje ya escrito como alternativa.
     async function enviarFormulario(){
       const nombre=document.getElementById('fNombre').value.trim();
       const email=document.getElementById('fEmail').value.trim();
@@ -377,26 +381,23 @@
       if(!nombre||!email||!evento||!invitados||!mensaje){mostrarToast('Por favor rellena todos los campos obligatorios');return}
       if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){mostrarToast('Introduce un email válido');return}
       const btn=document.getElementById('btnForm');btn.disabled=true;btn.textContent='⏳ Enviando...';
-      await new Promise(r=>setTimeout(r,600));
-      const lineas=[
-        'Nombre: '+nombre,
-        'Email: '+email,
-        telefono?('Teléfono: '+telefono):null,
-        'Tipo de evento: '+eventoTexto,
-        fecha?('Fecha del evento: '+fecha):null,
-        'Número de invitados: '+invitadosTexto,
-        '',
-        mensaje
-      ].filter(Boolean).join('\n');
-      const mailto='mailto:info@kaori.es?subject='+encodeURIComponent('Presupuesto '+eventoTexto+' — '+nombre)+'&body='+encodeURIComponent(lineas);
-      window.location.href=mailto;
+      const {error}=await db.from('solicitudes').insert({
+        tipo:'evento', nombre, email, telefono:telefono||null,
+        asunto:'Presupuesto '+eventoTexto, mensaje,
+        datos:{evento:eventoTexto, fecha:fecha||null, invitados:invitadosTexto}
+      });
+      btn.disabled=false;btn.textContent='Enviar solicitud de presupuesto ✦';
+      if(error){
+        console.error('Solicitud:',error);
+        const lineas=['Nombre: '+nombre,'Email: '+email,telefono?('Teléfono: '+telefono):null,'Tipo de evento: '+eventoTexto,fecha?('Fecha del evento: '+fecha):null,'Número de invitados: '+invitadosTexto,'',mensaje].filter(Boolean).join('\n');
+        window.location.href='mailto:info@kaori.es?subject='+encodeURIComponent('Presupuesto '+eventoTexto+' — '+nombre)+'&body='+encodeURIComponent(lineas);
+        document.getElementById('formSuccessTxt').textContent='No hemos podido enviarlo desde la web, así que hemos abierto tu correo con la solicitud ya escrita. Solo tienes que pulsar enviar.';
+      }
       document.getElementById('formContainer').style.display='none';
       document.getElementById('formSuccess').style.display='block';
-      mostrarToast('✦ Abriendo tu gestor de correo...');
-      btn.disabled=false;btn.textContent='Enviar solicitud de presupuesto ✦';
     }
     function mostrarToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000)}
-    (async()=>{try{const sesion=await obtenerSesion();const btn=document.getElementById('btnCuenta');const mBtn=document.getElementById('mobileLoginBtn');if(sesion){const rol=await obtenerRol();const href=rol==='admin'?'admin.html':'mi-cuenta.html';const txt=rol==='admin'?'👑 Panel Admin':'Mi cuenta';if(btn){btn.href=href;btn.textContent=txt}if(mBtn){mBtn.href=href;mBtn.textContent=txt}}}catch(e){}})();
+    actualizarBotonCuenta();
   </script>
 </body>
 </html>

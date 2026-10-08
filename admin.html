@@ -4,6 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kaori – Panel Admin</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
@@ -340,6 +343,10 @@
           <span class="nav-badge" id="pendingBadge" style="display:none">!</span>
         </button>
         <span class="nav-section-label">Gestión</span>
+        <button class="nav-item" onclick="switchTab('mensajes',this)">
+          <span class="nav-icon">✉️</span> Mensajes
+          <span class="nav-badge" id="mensajesBadge" style="display:none">!</span>
+        </button>
         <button class="nav-item" onclick="switchTab('usuarios',this)">
           <span class="nav-icon">👥</span> Usuarios
         </button>
@@ -477,6 +484,28 @@
           </div>
         </div>
 
+        <!-- ── MENSAJES (contacto, bodas/eventos y newsletter) ── -->
+        <div class="tab-content" id="tab-mensajes">
+          <div class="card">
+            <div class="card-head">
+              <h2>✉️ Solicitudes de contacto y eventos</h2>
+              <button class="btn-secondary btn-sm" onclick="cargarMensajes()">↻ Actualizar</button>
+            </div>
+            <div id="solicitudesList">
+              <div class="loading-rows"><div class="sp"></div><p>Cargando...</p></div>
+            </div>
+          </div>
+          <div class="card" style="margin-top:1.25rem">
+            <div class="card-head">
+              <h2>💌 Newsletter</h2>
+              <button class="btn-secondary btn-sm" onclick="copiarEmailsNewsletter()">Copiar emails</button>
+            </div>
+            <div id="newsletterList">
+              <div class="loading-rows"><div class="sp"></div><p>Cargando...</p></div>
+            </div>
+          </div>
+        </div>
+
         <!-- ── USUARIOS ── -->
         <div class="tab-content" id="tab-usuarios">
           <div class="card">
@@ -602,12 +631,12 @@
   <div id="adminToast"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js"></script>
-  <script src="supabase.js"></script>
+  <script src="utils.js"></script><script src="supabase.js"></script>
   <script src="auth.js"></script>
   <script>
     // ─── ESTADO ───────────────────────────────────────────────────────────────
     const STATUS = {
-      pending:    { label:'Pendiente',  cls:'s-pending',    icon:'⏳' },
+      pending:    { label:'Nuevo',      cls:'s-pending',    icon:'⏳' },
       processing: { label:'En proceso', cls:'s-processing',  icon:'🔄' },
       shipped:    { label:'Enviado',    cls:'s-shipped',     icon:'🚚' },
       delivered:  { label:'Entregado',  cls:'s-delivered',   icon:'✅' },
@@ -637,6 +666,7 @@
 
       await Promise.all([cargarProductos(), cargarPedidos()]);
       iniciarRealtime();
+      avisarMensajesNuevos();
     })();
 
     // ─── SIDEBAR ──────────────────────────────────────────────────────────────
@@ -646,7 +676,7 @@
     }
 
     // ─── TABS ─────────────────────────────────────────────────────────────────
-    const TAB_TITLES = { dashboard:'Dashboard', productos:'Productos', pedidos:'Pedidos', usuarios:'Usuarios' };
+    const TAB_TITLES = { dashboard:'Dashboard', productos:'Productos', pedidos:'Pedidos', mensajes:'Mensajes', usuarios:'Usuarios' };
 
     function switchTab(nombre, btn) {
       tabActual = nombre;
@@ -656,6 +686,7 @@
       if (btn) btn.classList.add('active');
       document.getElementById('pageTitle').textContent = TAB_TITLES[nombre] || nombre;
       if (nombre === 'usuarios') cargarUsuarios();
+      if (nombre === 'mensajes') { cargarMensajes(); document.getElementById('mensajesBadge').style.display = 'none'; }
       if (nombre === 'pedidos') {
         renderPedidos();
         document.getElementById('pendingBadge').style.display = 'none';
@@ -701,7 +732,7 @@
 
     async function cargarPedidos() {
       try {
-        const { data, error } = await db.from('pedidos').select('*').order('created_at', { ascending:false });
+        const { data, error } = await db.from('pedidos').select('*').order('created_at', { ascending:false }).limit(500);
         if (error) throw error;
         pedidosData = data || [];
         renderPedidos(); renderLatestOrders(); actualizarStats();
@@ -711,12 +742,13 @@
     // ─── STATS ────────────────────────────────────────────────────────────────
     function actualizarStats() {
       const activos      = productosData.filter(p => p.active).length;
-      const nonCancelled = pedidosData.filter(o => o.status !== 'cancelled');
+      // Ingresos = solo pedidos cobrados (paid_at) y no cancelados.
+      const cobrados     = pedidosData.filter(o => o.paid_at && o.status !== 'cancelled');
       const pending      = pedidosData.filter(o => o.status === 'pending').length;
       document.getElementById('statProductos').textContent = activos;
       document.getElementById('statPedidos').textContent   = pedidosData.length;
       document.getElementById('statPending').textContent   = pending;
-      document.getElementById('statRevenue').textContent   = nonCancelled.reduce((s,o) => s+Number(o.total),0).toFixed(2) + ' €';
+      document.getElementById('statRevenue').textContent   = precio(cobrados.reduce((s,o) => s+Number(o.total),0));
     }
 
     // ─── TABLA PRODUCTOS ──────────────────────────────────────────────────────
@@ -730,7 +762,7 @@
     function renderTablaProductos() {
       const q = (document.getElementById('searchProductos')?.value||'').toLowerCase();
       const lista = productosData.filter(p => {
-        const mq = !q || p.name.toLowerCase().includes(q);
+        const mq = !q || (p.name||'').toLowerCase().includes(q);
         const mc = !filtroCategoria || p.category === filtroCategoria;
         return mq && mc;
       });
@@ -745,18 +777,18 @@
           <tr>
             <td data-label="Producto">
               <div style="display:flex;align-items:center;gap:0.75rem">
-                <img class="prod-thumb" src="${p.image}" alt="${p.name}"
-                     onerror="this.src='https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=100&q=60'" />
+                <img class="prod-thumb" src="${urlSegura(p.image) || IMG_FALLBACK}" alt=""
+                     onerror="this.onerror=null;this.src=IMG_FALLBACK" />
                 <div class="prod-name-cell">
-                  <strong>${p.name}</strong>
-                  <span>${p.description ? p.description.slice(0,40)+'...' : '—'}</span>
+                  <strong>${esc(p.name)}</strong>
+                  <span>${p.description ? esc(p.description.slice(0,40))+'...' : '—'}</span>
                 </div>
               </div>
             </td>
-            <td data-label="Categoría"><span class="cat-badge">${p.category}</span></td>
+            <td data-label="Categoría"><span class="cat-badge">${esc(p.category)}</span></td>
             <td data-label="Precio">
-              <strong style="color:var(--dark)">${Number(p.price).toFixed(2)} €</strong>
-              ${p.compare_price ? `<br/><span style="color:var(--muted);font-size:0.72rem;text-decoration:line-through">${Number(p.compare_price).toFixed(2)} €</span>` : ''}
+              <strong style="color:var(--dark)">${precio(p.price)}</strong>
+              ${p.compare_price ? `<br/><span style="color:var(--muted);font-size:0.72rem;text-decoration:line-through">${precio(p.compare_price)}</span>` : ''}
             </td>
             <td data-label="Aromas">
               ${variantes.length
@@ -769,9 +801,9 @@
             </td>
             <td data-label="Acciones">
               <div class="prod-actions">
-                <button class="btn-edit btn-sm"      onclick="editarProducto('${p.id}')">Editar</button>
-                <button class="btn-secondary btn-sm" onclick="duplicarProducto('${p.id}')">Duplicar</button>
-                <button class="btn-danger btn-sm"    onclick="eliminarProducto('${p.id}')">Eliminar</button>
+                <button class="btn-edit btn-sm"      data-id="${esc(p.id)}" onclick="editarProducto(this.dataset.id)">Editar</button>
+                <button class="btn-secondary btn-sm" data-id="${esc(p.id)}" onclick="duplicarProducto(this.dataset.id)">Duplicar</button>
+                <button class="btn-danger btn-sm"    data-id="${esc(p.id)}" onclick="eliminarProducto(this.dataset.id)">Eliminar</button>
               </div>
             </td>
           </tr>`;
@@ -797,22 +829,22 @@
           <div class="variante-field">
             <label>Nombre del aroma *</label>
             <input type="text" id="vNombre-${idx}" placeholder="Lavanda, Coco, Vainilla..."
-                   value="${item.nombre}" oninput="variantesData[${idx}].nombre=this.value" />
+                   value="${esc(item.nombre)}" maxlength="80" oninput="variantesData[${idx}].nombre=this.value" />
           </div>
           <div class="variante-field">
             <label>Stock disponible</label>
             <input type="number" id="vStock-${idx}" placeholder="10" min="0"
-                   value="${item.stock}" oninput="variantesData[${idx}].stock=this.value" />
+                   value="${esc(item.stock ?? '')}" oninput="variantesData[${idx}].stock=this.value" />
           </div>
           <div class="variante-field">
             <label>Precio especial (€) <span style="color:var(--muted);font-weight:300">opcional</span></label>
             <input type="number" id="vPrecio-${idx}" placeholder="Deja vacío para usar precio base"
-                   step="0.01" min="0" value="${item.precio}"
+                   step="0.01" min="0" value="${esc(item.precio ?? '')}"
                    oninput="variantesData[${idx}].precio=this.value" />
           </div>
           <div class="variante-field" style="align-self:flex-end">
             <label style="color:var(--green);font-size:0.68rem" id="vStockLabel-${idx}">
-              ${item.stock ? `✓ ${item.stock} uds disponibles` : ''}
+              ${item.stock !== null && item.stock !== undefined && item.stock !== '' ? (Number(item.stock) > 0 ? `✓ ${esc(item.stock)} uds disponibles` : '✕ Agotado') : 'Sin control de stock'}
             </label>
           </div>
         </div>
@@ -821,7 +853,7 @@
           <div class="variante-img-wrap">
             <div class="variante-thumb" id="vThumb-${idx}">
               ${item.imagen
-                ? `<img src="${item.imagen}" alt="Aroma ${idx}" />`
+                ? `<img src="${urlSegura(item.imagen)}" alt="" />`
                 : '🌸'}
             </div>
             <div>
@@ -862,7 +894,7 @@
         variantesData[idx].imagen = url;
 
         const thumb = document.getElementById('vThumb-' + idx);
-        thumb.innerHTML = `<img src="${url}" alt="Aroma ${idx}" />`;
+        thumb.innerHTML = `<img src="${urlSegura(url)}" alt="" />`;
         document.getElementById('vLoading-' + idx).style.display = 'none';
         toast('✓ Imagen del aroma subida', 'success');
       } catch(e) {
@@ -895,7 +927,8 @@
       document.getElementById('masOpciones').open =
         !!(producto?.compare_price || producto?.description || producto?.featured);
 
-      if (producto?.image) imagenesSubidas = [producto.image];
+      if (Array.isArray(producto?.images) && producto.images.length) imagenesSubidas = [...producto.images];
+      else if (producto?.image) imagenesSubidas = [producto.image];
       renderPreview();
 
       // Cargar variantes existentes
@@ -1008,8 +1041,8 @@
       if (!imagenesSubidas.length) { grid.innerHTML = ''; return; }
       grid.innerHTML = imagenesSubidas.map((url, i) => `
         <div class="preview-thumb">
-          <img src="${url}" alt="img ${i}" onerror="this.src='https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=200&q=60'" />
-          <button class="rm" onclick="quitarImagen(${i})">✕</button>
+          <img src="${urlSegura(url)}" alt="" onerror="this.onerror=null;this.src=IMG_FALLBACK" />
+          <button type="button" class="rm" onclick="quitarImagen(${i})" aria-label="Quitar imagen">✕</button>
           ${i === 0 ? '<span class="main-badge">Principal</span>' : ''}
         </div>`).join('');
     }
@@ -1055,8 +1088,9 @@
         images:        imagenesSubidas,
         variantes:     variantesValidas.map(v => ({
           nombre:  v.nombre?.trim() || '',
-          stock:   v.stock  ? parseInt(v.stock)     : null,
-          precio:  v.precio ? parseFloat(v.precio)  : null,
+          // '' = sin control de stock; 0 = agotado (antes el 0 se guardaba como "sin control")
+          stock:   v.stock !== '' && v.stock !== null && v.stock !== undefined && !isNaN(parseInt(v.stock)) ? Math.max(0, parseInt(v.stock)) : null,
+          precio:  parseFloat(v.precio) > 0 ? parseFloat(v.precio) : null,
           imagen:  v.imagen || '',
         })),
       };
@@ -1075,7 +1109,7 @@
         await cargarProductos();
       } catch(e) {
         console.error('Error guardando:', e);
-        toast('Error guardando el producto: ' + e.message, 'error');
+        toast('Error guardando el producto: ' + (e.message || 'inténtalo de nuevo'), 'error');
       }
 
       btn.disabled    = false;
@@ -1103,7 +1137,7 @@
     function renderPedidos() {
       const q = (document.getElementById('searchPedidos')?.value||'').toLowerCase();
       const filtered = pedidosData.filter(o => {
-        const ms  = !q || o.customer_name.toLowerCase().includes(q) || o.customer_email.toLowerCase().includes(q);
+        const ms  = !q || (o.customer_name||'').toLowerCase().includes(q) || (o.customer_email||'').toLowerCase().includes(q) || o.id.startsWith(q.replace('#',''));
         const mst = filtroPedido === 'all' || o.status === filtroPedido;
         return ms && mst;
       });
@@ -1120,42 +1154,51 @@
         const items   = Array.isArray(o.items)
           ? o.items.map(i => `
               <div class="detail-item-row">
-                <img class="detail-item-img" src="${i.image||''}" alt="${i.product_name}"
+                <img class="detail-item-img" src="${urlSegura(i.image)}" alt=""
                      onerror="this.style.display='none'" />
                 <div class="detail-item-info">
-                  <strong>${i.product_name}</strong>
-                  <span>× ${i.quantity} · ${Number(i.price).toFixed(2)} € c/u</span>
+                  <strong>${esc(i.product_name)}</strong>
+                  <span>× ${Number(i.quantity)} · ${precio(i.price)} c/u</span>
                 </div>
-                <span class="detail-item-price">${(i.price * i.quantity).toFixed(2)} €</span>
+                <span class="detail-item-price">${precio(i.price * i.quantity)}</span>
               </div>`).join('')
           : '';
         const stBtns = Object.entries(STATUS).map(([k,v]) =>
-          `<button class="st-btn ${o.status===k?'current':''}" onclick="cambiarEstado('${o.id}','${k}')">
+          `<button type="button" class="st-btn ${o.status===k?'current':''}" data-id="${esc(o.id)}" onclick="cambiarEstado(this.dataset.id,'${k}')">
             ${v.icon} ${v.label}
           </button>`).join('');
         return `
           <div class="order-row">
-            <div class="order-summary" onclick="toggleOrder('${o.id}')">
+            <div class="order-summary" data-id="${esc(o.id)}" onclick="toggleOrder(this.dataset.id)">
               <span class="order-id-tag">#${orderId}</span>
               <div class="order-client">
-                <strong>${o.customer_name}</strong>
-                <span>${o.customer_email} · ${o.customer_phone}</span>
+                <strong>${esc(o.customer_name)}</strong>
+                <span>${esc(o.customer_email)} · ${esc(o.customer_phone)}</span>
               </div>
               <span class="status-badge ${st.cls}">${st.icon} ${st.label}</span>
+              ${pagoBadge(o)}
               <div class="order-amount">
-                <strong>${Number(o.total).toFixed(2)} €</strong>
+                <strong>${precio(o.total)}</strong>
                 <span>${date}</span>
               </div>
-              <button class="btn-del-order" onclick="event.stopPropagation();eliminarPedido('${o.id}')">🗑️</button>
+              <button type="button" class="btn-del-order" data-id="${esc(o.id)}" onclick="event.stopPropagation();eliminarPedido(this.dataset.id)" aria-label="Eliminar pedido">🗑️</button>
             </div>
-            <div class="order-detail" id="det-${o.id}">
+            <div class="order-detail" id="det-${esc(o.id)}">
               <p class="detail-section-title">Productos</p>
               <div class="detail-items">${items}</div>
               <div class="detail-totals">
-                <div class="detail-total-row"><span>Envío</span><span>${Number(o.shipping_cost)===0?'Gratis':Number(o.shipping_cost).toFixed(2)+' €'}</span></div>
-                <div class="detail-total-final"><span>Total</span><span>${Number(o.total).toFixed(2)} €</span></div>
+                <div class="detail-total-row"><span>Envío</span><span>${Number(o.shipping_cost)===0?'Gratis':precio(o.shipping_cost)}</span></div>
+                <div class="detail-total-final"><span>Total</span><span>${precio(o.total)}</span></div>
               </div>
-              ${o.shipping_address ? `<p class="detail-section-title">Dirección</p><p style="font-size:0.82rem;color:var(--muted);margin-bottom:1rem">${o.shipping_address}, ${o.shipping_city} ${o.shipping_postal_code}</p>` : ''}
+              <p class="detail-section-title">Entrega y pago</p>
+              <p style="font-size:0.82rem;color:var(--muted);margin-bottom:1rem">
+                ${o.shipping_type === 'pickup' ? '🏪 Recogida en tienda' : '🚚 Envío a domicilio'} ·
+                ${o.payment_method === 'transfer' ? '🏦 Transferencia' : '💳 Tarjeta'} ·
+                ${o.paid_at ? '✅ Cobrado el ' + new Date(o.paid_at).toLocaleDateString('es-ES') : '⏳ Pago pendiente'}
+                ${!o.paid_at && o.status !== 'cancelled' ? `<br/><button type="button" class="btn-secondary btn-sm" style="margin-top:0.5rem" data-id="${esc(o.id)}" onclick="marcarPagado(this.dataset.id)">✅ Marcar como cobrado</button>` : ''}
+              </p>
+              ${o.shipping_address ? `<p class="detail-section-title">Dirección</p><p style="font-size:0.82rem;color:var(--muted);margin-bottom:1rem">${esc(o.shipping_address)}, ${esc(o.shipping_city)} ${esc(o.shipping_postal_code)}</p>` : ''}
+              ${o.notes ? `<p class="detail-section-title">Notas del cliente</p><p style="font-size:0.82rem;color:var(--muted);margin-bottom:1rem;white-space:pre-wrap">${esc(o.notes)}</p>` : ''}
               <p class="detail-section-title">Cambiar estado</p>
               <div class="status-btns">${stBtns}</div>
             </div>
@@ -1178,8 +1221,29 @@
       } catch(e) { toast('Error actualizando estado', 'error'); }
     }
 
+    function pagoBadge(o) {
+      if (o.status === 'cancelled') return '';
+      return o.paid_at
+        ? '<span class="status-badge s-delivered" title="Pago recibido">💳 Pagado</span>'
+        : '<span class="status-badge s-cancelled" title="Pago no recibido todavía">Sin pagar</span>';
+    }
+
+    // Para transferencias (o pagos en tienda): la admin confirma el cobro.
+    // Al marcarlo, la base de datos descuenta el stock de los aromas.
+    async function marcarPagado(id) {
+      if (!confirm('¿Confirmas que has recibido el pago de este pedido?')) return;
+      try {
+        const paid_at = new Date().toISOString();
+        const { error } = await db.from('pedidos').update({ paid_at }).eq('id', id);
+        if (error) throw error;
+        pedidosData = pedidosData.map(o => o.id===id ? {...o, paid_at} : o);
+        renderPedidos(); renderLatestOrders(); actualizarStats();
+        toast('✓ Pedido marcado como cobrado', 'success');
+      } catch(e) { toast('Error marcando el pago', 'error'); }
+    }
+
     async function eliminarPedido(id) {
-      if (!confirm('¿Eliminar este pedido?')) return;
+      if (!confirm('¿Eliminar este pedido? Se borrará definitivamente. Si solo no se va a enviar, mejor márcalo como "Cancelado".')) return;
       try {
         const { error } = await db.from('pedidos').delete().eq('id', id);
         if (error) throw error;
@@ -1204,12 +1268,13 @@
           <div class="latest-order">
             <span class="order-id-tag">#${oid}</span>
             <div class="order-client" style="flex:1">
-              <strong>${o.customer_name}</strong>
-              <span>${o.customer_email}</span>
+              <strong>${esc(o.customer_name)}</strong>
+              <span>${esc(o.customer_email)}</span>
             </div>
             <span class="status-badge ${st.cls}">${st.icon} ${st.label}</span>
+            ${pagoBadge(o)}
             <div class="order-amount">
-              <strong>${Number(o.total).toFixed(2)} €</strong>
+              <strong>${precio(o.total)}</strong>
               <span>${date}</span>
             </div>
           </div>`;
@@ -1225,12 +1290,12 @@
         if (!data?.length) { list.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--muted)">No hay usuarios.</div>'; return; }
         list.innerHTML = data.map(u => {
           const fecha   = new Date(u.created_at).toLocaleDateString('es-ES', { day:'2-digit', month:'short', year:'numeric' });
-          const inicial = u.email[0].toUpperCase();
+          const inicial = esc((u.email || '?')[0].toUpperCase());
           return `
             <div class="user-row">
               <div class="user-avatar">${inicial}</div>
               <div class="user-info">
-                <strong>${u.email}</strong>
+                <strong>${esc(u.email)}</strong>
                 <span>Registrado el ${fecha}</span>
               </div>
               <span class="role-badge ${u.role==='admin'?'role-admin':'role-client'}">
@@ -1239,6 +1304,77 @@
             </div>`;
         }).join('');
       } catch(e) { list.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--muted)">Error cargando usuarios.</div>'; }
+    }
+
+    // ─── MENSAJES ─────────────────────────────────────────────────────────────
+    let newsletterEmails = [];
+
+    async function avisarMensajesNuevos() {
+      try {
+        const { count } = await db.from('solicitudes').select('id', { count:'exact', head:true }).eq('estado', 'nueva');
+        if (count) document.getElementById('mensajesBadge').style.display = '';
+      } catch(e) {}
+    }
+
+    async function cargarMensajes() {
+      const list = document.getElementById('solicitudesList');
+      try {
+        const { data, error } = await db.from('solicitudes').select('*').order('created_at', { ascending:false }).limit(200);
+        if (error) throw error;
+        if (!data.length) {
+          list.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--muted)">Aún no hay solicitudes.</div>';
+        } else {
+          list.innerHTML = data.map(m => {
+            const fecha  = new Date(m.created_at).toLocaleDateString('es-ES', { day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit' });
+            const extra  = Object.entries(m.datos || {}).filter(([,v]) => v).map(([k,v]) => `<span><strong>${esc(k)}:</strong> ${esc(v)}</span>`).join(' · ');
+            const asunto = encodeURIComponent('Re: ' + (m.asunto || (m.tipo === 'evento' ? 'Tu evento con Kaori' : 'Tu mensaje a Kaori')));
+            return `
+              <div class="order-row" style="padding:1rem 1.25rem;${m.estado === 'nueva' ? 'border-left:3px solid var(--primary)' : 'opacity:0.75'}">
+                <div style="display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:0.4rem">
+                  <strong>${m.tipo === 'evento' ? '💍 Evento' : '✉️ Contacto'} · ${esc(m.nombre)}</strong>
+                  <span style="font-size:0.75rem;color:var(--muted)">${fecha}</span>
+                </div>
+                <p style="font-size:0.8rem;color:var(--muted);margin-bottom:0.4rem">
+                  <a href="mailto:${esc(m.email)}?subject=${asunto}" style="color:var(--primary)">${esc(m.email)}</a>
+                  ${m.telefono ? ` · <a href="tel:${esc(m.telefono)}" style="color:var(--primary)">${esc(m.telefono)}</a>` : ''}
+                  ${m.asunto ? ` · ${esc(m.asunto)}` : ''}
+                </p>
+                ${extra ? `<p style="font-size:0.78rem;color:var(--muted);margin-bottom:0.4rem">${extra}</p>` : ''}
+                <p style="font-size:0.85rem;white-space:pre-wrap;margin-bottom:0.6rem">${esc(m.mensaje)}</p>
+                <div style="display:flex;gap:0.5rem;flex-wrap:wrap">
+                  ${m.estado !== 'respondida' ? `<button type="button" class="btn-secondary btn-sm" data-id="${esc(m.id)}" onclick="estadoMensaje(this.dataset.id,'respondida')">✓ Respondida</button>` : ''}
+                  ${m.estado !== 'archivada' ? `<button type="button" class="btn-secondary btn-sm" data-id="${esc(m.id)}" onclick="estadoMensaje(this.dataset.id,'archivada')">Archivar</button>` : ''}
+                </div>
+              </div>`;
+          }).join('');
+        }
+      } catch(e) {
+        list.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--muted)">Error cargando solicitudes.</div>';
+      }
+
+      const nl = document.getElementById('newsletterList');
+      try {
+        const { data, error } = await db.from('newsletter').select('email,created_at').order('created_at', { ascending:false }).limit(1000);
+        if (error) throw error;
+        newsletterEmails = data.map(d => d.email);
+        nl.innerHTML = data.length
+          ? `<p style="font-size:0.82rem;color:var(--muted);margin-bottom:0.75rem">${data.length} suscriptor${data.length !== 1 ? 'es' : ''}</p>` +
+            data.slice(0, 50).map(d => `<div style="font-size:0.82rem;padding:0.3rem 0;border-bottom:1px solid var(--border)">${esc(d.email)} <span style="color:var(--muted)">· ${new Date(d.created_at).toLocaleDateString('es-ES')}</span></div>`).join('')
+          : '<div style="text-align:center;padding:2rem;color:var(--muted)">Aún no hay suscriptores.</div>';
+      } catch(e) {
+        nl.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--muted)">Error cargando la newsletter.</div>';
+      }
+    }
+
+    async function estadoMensaje(id, estado) {
+      const { error } = await db.from('solicitudes').update({ estado }).eq('id', id);
+      if (error) { toast('Error actualizando', 'error'); return; }
+      cargarMensajes();
+    }
+
+    function copiarEmailsNewsletter() {
+      if (!newsletterEmails.length) { toast('No hay emails'); return; }
+      navigator.clipboard.writeText(newsletterEmails.join(', ')).then(() => toast('✓ Emails copiados', 'success'));
     }
 
     // ─── LOGOUT / REFRESH ─────────────────────────────────────────────────────

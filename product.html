@@ -4,6 +4,20 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kaori – Producto</title>
+  <meta name="description" id="metaDesc" content="Velas artesanales y aromas hechos a mano por Kaori. Envío a toda España." />
+  <link rel="canonical" id="canonicalLink" href="https://kaori.es/shop.html" />
+  <meta property="og:type" content="product" />
+  <meta property="og:site_name" content="Kaori" />
+  <meta property="og:locale" content="es_ES" />
+  <meta property="og:title" id="ogTitle" content="Kaori – Velas artesanales" />
+  <meta property="og:image" id="ogImage" content="https://kaori.es/og-image.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://zlebihuuhgyebnauyyug.supabase.co" crossorigin />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
@@ -120,7 +134,7 @@
     .related-title{font-size:clamp(1.5rem,3vw,2.2rem);color:var(--dark);font-weight:300}
     .related-title em{font-style:italic;color:var(--primary)}
     .related-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:1.25rem}
-    .related-card{background:white;border:1px solid var(--border);border-radius:1rem;overflow:hidden;cursor:pointer;transition:all 0.3s}
+    .related-card{display:block;background:white;border:1px solid var(--border);border-radius:1rem;overflow:hidden;cursor:pointer;transition:all 0.3s}
     .related-card:hover{box-shadow:0 8px 30px rgba(124,58,237,0.12);transform:translateY(-3px)}
     .related-img{aspect-ratio:1;overflow:hidden;background:var(--light)}
     .related-img img{width:100%;height:100%;object-fit:cover;transition:transform 0.4s}
@@ -213,7 +227,7 @@
       <!-- GALERÍA -->
       <div class="gallery-wrap">
         <div class="main-img-wrap">
-          <img id="mainImg" src="" alt="Producto" />
+          <img id="mainImg" alt="" fetchpriority="high" />
           <div class="img-badges" id="imgBadges"></div>
         </div>
         <div class="gallery-thumbs" id="galleryThumbs"></div>
@@ -257,9 +271,9 @@
         <div class="qty-block">
           <p class="qty-label">Cantidad</p>
           <div class="qty-control">
-            <button class="qty-btn" id="btnMenos" onclick="cambiarQty(-1)" disabled>−</button>
+            <button type="button" class="qty-btn" id="btnMenos" onclick="cambiarQty(-1)" aria-label="Menos" disabled>−</button>
             <span class="qty-num" id="qtyNum">1</span>
-            <button class="qty-btn" onclick="cambiarQty(1)">+</button>
+            <button type="button" class="qty-btn" onclick="cambiarQty(1)" aria-label="Más">+</button>
           </div>
         </div>
 
@@ -306,12 +320,13 @@
   <div id="toast"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js"></script>
-  <script src="supabase.js"></script>
+  <script src="utils.js"></script><script src="supabase.js"></script>
   <script src="auth.js"></script>
   <script src="cart.js"></script>
   <script>
     var productoActual = null;
     var varianteActual = null;
+    var variantesActuales = [];
     var cantidad = 1;
 
     window.addEventListener('scroll', function() {
@@ -330,16 +345,25 @@
       }
     });
 
+    function stockDe(v) {
+      // null/'' = sin control de stock; número = unidades disponibles
+      return (v.stock === null || v.stock === undefined || v.stock === '') ? null : Number(v.stock);
+    }
+
     // ── CARGAR PRODUCTO ───────────────────────────────────────────────────────
     async function cargarProducto() {
       var id = new URLSearchParams(window.location.search).get('id');
-      if (!id) { mostrarNotFound(); return; }
+      if (!id || !/^[0-9a-f-]{36}$/i.test(id)) { mostrarNotFound(); return; }
       try {
-        var result = await db.from('productos').select('*').eq('id', id).single();
+        // RLS ya oculta los productos inactivos a los clientes.
+        var result = await db.from('productos')
+          .select('id,name,description,category,price,compare_price,featured,image,images,variantes,active')
+          .eq('id', id).maybeSingle();
         document.getElementById('loadingScreen').style.display = 'none';
         if (result.error || !result.data) { mostrarNotFound(); return; }
         productoActual = result.data;
         renderProducto(result.data);
+        actualizarSEO(result.data);
         cargarRelacionados(result.data);
         document.getElementById('productPage').style.display = '';
       } catch(e) {
@@ -351,78 +375,112 @@
     function mostrarNotFound() {
       document.getElementById('loadingScreen').style.display = 'none';
       document.getElementById('notFound').style.display      = 'flex';
+      var robots = document.createElement('meta');
+      robots.name = 'robots'; robots.content = 'noindex';
+      document.head.appendChild(robots);
+    }
+
+    // ── SEO por producto (Google ejecuta JavaScript al indexar) ───────────────
+    function actualizarSEO(p) {
+      var url  = 'https://kaori.es/product.html?id=' + encodeURIComponent(p.id);
+      var desc = (p.description || (p.name + ' de Kaori, hecho a mano con ingredientes naturales.')).replace(/\s+/g, ' ').slice(0, 155);
+      document.title = p.name + ' – Kaori';
+      document.getElementById('metaDesc').setAttribute('content', desc);
+      document.getElementById('canonicalLink').setAttribute('href', url);
+      document.getElementById('ogTitle').setAttribute('content', p.name + ' – Kaori');
+      if (p.image) document.getElementById('ogImage').setAttribute('content', p.image);
+
+      var variantes = Array.isArray(p.variantes) ? p.variantes.filter(function(v) { return v && v.nombre; }) : [];
+      var hayStock  = !variantes.length || variantes.some(function(v) { var s = stockDe(v); return s === null || s > 0; });
+      var ld = {
+        '@context': 'https://schema.org',
+        '@type': 'Product',
+        name: p.name,
+        description: desc,
+        image: (Array.isArray(p.images) && p.images.length ? p.images : [p.image]).filter(Boolean),
+        sku: p.id,
+        category: p.category,
+        brand: { '@type': 'Brand', name: 'Kaori' },
+        offers: {
+          '@type': 'Offer',
+          url: url,
+          priceCurrency: 'EUR',
+          price: Number(p.price).toFixed(2),
+          availability: hayStock ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+          itemCondition: 'https://schema.org/NewCondition',
+          seller: { '@type': 'Organization', name: 'Kaori' }
+        }
+      };
+      var breadcrumbs = {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Inicio', item: 'https://kaori.es/' },
+          { '@type': 'ListItem', position: 2, name: 'Tienda', item: 'https://kaori.es/shop.html' },
+          { '@type': 'ListItem', position: 3, name: p.name, item: url }
+        ]
+      };
+      [ld, breadcrumbs].forEach(function(obj) {
+        var tag = document.createElement('script');
+        tag.type = 'application/ld+json';
+        tag.textContent = JSON.stringify(obj);
+        document.head.appendChild(tag);
+      });
     }
 
     // ── RENDER PRODUCTO ───────────────────────────────────────────────────────
     function renderProducto(p) {
-      document.title = 'Kaori – ' + p.name;
       document.getElementById('breadcrumbNombre').textContent = p.name;
       document.getElementById('prodCat').textContent          = p.category;
       document.getElementById('prodName').textContent         = p.name;
       if (p.description) document.getElementById('prodDesc').textContent = p.description;
 
       var img = document.getElementById('mainImg');
+      img.onerror = function() { img.onerror = null; img.src = IMG_FALLBACK; };
       img.src = p.image;
       img.alt = p.name;
-      img.onerror = function() {
-        img.src = 'https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=800&q=80';
-      };
 
       // Badges
       var badges = '';
-      if (p.compare_price && p.compare_price > p.price) {
+      if (p.compare_price && Number(p.compare_price) > Number(p.price)) {
         var disc = Math.round((1 - p.price / p.compare_price) * 100);
         badges += '<span class="img-badge badge-disc">-' + disc + '%</span>';
-        document.getElementById('prodCompare').textContent   = Number(p.compare_price).toFixed(2) + ' €';
+        document.getElementById('prodCompare').textContent   = precio(p.compare_price);
         document.getElementById('prodCompare').style.display = '';
-        document.getElementById('prodSaving').textContent    = 'Ahorras ' + (p.compare_price - p.price).toFixed(2) + ' €';
+        document.getElementById('prodSaving').textContent    = 'Ahorras ' + precio(p.compare_price - p.price);
         document.getElementById('prodSaving').style.display  = '';
       }
       if (p.featured) badges += '<span class="img-badge badge-feat">✨ Destacado</span>';
       document.getElementById('imgBadges').innerHTML = badges;
 
-      document.getElementById('prodPrice').textContent = Number(p.price).toFixed(2) + ' €';
+      document.getElementById('prodPrice').textContent = precio(p.price);
 
-      // Miniaturas del producto (fotos principales)
-      renderThumbsProducto();
+      renderThumbs((Array.isArray(p.images) && p.images.length > 1)
+        ? p.images.map(function(url, i) { return { url: url, label: '', alt: p.name + ' – foto ' + (i + 1) }; })
+        : []);
 
-      // Variantes/aromas
-      var variantes = Array.isArray(p.variantes) ? p.variantes.filter(function(v) { return v && v.nombre; }) : [];
-      if (variantes.length) renderAromas(variantes);
+      variantesActuales = Array.isArray(p.variantes) ? p.variantes.filter(function(v) { return v && v.nombre; }) : [];
+      if (variantesActuales.length) renderAromas(variantesActuales);
     }
 
-    // ── MINIATURAS PRODUCTO ───────────────────────────────────────────────────
-    function renderThumbsProducto() {
-      var p       = productoActual;
-      var imagenes = (Array.isArray(p.images) && p.images.length > 1) ? p.images : [];
-      var thumbs   = document.getElementById('galleryThumbs');
-      if (imagenes.length > 1) {
-        thumbs.innerHTML = imagenes.map(function(url, i) {
-          return '<div class="thumb-wrap">' +
-            '<button class="thumb-btn ' + (i === 0 ? 'active' : '') + '" onclick="cambiarImagen(\'' + url.replace(/'/g, "\\'") + '\', this)">' +
-            '<img src="' + url + '" alt="Foto ' + (i+1) + '" onerror="this.src=\'https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=100&q=60\'" />' +
-            '</button></div>';
-        }).join('');
-      } else {
-        thumbs.innerHTML = '';
-      }
-    }
-
-    // ── MINIATURAS CUANDO HAY AROMA SELECCIONADO ──────────────────────────────
-    function renderThumbsConAroma(urlAroma, urlPrincipal) {
+    // ── MINIATURAS ────────────────────────────────────────────────────────────
+    function renderThumbs(fotos) {
       var thumbs = document.getElementById('galleryThumbs');
-      var fotos  = [
-        { url: urlAroma,     label: 'Aroma'    },
-        { url: urlPrincipal, label: 'Producto' },
-      ];
-      thumbs.innerHTML = fotos.map(function(f, i) {
+      thumbs.innerHTML = fotos.length < 2 ? '' : fotos.map(function(f, i) {
         return '<div class="thumb-wrap">' +
-          '<button class="thumb-btn ' + (i === 0 ? 'active' : '') + '" onclick="cambiarImagen(\'' + f.url.replace(/'/g, "\\'") + '\', this)">' +
-          '<img src="' + f.url + '" alt="' + f.label + '" onerror="this.src=\'https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=100&q=60\'" />' +
+          '<button type="button" class="thumb-btn ' + (i === 0 ? 'active' : '') + '" data-url="' + urlSegura(f.url) + '" onclick="cambiarImagen(this.dataset.url, this)" aria-label="' + esc(f.alt) + '">' +
+          '<img src="' + (urlSegura(f.url) || IMG_FALLBACK) + '" alt="' + esc(f.alt) + '" loading="lazy" onerror="this.onerror=null;this.src=IMG_FALLBACK" />' +
           '</button>' +
-          '<span class="thumb-label">' + f.label + '</span>' +
+          (f.label ? '<span class="thumb-label">' + esc(f.label) + '</span>' : '') +
           '</div>';
       }).join('');
+    }
+
+    function renderThumbsProducto() {
+      var p = productoActual;
+      renderThumbs((Array.isArray(p.images) && p.images.length > 1)
+        ? p.images.map(function(url, i) { return { url: url, label: '', alt: p.name + ' – foto ' + (i + 1) }; })
+        : []);
     }
 
     // ── CAMBIAR IMAGEN PRINCIPAL ──────────────────────────────────────────────
@@ -430,14 +488,12 @@
       var img = document.getElementById('mainImg');
       img.classList.add('changing');
       setTimeout(function() {
+        img.onerror = function() { img.onerror = null; img.src = IMG_FALLBACK; };
         img.src = url;
-        img.onerror = function() {
-          img.src = 'https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=800&q=80';
-        };
         img.classList.remove('changing');
       }, 200);
       document.querySelectorAll('.thumb-btn').forEach(function(b) { b.classList.remove('active'); });
-      btn.classList.add('active');
+      if (btn) btn.classList.add('active');
     }
 
     // ── AROMAS ────────────────────────────────────────────────────────────────
@@ -445,80 +501,83 @@
       document.getElementById('aromasBlock').style.display = '';
       var grid = document.getElementById('aromasGrid');
       grid.innerHTML = variantes.map(function(v, i) {
-        var sinStock  = v.stock !== null && v.stock !== undefined && v.stock !== '' && Number(v.stock) <= 0;
-        var pocoStock = v.stock && Number(v.stock) > 0 && Number(v.stock) <= 5;
-        return '<button class="aroma-btn" id="aroma-btn-' + i + '"' +
+        var stock     = stockDe(v);
+        var sinStock  = stock !== null && stock <= 0;
+        var pocoStock = stock !== null && stock > 0 && stock <= 5;
+        return '<button type="button" class="aroma-btn" id="aroma-btn-' + i + '"' +
           (sinStock ? ' disabled' : ' onclick="seleccionarAroma(' + i + ')"') + '>' +
-          (v.imagen ? '<img class="aroma-img-mini" src="' + v.imagen + '" alt="' + v.nombre + '" onerror="this.style.display=\'none\'" />' : '🌸') +
-          v.nombre +
+          (v.imagen ? '<img class="aroma-img-mini" src="' + urlSegura(v.imagen) + '" alt="" onerror="this.style.display=\'none\'" />' : '🌸') +
+          esc(v.nombre) +
           (sinStock  ? '<span class="aroma-stock-badge">Agotado</span>' : '') +
-          (pocoStock ? '<span class="aroma-stock-badge" style="background:#d97706">' + v.stock + ' uds</span>' : '') +
+          (pocoStock ? '<span class="aroma-stock-badge" style="background:#d97706">' + stock + ' uds</span>' : '') +
           '</button>';
       }).join('');
 
-      var primero = variantes.findIndex(function(v) {
-        return !v.stock || v.stock === '' || Number(v.stock) > 0;
-      });
+      var primero = variantes.findIndex(function(v) { var s = stockDe(v); return s === null || s > 0; });
       if (primero !== -1) seleccionarAroma(primero);
+      else {
+        var btn = document.getElementById('btnCart');
+        btn.disabled = true;
+        btn.textContent = 'Agotado';
+      }
     }
 
     function seleccionarAroma(idx) {
-      var variantes = productoActual.variantes.filter(function(v) { return v && v.nombre; });
-      var v = variantes[idx];
+      var v = variantesActuales[idx];
       if (!v) return;
       varianteActual = v;
+      cantidad = 1;
+      document.getElementById('qtyNum').textContent = cantidad;
+      document.getElementById('btnMenos').disabled  = true;
 
-      // Activar botón
       document.querySelectorAll('.aroma-btn').forEach(function(b, i) {
         b.classList.toggle('selected', i === idx);
       });
 
-      // Cambiar imagen principal
+      // Imagen principal
       var nuevaImg = v.imagen || productoActual.image;
       var img = document.getElementById('mainImg');
       img.classList.add('changing');
       setTimeout(function() {
+        img.onerror = function() { img.onerror = null; img.src = productoActual.image; };
         img.src = nuevaImg;
-        img.onerror = function() { img.src = productoActual.image; };
         img.classList.remove('changing');
 
-        // Badge aroma en imagen
         var badgesEl  = document.getElementById('imgBadges');
         var existente = badgesEl.querySelector('.badge-aroma');
         if (existente) existente.remove();
         if (v.imagen) {
-          badgesEl.insertAdjacentHTML('beforeend',
-            '<span class="img-badge badge-aroma">🌸 ' + v.nombre + '</span>');
+          badgesEl.insertAdjacentHTML('beforeend', '<span class="img-badge badge-aroma">🌸 ' + esc(v.nombre) + '</span>');
         }
       }, 200);
 
-      // ── MINIATURAS: foto del aroma + foto principal del producto ──────────
       if (v.imagen) {
-        renderThumbsConAroma(v.imagen, productoActual.image);
+        renderThumbs([
+          { url: v.imagen,              label: 'Aroma',    alt: productoActual.name + ' – ' + v.nombre },
+          { url: productoActual.image,  label: 'Producto', alt: productoActual.name },
+        ]);
       } else {
-        // Sin imagen propia → miniaturas normales del producto
         renderThumbsProducto();
       }
 
       // Precio
-      var precio = v.precio ? Number(v.precio) : Number(productoActual.price);
-      document.getElementById('prodPrice').textContent      = precio.toFixed(2) + ' €';
-      document.getElementById('varianteNote').style.display = v.precio ? '' : 'none';
+      var precioV = Number(v.precio) > 0 ? Number(v.precio) : Number(productoActual.price);
+      document.getElementById('prodPrice').textContent      = precio(precioV);
+      document.getElementById('varianteNote').style.display = Number(v.precio) > 0 ? '' : 'none';
 
-      // Label seleccionado
       var label = document.getElementById('aromaSeleccionadoLabel');
       label.textContent   = v.nombre;
       label.style.display = '';
 
       // Stock
+      var stock   = stockDe(v);
       var stockEl = document.getElementById('stockInfo');
-      if (!v.stock && v.stock !== 0) { stockEl.innerHTML = ''; }
-      else if (Number(v.stock) <= 0) { stockEl.innerHTML = '<span class="stock-out">✕ Sin stock</span>'; }
-      else if (Number(v.stock) <= 5) { stockEl.innerHTML = '<span class="stock-low">⚠️ Solo ' + v.stock + ' uds</span>'; }
-      else { stockEl.innerHTML = '<span class="stock-ok">✓ ' + v.stock + ' disponibles</span>'; }
+      if (stock === null)  { stockEl.innerHTML = ''; }
+      else if (stock <= 0) { stockEl.innerHTML = '<span class="stock-out">✕ Sin stock</span>'; }
+      else if (stock <= 5) { stockEl.innerHTML = '<span class="stock-low">⚠️ Solo quedan ' + stock + ' uds</span>'; }
+      else                 { stockEl.innerHTML = '<span class="stock-ok">✓ En stock</span>'; }
 
-      // Botón carrito
-      var sinStock = v.stock !== null && v.stock !== undefined && v.stock !== '' && Number(v.stock) <= 0;
+      var sinStock = stock !== null && stock <= 0;
       var btnCart  = document.getElementById('btnCart');
       btnCart.disabled    = sinStock;
       btnCart.textContent = sinStock ? 'Sin stock' : '🛒 Añadir al carrito';
@@ -526,40 +585,39 @@
 
     // ── CANTIDAD ──────────────────────────────────────────────────────────────
     function cambiarQty(delta) {
-      var max = (varianteActual && varianteActual.stock) ? Number(varianteActual.stock) : 99;
+      var stock = varianteActual ? stockDe(varianteActual) : null;
+      var max   = stock !== null ? Math.max(1, stock) : 99;
       cantidad = Math.max(1, Math.min(cantidad + delta, max));
-      document.getElementById('qtyNum').textContent  = cantidad;
-      document.getElementById('btnMenos').disabled   = cantidad <= 1;
+      document.getElementById('qtyNum').textContent = cantidad;
+      document.getElementById('btnMenos').disabled  = cantidad <= 1;
     }
 
     // ── CARRITO ───────────────────────────────────────────────────────────────
     function añadirAlCarrito() {
       if (!productoActual) return;
-      var variantes = Array.isArray(productoActual.variantes)
-        ? productoActual.variantes.filter(function(v) { return v && v.nombre; }) : [];
-      if (variantes.length && !varianteActual) {
+      if (variantesActuales.length && !varianteActual) {
         mostrarToast('Por favor selecciona un aroma');
         document.getElementById('aromasBlock').scrollIntoView({ behavior:'smooth', block:'center' });
         return;
       }
-      var precio = varianteActual && varianteActual.precio ? Number(varianteActual.precio) : Number(productoActual.price);
-      var nombre = varianteActual ? productoActual.name + ' – ' + varianteActual.nombre : productoActual.name;
-      var imagen = (varianteActual && varianteActual.imagen) || productoActual.image;
-      var key    = varianteActual ? productoActual.id + '-' + varianteActual.nombre : productoActual.id;
-      var cart   = getCarrito();
-      var ex     = cart.find(function(i) { return i.id === key; });
-      if (ex) { ex.quantity += cantidad; } else { cart.push({ id:key, name:nombre, price:precio, image:imagen, quantity:cantidad }); }
-      guardarCarrito(cart);
-      if (window.CartWidget) CartWidget.render();
+      var precioU = varianteActual && Number(varianteActual.precio) > 0 ? Number(varianteActual.precio) : Number(productoActual.price);
+      var nombre  = varianteActual ? productoActual.name + ' – ' + varianteActual.nombre : productoActual.name;
+      CartWidget.add({
+        productId: productoActual.id,
+        variante:  varianteActual ? varianteActual.nombre : null,
+        name:      nombre,
+        price:     precioU,
+        image:     (varianteActual && varianteActual.imagen) || productoActual.image,
+        quantity:  cantidad,
+      });
       var btn = document.getElementById('btnCart');
       btn.textContent = '✓ ¡Añadido!';
       btn.classList.add('added');
-      setTimeout(function() { btn.innerHTML = '🛒 Añadir al carrito'; btn.classList.remove('added'); }, 2000);
+      setTimeout(function() { btn.textContent = '🛒 Añadir al carrito'; btn.classList.remove('added'); }, 2000);
       mostrarToast(nombre + ' añadido');
+      CartWidget.open();
     }
 
-    function getCarrito() { try { return JSON.parse(localStorage.getItem('kaori_cart') || '[]'); } catch { return []; } }
-    function guardarCarrito(cart) { localStorage.setItem('kaori_cart', JSON.stringify(cart)); if (window.CartWidget) CartWidget.updateBadge(); }
     function mostrarToast(msg) {
       var t = document.getElementById('toast');
       t.textContent = '✦ ' + msg;
@@ -570,41 +628,31 @@
     // ── RELACIONADOS ──────────────────────────────────────────────────────────
     async function cargarRelacionados(actual) {
       try {
-        var r = await db.from('productos').select('id,name,price,image,category')
+        var campos = 'id,name,price,image,category';
+        var r = await db.from('productos').select(campos)
           .eq('active', true).eq('category', actual.category).neq('id', actual.id).limit(4);
-        var data = r.data;
-        if (!data || !data.length) {
-          var r2 = await db.from('productos').select('id,name,price,image,category').eq('active', true).neq('id', actual.id).limit(4);
-          data = r2.data || [];
+        var data = r.data || [];
+        if (data.length < 4) {
+          var r2 = await db.from('productos').select(campos).eq('active', true).neq('id', actual.id).limit(8);
+          (r2.data || []).forEach(function(p) {
+            if (data.length < 4 && !data.some(function(x) { return x.id === p.id; })) data.push(p);
+          });
         }
         var grid = document.getElementById('relatedGrid');
-        if (!data.length) { grid.style.display = 'none'; return; }
+        if (!data.length) { grid.closest('.related').style.display = 'none'; return; }
         grid.innerHTML = data.map(function(p) {
-          return '<div class="related-card" onclick="window.location.href=\'product.html?id=' + p.id + '\'">' +
-            '<div class="related-img"><img src="' + p.image + '" alt="' + p.name + '" loading="lazy" onerror="this.src=\'https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=400&q=80\'" /></div>' +
-            '<div class="related-info"><p class="related-cat">' + p.category + '</p>' +
-            '<h4 class="related-name">' + p.name + '</h4>' +
-            '<p class="related-price">' + Number(p.price).toFixed(2) + ' €</p></div></div>';
+          return '<a class="related-card" href="product.html?id=' + encodeURIComponent(p.id) + '">' +
+            '<div class="related-img"><img src="' + (urlSegura(p.image) || IMG_FALLBACK) + '" alt="' + esc(p.name) + '" loading="lazy" decoding="async" onerror="this.onerror=null;this.src=IMG_FALLBACK" /></div>' +
+            '<div class="related-info"><p class="related-cat">' + esc(p.category) + '</p>' +
+            '<h3 class="related-name">' + esc(p.name) + '</h3>' +
+            '<p class="related-price">' + precio(p.price) + '</p></div></a>';
         }).join('');
-      } catch(e) {}
+      } catch(e) {
+        console.error('Relacionados:', e);
+      }
     }
 
-    // ── NAVBAR DINÁMICO ───────────────────────────────────────────────────────
-    (async function() {
-      try {
-        var sesion = await obtenerSesion();
-        var btn    = document.getElementById('btnCuenta');
-        var mBtn   = document.getElementById('mobileLoginBtn');
-        if (sesion) {
-          var rol  = await obtenerRol();
-          var href = rol === 'admin' ? 'admin.html' : 'mi-cuenta.html';
-          var txt  = rol === 'admin' ? '👑 Panel Admin' : 'Mi cuenta';
-          if (btn)  { btn.href  = href; btn.textContent  = txt; }
-          if (mBtn) { mBtn.href = href; mBtn.textContent = txt; }
-        }
-      } catch(e) {}
-    })();
-
+    actualizarBotonCuenta();
     cargarProducto();
   </script>
 </body>

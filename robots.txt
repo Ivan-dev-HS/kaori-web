@@ -1,4 +1,11 @@
 User-agent: *
 Allow: /
+Disallow: /admin.html
+Disallow: /login.html
+Disallow: /mi-cuenta.html
+Disallow: /checkout.html
+Disallow: /gracias.html
+Disallow: /acceso-denegado.html
+Disallow: /api/
 
 Sitemap: https://kaori.es/sitemap.xml
