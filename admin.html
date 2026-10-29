@@ -214,6 +214,17 @@
     .btn-add-variante{width:100%;background:transparent;border:2px dashed var(--border);border-radius:0.875rem;padding:0.875rem;font-family:'Nunito',sans-serif;font-size:0.82rem;color:var(--primary);font-weight:700;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:0.5rem;margin-top:0.75rem}
     .btn-add-variante:hover{border-color:var(--primary);background:var(--cream2)}
 
+    /* ── CATEGORÍAS ── */
+    .cat-input{font-family:'Nunito',sans-serif;border:1.5px solid var(--border);border-radius:0.6rem;padding:0.6rem 0.75rem;font-size:1rem;outline:none;color:var(--dark);background:white}
+    .cat-input:focus{border-color:var(--primary)}
+    .nueva-categoria-row{display:flex;gap:0.6rem;margin-top:1.25rem;flex-wrap:wrap;padding-top:1.25rem;border-top:1px solid var(--border)}
+    .cat-row{display:flex;align-items:center;gap:0.9rem;padding:0.8rem 0;border-bottom:1px solid var(--cream2)}
+    .cat-row:last-child{border-bottom:none}
+    .cat-row-emoji{font-size:1.2rem;width:28px;text-align:center;flex-shrink:0}
+    .cat-row-name{flex:1;font-size:0.9rem;color:var(--dark);font-weight:600}
+    .cat-row.inactiva .cat-row-name{color:var(--muted);font-weight:400}
+    .cat-row-badge{font-size:0.65rem;color:var(--muted);background:var(--cream2);padding:2px 8px;border-radius:9999px;flex-shrink:0}
+
     /* ── PEDIDOS ── */
     .order-row{border-bottom:1px solid var(--border);transition:background 0.15s}
     .order-row:last-child{border-bottom:none}
@@ -342,6 +353,9 @@
           <span class="nav-icon">📦</span> Pedidos
           <span class="nav-badge" id="pendingBadge" style="display:none">!</span>
         </button>
+        <button class="nav-item" onclick="switchTab('categorias',this)">
+          <span class="nav-icon">🏷️</span> Categorías
+        </button>
         <span class="nav-section-label">Gestión</span>
         <button class="nav-item" onclick="switchTab('mensajes',this)">
           <span class="nav-icon">✉️</span> Mensajes
@@ -435,11 +449,9 @@
                 <span class="si">🔍</span>
                 <input type="text" placeholder="Buscar..." id="searchProductos" oninput="renderTablaProductos()" />
               </div>
-              <button class="filter-pill active" onclick="setFiltroCategoria('',this)">Todos</button>
-              <button class="filter-pill" onclick="setFiltroCategoria('velas',this)">🕯️ Velas</button>
-              <button class="filter-pill" onclick="setFiltroCategoria('minerales',this)">💎 Minerales</button>
-              <button class="filter-pill" onclick="setFiltroCategoria('joyeria',this)">📿 Joyería</button>
-              <button class="filter-pill" onclick="setFiltroCategoria('ambientacion',this)">🌸 Ambientación</button>
+              <div id="filtroCategoriasProductos" style="display:flex;gap:0.5rem;flex-wrap:wrap">
+                <button class="filter-pill active" onclick="setFiltroCategoria('',this)">Todos</button>
+              </div>
             </div>
             <div class="table-wrap">
               <table>
@@ -480,6 +492,25 @@
             </div>
             <div id="pedidosList">
               <div class="loading-rows"><div class="sp"></div><p>Cargando pedidos...</p></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── CATEGORÍAS ── -->
+        <div class="tab-content" id="tab-categorias">
+          <div class="card">
+            <div class="card-head"><h2>🏷️ Categorías</h2></div>
+            <div class="card-body">
+              <p style="font-size:0.82rem;color:var(--muted);margin-bottom:1.25rem;line-height:1.6">
+                Desactiva una categoría para que deje de aparecer como pestaña de filtro en la tienda.
+                Los productos que ya tuvieran esa categoría no se borran ni se ocultan.
+              </p>
+              <div id="categoriasList"><div class="loading-rows"><div class="sp"></div><p>Cargando...</p></div></div>
+              <div class="nueva-categoria-row">
+                <input type="text" id="catNuevoEmoji" class="cat-input" placeholder="🕯️" maxlength="4" style="width:64px;text-align:center;flex:none" />
+                <input type="text" id="catNuevoNombre" class="cat-input" placeholder="Nombre de la nueva categoría" style="flex:1;min-width:160px" />
+                <button class="btn-primary btn-sm" onclick="crearCategoria()">+ Añadir</button>
+              </div>
             </div>
           </div>
         </div>
@@ -562,12 +593,6 @@
             <label>Categoría *</label>
             <select id="pCategoria">
               <option value="">Seleccionar...</option>
-              <option value="velas">🕯️ Velas</option>
-              <option value="minerales">💎 Minerales</option>
-              <option value="joyeria">📿 Joyería</option>
-              <option value="ambientacion">🌸 Ambientación</option>
-              <option value="corporal">🧴 Corporal</option>
-              <option value="quemadores">🔥 Quemadores</option>
             </select>
           </div>
           <div class="form-group">
@@ -664,7 +689,7 @@
       document.getElementById('loadingScreen').style.display = 'none';
       document.getElementById('mainContent').style.display   = 'flex';
 
-      await Promise.all([cargarProductos(), cargarPedidos()]);
+      await Promise.all([cargarProductos(), cargarPedidos(), cargarCategorias()]);
       iniciarRealtime();
       avisarMensajesNuevos();
     })();
@@ -676,7 +701,7 @@
     }
 
     // ─── TABS ─────────────────────────────────────────────────────────────────
-    const TAB_TITLES = { dashboard:'Dashboard', productos:'Productos', pedidos:'Pedidos', mensajes:'Mensajes', usuarios:'Usuarios' };
+    const TAB_TITLES = { dashboard:'Dashboard', productos:'Productos', pedidos:'Pedidos', categorias:'Categorías', mensajes:'Mensajes', usuarios:'Usuarios' };
 
     function switchTab(nombre, btn) {
       tabActual = nombre;
@@ -686,6 +711,7 @@
       if (btn) btn.classList.add('active');
       document.getElementById('pageTitle').textContent = TAB_TITLES[nombre] || nombre;
       if (nombre === 'usuarios') cargarUsuarios();
+      if (nombre === 'categorias') cargarCategorias();
       if (nombre === 'mensajes') { cargarMensajes(); document.getElementById('mensajesBadge').style.display = 'none'; }
       if (nombre === 'pedidos') {
         renderPedidos();
@@ -1309,6 +1335,106 @@
     // ─── MENSAJES ─────────────────────────────────────────────────────────────
     let newsletterEmails = [];
 
+    // ─── CATEGORÍAS ───────────────────────────────────────────────────────────
+    let categoriasData = [];
+
+    function slugificar(texto) {
+      return texto.toLowerCase().trim()
+        .normalize('NFD').replace(/[̀-ͯ]/g, '')
+        .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+    }
+
+    async function cargarCategorias() {
+      const list = document.getElementById('categoriasList');
+      try {
+        const { data, error } = await db.from('categorias').select('*').order('orden', { ascending:true });
+        if (error) throw error;
+        categoriasData = data || [];
+        renderCategorias();
+        poblarSelectCategorias();
+      } catch(e) {
+        if (list) list.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--muted)">Error cargando categorías.</div>';
+      }
+    }
+
+    function renderCategorias() {
+      const list = document.getElementById('categoriasList');
+      if (!list) return;
+      if (!categoriasData.length) { list.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--muted)">No hay categorías todavía.</div>'; return; }
+      list.innerHTML = categoriasData.map(c => `
+        <div class="cat-row ${c.activa ? '' : 'inactiva'}">
+          <span class="cat-row-emoji">${esc(c.emoji || '🏷️')}</span>
+          <span class="cat-row-name">${esc(c.nombre)}</span>
+          <span class="cat-row-badge">${c.activa ? 'Visible en la tienda' : 'Oculta'}</span>
+          <div class="toggle">
+            <input type="checkbox" ${c.activa ? 'checked' : ''} data-slug="${esc(c.slug)}" onchange="toggleCategoria(this.dataset.slug, this.checked)" />
+            <span class="toggle-slider"></span>
+          </div>
+          <button class="btn-danger btn-sm" data-slug="${esc(c.slug)}" onclick="eliminarCategoria(this.dataset.slug)">Eliminar</button>
+        </div>`).join('');
+    }
+
+    function poblarSelectCategorias() {
+      const select = document.getElementById('pCategoria');
+      const actual  = select.value;
+      select.innerHTML = '<option value="">Seleccionar...</option>' +
+        categoriasData.map(c => `<option value="${esc(c.slug)}">${esc(c.emoji ? c.emoji + ' ' : '')}${esc(c.nombre)}${c.activa ? '' : ' (oculta)'}</option>`).join('');
+      select.value = actual;
+
+      // Pestañas de filtro del listado de productos — todas, para poder ver
+      // también los productos de una categoría ya desactivada.
+      const wrap = document.getElementById('filtroCategoriasProductos');
+      wrap.innerHTML = '<button class="filter-pill active" onclick="setFiltroCategoria(\'\',this)">Todos</button>' +
+        categoriasData.map(c => `<button class="filter-pill" data-slug="${esc(c.slug)}" onclick="setFiltroCategoria(this.dataset.slug,this)">${esc(c.emoji ? c.emoji + ' ' : '')}${esc(c.nombre)}</button>`).join('');
+    }
+
+    async function toggleCategoria(slug, activa) {
+      try {
+        const { error } = await db.from('categorias').update({ activa }).eq('slug', slug);
+        if (error) throw error;
+        const cat = categoriasData.find(c => c.slug === slug);
+        if (cat) cat.activa = activa;
+        renderCategorias();
+        toast(activa ? '✓ Categoría activada' : '✓ Categoría desactivada', 'success');
+      } catch(e) {
+        toast('Error guardando: ' + e.message, 'error');
+        renderCategorias(); // revertir visualmente al estado real
+      }
+    }
+
+    async function crearCategoria() {
+      const nombreEl = document.getElementById('catNuevoNombre');
+      const emojiEl  = document.getElementById('catNuevoEmoji');
+      const nombre   = nombreEl.value.trim();
+      const emoji    = emojiEl.value.trim();
+      if (!nombre) { toast('⚠️ Ponle un nombre a la categoría', 'error'); return; }
+      const slug = slugificar(nombre);
+      if (!slug) { toast('⚠️ Nombre no válido', 'error'); return; }
+      if (categoriasData.some(c => c.slug === slug)) { toast('Ya existe una categoría con ese nombre', 'error'); return; }
+      try {
+        const orden = categoriasData.length ? Math.max(...categoriasData.map(c => c.orden || 0)) + 1 : 1;
+        const { error } = await db.from('categorias').insert({ slug, nombre, emoji, orden });
+        if (error) throw error;
+        nombreEl.value = ''; emojiEl.value = '';
+        toast('✓ Categoría añadida', 'success');
+        await cargarCategorias();
+      } catch(e) {
+        toast('Error añadiendo la categoría: ' + e.message, 'error');
+      }
+    }
+
+    async function eliminarCategoria(slug) {
+      if (!confirm('¿Eliminar esta categoría? Los productos que la tengan asignada no se verán afectados, pero dejará de poder elegirse.')) return;
+      try {
+        const { error } = await db.from('categorias').delete().eq('slug', slug);
+        if (error) throw error;
+        toast('✓ Categoría eliminada', 'success');
+        await cargarCategorias();
+      } catch(e) {
+        toast('Error eliminando: ' + e.message, 'error');
+      }
+    }
+
     async function avisarMensajesNuevos() {
       try {
         const { count } = await db.from('solicitudes').select('id', { count:'exact', head:true }).eq('estado', 'nueva');
@@ -1385,7 +1511,7 @@
     }
 
     async function refrescarTodo() {
-      await Promise.all([cargarProductos(), cargarPedidos()]);
+      await Promise.all([cargarProductos(), cargarPedidos(), cargarCategorias()]);
       toast('✓ Datos actualizados', 'success');
     }
 

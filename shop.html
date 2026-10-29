@@ -69,6 +69,7 @@
     .filter-cat:hover{color:var(--primary)}
     .filter-cat.active{color:var(--primary);border-bottom-color:var(--primary);font-weight:700}
     .filters-sep{width:1px;height:20px;background:var(--border);flex-shrink:0;margin:0 0.5rem}
+    #categoriaPills{display:contents}
     .filters-right{margin-left:auto;display:flex;align-items:center;gap:0.75rem;flex-shrink:0}
     .search-wrap{position:relative}
     .search-wrap input{padding:0.55rem 0.9rem 0.55rem 2rem;border:1px solid var(--border);border-radius:9999px;font-family:'Nunito',sans-serif;font-size:0.78rem;outline:none;background:var(--cream);color:var(--text);width:200px;transition:all 0.3s}
@@ -166,14 +167,9 @@
   </div>
   <div class="filters-bar" id="filtersBar">
     <div class="filters-inner">
-      <button type="button" class="filter-cat active" data-cat="" onclick="setCategoria('',this)">Todas</button>
-      <div class="filters-sep"></div>
-      <button type="button" class="filter-cat" data-cat="velas" onclick="setCategoria('velas',this)">🕯️ Velas</button>
-      <button type="button" class="filter-cat" data-cat="minerales" onclick="setCategoria('minerales',this)">💎 Minerales</button>
-      <button type="button" class="filter-cat" data-cat="joyeria" onclick="setCategoria('joyeria',this)">📿 Joyería</button>
-      <button type="button" class="filter-cat" data-cat="ambientacion" onclick="setCategoria('ambientacion',this)">🌸 Ambientación</button>
-      <button type="button" class="filter-cat" data-cat="corporal" onclick="setCategoria('corporal',this)">🧴 Corporal</button>
-      <button type="button" class="filter-cat" data-cat="quemadores" onclick="setCategoria('quemadores',this)">🔥 Quemadores</button>
+      <span id="categoriaPills">
+        <button type="button" class="filter-cat active" data-cat="" onclick="setCategoria('',this)">Todas</button>
+      </span>
       <div class="filters-right">
         <div class="search-wrap"><span class="search-icon">🔍</span><input type="text" placeholder="Buscar..." id="searchInput" oninput="filtrarProductos()" /></div>
         <select class="sort-select" id="sortSelect" onchange="filtrarProductos()">
@@ -224,6 +220,22 @@
     async function cargarProductos(){try{const{data,error}=await db.from('productos').select('id,name,description,price,compare_price,image,category,featured,variantes,created_at').eq('active',true).order('created_at',{ascending:false});if(error)throw error;todosLosProductos=data||[];ocultarCategoriasVacias();filtrarProductos()}catch(e){console.error('Productos:',e);document.getElementById('productsGrid').className='products-grid';document.getElementById('productsGrid').innerHTML=`<div class="empty-state"><h3>No pudimos cargar los productos</h3><p>Revisa tu conexión y vuelve a intentarlo.</p><a href="javascript:location.reload()">Reintentar</a></div>`}}
     // Oculta los filtros de categorías que todavía no tienen productos.
     function ocultarCategoriasVacias(){const usadas=new Set(todosLosProductos.map(p=>p.category));document.querySelectorAll('.filter-cat[data-cat]').forEach(b=>{const cat=b.dataset.cat;b.style.display=!cat||usadas.has(cat)||cat===categoriaActiva?'':'none'})}
+    async function cargarCategoriasFiltro(){
+      try{
+        const{data,error}=await db.from('categorias').select('slug,nombre,emoji').eq('activa',true).order('orden',{ascending:true});
+        if(error||!data?.length)return;
+        const wrap=document.getElementById('categoriaPills');
+        wrap.innerHTML=`<button type="button" class="filter-cat active" data-cat="" onclick="setCategoria('',this)">Todas</button><div class="filters-sep"></div>`+
+          data.map(c=>`<button type="button" class="filter-cat" data-cat="${esc(c.slug)}" onclick="setCategoria(this.dataset.cat,this)">${esc(c.emoji?c.emoji+' ':'')}${esc(c.nombre)}</button>`).join('');
+        ocultarCategoriasVacias();
+        // Si venimos con ?category= en la URL, activar esa pestaña ahora que ya existen los botones.
+        const catParam=new URLSearchParams(window.location.search).get('category');
+        if(catParam){
+          const btn=wrap.querySelector(`[data-cat="${CSS.escape(catParam)}"]`);
+          if(btn){categoriaActiva=catParam;wrap.querySelectorAll('.filter-cat').forEach(b=>b.classList.remove('active'));btn.classList.add('active');filtrarProductos()}
+        }
+      }catch(e){}
+    }
     function setCategoria(cat,btn){categoriaActiva=cat;document.querySelectorAll('.filter-cat').forEach(b=>b.classList.remove('active'));btn.classList.add('active');filtrarProductos()}
     function setPrecio(min,max,btn){precioMin=min;precioMax=max;document.querySelectorAll('.price-pill').forEach(b=>b.classList.remove('active'));btn.classList.add('active');filtrarProductos()}
     function filtrarProductos(){const q=(document.getElementById('searchInput')?.value||'').toLowerCase();const sort=document.getElementById('sortSelect')?.value||'newest';let lista=todosLosProductos.filter(p=>{const mq=!q||(p.name||'').toLowerCase().includes(q)||(p.description||'').toLowerCase().includes(q);const mc=!categoriaActiva||p.category===categoriaActiva;const mp=(precioMin===null||p.price>=precioMin)&&(precioMax===null||p.price<=precioMax);return mq&&mc&&mp});if(sort==='price-asc')lista.sort((a,b)=>a.price-b.price);if(sort==='price-desc')lista.sort((a,b)=>b.price-a.price);if(sort==='name')lista.sort((a,b)=>a.name.localeCompare(b.name));document.getElementById('resultsCount').innerHTML=`<strong>${lista.length}</strong> producto${lista.length!==1?'s':''} encontrado${lista.length!==1?'s':''}`;renderProductos(lista)}
@@ -232,7 +244,7 @@
     function añadirCarrito(id,btn){const p=todosLosProductos.find(x=>x.id===id);if(!p)return;if(tieneAromas(p)){window.location.href=urlProducto(p);return}CartWidget.add({productId:p.id,name:p.name,price:p.price,image:p.image});const orig=btn.textContent;btn.textContent='✓ Añadido';btn.classList.add('added');setTimeout(()=>{btn.textContent=orig;btn.classList.remove('added')},1500);mostrarToast(`"${p.name}" añadido`)}
     function mostrarToast(msg){const t=document.getElementById('toast');t.textContent='✦ '+msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800)}
     actualizarBotonCuenta();
-    const catParam=new URLSearchParams(window.location.search).get('category');if(catParam){const btn=document.querySelector(`.filter-cat[data-cat="${CSS.escape(catParam)}"]`);if(btn){categoriaActiva=catParam;document.querySelectorAll('.filter-cat').forEach(b=>b.classList.remove('active'));btn.classList.add('active')}}
+    cargarCategoriasFiltro();
     cargarProductos();
     if(!localStorage.getItem('kaori_cookie_consent')){setTimeout(()=>{document.getElementById('cookieBanner').style.display='flex'},1200)}
   </script>
