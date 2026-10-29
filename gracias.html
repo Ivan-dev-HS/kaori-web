@@ -4,6 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kaori – ¡Gracias por tu pedido!</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
@@ -136,11 +140,11 @@
   <section class="hero">
     <div class="hero-inner">
       <div class="success-icon">✦</div>
-      <span class="hero-eyebrow">Pedido confirmado</span>
+      <span class="hero-eyebrow" id="heroEyebrow">Pedido recibido</span>
       <h1>¡Gracias por tu<br /><em>confianza!</em></h1>
-      <p class="hero-sub">
-        Tu pedido ha sido recibido y está siendo preparado con mucho amor y cuidado.
-        Recibirás un email de confirmación en breve.
+      <p class="hero-sub" id="heroSub">
+        Tu pedido ha sido recibido y lo prepararemos con mucho amor y cuidado.
+        Guarda tu número de pedido; si tienes cualquier duda escríbenos a info@kaori.es.
       </p>
 
       <div class="order-id-wrap" id="orderIdWrap" style="display:none">
@@ -200,7 +204,7 @@
     <div class="share-btns">
       <button class="share-btn" onclick="compartirWhatsApp()">💬 WhatsApp</button>
       <button class="share-btn" onclick="compartirInstagram()">📷 Instagram</button>
-      <button class="share-btn" onclick="copiarLink()">🔗 Copiar enlace</button>
+      <button class="share-btn" onclick="copiarLink(this)">🔗 Copiar enlace</button>
     </div>
   </div>
 
@@ -220,7 +224,7 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js"></script>
-  <script src="supabase.js"></script>
+  <script src="utils.js"></script><script src="supabase.js"></script>
   <script src="auth.js"></script>
   <script>
     // ── CONFETTI ──────────────────────────────────────────────────────────────
@@ -253,55 +257,60 @@
     }
 
     // ── CARGAR PEDIDO ─────────────────────────────────────────────────────────
+    // /api/order-status confirma el pago con Stripe (si venimos de allí) y
+    // devuelve un resumen sin datos personales; funciona también sin cuenta.
     (async function() {
-      lanzarConfetti();
+      var params    = new URLSearchParams(window.location.search);
+      var orderId   = params.get('order_id') || '';
+      var sessionId = params.get('session_id') || '';
+      var esTransf  = params.get('pago') === 'transferencia';
 
-      // Limpiar carrito
-      localStorage.removeItem('kaori_cart');
+      if (!/^[0-9a-f-]{36}$/i.test(orderId)) return;
 
-      // Obtener ID del pedido desde URL
-      var params  = new URLSearchParams(window.location.search);
-      var pedidoId = params.get('pedido') || params.get('session_id');
+      if (window.CartWidget) CartWidget.clear();
+      else localStorage.removeItem('kaori_cart');
 
-      if (!pedidoId) return;
+      document.getElementById('orderIdVal').textContent = '#' + orderId.split('-')[0].toUpperCase();
+      document.getElementById('orderIdWrap').style.display = '';
 
       try {
-        // Mostrar ID del pedido
-        var idCorto = pedidoId.split('-')[0].toUpperCase();
-        document.getElementById('orderIdVal').textContent = '#' + idCorto;
-        document.getElementById('orderIdWrap').style.display = '';
+        var url = '/api/order-status?order_id=' + encodeURIComponent(orderId) +
+                  (sessionId ? '&session_id=' + encodeURIComponent(sessionId) : '');
+        var r = await fetch(url);
+        if (!r.ok) return;
+        var pedido = await r.json();
+        lanzarConfetti();
 
-        // Buscar pedido en Supabase
-        var filtro   = pedidoId.startsWith('cs_') ? 'stripe_session_id' : 'id';
-        var resultado = await db.from('pedidos').select('*').eq(filtro, pedidoId).single();
+        if (pedido.pagado) {
+          document.getElementById('heroEyebrow').textContent = 'Pago confirmado';
+        } else if (pedido.payment_method === 'transfer' || esTransf) {
+          document.getElementById('heroEyebrow').textContent = 'Pedido registrado · pendiente de transferencia';
+          document.getElementById('heroSub').textContent =
+            'Te enviaremos por email los datos bancarios. Prepararemos tu pedido en cuanto recibamos la transferencia. ' +
+            'Indica el número de pedido en el concepto.';
+        } else {
+          document.getElementById('heroEyebrow').textContent = 'Pedido recibido · confirmando pago';
+        }
 
-        if (resultado.error || !resultado.data) return;
-
-        var pedido = resultado.data;
         document.getElementById('resumenSection').style.display = '';
-
-        // Fecha
-        var fecha = new Date(pedido.created_at).toLocaleDateString('es-ES', {
+        document.getElementById('resumenFecha').textContent = new Date(pedido.created_at).toLocaleDateString('es-ES', {
           day:'2-digit', month:'long', year:'numeric'
         });
-        document.getElementById('resumenFecha').textContent = fecha;
 
-        // Items
         var items = Array.isArray(pedido.items) ? pedido.items : [];
         document.getElementById('resumenItems').innerHTML = items.map(function(i) {
           return '<div class="resumen-item">' +
-            '<img class="resumen-img" src="' + (i.image||'') + '" alt="' + i.product_name + '" onerror="this.style.display=\'none\'" />' +
-            '<div class="resumen-info"><strong>' + i.product_name + '</strong>' +
-            '<span>× ' + i.quantity + ' · ' + Number(i.price).toFixed(2) + ' € c/u</span></div>' +
-            '<span class="resumen-price">' + (i.price * i.quantity).toFixed(2) + ' €</span>' +
+            '<img class="resumen-img" src="' + urlSegura(i.image) + '" alt="" onerror="this.style.display=\'none\'" />' +
+            '<div class="resumen-info"><strong>' + esc(i.product_name) + '</strong>' +
+            '<span>× ' + Number(i.quantity) + ' · ' + precio(i.price) + ' c/u</span></div>' +
+            '<span class="resumen-price">' + precio(i.price * i.quantity) + '</span>' +
             '</div>';
         }).join('');
 
-        // Totales
         document.getElementById('resumenTotales').innerHTML =
-          '<div class="total-row"><span>Subtotal</span><span>' + Number(pedido.subtotal).toFixed(2) + ' €</span></div>' +
-          '<div class="total-row"><span>Envío</span><span>' + (Number(pedido.shipping_cost) === 0 ? 'Gratis' : Number(pedido.shipping_cost).toFixed(2) + ' €') + '</span></div>' +
-          '<div class="total-final"><span>Total pagado</span><span>' + Number(pedido.total).toFixed(2) + ' €</span></div>';
+          '<div class="total-row"><span>Subtotal</span><span>' + precio(pedido.subtotal) + '</span></div>' +
+          '<div class="total-row"><span>Envío</span><span>' + (Number(pedido.shipping_cost) === 0 ? 'Gratis' : precio(pedido.shipping_cost)) + '</span></div>' +
+          '<div class="total-final"><span>' + (pedido.pagado ? 'Total pagado' : 'Total') + '</span><span>' + precio(pedido.total) + '</span></div>';
 
       } catch(e) {
         console.error('Error cargando pedido:', e);
@@ -311,16 +320,15 @@
     // ── COMPARTIR ─────────────────────────────────────────────────────────────
     function compartirWhatsApp() {
       var msg = '¡Acabo de hacer un pedido en Kaori! 🕯️✨ Las mejores velas artesanales en kaori.es';
-      window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
+      window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank', 'noopener');
     }
 
     function compartirInstagram() {
-      window.open('https://instagram.com/kaoribyjessnuan', '_blank');
+      window.open('https://instagram.com/kaoribyjessnuan', '_blank', 'noopener');
     }
 
-    function copiarLink() {
+    function copiarLink(btn) {
       navigator.clipboard.writeText('https://kaori.es').then(function() {
-        var btn = event.target;
         btn.textContent = '✓ ¡Copiado!';
         setTimeout(function() { btn.textContent = '🔗 Copiar enlace'; }, 2000);
       });

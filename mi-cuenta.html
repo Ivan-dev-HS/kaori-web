@@ -4,6 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kaori – Mi Cuenta</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
@@ -349,12 +352,13 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js"></script>
-  <script src="supabase.js"></script>
+  <script src="utils.js"></script><script src="supabase.js"></script>
   <script src="auth.js"></script>
   <script src="cart.js"></script>
   <script>
     const STATUS = {
-      pending:    { label:'Pendiente',  cls:'s-pending',   icon:'⏳' },
+      pending:    { label:'Pendiente de pago', cls:'s-pending', icon:'⏳' },
+      paid:       { label:'Pagado',     cls:'s-processing', icon:'💳' },
       processing: { label:'En proceso', cls:'s-processing', icon:'🔄' },
       shipped:    { label:'Enviado',    cls:'s-shipped',    icon:'🚚' },
       delivered:  { label:'Entregado',  cls:'s-delivered',  icon:'✅' },
@@ -387,7 +391,8 @@
         if (!sesion) { window.location.href = 'login.html'; return; }
 
         usuarioActual = await obtenerUsuario();
-        const rol     = await obtenerRol();
+        if (!usuarioActual) { window.location.href = 'login.html'; return; }
+        const rol     = await obtenerRol(sesion);
         if (rol === 'admin') { window.location.href = 'admin.html'; return; }
 
         document.getElementById('loadingScreen').style.display = 'none';
@@ -480,17 +485,8 @@
       try {
         const { error } = await db
           .from('profiles')
-          .upsert({
-            id:        usuarioActual.id,
-            email:     usuarioActual.email,
-            nombre,
-            apellidos,
-            telefono,
-            ciudad,
-            direccion,
-            cp,
-            provincia,
-          }, { onConflict: 'id' });
+          .update({ nombre, apellidos, telefono, ciudad, direccion, cp, provincia })
+          .eq('id', usuarioActual.id);
 
         if (error) throw error;
 
@@ -518,16 +514,17 @@
       try {
         const { data, error } = await db
           .from('pedidos')
-          .select('*')
+          .select('id,created_at,status,paid_at,items,subtotal,shipping_cost,total,payment_method,shipping_address,shipping_city,shipping_postal_code')
           .eq('user_id', usuarioActual.id)
-          .order('created_at', { ascending: false });
+          .order('created_at', { ascending: false })
+          .limit(100);
 
         if (error) throw error;
 
         const pedidos = data || [];
 
         // Stats
-        const pendientes = pedidos.filter(o => ['pending','processing','shipped'].includes(o.status)).length;
+        const pendientes = pedidos.filter(o => ['pending','paid','processing','shipped'].includes(o.status)).length;
         const entregados = pedidos.filter(o => o.status === 'delivered').length;
         document.getElementById('statPendientes').textContent = pendientes;
         document.getElementById('statEntregados').textContent = entregados;
@@ -543,14 +540,14 @@
         }
 
         list.innerHTML = pedidos.map(o => {
-          const st      = STATUS[o.status] || STATUS.pending;
+          const st      = (o.status === 'pending' && o.paid_at) ? STATUS.paid : (STATUS[o.status] || STATUS.pending);
           const date    = new Date(o.created_at).toLocaleDateString('es-ES', { day:'2-digit', month:'long', year:'numeric' });
           const orderId = o.id.split('-')[0].toUpperCase();
           const items   = Array.isArray(o.items) ? o.items : [];
 
           return `
             <div class="pedido-row">
-              <div class="pedido-summary" onclick="togglePedido('${o.id}')">
+              <div class="pedido-summary" data-id="${esc(o.id)}" onclick="togglePedido(this.dataset.id)">
                 <span class="pedido-id">#${orderId}</span>
                 <div class="pedido-info">
                   <strong>${items.length} producto${items.length !== 1 ? 's' : ''}</strong>
@@ -562,16 +559,16 @@
                   <span>${o.payment_method === 'stripe' ? '💳 Tarjeta' : '🏦 Transfer.'}</span>
                 </div>
               </div>
-              <div class="pedido-detail" id="pd-${o.id}">
+              <div class="pedido-detail" id="pd-${esc(o.id)}">
                 <div class="pedido-items">
                   ${items.map(i => `
                     <div class="pitem">
-                      <img class="pitem-img" src="${i.image||''}" alt="${i.product_name}" onerror="this.style.display='none'" />
+                      <img class="pitem-img" src="${urlSegura(i.image)}" alt="" onerror="this.style.display='none'" />
                       <div class="pitem-info">
-                        <strong>${i.product_name}</strong>
-                        <span>× ${i.quantity} · ${Number(i.price).toFixed(2)} € c/u</span>
+                        <strong>${esc(i.product_name)}</strong>
+                        <span>× ${Number(i.quantity)} · ${precio(i.price)} c/u</span>
                       </div>
-                      <span class="pitem-price">${(i.price * i.quantity).toFixed(2)} €</span>
+                      <span class="pitem-price">${precio(i.price * i.quantity)}</span>
                     </div>`).join('')}
                 </div>
                 <div class="pedido-totales">
@@ -581,7 +578,7 @@
                 </div>
                 ${o.shipping_address ? `
                   <p style="font-size:0.72rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-top:1rem;margin-bottom:0.3rem">Dirección de envío</p>
-                  <p style="font-size:0.82rem;color:var(--text)">${o.shipping_address}, ${o.shipping_city} ${o.shipping_postal_code}</p>` : ''}
+                  <p style="font-size:0.82rem;color:var(--text)">${esc(o.shipping_address)}, ${esc(o.shipping_city)} ${esc(o.shipping_postal_code)}</p>` : ''}
               </div>
             </div>`;
         }).join('');
@@ -603,7 +600,7 @@
       btn.textContent = '⏳ Enviando...';
       try {
         const { error } = await db.auth.resetPasswordForEmail(usuarioActual.email, {
-          redirectTo: 'https://kaori.es/login.html'
+          redirectTo: location.origin + '/login.html'
         });
         if (error) throw error;
         document.getElementById('msgOk').style.display  = 'block';

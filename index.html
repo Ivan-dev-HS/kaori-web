@@ -37,11 +37,15 @@
     "image": "https://kaori.es/og-image.jpg",
     "priceRange": "€€",
     "currenciesAccepted": "EUR",
-    "paymentAccepted": "Credit Card",
+    "paymentAccepted": "Tarjeta de crédito/débito, transferencia bancaria",
+    "email": "info@kaori.es",
     "areaServed": "ES",
     "sameAs": ["https://instagram.com/kaoribyjessnuan"]
   }
   </script>
+  <link rel="preconnect" href="https://zlebihuuhgyebnauyyug.supabase.co" crossorigin />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
@@ -130,7 +134,7 @@
     .carousel-track{display:flex;gap:1.5rem;padding:0.5rem 1.5rem;animation:carouselScroll 40s linear infinite;width:max-content}
     .carousel-track:hover{animation-play-state:paused}
     @keyframes carouselScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-    .carousel-card{width:240px;flex-shrink:0;background:white;border:1px solid var(--border);border-radius:1rem;cursor:pointer;transition:all 0.4s;overflow:hidden}
+    .carousel-card{display:block;width:240px;flex-shrink:0;background:white;border:1px solid var(--border);border-radius:1rem;cursor:pointer;transition:all 0.4s;overflow:hidden}
     .carousel-card:hover{box-shadow:0 16px 50px rgba(124,58,237,0.15);transform:translateY(-6px)}
     .carousel-card-img{aspect-ratio:3/4;overflow:hidden;background:var(--light);position:relative}
     .carousel-card-img img{width:100%;height:100%;object-fit:cover;transition:transform 0.6s ease}
@@ -406,8 +410,8 @@
     <div class="divider" style="background:rgba(167,139,250,0.3);margin:1.5rem auto"></div>
     <p>Recibe novedades, rituales y acceso prioritario a nuevas colecciones.</p>
     <div class="newsletter-form">
-      <input type="email" placeholder="Tu email..." />
-      <button type="button">Suscribirse</button>
+      <input type="email" id="newsletterEmail" placeholder="Tu email..." autocomplete="email" aria-label="Tu email" />
+      <button type="button" id="newsletterBtn" onclick="suscribirNewsletter()">Suscribirse</button>
     </div>
   </section>
 
@@ -417,13 +421,12 @@
         <img src="logo.png" alt="Kaori" class="footer-logo" />
         <p>Velas artesanales y productos naturales creados con intención, amor y los mejores materiales para transformar tu hogar.</p>
         <div class="footer-social">
-          <a href="https://instagram.com/kaoribyjessnuan" target="_blank">Instagram</a>
-          <a href="#">Pinterest</a>
+          <a href="https://instagram.com/kaoribyjessnuan" target="_blank" rel="noopener">Instagram</a>
         </div>
       </div>
       <div class="footer-links"><h4>Colección</h4><ul><li><a href="shop.html">Todos los productos</a></li><li><a href="shop.html?category=velas">Velas</a></li><li><a href="shop.html?category=minerales">Minerales</a></li><li><a href="shop.html?category=joyeria">Joyería</a></li></ul></div>
       <div class="footer-links"><h4>Kaori</h4><ul><li><a href="about.html">Nosotras</a></li><li><a href="eventos.html">Eventos & Bodas</a></li><li><a href="contact.html">Contacto</a></li></ul></div>
-      <div class="footer-links"><h4>Contacto</h4><ul><li><a href="mailto:info@kaori.es">info@kaori.es</a></li><li><a href="https://instagram.com/kaoribyjessnuan" target="_blank">@kaoribyjessnuan</a></li><li><a href="checkout.html">Finalizar compra</a></li></ul></div>
+      <div class="footer-links"><h4>Contacto</h4><ul><li><a href="mailto:info@kaori.es">info@kaori.es</a></li><li><a href="https://instagram.com/kaoribyjessnuan" target="_blank" rel="noopener">@kaoribyjessnuan</a></li><li><a href="checkout.html">Finalizar compra</a></li></ul></div>
     </div>
     <div class="footer-bottom"><p>© 2024 Kaori. Todos los derechos reservados.</p><a href="privacidad.html">Política de privacidad</a></div>
   </footer>
@@ -440,7 +443,7 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js"></script>
-  <script src="supabase.js"></script>
+  <script src="utils.js"></script><script src="supabase.js"></script>
   <script src="auth.js"></script>
   <script src="cart.js"></script>
   <script>
@@ -450,14 +453,14 @@
     const observer=new IntersectionObserver(entries=>{entries.forEach((entry,i)=>{if(entry.isIntersecting){setTimeout(()=>entry.target.classList.add('visible'),i*80);observer.unobserve(entry.target)}})},{threshold:0.12});
     document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el=>observer.observe(el));
     let todosProductos=[];
-    async function cargarCarrusel(){try{const{data}=await db.from('productos').select('*').order('created_at',{ascending:false});if(!data?.length)return;todosProductos=data;const items=[...data,...data];const track=document.getElementById('carouselTrack');track.innerHTML=items.map(p=>`<div class="carousel-card" onclick="window.location.href='product.html?id=${p.id}'"><div class="carousel-card-img"><img src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=400&q=80'" /><div class="carousel-card-overlay"><button class="carousel-card-quick" onclick="event.stopPropagation();quickAdd('${p.id}',this)">+ Añadir</button></div></div><div class="carousel-card-info"><p class="carousel-card-cat">${p.category}</p><h3 class="carousel-card-name">${p.name}</h3><p class="carousel-card-price">${Number(p.price).toFixed(2)} €</p></div></div>`).join('')}catch(e){console.error('Carrusel:',e)}}
-    async function cargarDestacados(){try{const{data}=await db.from('productos').select('*').eq('featured',true).limit(4);if(!data)return;const grid=document.getElementById('featuredGrid');if(!data.length){grid.innerHTML=`<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--muted)">No hay productos destacados todavía.<br/><a href="shop.html" style="color:var(--primary);font-weight:600;margin-top:1rem;display:inline-block">Ver todos →</a></div>`;return}grid.innerHTML=data.map(p=>`<div class="feat-card" onclick="window.location.href='product.html?id=${p.id}'"><div class="feat-img"><img src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=400&q=80'" /><span class="feat-badge">✨ Destacado</span></div><div class="feat-info"><p class="feat-cat">${p.category}</p><h3 class="feat-name">${p.name}</h3><p class="feat-price"><strong>${Number(p.price).toFixed(2)} €</strong>${p.compare_price?`<span style="text-decoration:line-through;color:var(--muted);margin-left:0.5rem;font-weight:400">${Number(p.compare_price).toFixed(2)} €</span>`:''}</p><button class="feat-btn" onclick="event.stopPropagation();añadirCarrito('${p.id}',this)">Añadir al carrito</button></div></div>`).join('');grid.querySelectorAll('.feat-card').forEach((card,i)=>{card.style.opacity='0';card.style.transform='translateY(24px)';card.style.transition=`opacity 0.6s ease ${i*100}ms,transform 0.6s ease ${i*100}ms`;setTimeout(()=>{card.style.opacity='1';card.style.transform='translateY(0)'},100)})}catch(e){console.error('Destacados:',e)}}
-    function getCarrito(){try{return JSON.parse(localStorage.getItem('kaori_cart')||'[]')}catch{return[]}}
-    function guardarCarrito(cart){localStorage.setItem('kaori_cart',JSON.stringify(cart));if(window.CartWidget)CartWidget.updateBadge()}
-    function añadirCarrito(id,btn){const p=todosProductos.find(x=>x.id===id);if(!p)return;const cart=getCarrito();const ex=cart.find(i=>i.id===id);if(ex)ex.quantity++;else cart.push({id:p.id,name:p.name,price:Number(p.price),image:p.image,quantity:1});guardarCarrito(cart);if(window.CartWidget)CartWidget.render();const orig=btn.textContent;btn.textContent='✓ Añadido';btn.classList.add('added');setTimeout(()=>{btn.textContent=orig;btn.classList.remove('added')},1500);mostrarToast(`"${p.name}" añadido al carrito`)}
-    function quickAdd(id,btn){const p=todosProductos.find(x=>x.id===id);if(!p)return;const cart=getCarrito();const ex=cart.find(i=>i.id===id);if(ex)ex.quantity++;else cart.push({id:p.id,name:p.name,price:Number(p.price),image:p.image,quantity:1});guardarCarrito(cart);if(window.CartWidget)CartWidget.render();mostrarToast(`"${p.name}" añadido al carrito`)}
+    const tieneAromas=p=>Array.isArray(p.variantes)&&p.variantes.some(v=>v&&v.nombre);
+    const urlProducto=p=>'product.html?id='+encodeURIComponent(p.id);
+    async function cargarCarrusel(){try{const{data,error}=await db.from('productos').select('id,name,price,image,category,variantes').eq('active',true).order('created_at',{ascending:false}).limit(12);if(error)throw error;if(!data?.length)return;data.forEach(p=>{if(!todosProductos.some(x=>x.id===p.id))todosProductos.push(p)});const items=[...data,...data];const track=document.getElementById('carouselTrack');track.innerHTML=items.map((p,i)=>`<a class="carousel-card" href="${urlProducto(p)}"${i>=data.length?' aria-hidden="true" tabindex="-1"':''}><div class="carousel-card-img"><img src="${urlSegura(p.image)||IMG_FALLBACK}" alt="${esc(p.name)}" loading="lazy" decoding="async" onerror="this.onerror=null;this.src=IMG_FALLBACK" /><div class="carousel-card-overlay"><button type="button" class="carousel-card-quick" data-id="${esc(p.id)}" onclick="event.preventDefault();event.stopPropagation();añadirCarrito(this.dataset.id,this)">${tieneAromas(p)?'Elegir aroma':'+ Añadir'}</button></div></div><div class="carousel-card-info"><p class="carousel-card-cat">${esc(p.category)}</p><h3 class="carousel-card-name">${esc(p.name)}</h3><p class="carousel-card-price">${precio(p.price)}</p></div></a>`).join('')}catch(e){console.error('Carrusel:',e)}}
+    async function cargarDestacados(){try{const{data,error}=await db.from('productos').select('id,name,price,compare_price,image,category,variantes').eq('active',true).eq('featured',true).order('created_at',{ascending:false}).limit(4);if(error)throw error;const grid=document.getElementById('featuredGrid');if(!data.length){grid.innerHTML=`<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--muted)">No hay productos destacados todavía.<br/><a href="shop.html" style="color:var(--primary);font-weight:600;margin-top:1rem;display:inline-block">Ver todos →</a></div>`;return}data.forEach(p=>{if(!todosProductos.some(x=>x.id===p.id))todosProductos.push(p)});grid.innerHTML=data.map(p=>`<div class="feat-card" onclick="window.location.href='${urlProducto(p)}'"><div class="feat-img"><img src="${urlSegura(p.image)||IMG_FALLBACK}" alt="${esc(p.name)}" loading="lazy" decoding="async" onerror="this.onerror=null;this.src=IMG_FALLBACK" /><span class="feat-badge">✨ Destacado</span></div><div class="feat-info"><p class="feat-cat">${esc(p.category)}</p><h3 class="feat-name"><a href="${urlProducto(p)}">${esc(p.name)}</a></h3><p class="feat-price"><strong>${precio(p.price)}</strong>${p.compare_price>p.price?`<span style="text-decoration:line-through;color:var(--muted);margin-left:0.5rem;font-weight:400">${precio(p.compare_price)}</span>`:''}</p><button type="button" class="feat-btn" data-id="${esc(p.id)}" onclick="event.stopPropagation();añadirCarrito(this.dataset.id,this)">${tieneAromas(p)?'Elegir aroma':'Añadir al carrito'}</button></div></div>`).join('');grid.querySelectorAll('.feat-card').forEach((card,i)=>{card.style.opacity='0';card.style.transform='translateY(24px)';card.style.transition=`opacity 0.6s ease ${i*100}ms,transform 0.6s ease ${i*100}ms`;setTimeout(()=>{card.style.opacity='1';card.style.transform='translateY(0)'},100)})}catch(e){console.error('Destacados:',e)}}
+    function añadirCarrito(id,btn){const p=todosProductos.find(x=>x.id===id);if(!p)return;if(tieneAromas(p)){window.location.href=urlProducto(p);return}CartWidget.add({productId:p.id,name:p.name,price:p.price,image:p.image});const orig=btn.textContent;btn.textContent='✓ Añadido';btn.classList.add('added');setTimeout(()=>{btn.textContent=orig;btn.classList.remove('added')},1500);mostrarToast(`"${p.name}" añadido al carrito`)}
     function mostrarToast(msg){const t=document.getElementById('toast');t.textContent='✦ '+msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800)}
-    (async()=>{try{const sesion=await obtenerSesion();const btn=document.getElementById('btnCuenta');const mBtn=document.getElementById('mobileLoginBtn');if(sesion){const rol=await obtenerRol();const href=rol==='admin'?'admin.html':'mi-cuenta.html';const txt=rol==='admin'?'👑 Panel Admin':'Mi cuenta';if(btn){btn.href=href;btn.textContent=txt}if(mBtn){mBtn.href=href;mBtn.textContent=txt}}}catch(e){}})();
+    async function suscribirNewsletter(){const input=document.getElementById('newsletterEmail');const email=input.value.trim().toLowerCase();if(!/^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/.test(email)){mostrarToast('Introduce un email válido');return}const btn=document.getElementById('newsletterBtn');btn.disabled=true;const{error}=await db.from('newsletter').insert({email,origen:'home'});btn.disabled=false;if(error&&error.code!=='23505'){mostrarToast('No se pudo completar la suscripción. Inténtalo de nuevo.');return}mostrarToast('¡Gracias! Te avisaremos de nuestras novedades');input.value=''}
+    actualizarBotonCuenta();
     cargarCarrusel();
     cargarDestacados();
     if(!localStorage.getItem('kaori_cookie_consent')){setTimeout(()=>{document.getElementById('cookieBanner').style.display='flex'},1200)}

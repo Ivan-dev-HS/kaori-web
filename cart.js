@@ -1,5 +1,6 @@
 // cart.js
-// Carrito desplegable tipo burbuja — se inyecta automáticamente en cualquier página
+// Carrito desplegable tipo burbuja — se inyecta automáticamente en cualquier página.
+// Necesita utils.js cargado antes (esc, precio, urlSegura).
 
 (function() {
 
@@ -180,19 +181,57 @@
       }
     },
 
+    // Envío: misma regla que calcula el servidor (función crear_pedido).
+    ENVIO_ESTANDAR:   4.95,
+    ENVIO_GRATIS_MIN: 50,
+
     getCart() {
-      try { return JSON.parse(localStorage.getItem('kaori_cart') || '[]'); }
-      catch { return []; }
+      try {
+        const cart = JSON.parse(localStorage.getItem('kaori_cart') || '[]');
+        return Array.isArray(cart) ? cart.filter(i => i && i.id && i.quantity > 0) : [];
+      } catch { return []; }
     },
 
     saveCart(cart) {
-      localStorage.setItem('kaori_cart', JSON.stringify(cart));
+      try { localStorage.setItem('kaori_cart', JSON.stringify(cart)); } catch {}
       this.updateBadge();
     },
 
+    // Añade un producto. El precio guardado solo sirve para mostrarlo: el
+    // importe real lo calcula el servidor al crear el pedido.
+    add({ productId, variante = null, name, price, image, quantity = 1 }) {
+      const id   = variante ? productId + '-' + variante : productId;
+      const cart = this.getCart();
+      const ex   = cart.find(i => i.id === id);
+      if (ex) ex.quantity = Math.min(99, ex.quantity + quantity);
+      else cart.push({ id, productId, variante, name, price: Number(price), image, quantity: Math.min(99, quantity) });
+      this.saveCart(cart);
+      this.render();
+    },
+
+    // Para el checkout: {product_id, variante, quantity}. Soporta carritos
+    // antiguos donde solo se guardaba id = "<uuid>" o "<uuid>-<aroma>".
+    itemsParaPedido() {
+      return this.getCart().map(i => ({
+        product_id: i.productId || String(i.id).slice(0, 36),
+        variante:   i.productId ? (i.variante || null) : (String(i.id).length > 37 ? String(i.id).slice(37) : null),
+        quantity:   i.quantity,
+      }));
+    },
+
+    clear() {
+      try { localStorage.removeItem('kaori_cart'); } catch {}
+      this.updateBadge();
+    },
+
+    totales(envio = 'standard') {
+      const subtotal = this.getCart().reduce((s, i) => s + Number(i.price) * i.quantity, 0);
+      const shipping = envio === 'pickup' || subtotal >= this.ENVIO_GRATIS_MIN ? 0 : this.ENVIO_ESTANDAR;
+      return { subtotal, shipping, total: subtotal + shipping };
+    },
+
     updateBadge() {
-      const total  = this.getCart().reduce((s,i) => s + i.quantity, 0);
-      // Actualizar todos los badges de la página
+      const total = this.getCart().reduce((s,i) => s + i.quantity, 0);
       document.querySelectorAll('.cart-count-badge').forEach(el => {
         el.textContent   = total;
         el.style.display = total > 0 ? 'flex' : 'none';
@@ -206,7 +245,7 @@
       const cart = this.getCart();
       const item = cart.find(i => i.id === id);
       if (!item) return;
-      item.quantity += delta;
+      item.quantity = Math.min(99, item.quantity + delta);
       if (item.quantity <= 0) {
         this.removeItem(id);
         return;
@@ -256,8 +295,8 @@
           border-bottom:1px solid #faf5ff;
           align-items:center;
         ">
-          <img src="${item.image}" alt="${item.name}"
-               onerror="this.src='https://images.unsplash.com/photo-1602178478026-72d94a3e8e3f?w=200&q=60'"
+          <img src="${urlSegura(item.image) || IMG_FALLBACK}" alt="${esc(item.name)}"
+               onerror="this.onerror=null;this.src=IMG_FALLBACK"
                style="
                  width:60px;height:60px;object-fit:cover;
                  border-radius:0.6rem;flex-shrink:0;
@@ -268,9 +307,9 @@
               font-weight:600;color:#4c1d95;font-size:0.82rem;
               margin-bottom:0.2rem;
               overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
-            ">${item.name}</p>
+            ">${esc(item.name)}</p>
             <p style="color:#7c3aed;font-size:0.78rem;font-weight:700;margin-bottom:0.5rem">
-              ${Number(item.price).toFixed(2)} €
+              ${precio(item.price)}
             </p>
             <div style="display:flex;align-items:center;justify-content:space-between">
               <div style="
@@ -278,7 +317,7 @@
                 background:#f3e8ff;border-radius:9999px;
                 padding:0.15rem;
               ">
-                <button onclick="CartWidget.updateQty('${item.id}',-1)" style="
+                <button data-id="${esc(item.id)}" onclick="CartWidget.updateQty(this.dataset.id,-1)" aria-label="Quitar uno" style="
                   width:26px;height:26px;border:none;background:white;
                   border-radius:50%;cursor:pointer;font-size:0.9rem;
                   color:#7c3aed;font-weight:700;
@@ -288,8 +327,8 @@
                 <span style="
                   width:28px;text-align:center;font-size:0.82rem;
                   font-weight:700;color:#2d1b69;
-                ">${item.quantity}</span>
-                <button onclick="CartWidget.updateQty('${item.id}',1)" style="
+                ">${Number(item.quantity)}</span>
+                <button data-id="${esc(item.id)}" onclick="CartWidget.updateQty(this.dataset.id,1)" aria-label="Añadir uno" style="
                   width:26px;height:26px;border:none;background:white;
                   border-radius:50%;cursor:pointer;font-size:0.9rem;
                   color:#7c3aed;font-weight:700;
@@ -298,11 +337,11 @@
                 ">+</button>
               </div>
               <span style="font-size:0.82rem;font-weight:700;color:#4c1d95">
-                ${(item.price * item.quantity).toFixed(2)} €
+                ${precio(item.price * item.quantity)}
               </span>
             </div>
           </div>
-          <button onclick="CartWidget.removeItem('${item.id}')" style="
+          <button data-id="${esc(item.id)}" onclick="CartWidget.removeItem(this.dataset.id)" aria-label="Eliminar del carrito" style="
             background:none;border:none;cursor:pointer;
             color:#d1d5db;font-size:1rem;padding:0.25rem;
             border-radius:50%;transition:all 0.15s;
@@ -312,23 +351,21 @@
           onmouseout="this.style.color='#d1d5db';this.style.background='none'">🗑️</button>
         </div>`).join('');
 
-      // Totales
-      const subtotal = cart.reduce((s,i) => s + i.price * i.quantity, 0);
-      const shipping  = subtotal >= 50 ? 0 : 4.95;
-      const total     = subtotal + shipping;
-      const pct       = Math.min(100, Math.round((subtotal / 50) * 100));
+      // Totales (estimación con envío a domicilio; el importe final lo calcula el servidor)
+      const { subtotal, shipping, total } = this.totales('standard');
+      const pct = Math.min(100, Math.round((subtotal / this.ENVIO_GRATIS_MIN) * 100));
 
-      document.getElementById('cw-subtotal').textContent = subtotal.toFixed(2) + ' €';
+      document.getElementById('cw-subtotal').textContent = precio(subtotal);
       const shipEl = document.getElementById('cw-shipping');
-      shipEl.textContent  = shipping === 0 ? '🎉 Gratis' : shipping.toFixed(2) + ' €';
+      shipEl.textContent  = shipping === 0 ? '🎉 Gratis' : precio(shipping);
       shipEl.style.color  = shipping === 0 ? '#16a34a' : '#6b7280';
-      document.getElementById('cw-total').textContent = total.toFixed(2) + ' €';
+      document.getElementById('cw-total').textContent = precio(total);
 
       // Barra envío gratis
       document.getElementById('cw-free-fill').style.width = pct + '%';
-      if (subtotal < 50) {
+      if (subtotal < this.ENVIO_GRATIS_MIN) {
         document.getElementById('cw-free-txt').textContent =
-          `¡Te faltan ${(50 - subtotal).toFixed(2)} € para envío gratis!`;
+          `¡Te faltan ${precio(this.ENVIO_GRATIS_MIN - subtotal)} para envío gratis!`;
         document.getElementById('cw-free-pct').textContent = pct + '%';
       } else {
         document.getElementById('cw-free-txt').textContent = '🎉 ¡Envío gratis conseguido!';
